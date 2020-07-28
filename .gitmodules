@@ -1,0 +1,6 @@
+[submodule "meme-pack-java"]
+	path = meme-pack-java
+	url = https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack
+[submodule "meme-pack-bedrock"]
+	path = meme-pack-bedrock
+	url = https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock
