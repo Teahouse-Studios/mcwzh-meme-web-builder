@@ -109,8 +109,13 @@
             {% if notice_existence %}
                 {% include './custom/notice.html' %}
             {% endif %}
+
             <v-container>
-                <v-row>
+                <v-switch
+                        v-model="whetherUseBE"
+                        :label="whetherUseBE ? '基岩版' : 'Java版'"
+                ></v-switch>
+                <v-row v-if="!whetherUseBE">
                     <v-col cols="6" sm="4">
                         <v-select label="游戏版本" :items="consts.type"
                                   v-model="inputBasic.type"></v-select>
@@ -124,7 +129,7 @@
                 </v-row>
                 <v-checkbox label='调试模式' v-model="inputBasic.debug"></v-checkbox>
                 <v-row>
-                    <v-col cols="12" sm="4">
+                    <v-col cols="12" :sm="whetherUseBE ? 12 : 4">
                         <v-select label="附加包/材质选择" multiple
                                   :items="consts.resourceList" v-model="input.resource">
                             <template v-slot:prepend-item>
@@ -153,12 +158,12 @@
                             </template>
                         </v-select>
                     </v-col>
-                    <v-col cols="12" sm="4">
+                    <v-col cols="12" sm="4" v-if="!whetherUseBE">
                         <v-select label="Mod/附加内容选择" :disabled="input.modOption !== 'custom'"
                                   :items="consts.modList" v-model="input.mod" multiple
                         ></v-select>
                     </v-col>
-                    <v-col cols="12" sm="4">
+                    <v-col cols="12" sm="4" v-if="!whetherUseBE">
                         <v-select label="语言选择" :disabled="input.languageOption === 'none'" multiple
                                   :items="consts.languageList" v-model="input.language">
                             <template v-slot:item="data">
@@ -274,6 +279,7 @@
                 }
 
                 let data = Object.assign({}, this.inputBasic, {
+                    _be: this.whetherUseBE,
                     language: getNames(this.input.languageOption, this.input.language, "modules/"),
                     resource: this.input.resource.map(v => v.slice("modules/".length)),
                     mod: getNames(this.input.modOption, this.input.mod, "mods/"),
@@ -315,6 +321,7 @@
             }
         },
         data: () => ({
+            whetherUseBE: false,
             logsPanel: [],
             loading: false,
             inputBasic: {
@@ -341,8 +348,11 @@
                     return 'mdi-minus-box'
                 }
             },
-            consts: () => ({
-                type: [{text: "1.13以上", value: "normal"}, {text: "1.12.2", value: "compat"}],
+            consts: {
+                cache: false,
+                get(){
+                    return {
+                        type: [{text: "1.13以上", value: "normal"}, {text: "1.12.2", value: "compat"}],
                 resourceOption: [{text: "所有", value: "all"}, {text: "无", value: "none"}, {
                     text: "自定义",
                     value: "custom"
@@ -358,9 +368,11 @@
                 modList: [{header: 'Mod文件'}].concat({{ mods|tojson }}).concat({header: 'Mod文件(未汉化)'})
                     .concat({{ enmods|tojson }}),
                 languageList: {{ language|tojson }},
-                resourceList: {{ resource|tojson }},
+                resourceList: this.whetherUseBE ? [] : {{ resource|tojson }},
                 manifests: {{ manifests|tojson }}
-            })
+                    }
+                }
+            }
         },
         vuetify: new Vuetify(),
     })

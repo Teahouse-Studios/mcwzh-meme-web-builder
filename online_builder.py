@@ -19,16 +19,18 @@ lock = Lock()
 
 @app.route('/')
 def generate_website():
-    mods = ["mods/" + file for file in os.listdir('mods')]
-    enmods = ["en-mods/" + file for file in os.listdir('en-mods')]
+    je_builder = importlib.import_module('meme-pack-java.build')
+    be_builder = importlib.import_module('meme-pack-bedrock.build')
+    mods = ["mods/" + file for file in os.listdir('meme-pack-java/mods')]
+    enmods = ["en-mods/" + file for file in os.listdir('meme-pack-java/en-mods')]
     language_modules = [
-        "modules/" + module for module in build.module_checker().get_module_list('language')]
+        "modules/" + module for module in je_builder.module_checker().get_module_list('language')]
     resource_modules = [
-        "modules/" + module for module in build.module_checker().get_module_list('resource')]
+        "modules/" + module for module in je_builder.module_checker().get_module_list('resource')]
     header_existence = os.path.exists("./views/custom/header.html")
     notice_existence = os.path.exists("./views/custom/notice.html")
     footer_existence = os.path.exists("./views/custom/footer.html")
-    manifests = build.module_checker().get_manifests()
+    manifests = je_builder.module_checker().get_manifests()
     return render_template("index.html", mods=mods, enmods=enmods, language=language_modules, resource=resource_modules,
                            header_existence=header_existence, notice_existence=notice_existence, footer_existence=footer_existence, manifests=manifests)
 
@@ -42,7 +44,7 @@ def ajax():
         logs = ""
         if nt + 60 <= time.time():
             nt = time.time()
-            p = subprocess.Popen(["git", "pull", "origin", "master"],
+            p = subprocess.Popen(["git", "pull", "origin", "master", "--recursive"],
                                  stdout=subprocess.PIPE, stderr=subprocess.STDOUT, stdin=subprocess.PIPE)
             p.wait()
             logs += str(p.communicate()[0], 'utf-8', 'ignore')
