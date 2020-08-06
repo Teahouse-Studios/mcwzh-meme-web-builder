@@ -128,6 +128,7 @@
                     </v-col>
                 </v-row>
                 <v-checkbox label='调试模式' v-model="inputBasic.debug"></v-checkbox>
+                <v-select label="附加包格式" v-if="whetherUseBE" v-model="input.beExtType" :items="consts.beExtType"></v-select>
                 <v-row>
                     <v-col cols="12" :sm="whetherUseBE ? 12 : 4">
                         <v-select label="附加包/材质选择" multiple
@@ -277,14 +278,15 @@
                         return res.map(v => v.split(prefix).join(''))
                     }
                 }
-
                 let data = Object.assign({}, this.inputBasic, {
                     _be: this.whetherUseBE,
                     language: getNames(this.input.languageOption, this.input.language, "modules/"),
-                    resource: this.input.resource.map(v => v.slice("modules/".length)),
+                    resource: this.input.resource.map(v => v.startsWith("/modules/") ? v.slice("modules/".length) : v),
                     mod: getNames(this.input.modOption, this.input.mod, "mods/"),
                     hash: true,
                     sfw: this.input.language.includes("modules/sfw")
+                }, this.whetherUseBE && {
+                    type: this.input.beExtType
                 })
                 console.log(data)
                 axios({url: '/ajax', method: 'POST', data}).then(function (res) {
@@ -335,7 +337,8 @@
                 modOption: "all",
                 mod: [],
                 resource: [],
-                language: []
+                language: [],
+                beExtType: 'zip'
             }
         }),
         computed: {
@@ -365,6 +368,7 @@
                     value: "custom",
                     text: "自定义"
                 }],
+                        beExtType: ['mcpack', 'zip'],
                 modList: [{header: 'Mod文件'}].concat({{ mods|tojson }}).concat({header: 'Mod文件(未汉化)'})
                     .concat({{ enmods|tojson }}),
                 languageList: {{ language|tojson }},

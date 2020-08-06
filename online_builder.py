@@ -64,6 +64,13 @@ def ajax():
             logs += builder.get_logs()
             message = {"code": 200, "argument": recv_data,
                        "logs": logs, "filename": builder.get_filename()}
+        else:
+            builder = importlib.import_module('meme-pack-bedrock.build').builder()
+            builder.set_args(recv_data)
+            builder.build()
+            logs += builder.get_logs()
+            message = {"code": 200, "argument": recv_data,
+                       "logs": logs, "filename": builder.get_filename()}
         print(recv_data)
     finally:
         lock.release()
