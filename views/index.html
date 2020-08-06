@@ -368,8 +368,8 @@
                 modList: [{header: 'Mod文件'}].concat({{ mods|tojson }}).concat({header: 'Mod文件(未汉化)'})
                     .concat({{ enmods|tojson }}),
                 languageList: {{ language|tojson }},
-                resourceList: this.whetherUseBE ? [] : {{ resource|tojson }},
-                manifests: {{ manifests|tojson }}
+                resourceList: this.whetherUseBE ? {{ be_resource|tojson }} : {{ resource|tojson }},
+                manifests:this.whetherUseBE ? {{ be_manifests|tojson }}: {{ manifests|tojson }}
                     }
                 }
             }

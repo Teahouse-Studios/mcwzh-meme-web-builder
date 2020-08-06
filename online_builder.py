@@ -32,6 +32,8 @@ def generate_website():
     footer_existence = os.path.exists("./views/custom/footer.html")
     manifests = je_builder.module_checker().get_manifests()
     return render_template("index.html", mods=mods, enmods=enmods, language=language_modules, resource=resource_modules,
+                           be_resource=be_builder.module_checker().get_module_list(),
+                           be_manifests=be_builder.module_checker().get_manifests(),
                            header_existence=header_existence, notice_existence=notice_existence, footer_existence=footer_existence, manifests=manifests)
 
 
