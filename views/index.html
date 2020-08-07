@@ -178,7 +178,6 @@
                         </v-row>
                     </v-tab-item>
                 </v-tabs-items>
-                <v-checkbox label='调试模式' v-model="inputBasic.debug"></v-checkbox>
                 <v-btn color="primary" @click="submit" :disabled="loading" :loading="loading">
                     <v-icon left>cloud_download</v-icon>
                     提交构建选项
@@ -317,8 +316,7 @@
             logsPanel: [],
             loading: false,
             inputBasic: {
-                type: "normal",
-                debug: false
+                type: "normal"
             },
             logs: [],
             input: {
