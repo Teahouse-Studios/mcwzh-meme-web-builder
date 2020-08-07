@@ -138,12 +138,15 @@
                                 <v-select label="语言选项" :items="consts.languageOption"
                                           v-model="input.languageOption"></v-select>
                             </v-col>
-                            <v-col cols="12" sm="6">
+                            <v-col cols="12" sm="4">
+                                <resource-selector></resource-selector>
+                            </v-col>
+                            <v-col cols="12" sm="4">
                                 <v-select label="Mod/附加内容选择" :disabled="input.modOption !== 'custom'"
                                           :items="consts.modList" v-model="input.mod" multiple
                                 ></v-select>
                             </v-col>
-                            <v-col cols="12" sm="6">
+                            <v-col cols="12" sm="4">
                                 <v-select label="语言选择" :disabled="input.languageOption === 'none'" multiple
                                           :items="consts.languageList" v-model="input.language">
                                     <template v-slot:item="data">
@@ -165,42 +168,21 @@
                         </v-row>
                     </v-tab-item>
                     <v-tab-item>
-                        <v-select label="附加包格式" v-model="input.beExtType" :items="consts.beExtType"></v-select>
-                        <resource-selector></resource-selector>
+                        <v-row>
+                            <v-col cols="6" sm="6">
+<v-select label="附加包格式" v-model="input.beExtType" :items="consts.beExtType"></v-select>
+                        </v-col>
+                        <v-col cols="6" sm="6">
+<resource-selector></resource-selector>
+                        </v-col>
+                        </v-row>
                     </v-tab-item>
                 </v-tabs-items>
-                <v-checkbox label='调试模式' v-model="inputBasic.debug"></v-checkbox>
-                <v-select label="附加包/材质选择" multiple
-                          :items="consts.resourceList" v-model="input.resource">
-                    <template v-slot:prepend-item>
-                        <v-list-item ripple @click="toggleResource">
-                            <v-list-item-action>
-                                <v-icon>{% raw %} {{ resourceIcon }}{% endraw %}</v-icon>
-                            </v-list-item-action>
-                            <v-list-item-content>
-                                <v-list-item-title>全选</v-list-item-title>
-                            </v-list-item-content>
-                        </v-list-item>
-                        <v-divider class="mt-2"></v-divider>
-                    </template>
-                    <template v-slot:item="data">
-                        <v-list-item v-bind="data.attrs" v-on="data.on">
-                            <v-list-item-action>
-                                <v-checkbox :value="data.attrs.inputValue"
-                                            @change="data.parent.$emit('select')"></v-checkbox>
-                            </v-list-item-action>
-                            <v-list-item-content>
-                                <v-list-item-title>{% raw %} {{ data.item }} {% endraw %}</v-list-item-title>
-                                <v-list-item-subtitle>{% raw %} {{ getManifest(data.item)
-                                    }}{% endraw %}</v-list-item-subtitle>
-                            </v-list-item-content>
-                        </v-list-item>
-                    </template>
-                </v-select>
                 <v-btn color="primary" @click="submit" :disabled="loading" :loading="loading">
                     <v-icon left>cloud_download</v-icon>
                     提交构建选项
                 </v-btn>
+                <v-checkbox label='调试模式' v-model="inputBasic.debug"></v-checkbox>
                 <div v-if="logs.length >= 1">
                     <v-divider style="margin:15px 0"></v-divider>
                     <p class="headline" ref="logs">构建日志</p>
@@ -216,7 +198,7 @@
                                     下载
                                 </v-btn>
                                 <v-btn v-else
-                                       @click="open('https://github.com/lakejason0/mcwzh-meme-resourcepack/issues/new/choose')"
+                                       @click="open('https://github.com/Teahouse-Studios/mcwzh-meme-web-builder/issues/new/choose')"
                                        dark color="black">
                                     <v-icon left>bug_report</v-icon>
                                     反馈
@@ -267,13 +249,6 @@
             open(name) {
                 window.open(name)
             },
-            toggleResource() {
-                if (this.input.resource.length === this.consts.resourceList.length) {
-                    this.input.resource = []
-                } else {
-                    this.input.resource = this.consts.resourceList
-                }
-            },
             submit() {
                 this.loading = true
 
@@ -296,7 +271,7 @@
                 let data = Object.assign({}, this.inputBasic, {
                     _be: this.whetherUseBE,
                     language: getNames(this.input.languageOption, this.input.language, "modules/"),
-                    resource: this.input.resource.map(v => v.startsWith("/modules/") ? v.slice("modules/".length) : v),
+                    resource: this.input.resource.map(v => v.startsWith("modules/") ? v.slice("modules/".length) : v),
                     mod: getNames(this.input.modOption, this.input.mod, "mods/"),
                     hash: true,
                     sfw: this.input.language.includes("modules/sfw")
@@ -356,18 +331,80 @@
                 beExtType: 'zip'
             }
         }),
+        beforeMount() {
+            let that = this
+            Vue.component('resource-selector', {
+                template: `
+    <v-select label="附加包/材质选择" multiple
+                          :items="consts.resourceList" v-model="resource">
+                    <template v-slot:prepend-item>
+                        <v-list-item ripple @click="toggleResource">
+                            <v-list-item-action>
+                                <v-icon>{% raw %} {{ resourceIcon }}{% endraw %}</v-icon>
+                            </v-list-item-action>
+                            <v-list-item-content>
+                                <v-list-item-title>全选</v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
+                        <v-divider class="mt-2"></v-divider>
+                    </template>
+                    <template v-slot:item="data">
+                        <v-list-item v-bind="data.attrs" v-on="data.on">
+                            <v-list-item-action>
+                                <v-checkbox :value="data.attrs.inputValue"
+                                            @change="data.parent.$emit('select')"></v-checkbox>
+                            </v-list-item-action>
+                            <v-list-item-content>
+                                <v-list-item-title>{% raw %} {{ data.item }} {% endraw %}</v-list-item-title>
+                                <v-list-item-subtitle>{% raw %} {{ getManifest(data.item)
+                                    }}{% endraw %}</v-list-item-subtitle>
+                            </v-list-item-content>
+                        </v-list-item>
+                    </template>
+                </v-select>
+  `,
+                computed: {
+                    resourceIcon() {
+                        if (this.resource.length === 0) {
+                            return 'mdi-checkbox-blank-outline'
+                        } else if (this.resource.length === that.consts.resourceList.length) {
+                            return 'mdi-close-box'
+                        } else {
+                            return 'mdi-minus-box'
+                        }
+                    },
+                    consts() {
+                        return that.consts
+                    }
+                },
+                watch: {
+                    resource(newVal, oldVal) {
+                        console.log(newVal)
+                        that.input.resource = newVal
+                    }
+                },
+                methods: {
+                    getManifest(arguments) {
+                        return that.getManifest(arguments)
+                    },
+                    toggleResource() {
+                        if (this.resource.length === this.consts.resourceList.length) {
+                            this.resource = []
+                        } else {
+                            this.resource = this.consts.resourceList
+                        }
+                    },
+                },
+                data() {
+                    return {
+                        resource: []
+                    }
+                }
+            });
+        },
         computed: {
             whetherUseBE() {
                 return this.tab === 1
-            },
-            resourceIcon() {
-                if (this.input.resource.length === 0) {
-                    return 'mdi-checkbox-blank-outline'
-                } else if (this.input.resource.length === this.consts.resourceList.length) {
-                    return 'mdi-close-box'
-                } else {
-                    return 'mdi-minus-box'
-                }
             },
             consts: {
                 cache: false,
@@ -394,6 +431,11 @@
                         manifests: this.whetherUseBE ? {{ be_manifests|tojson }} : {{ manifests|tojson }}
                     }
                 }
+            }
+        },
+        watch: {
+            tab(){
+                this.input.resource = []
             }
         },
         vuetify: new Vuetify(),
