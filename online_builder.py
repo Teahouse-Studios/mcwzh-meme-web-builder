@@ -54,8 +54,8 @@ async def ajax(request: web.Request):
         if build_time + 60 < time.time():
             build_time = time.time()
             proc = await asyncio.create_subprocess_exec("git", "pull", "origin", "master", "--recurse-submodules",
-                                                        stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-                                                        stdin=subprocess.PIPE)
+                                                        stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
+                                                        stdin=subprocess.DEVNULL)
             log.append(str((await proc.communicate())[0], encoding="utf-8", errors="ignore"))
         else:
             log.append("Build file up to date, skipping update\n")
@@ -79,4 +79,9 @@ app.add_routes([
 ])
 
 if __name__ == '__main__':
+    import sys
+    if sys.platform == "win32":  # <- Special version
+        asyncio.set_event_loop(
+            asyncio.ProactorEventLoop()
+        )
     web.run_app(app, host="127.0.0.1", port=8000)
