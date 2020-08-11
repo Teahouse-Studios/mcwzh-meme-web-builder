@@ -22,20 +22,16 @@ def get_env():
     je_builder = importlib.import_module('meme-pack-java.build')
     be_builder = importlib.import_module('meme-pack-bedrock.build')
     mods = ["mods/" + file for file in os.listdir('meme-pack-java/mods')]
-    enmods = ["en-mods/" + file for file in os.listdir('meme-pack-java/en-mods')]
+    enmods = ["en-mods/" +
+              file for file in os.listdir('meme-pack-java/en-mods')]
     language_modules = [
         "modules/" + module for module in je_builder.module_checker().get_module_list('language')]
     resource_modules = [
         "modules/" + module for module in je_builder.module_checker().get_module_list('resource')]
-    header_existence = os.path.exists("./views/custom/header.html")
-    notice_existence = os.path.exists("./views/custom/notice.html")
-    footer_existence = os.path.exists("./views/custom/footer.html")
     manifests = je_builder.module_checker().get_manifests()
     return dict(mods=mods, enmods=enmods, language=language_modules, resource=resource_modules,
                 be_resource=be_builder.module_checker().get_module_list(),
-                be_manifests=be_builder.module_checker().get_manifests(),
-                header_existence=header_existence, notice_existence=notice_existence,
-                footer_existence=footer_existence, manifests=manifests)
+                be_manifests=be_builder.module_checker().get_manifests(), manifests=manifests)
 
 
 @aiohttp_jinja2.template("index.html")
@@ -62,7 +58,8 @@ async def ajax(request: web.Request):
         if not data["_be"]:
             builder = importlib.import_module('meme-pack-java.build').builder()
         else:
-            builder = importlib.import_module('meme-pack-bedrock.build').builder()
+            builder = importlib.import_module(
+                'meme-pack-bedrock.build').builder()
         builder.set_args(data)
         await asyncio.get_event_loop().run_in_executor(executor, builder.build)
         log.append(builder.get_logs())
