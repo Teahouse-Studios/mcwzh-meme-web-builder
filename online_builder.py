@@ -25,13 +25,13 @@ def get_env():
     enmods = ["en-mods/" +
               file for file in os.listdir('meme-pack-java/en-mods')]
     language_modules = [
-        "modules/" + module for module in je_builder.module_checker().get_module_list('language')]
+        "modules/" + module for module in je_builder.module_checker().language_module_list]
     resource_modules = [
-        "modules/" + module for module in je_builder.module_checker().get_module_list('resource')]
-    manifests = je_builder.module_checker().get_manifests()
+        "modules/" + module for module in je_builder.module_checker().resource_module_list]
+    manifests = je_builder.module_checker().manifests
     return dict(mods=mods, enmods=enmods, language=language_modules, resource=resource_modules,
-                be_resource=be_builder.module_checker().get_module_list(),
-                be_manifests=be_builder.module_checker().get_manifests(), manifests=manifests)
+                be_resource=be_builder.module_checker().module_list,
+                be_manifests=be_builder.module_checker().manifests, manifests=manifests)
 
 
 @aiohttp_jinja2.template("index.html")
@@ -60,12 +60,12 @@ async def ajax(request: web.Request):
         else:
             builder = importlib.import_module(
                 'meme-pack-bedrock.build').builder()
-        builder.set_args(data)
+        builder.args = data
         await asyncio.get_event_loop().run_in_executor(executor, builder.build)
-        log.append(builder.get_logs())
+        log.append(builder.logs)
     return web.json_response({"code": 200, "argument": data,
                               "logs": ''.join(log),
-                              "filename": builder.get_filename()})
+                              "filename": builder.filename})
 
 
 app.add_routes([
