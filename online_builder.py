@@ -2,7 +2,6 @@ import os
 import time
 
 import jinja2
-import asyncio
 import importlib
 import aiohttp_jinja2
 from asyncio import subprocess
