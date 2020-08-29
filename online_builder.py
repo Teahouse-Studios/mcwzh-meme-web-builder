@@ -67,6 +67,9 @@ async def ajax(request: web.Request):
                               "filename": builder.filename})
 
 
+if not os.path.exists("./builds"):
+    os.mkdir("builds")
+
 app.add_routes([
     web.static("/static/", "./static"),
     web.static("/builds/", "./builds"),
