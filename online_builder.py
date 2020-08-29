@@ -17,7 +17,6 @@ env = {"update": 0.0, "data": {}}
 
 
 def get_env():
-    # 看不懂，摸了
     je_builder = importlib.import_module('meme-pack-java.build')
     be_builder = importlib.import_module('meme-pack-bedrock.build')
     mods = ["mods/" + file for file in os.listdir('meme-pack-java/mods')]
