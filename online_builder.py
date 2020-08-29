@@ -1,92 +1,86 @@
-import importlib
-import json
 import os
-import subprocess
 import time
-from threading import Lock
+import asyncio
+import jinja2
+import importlib
+import aiohttp_jinja2
+from asyncio import subprocess
+from concurrent.futures import ThreadPoolExecutor
+from aiohttp import web
 
-from flask import Flask, render_template, request, jsonify, send_from_directory, json, make_response
-
-app = Flask(__name__, template_folder='./views/',
-            static_folder="static", static_url_path="/static")
-app.config['TEMPLATES_AUTO_RELOAD'] = True
-nt = 0
-lock = Lock()
-
-
-# TODO: separate java sections and bedrock sections
-# TODO: get currently existent modules from both submodule
-# TODO: send appropriate args to backend
+app = web.Application()
+aiohttp_jinja2.setup(app, loader=jinja2.FileSystemLoader("./views"))
+executor = ThreadPoolExecutor(8)
+build_time = 0.0
+builder_lock = asyncio.Lock()
+env = {"update": 0.0, "data": {}}
 
 
-@app.route('/')
-def generate_website():
+def get_env():
+    # 看不懂，摸了
     je_builder = importlib.import_module('meme-pack-java.build')
     be_builder = importlib.import_module('meme-pack-bedrock.build')
     mods = ["mods/" + file for file in os.listdir('meme-pack-java/mods')]
-    enmods = ["en-mods/" + file for file in os.listdir('meme-pack-java/en-mods')]
+    enmods = ["en-mods/" +
+              file for file in os.listdir('meme-pack-java/en-mods')]
     language_modules = [
-        "modules/" + module for module in je_builder.module_checker().get_module_list('language')]
+        "modules/" + module for module in je_builder.module_checker().language_module_list]
     resource_modules = [
-        "modules/" + module for module in je_builder.module_checker().get_module_list('resource')]
-    header_existence = os.path.exists("./views/custom/header.html")
-    notice_existence = os.path.exists("./views/custom/notice.html")
-    footer_existence = os.path.exists("./views/custom/footer.html")
-    manifests = je_builder.module_checker().get_manifests()
-    return render_template("index.html", mods=mods, enmods=enmods, language=language_modules, resource=resource_modules,
-                           be_resource=be_builder.module_checker().get_module_list(),
-                           be_manifests=be_builder.module_checker().get_manifests(),
-                           header_existence=header_existence, notice_existence=notice_existence,
-                           footer_existence=footer_existence, manifests=manifests)
+        "modules/" + module for module in je_builder.module_checker().resource_module_list]
+    manifests = je_builder.module_checker().manifests
+    return dict(mods=mods, enmods=enmods, language=language_modules, resource=resource_modules,
+                be_resource=be_builder.module_checker().module_list,
+                be_manifests=be_builder.module_checker().manifests, manifests=manifests)
 
 
-@app.route('/ajax', methods=['POST'])
-def ajax():
-    global nt
-    lock.acquire(timeout=60)
-    try:
-        recv_data = json.loads(request.get_data('data'))
-        logs = ""
-        if nt + 60 <= time.time():
-            nt = time.time()
-            p = subprocess.Popen(["git", "pull", "origin", "master", "--recurse-submodules"],
-                                 stdout=subprocess.PIPE, stderr=subprocess.STDOUT, stdin=subprocess.PIPE)
-            p.wait()
-            logs += str(p.communicate()[0], 'utf-8', 'ignore')
+@aiohttp_jinja2.template("index.html")
+async def index(_):
+    if env["update"] + 60 < time.time():
+        env["data"] = get_env()
+        env["update"] = time.time()
+    return env["data"]
+
+
+async def ajax(request: web.Request):
+    data = await request.json()
+    log = []
+    async with builder_lock:
+        global build_time
+        if build_time + 60 < time.time():
+            build_time = time.time()
+            proc = await asyncio.create_subprocess_exec("git", "pull", "origin", "master", "--recurse-submodules",
+                                                        stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
+                                                        stdin=subprocess.DEVNULL)
+            log.append(str((await proc.communicate())[0], encoding="utf-8", errors="ignore"))
         else:
-            logs += 'Skipping the repository update because there\'s an available cache within 60 seconds.\n'
-        # TODO: use importlib to introduce backend builder
-        message = {}
-        if not recv_data['_be']:
+            log.append("Build file up to date, skipping update\n")
+        if not data["_be"]:
             builder = importlib.import_module('meme-pack-java.build').builder()
-            builder.set_args(recv_data)
-            builder.build()
-            logs += builder.get_logs()
-            message = {"code": 200, "argument": recv_data,
-                       "logs": logs, "filename": builder.get_filename()}
         else:
-            builder = importlib.import_module('meme-pack-bedrock.build').builder()
-            builder.set_args(recv_data)
-            builder.build()
-            logs += builder.get_logs()
-            message = {"code": 200, "argument": recv_data,
-                       "logs": logs, "filename": builder.get_filename()}
-        print(recv_data)
-    finally:
-        lock.release()
-    return json.dumps(message)
+            builder = importlib.import_module(
+                'meme-pack-bedrock.build').builder()
+        builder.args = data
+        await asyncio.get_event_loop().run_in_executor(executor, builder.build)
+        log.append(builder.logs)
+    return web.json_response({"code": 200, "argument": data,
+                              "logs": ''.join(log),
+                              "filename": builder.filename})
 
 
-@app.route('/builds/<file_name>', methods=['GET'])
-def get_file(file_name):
-    directory = "./builds"
-    try:
-        response = make_response(send_from_directory(
-            directory, file_name, as_attachment=True))
-        return response
-    except Exception as e:
-        return jsonify({"code": "500", "message": "{}".format(e)})
+if not os.path.exists("./builds"):
+    os.mkdir("builds")
 
+app.add_routes([
+    web.static("/static/", "./static"),
+    web.static("/builds/", "./builds"),
+    web.route("GET", "/", index),
+    web.route("POST", "/ajax", ajax)
+])
 
 if __name__ == '__main__':
-    app.run()
+    import sys
+    if sys.platform == "win32":  # <- Special version
+        asyncio.set_event_loop(
+            asyncio.ProactorEventLoop()
+        )
+    web.run_app(app, host="127.0.0.1", port=8000)

@@ -33,9 +33,7 @@
 <div id="app">
     <v-app>
         <v-main>
-            {% if header_existence %}
-                {% include './custom/header.html' %}
-            {% endif %}
+            {% include './custom/header.html' ignore missing %}
             <v-app-bar
                     outlined flat
                     color="white">
@@ -106,9 +104,7 @@
                     </v-menu>
                 </div>
             </v-app-bar>
-            {% if notice_existence %}
-                {% include './custom/notice.html' %}
-            {% endif %}
+            {% include './custom/notice.html' ignore missing %}
             <v-tabs
                     fixed-tabs
                     background-color="transparent"
@@ -235,9 +231,7 @@
                     </v-col>
                 </v-row>
             </v-container>
-            {% if footer_existence %}
-                {% include './custom/footer.html' %}
-            {% endif %}
+            {% include './custom/footer.html' ignore missing %}
         </v-main>
     </v-app>
 </div>
