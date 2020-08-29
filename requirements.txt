@@ -1,1 +1,2 @@
-flask
+Jinja2~=2.11.2
+aiohttp~=3.6.2
