@@ -19,17 +19,17 @@ env = {"update": 0.0, "data": {}}
 def get_env():
     je_builder = importlib.import_module('meme-pack-java.build')
     be_builder = importlib.import_module('meme-pack-bedrock.build')
-    mods = ["mods/" + file for file in os.listdir('meme-pack-java/mods')]
-    enmods = ["en-mods/" +
-              file for file in os.listdir('meme-pack-java/en-mods')]
-    language_modules = [
-        "modules/" + module for module in je_builder.module_checker().language_module_list]
-    resource_modules = [
-        "modules/" + module for module in je_builder.module_checker().resource_module_list]
-    manifests = je_builder.module_checker().manifests
-    return dict(mods=mods, enmods=enmods, language=language_modules, resource=resource_modules,
+    mods = map(lambda file: f"mods/{file}", os.listdir('meme-pack-java/mods'))
+    enmods = map(lambda file: f"en-mods/{file}",
+                 os.listdir('meme-pack-java/en-mods'))
+    language_modules = map(
+        lambda module: f"modules/{module}", je_builder.module_checker().language_module_list)
+    resource_modules = map(
+        lambda module: f"modules/{module}", je_builder.module_checker().resource_module_list)
+    return dict(mods=list(mods), enmods=list(enmods), language=list(language_modules), resource=list(resource_modules),
+                manifests=je_builder.module_checker().manifests,
                 be_resource=be_builder.module_checker().module_list,
-                be_manifests=be_builder.module_checker().manifests, manifests=manifests)
+                be_manifests=be_builder.module_checker().manifests)
 
 
 @aiohttp_jinja2.template("index.html")
