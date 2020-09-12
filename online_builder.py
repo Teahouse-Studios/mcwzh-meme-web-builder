@@ -78,8 +78,12 @@ app.add_routes([
 
 if __name__ == '__main__':
     import sys
-    if sys.platform == "win32":  # <- Special version
-        asyncio.set_event_loop(
-            asyncio.ProactorEventLoop()
-        )
+    if sys.hexversion < 0x030500F0:
+        raise RuntimeError(
+            "This program uses features introduced in Python 3.5, please update your Python interpreter.") from None
+    elif sys.hexversion < 0x030800F0:
+        if sys.platform == "win32":  # <- Special version
+            asyncio.set_event_loop(
+                asyncio.ProactorEventLoop()
+            )
     web.run_app(app, host="127.0.0.1", port=8000)
