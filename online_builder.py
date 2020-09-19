@@ -58,6 +58,7 @@ async def ajax(request: web.Request):
         else:
             builder = importlib.import_module(
                 'meme-pack-bedrock.build').builder()
+        data.setdefault('output', 'builds')
         builder.args = data
         await asyncio.get_event_loop().run_in_executor(executor, builder.build)
         log.append(builder.logs)
