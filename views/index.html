@@ -9,7 +9,7 @@
     <meta content="梗体中文 · 在线构建" property="og:title">
     <meta content="website" property="og:type">
     <meta content="梗体中文资源包在线构建系统，帮助用户构建。" property="og:description">
-    <script src="https://cdn.jsdelivr.net/combine/npm/axios@0.19.2/dist/axios.min.js,npm/vue@2,npm/vuetify@2,npm/moment@2.24.0/min/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/combine/npm/axios@0.19.2/dist/axios.min.js,npm/vue@2,npm/vuetify@2"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
@@ -184,7 +184,7 @@
                     <v-expansion-panels v-model="logsPanel" multiple>
                         <v-expansion-panel v-for="(item,i) in logs" :key="i">
                             <v-expansion-panel-header>
-                                {% raw %}{{moment(new Date(item.ts)).format('YYYY-MM-DD HH:mm:ss')}} {{ item.title }}{% endraw %}
+                                {% raw %}{{new Date(Number(item.ts)).toLocaleString()}} {{ item.title }}{% endraw %}
                             </v-expansion-panel-header>
                             <v-expansion-panel-content>
                                 <pre style="padding-bottom:15px;white-space: pre-wrap;font-family: 'Cascadia Code', 'Fira Code','Consolas', monospace;">{% raw %}{{item.content}}{% endraw %}</pre>
@@ -422,7 +422,7 @@
                         languageList: {{ language|tojson }},
                         resourceList: this.whetherUseBE ? {{ be_resource|tojson }} : {{ resource|tojson }},
                         manifests: this.whetherUseBE ? {{ be_manifests|tojson }} : {{ manifests|tojson }},
-                        versions: [{text: '1.16.2', value: 6}, {text: '1.15至1.16.1', value: 5}, {
+                        versions: [{text: '1.16.2+', value: 6}, {text: '1.15至1.16.1', value: 5}, {
                             text: '1.13至1.14.4', value: 4
                         }, {
                             text: '1.11至1.12', value: 3
