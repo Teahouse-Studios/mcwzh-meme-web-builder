@@ -123,8 +123,8 @@
                     <v-tab-item>
                         <v-row>
                             <v-col cols="4" sm="4">
-                                <v-select label="游戏版本" :items="consts.type"
-                                          v-model="inputBasic.type"></v-select>
+                                <v-select v-model="inputBasic.format" :items="consts.versions"
+                                          label="游戏版本"></v-select>
                             </v-col>
                             <v-col cols="4" sm="4">
                                 <v-select label="Mod内容选择" :items="consts.modOption"
@@ -166,11 +166,11 @@
                     <v-tab-item>
                         <v-row>
                             <v-col cols="6" sm="6">
-<v-select label="附加包格式" v-model="input.beExtType" :items="consts.beExtType"></v-select>
-                        </v-col>
-                        <v-col cols="6" sm="6">
-<resource-selector></resource-selector>
-                        </v-col>
+                                <v-select label="附加包格式" v-model="input.beExtType" :items="consts.beExtType"></v-select>
+                            </v-col>
+                            <v-col cols="6" sm="6">
+                                <resource-selector></resource-selector>
+                            </v-col>
                         </v-row>
                     </v-tab-item>
                 </v-tabs-items>
@@ -267,7 +267,8 @@
                     resource: this.input.resource.map(v => v.startsWith("modules/") ? v.slice("modules/".length) : v),
                     mod: getNames(this.input.modOption, this.input.mod, "mods/"),
                     hash: true,
-                    sfw: this.input.language.includes("modules/sfw")
+                    sfw: this.input.language.includes("modules/sfw"),
+                    type: this.inputBasic.format === 3 ? 'compat' : 'normal'
                 }, this.whetherUseBE && {
                     type: this.input.beExtType
                 })
@@ -310,7 +311,7 @@
             logsPanel: [],
             loading: false,
             inputBasic: {
-                type: "normal"
+                format: 6
             },
             logs: [],
             input: {
@@ -420,13 +421,18 @@
                             .concat({{ enmods|tojson }}),
                         languageList: {{ language|tojson }},
                         resourceList: this.whetherUseBE ? {{ be_resource|tojson }} : {{ resource|tojson }},
-                        manifests: this.whetherUseBE ? {{ be_manifests|tojson }} : {{ manifests|tojson }}
+                        manifests: this.whetherUseBE ? {{ be_manifests|tojson }} : {{ manifests|tojson }},
+                        versions: [{text: '1.16.2', value: 6}, {text: '1.15至1.16.1', value: 5}, {
+                            text: '1.13至1.14.4', value: 4
+                        }, {
+                            text: '1.11至1.12', value: 3
+                        }]
                     }
                 }
             }
         },
         watch: {
-            tab(){
+            tab() {
                 this.input.resource = []
             }
         },
