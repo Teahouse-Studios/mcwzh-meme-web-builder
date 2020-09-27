@@ -1,2 +1,7 @@
 .idea
 views/custom/*.html
+builds/
+Scripts/
+Lib/
+Include/
+pyvenv.cfg
