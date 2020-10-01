@@ -273,6 +273,7 @@
                     type: this.input.beExtType
                 })
                 console.log(data)
+                window.ga && window.ga('send', 'event', this.whetherUseBE ? 'be' : 'je', 'build');
                 axios({url: '/ajax', method: 'POST', data}).then(function (res) {
                     console.log(res.data)
                     this.logs.unshift({
