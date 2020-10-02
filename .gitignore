@@ -5,3 +5,4 @@ Scripts/
 Lib/
 Include/
 pyvenv.cfg
+.DS_Store

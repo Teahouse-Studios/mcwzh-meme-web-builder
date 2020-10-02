@@ -52,7 +52,7 @@ async def ajax(request: web.Request):
                                                         stdin=subprocess.DEVNULL)
             log.append(str((await proc.communicate())[0], encoding="utf-8", errors="ignore"))
         else:
-            log.append("Build file up to date, skipping update\n")
+            log.append("A cache within 60 seconds is available, skipping update\n")
         if not data["_be"]:
             builder = importlib.import_module('meme-pack-java.build').builder()
         else:

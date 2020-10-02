@@ -4,20 +4,18 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
           name="viewport">
-    <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <title>梗体中文 · 在线构建</title>
     <meta content="梗体中文 · 在线构建" property="og:title">
     <meta content="website" property="og:type">
     <meta content="梗体中文资源包在线构建系统，帮助用户构建。" property="og:description">
     <script src="https://cdn.jsdelivr.net/combine/npm/axios@0.19.2/dist/axios.min.js,npm/vue@2,npm/vuetify@2"></script>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet">
     <link rel="apple-touch-icon" sizes="180x180" href="static/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="static/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="static/favicon-16x16.png">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
     {% include './custom/style.html' ignore missing %}
     <style>
         .v-main__wrap > container {
@@ -441,10 +439,10 @@
                         languageList: {{ language|tojson }},
                         resourceList: this.whetherUseBE ? {{ be_resource|tojson }} : {{ resource|tojson }},
                         manifests: this.whetherUseBE ? {{ be_manifests|tojson }} : {{ manifests|tojson }},
-                        versions: [{text: '1.16.2+', value: 6}, {text: '1.15至1.16.1', value: 5}, {
-                            text: '1.13至1.14.4', value: 4
+                        versions: [{text: '1.16.2+', value: 6}, {text: '1.15 - 1.16.1', value: 5}, {
+                            text: '1.13 - 1.14.4', value: 4
                         }, {
-                            text: '1.11至1.12', value: 3
+                            text: '1.11 - 1.12.2', value: 3
                         }]
                     }
                 }
