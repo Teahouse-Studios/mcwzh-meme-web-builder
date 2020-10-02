@@ -22,7 +22,7 @@ pip install -r requirements.txt
 
 我们根据 Apache 2.0 协议，在 2020 年 10 月 2 日规定以下附加协议：
 
-Based on Apache 2.0 License, we added the following additional license on Nov.2, 2020:
+Based on Apache 2.0 License, we added the following additional license on Oct.2, 2020:
 
 使用本仓库搭建的公开网站，除非拥有 Teahouse Studios 的书面授权，均应声明其与 Teahouse Studios 无关，并链接到官方下载链接 <https://dl.meme.teahou.se/>.
 
@@ -30,4 +30,4 @@ Any public website built on this repository should clarify that the website is n
 
 本附加协议具有追溯性，即在 2020 年 10 月 2 日之前本仓库的版本也同样受本附加协议的限制。
 
-This additional license is retrospective, that is versions of this repository before Nov.2, 2020, are also restricted by this license.
+This additional license is retrospective, that is versions of this repository before Oct.2, 2020, are also restricted by this license.
