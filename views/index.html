@@ -45,7 +45,7 @@
                     <v-btn text rel="noopener noreferrer"
                            href="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack">
                         <v-icon left>mdi-github</v-icon>
-                        Github
+                        GitHub
                     </v-btn>
                     <v-btn text rel="noopener noreferrer"
                            href="https://dianliang-oss-1301161188.file.myqcloud.com/zh-meme-respack/record-java.zip">
@@ -57,9 +57,9 @@
                     <v-menu bottom left>
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn
-                                    icon
-                                    v-bind="attrs"
-                                    v-on="on"
+                                icon
+                                v-bind="attrs"
+                                v-on="on"
                             >
                                 <v-icon>mdi-dots-vertical</v-icon>
                             </v-btn>
@@ -81,7 +81,7 @@
                                     <v-icon>mdi-github</v-icon>
                                 </v-list-item-icon>
                                 <v-list-item-text>
-                                    Github
+                                    GitHub
                                 </v-list-item-text>
                             </v-list-item>
                             <v-list-item rel="noopener noreferrer"
@@ -181,14 +181,14 @@
                             </v-expansion-panel-header>
                             <v-expansion-panel-content>
                                 <pre style="padding-bottom:15px;white-space: pre-wrap;font-family: 'Cascadia Code', 'Fira Code','Consolas', monospace;">{% raw %}{{item.content}}{% endraw %}</pre>
-                                <v-btn v-if="item.filename" @click="open('builds/' + item.filename)" outlined
-                                       color="indigo">
+                                <v-btn v-if="item.filename" @click="open('builds/' + item.filename)"
+                                       color="indigo" outlined>
                                     下载
                                 </v-btn>
                                 <v-btn v-else
                                        @click="open('https://github.com/Teahouse-Studios/mcwzh-meme-web-builder/issues/new/choose')"
                                        dark color="black">
-                                    <v-icon left>bug_report</v-icon>
+                                    <v-icon left>mdi-bug-report</v-icon>
                                     反馈
                                 </v-btn>
                             </v-expansion-panel-content>
@@ -198,7 +198,7 @@
                 <v-divider style="margin:15px 0"></v-divider>
                 <v-row>
                     <v-col col="12" md="6">
-                        <v-card outlined>
+                        <v-card>
                             <v-list-item three-line>
                                 <v-list-item-content>
                                     <div class="overline mb-4">SPONSOR</div>
@@ -223,7 +223,7 @@
                         </v-card>
                     </v-col>
                     <v-col col="12" md="6">
-                        <v-card outlined>
+                        <v-card>
                             <v-list-item three-line>
                                 <v-list-item-content>
                                     <div class="overline mb-4">SPONSOR</div>
