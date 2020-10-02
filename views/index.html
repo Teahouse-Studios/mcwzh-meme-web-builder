@@ -9,9 +9,8 @@
     <meta content="website" property="og:type">
     <meta content="梗体中文资源包在线构建系统，帮助用户构建。" property="og:description">
     <script src="https://cdn.jsdelivr.net/combine/npm/axios@0.19.2/dist/axios.min.js,npm/vue@2,npm/vuetify@2"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
     <link rel="apple-touch-icon" sizes="180x180" href="static/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="static/favicon-32x32.png">
@@ -45,7 +44,7 @@
                     </v-btn>
                     <v-btn text rel="noopener noreferrer"
                            href="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack">
-                        <v-icon left>mdi-github-circle</v-icon>
+                        <v-icon left>mdi-github</v-icon>
                         Github
                     </v-btn>
                     <v-btn text rel="noopener noreferrer"
@@ -169,7 +168,7 @@
                     </v-tab-item>
                 </v-tabs-items>
                 <v-btn color="primary" @click="submit" :disabled="loading" :loading="loading">
-                    <v-icon left>cloud_download</v-icon>
+                    <v-icon left>mdi-cloud-download</v-icon>
                     提交构建选项
                 </v-btn>
                 <div v-if="logs.length >= 1">
