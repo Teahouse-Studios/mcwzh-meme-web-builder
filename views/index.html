@@ -18,6 +18,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="static/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="static/favicon-16x16.png">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+    {% include './custom/style.html' ignore missing %}
     <style>
         .v-main__wrap > container {
             margin-top: 16px;
@@ -210,7 +211,7 @@
                                 <v-list-item-content>
                                     <div class="overline mb-4">SPONSOR</div>
                                     <v-list-item-title class="headline mb-1">梗体中文 由 SPGoding 赞助</v-list-item-title>
-                                    <v-list-item-subtitle>SPGoding 是一位 Mojira 助手、MCBBS 艺术家，代表作《大憨批》VSCode 插件。ta
+                                    <v-list-item-subtitle>SPGoding 是一位 Mojira 管理员、MCBBS 艺术家，代表作《大憨批》VSCode 插件。ta
                                         热心的赠送了梗体中文 7 天的 MCBBS 广告位。
                                     </v-list-item-subtitle>
                                 </v-list-item-content>
@@ -229,12 +230,34 @@
                             </v-card-actions>
                         </v-card>
                     </v-col>
+                    <v-col col="12" md="6">
+                        <v-card outlined>
+                            <v-list-item three-line>
+                                <v-list-item-content>
+                                    <div class="overline mb-4">SPONSOR</div>
+                                    <v-list-item-title class="headline mb-1">梗体中文 由 是秋夕呀mua 赞助</v-list-item-title>
+                                    <v-list-item-subtitle>是秋夕呀mua 是一位 Bilibili UP 主。她向她的 6w+ 粉丝<a href="https://www.bilibili.com/video/BV1Vt4y1v7jP">推荐了梗体中文</a>。
+                                    </v-list-item-subtitle>
+                                </v-list-item-content>
+
+                                <v-list-item-avatar tile color="grey" size="80">
+                                    <v-img src="https://i2.hdslb.com/bfs/face/8536d433884933e4a1b3cf640efd8981378c6a15.jpg"></v-img>
+                                </v-list-item-avatar>
+                            </v-list-item>
+
+                            <v-card-actions>
+                                <v-btn rel="noopener noreferrer" text href="https://space.bilibili.com/678013610">Bilibili 主页
+                                </v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-col>
                 </v-row>
             </v-container>
             {% include './custom/footer.html' ignore missing %}
         </v-main>
     </v-app>
 </div>
+{% include './custom/script.html' ignore missing %}
 <script>
     new Vue({
         el: '#app',
