@@ -199,3 +199,16 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
+   
+   ------------------------------------------------------------------------
+   
+   Based on Apache 2.0 License, we added the following additional license
+   on Oct.2, 2020:
+   
+   Any public website built on this repository should clarify that the
+   website is not affiliated with Teahouse Studios and should provide a
+   link to the official link dl.meme.teahou.se, except with written
+   permission from Teahouse Studios.
+   
+   This additional license is retrospective, that is versions of this
+   repository before Oct.2, 2020, are also restricted by this license.
