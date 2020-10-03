@@ -2,7 +2,7 @@
 name: 漏洞报告
 about: 报告网页上遇到的问题。
 title: ''
-labels: bug
+labels: 漏洞
 ---
 
 **注意：这里是Web Builder的仓库，如果和资源包内容有关，强烈建议您前往 https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack 进行反馈。**
