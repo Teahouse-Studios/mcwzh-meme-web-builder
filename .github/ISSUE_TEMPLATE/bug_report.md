@@ -3,15 +3,20 @@ name: 漏洞报告
 about: 报告网页上遇到的问题。
 title: ''
 labels: bug
-assignees: XxLittleCxX
-
 ---
 
 **注意：这里是Web Builder的仓库，如果和资源包内容有关，强烈建议您前往 https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack 进行反馈。**
 
 ## 简述错误
+请简明扼要地描述漏洞。
 
 ## 重现方法
+复现漏洞的步骤：
+
+1. 前往“...”
+2. 点击“...”
+3. 滑动至“...”
+4. 查看错误
 
 ## 提交截图
 截图能更好的帮助我们解决问题。
@@ -21,4 +26,5 @@ assignees: XxLittleCxX
 系统：
 设备：
 
-## 补充内容
+## 其他内容
+添加更多关于漏洞的来龙去脉。
