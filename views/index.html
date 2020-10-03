@@ -278,12 +278,15 @@
 
                 let data = Object.assign({}, this.inputBasic, {
                     _be: this.whetherUseBE,
-                    language: getNames(this.input.languageOption, this.input.language, "modules/"),
+                    language: [...new Set(
+                        getNames(this.input.languageOption, this.input.language, "modules/")
+                        .concat(this.inputBasic.format === 3 ? ['attributes', 'old_strings', 'diamond_hoe'] : [])
+                    )],
                     resource: this.input.resource.map(v => v.startsWith("modules/") ? v.slice("modules/".length) : v),
                     mod: getNames(this.input.modOption, this.input.mod, "mods/"),
                     hash: true,
                     sfw: this.input.language.includes("modules/sfw"),
-                    type: this.inputBasic.format === 3 ? 'compat' : 'normal'
+                    type: this.inputBasic.format === 3 ? 'legacy' : 'normal'
                 }, this.whetherUseBE && {
                     type: this.input.beExtType
                 })
