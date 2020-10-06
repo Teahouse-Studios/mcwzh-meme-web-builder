@@ -9,7 +9,8 @@
     <meta content="website" property="og:type">
     <meta content="梗体中文资源包在线构建系统，帮助用户构建。" property="og:description">
     <script src="https://cdn.jsdelivr.net/combine/npm/axios@0.19.2/dist/axios.min.js,npm/vue@2,npm/vuetify@2"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500&family=Roboto:wght@100;300;400;500;700;900&display=swap"
+          rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
     <link rel="apple-touch-icon" sizes="180x180" href="static/apple-touch-icon.png">
@@ -57,9 +58,9 @@
                     <v-menu bottom left>
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn
-                                icon
-                                v-bind="attrs"
-                                v-on="on"
+                                    icon
+                                    v-bind="attrs"
+                                    v-on="on"
                             >
                                 <v-icon>mdi-dots-vertical</v-icon>
                             </v-btn>
@@ -165,6 +166,8 @@
                                 <resource-selector></resource-selector>
                             </v-col>
                         </v-row>
+                        <v-checkbox label="使此附加包与其他附加包兼容。此选项只会生成zh_CN.lang，因此在选项中只需选择简体中文即可体验。"
+                                    v-model="input.compatible"></v-checkbox>
                     </v-tab-item>
                 </v-tabs-items>
                 <v-btn color="primary" @click="submit" :disabled="loading" :loading="loading">
@@ -188,7 +191,7 @@
                                 <v-btn v-else
                                        @click="open('https://github.com/Teahouse-Studios/mcwzh-meme-web-builder/issues/new/choose')"
                                        dark color="black">
-                                    <v-icon left>mdi-bug-report</v-icon>
+                                    <v-icon left>mdi-bug</v-icon>
                                     反馈
                                 </v-btn>
                             </v-expansion-panel-content>
@@ -228,7 +231,8 @@
                                 <v-list-item-content>
                                     <div class="overline mb-4">SPONSOR</div>
                                     <v-list-item-title class="headline mb-1">梗体中文 由 是秋夕呀mua 赞助</v-list-item-title>
-                                    <v-list-item-subtitle>是秋夕呀mua 是一位 Bilibili UP 主。她向她的 6w+ 粉丝<a href="https://www.bilibili.com/video/BV1Vt4y1v7jP">推荐了梗体中文</a>。
+                                    <v-list-item-subtitle>是秋夕呀mua 是一位 Bilibili UP 主。她向她的 6w+ 粉丝<a
+                                            href="https://www.bilibili.com/video/BV1Vt4y1v7jP">推荐了梗体中文</a>。
                                     </v-list-item-subtitle>
                                 </v-list-item-content>
 
@@ -238,7 +242,8 @@
                             </v-list-item>
 
                             <v-card-actions>
-                                <v-btn rel="noopener noreferrer" text href="https://space.bilibili.com/678013610">Bilibili 主页
+                                <v-btn rel="noopener noreferrer" text href="https://space.bilibili.com/678013610">
+                                    Bilibili 主页
                                 </v-btn>
                             </v-card-actions>
                         </v-card>
@@ -280,7 +285,7 @@
                     _be: this.whetherUseBE,
                     language: [...new Set(
                         getNames(this.input.languageOption, this.input.language, "modules/")
-                        .concat(this.inputBasic.format === 3 ? ['attributes', 'old_strings', 'diamond_hoe'] : [])
+                            .concat(this.inputBasic.format === 3 ? ['attributes', 'old_strings', 'diamond_hoe'] : [])
                     )],
                     resource: this.input.resource.map(v => v.startsWith("modules/") ? v.slice("modules/".length) : v),
                     mod: getNames(this.input.modOption, this.input.mod, "mods/"),
@@ -288,7 +293,8 @@
                     sfw: this.input.language.includes("modules/sfw"),
                     type: this.inputBasic.format === 3 ? 'legacy' : 'normal'
                 }, this.whetherUseBE && {
-                    type: this.input.beExtType
+                    type: this.input.beExtType,
+                    compatible: this.input.compatible
                 })
                 console.log(data)
                 window.ga && window.ga('send', 'event', this.whetherUseBE ? 'be' : 'je', 'build');
@@ -334,6 +340,7 @@
             },
             logs: [],
             input: {
+                compatible: false,
                 languageOption: "none",
                 resourceOption: "all",
                 modOption: "all",
