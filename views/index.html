@@ -209,7 +209,7 @@
                         />
                     </v-tab-item>
                 </v-tabs-items>
-                <v-subheader class="mb-3">提示：<span id="hint" /></v-subheader>
+                <v-subheader class="mb-3">提示：{% raw %}{{ consts.hints[hint] }}{% endraw %}</v-subheader>
                 <v-btn color="primary" @click="submit" :disabled="loading" :loading="loading">
                     <v-icon left>mdi-cloud-download</v-icon>
                     提交构建选项
@@ -390,7 +390,8 @@
                 resource: [],
                 language: [],
                 beExtType: 'mcpack'
-            }
+            },
+            hint: 0
         }),
         beforeMount() {
             let that = this
@@ -463,6 +464,12 @@
                 }
             });
         },
+        mounted() {
+            let that = this
+            setInterval(() => {
+                that.hint = that.hint === 2 ? 0 : ++that.hint
+            }, 4000)
+        },
         computed: {
             whetherUseBE() {
                 return this.tab === 1
@@ -494,11 +501,16 @@
                             text: '1.13 - 1.14.4', value: 4
                         }, {
                             text: '1.11 - 1.12.2', value: 3
-                        }]
+                        }],
+                        hints: [
+                            "若您不知道如何构建，请直接点击下方按钮下载。",
+                            "若需要基岩版的MCBBS/GitHub/唱片包，您可以点击基岩版选项卡后，再点击相应跳转按钮。",
+                            "若您发现问题，您可以点击上方链接向我们报告。"
+                        ]
                     }
                 }
             },
-            links(){
+            links() {
                 return {
                     github: 'https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack' + (this.tab ? '-bedrock' : ''),
                     mcbbs: `https://www.mcbbs.net/thread-${this.tab ? '1005191' : '1004643'}-1-1.html`,
@@ -513,20 +525,6 @@
         },
         vuetify: new Vuetify(),
     });
-    var hintNum = -1
-    const hints = [
-        "若您不知道如何构建，请直接点击下方按钮下载。",
-        "若需要基岩版的MCBBS/GitHub/唱片包，您可以点击基岩版选项卡后，再点击相应跳转按钮。",
-        "若您发现问题，您可以点击上方链接向我们报告。"
-    ]
-    setInterval( () => {
-        if ( hintNum == hints.length-1 ) {
-            hintNum = 0
-        } else {
-            hintNum ++
-        }
-        document.getElementById("hint").innerHTML = hints[hintNum]
-    }, 4000 );
 </script>
 </body>
 </html>
