@@ -209,7 +209,7 @@
                         />
                     </v-tab-item>
                 </v-tabs-items>
-                <v-subheader style="padding: none;">提示：若您不知道如何构建，请直接点击下方按钮下载。</v-subheader>
+                <v-subheader class="mb-3">提示：若您不知道如何构建，请直接点击下方按钮下载。</v-subheader>
                 <v-btn color="primary" @click="submit" :disabled="loading" :loading="loading">
                     <v-icon left>mdi-cloud-download</v-icon>
                     提交构建选项
@@ -239,7 +239,7 @@
                     </v-expansion-panels>
                 </div>
                 <v-divider style="margin:15px 0"></v-divider>
-                <v-row>
+                <v-row class="mb-3">
                     <v-col col="12" md="6">
                         <v-card>
                             <v-list-item three-line>
@@ -288,8 +288,8 @@
                             </v-card-actions>
                         </v-card>
                     </v-col>
-                    <v-subheader>这些赞助者均未给予 Teahouse Studios 梗体中文团队真实金钱，他们没有强迫 Teahouse Studios 梗体中文团队将其添加至赞助者列表。这只是 Teahouse Studios 梗体中文团队对他们的支持的最诚挚的感谢。❤️</v-subheader>
                 </v-row>
+                <v-subheader class="mb-3">这些赞助者均未给予 Teahouse Studios 梗体中文团队真实金钱，他们没有强迫 Teahouse Studios 梗体中文团队将其添加至赞助者列表。这只是 Teahouse Studios 梗体中文团队对他们的支持的最诚挚的感谢。❤️</v-subheader>
             </v-container>
             {% include './custom/footer.html' ignore missing %}
         </v-main>
