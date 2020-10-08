@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
@@ -117,28 +117,56 @@
                     <v-tab-item>
                         <v-row>
                             <v-col cols="4" sm="4">
-                                <v-select v-model="inputBasic.format" :items="consts.versions"
-                                          label="游戏版本"></v-select>
+                                <v-select
+                                    v-model="inputBasic.format"
+                                    :items="consts.versions"
+                                    label="游戏版本"
+                                    hint="选择您游玩的游戏版本区间。"
+                                    persistent-hint
+                                />
                             </v-col>
                             <v-col cols="4" sm="4">
-                                <v-select label="Mod内容选择" :items="consts.modOption"
-                                          v-model="input.modOption"></v-select>
+                                <v-select
+                                    label="Mod内容选择"
+                                    :items="consts.modOption"
+                                    v-model="input.modOption"
+                                    hint="您是否需要Mod支持？"
+                                    persistent-hint
+                                />
                             </v-col>
                             <v-col cols="4" sm="4">
-                                <v-select label="语言选项" :items="consts.languageOption"
-                                          v-model="input.languageOption"></v-select>
+                                <v-select
+                                    label="语言选项"
+                                    :items="consts.languageOption"
+                                    v-model="input.languageOption"
+                                    hint="您是否需要旧/特殊版本的字符串？"
+                                    persistent-hint
+                                />
                             </v-col>
                             <v-col cols="12" sm="4">
-                                <resource-selector></resource-selector>
+                                <resource-selector />
                             </v-col>
                             <v-col cols="12" sm="4">
-                                <v-select label="Mod/附加内容选择" :disabled="input.modOption !== 'custom'"
-                                          :items="consts.modList" v-model="input.mod" multiple
+                                <v-select
+                                    label="Mod内容选择"
+                                    :disabled="input.modOption !== 'custom'"
+                                    :items="consts.modList"
+                                    v-model="input.mod"
+                                    multiple
+                                    hint="请选择您需要的Mod。"
+                                    persistent-hint
                                 ></v-select>
                             </v-col>
                             <v-col cols="12" sm="4">
-                                <v-select label="语言选择" :disabled="input.languageOption === 'none'" multiple
-                                          :items="consts.languageList" v-model="input.language">
+                                <v-select
+                                    label="语言选择"
+                                    :disabled="input.languageOption === 'none'"
+                                    multiple
+                                    :items="consts.languageList"
+                                    v-model="input.language"
+                                    hint="请选择您需要的旧/特殊版本。"
+                                    persistent-hint
+                                >
                                     <template v-slot:item="data">
                                         <v-list-item v-bind="data.attrs" v-on="data.on">
                                             <v-list-item-action>
@@ -160,16 +188,28 @@
                     <v-tab-item>
                         <v-row>
                             <v-col cols="6" sm="6">
-                                <v-select label="附加包格式" v-model="input.beExtType" :items="consts.beExtType"></v-select>
+                                <v-select
+                                    label="附加包格式"
+                                    v-model="input.beExtType"
+                                    :items="consts.beExtType"
+                                    hint="请选择您需要的附加包格式。"
+                                    persistent-hint
+                                />
                             </v-col>
                             <v-col cols="6" sm="6">
                                 <resource-selector></resource-selector>
                             </v-col>
                         </v-row>
-                        <v-checkbox label="使此附加包与其他附加包兼容。此选项只会生成zh_CN.lang，因此在选项中只需选择简体中文即可体验。"
-                                    v-model="input.compatible"></v-checkbox>
+                        <v-checkbox
+                            label="使用兼容选项"
+                            v-model="input.compatible"
+                            hint="使此附加包与其他附加包兼容。此选项只会生成zh_CN.lang，因此在选项中只需选择简体中文即可体验。"
+                            persistent-hint
+                            class="mb-3"
+                        />
                     </v-tab-item>
                 </v-tabs-items>
+                <v-subheader style="padding: none;">提示：若您不知道如何构建，请直接点击下方按钮下载。</v-subheader>
                 <v-btn color="primary" @click="submit" :disabled="loading" :loading="loading">
                     <v-icon left>mdi-cloud-download</v-icon>
                     提交构建选项
@@ -248,6 +288,7 @@
                             </v-card-actions>
                         </v-card>
                     </v-col>
+                    <v-subheader>这些赞助者均未给予 Teahouse Studios 梗体中文团队真实金钱，他们没有强迫 Teahouse Studios 梗体中文团队将其添加至赞助者列表。这只是 Teahouse Studios 梗体中文团队对他们的支持的最诚挚的感谢。❤️</v-subheader>
                 </v-row>
             </v-container>
             {% include './custom/footer.html' ignore missing %}
@@ -356,7 +397,7 @@
             Vue.component('resource-selector', {
                 template: `
     <v-select label="附加包/材质选择" multiple
-                          :items="consts.resourceList" v-model="resource">
+                          :items="consts.resourceList" v-model="resource" hint="请选择您需要的附加包模块。" persistent-hint>
                     <template v-slot:prepend-item>
                         <v-list-item ripple @click="toggleResource">
                             <v-list-item-action>
