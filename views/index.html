@@ -396,8 +396,8 @@
             let that = this
             Vue.component('resource-selector', {
                 template: `
-    <v-select label="附加包/材质选择" multiple
-                          :items="consts.resourceList" v-model="resource" hint="请选择您需要的附加包模块。" persistent-hint>
+    <v-select label="附加内容/材质选择" multiple
+                          :items="consts.resourceList" v-model="resource" hint="请选择您需要的附加内容模块。" persistent-hint>
                     <template v-slot:prepend-item>
                         <v-list-item ripple @click="toggleResource">
                             <v-list-item-action>
