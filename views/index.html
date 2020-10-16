@@ -209,7 +209,7 @@
                         />
                     </v-tab-item>
                 </v-tabs-items>
-                <v-subheader class="mb-3">提示：{% raw %}{{ consts.hints[hint] }}{% endraw %}</v-subheader>
+                <v-alert type="info" dense outlined class="ma-3 text-body-2">提示：{% raw %}{{ consts.hints[hint] }}{% endraw %}</v-alert>
                 <v-btn color="primary" @click="submit" :disabled="loading" :loading="loading">
                     <v-icon left>mdi-cloud-download</v-icon>
                     提交构建选项
