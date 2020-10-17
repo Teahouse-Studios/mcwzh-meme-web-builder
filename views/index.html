@@ -474,7 +474,7 @@
           v-if="index === 1"
           class="grey--text caption"
         >
-          (更多 {{ resource.length - 1 }} 项内容){% endraw %}
+          (+ {{ resource.length - 1 }} 项){% endraw %}
         </span>
       </template>
                     <template v-slot:prepend-item>
@@ -547,7 +547,7 @@
         mounted() {
             let that = this
             setInterval(() => {
-                that.hint = that.hint === 2 ? 0 : ++that.hint
+                that.hint = that.hint === 3 ? 0 : ++that.hint
             }, 4000)
         },
         computed: {
