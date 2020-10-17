@@ -217,7 +217,7 @@
                         />
                     </v-tab-item>
                 </v-tabs-items>
-                <v-alert type="info" dense outlined icon="mdi-information-outline" class="ma-3 text-body-2">{% raw %}{{ consts.hints[hint] }}{% endraw %}</v-alert>
+                <v-alert type="info" dense outlined icon="mdi-information-outline" class="mt-3 mb-3 text-body-2">{% raw %}{{ consts.hints[hint] }}{% endraw %}</v-alert>
                 <v-btn color="primary" @click="submit" :disabled="loading" :loading="loading">
                     <v-icon left>mdi-cloud-download</v-icon>
                     提交构建选项
