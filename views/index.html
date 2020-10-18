@@ -120,34 +120,16 @@
                 </v-tab>
             </v-tabs>
 
-            <v-container>
+            <v-container class="mb-12">
                 <v-tabs-items v-model="tab">
                     <v-tab-item>
                         <v-row>
-                            <v-col cols="4" sm="4">
+                            <v-col cols="12" sm="4">
                                 <v-select
                                         v-model="inputBasic.format"
                                         :items="consts.versions"
                                         label="游戏版本"
                                         hint="选择您游玩的游戏版本区间。"
-                                        persistent-hint
-                                />
-                            </v-col>
-                            <v-col cols="4" sm="4">
-                                <v-select
-                                        label="Mod内容选择"
-                                        :items="consts.modOption"
-                                        v-model="input.modOption"
-                                        hint="您是否需要Mod支持？"
-                                        persistent-hint
-                                />
-                            </v-col>
-                            <v-col cols="4" sm="4">
-                                <v-select
-                                        label="语言选项"
-                                        :items="consts.languageOption"
-                                        v-model="input.languageOption"
-                                        hint="您是否需要旧/特殊版本的字符串？"
                                         persistent-hint
                                 />
                             </v-col>
@@ -158,6 +140,21 @@
                                         label="附加内容/材质选择" hint="请选择您需要的附加内容模块。"/>
                             </v-col>
                             <v-col cols="12" sm="4">
+                                <functional-selector label="语言选择" hint="请选择您需要的旧/特殊版本字符串。"
+                                                     v-model="input.language" :items="consts.je_modules.language"
+                                ></functional-selector>
+                            </v-col>
+                            <v-col cols="6" sm="6">
+                                <v-select
+                                        label="Mod内容选择"
+                                        :items="consts.modOption"
+                                        v-model="input.modOption"
+                                        hint="您是否需要Mod支持？"
+                                        persistent-hint
+                                />
+
+                            </v-col>
+                            <v-col cols="6" sm="6">
                                 <v-select
                                         label="Mod内容选择"
                                         :disabled="input.modOption !== 'custom'"
@@ -167,32 +164,6 @@
                                         hint="请选择您需要的Mod。"
                                         persistent-hint
                                 ></v-select>
-                            </v-col>
-                            <v-col cols="12" sm="4">
-                                <v-select
-                                        label="语言选择"
-                                        :disabled="input.languageOption === 'none'"
-                                        multiple
-                                        :items="consts.je_modules.language"
-                                        v-model="input.language"
-                                        hint="请选择您需要的旧/特殊版本。"
-                                        persistent-hint
-                                >
-                                    <template v-slot:item="data">
-                                        <v-list-item v-bind="data.attrs" v-on="data.on">
-                                            <v-list-item-action>
-                                                <v-checkbox :value="data.attrs.inputValue"
-                                                            @change="data.parent.$emit('select')"></v-checkbox>
-                                            </v-list-item-action>
-                                            <v-list-item-content>
-                                                <v-list-item-title>{% raw %} {{ data.item
-                                                    }} {% endraw %}</v-list-item-title>
-                                                <v-list-item-subtitle>{% raw %} {{ data.item
-                                                    }}{% endraw %}</v-list-item-subtitle>
-                                            </v-list-item-content>
-                                        </v-list-item>
-                                    </template>
-                                </v-select>
                             </v-col>
                         </v-row>
                     </v-tab-item>
@@ -402,33 +373,16 @@
             submit() {
                 this.loading = true
 
-                /**
-                 * 根据选择的资源获取资源名称
-                 * @param {string} opt - 选项 none | all | custom
-                 * @param {Array} res - 选择的自定义项
-                 * @param {string} prefix - 资源前缀
-                 */
-                function getNames(opt, res, prefix) {
-                    if (opt === 'all') {
-                        return ['all']
-                    } else if (opt === 'none') {
-                        return []
-                    } else {
-                        return res.map(v => v.split(prefix).join(''))
-                    }
-                }
-
                 let data = Object.assign({}, this.inputBasic, {
                     _be: this.whetherUseBE,
                     modules: {
                         language: [...new Set(
-                            getNames(this.input.languageOption, this.input.language, "modules/")
-                                .concat(this.inputBasic.format === 3 ? ['attributes', 'old_strings', 'diamond_hoe'] : [])
+                            this.input.language.concat(this.inputBasic.format === 3 ? ['attributes', 'old_strings', 'diamond_hoe'] : [])
                         )],
-                        resource: this.input.resource.map(v => v.startsWith("modules/") ? v.slice("modules/".length) : v),
+                        resource: this.input.resource,
                         mixed: []
                     },
-                    mod: getNames(this.input.modOption, this.input.mod, "mods/"),
+                    mod: this.input.mod,
                     hash: true,
                     type: this.inputBasic.format === 3 ? 'legacy' : 'normal'
                 }, this.whetherUseBE && {
@@ -436,7 +390,7 @@
                     compatible: this.input.compatible
                 })
                 console.log(data)
-                window.ga && window.ga('send', 'event', this.whetherUseBE ? 'be' : 'je', 'build');
+                window.location.host === 'dl.meme.teahou.se' && window.ga && window.ga('send', 'event', this.whetherUseBE ? 'be' : 'je', 'build');
                 axios({url: '/ajax', method: 'POST', data}).then(function (res) {
                     console.log(res.data)
                     this.logs.unshift({
@@ -478,8 +432,6 @@
             logs: [],
             input: {
                 compatible: false,
-                languageOption: "none",
-                resourceOption: "all",
                 modOption: "all",
                 mod: [],
                 resource: [],
@@ -489,7 +441,6 @@
             hint: 0
         }),
         beforeMount() {
-            let that = this
             {% raw %}
             Vue.component('functional-selector', {
                 template: `
