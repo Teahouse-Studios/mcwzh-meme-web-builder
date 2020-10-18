@@ -47,20 +47,28 @@
                 <v-toolbar-title>梗体中文 · 在线构建</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <div v-if="$vuetify.breakpoint.name !== 'xs'">
-                    <v-btn text rel="noopener noreferrer" :href="links.mcbbs">
-                        <v-icon left>mdi-post</v-icon>
-                        MCBBS
-                    </v-btn>
-                    <v-btn text rel="noopener noreferrer"
-                           :href="links.github">
-                        <v-icon left>mdi-github</v-icon>
-                        GitHub
-                    </v-btn>
-                    <v-btn text rel="noopener noreferrer"
-                           :href="links.disc">
-                        <v-icon left>mdi-disc</v-icon>
-                        唱片包
-                    </v-btn>
+                    <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                            <div v-bind="attrs"
+                                 v-on="on">
+                                <v-btn text rel="noopener noreferrer" :href="links.mcbbs">
+                                    <v-icon left>mdi-post</v-icon>
+                                    MCBBS
+                                </v-btn>
+                                <v-btn text rel="noopener noreferrer"
+                                       :href="links.github">
+                                    <v-icon left>mdi-github</v-icon>
+                                    GitHub
+                                </v-btn>
+                                <v-btn text rel="noopener noreferrer"
+                                       :href="links.disc">
+                                    <v-icon left>mdi-disc</v-icon>
+                                    唱片包
+                                </v-btn>
+                            </div>
+                        </template>
+                        <span>{% raw %}{{ !this.tab ? 'Java' : '基岩' }}{% endraw %}版</span>
+                    </v-tooltip>
                 </div>
                 <div v-else>
                     <v-menu bottom left>
@@ -328,32 +336,35 @@
                     </p>
                     <p class="text-body-1">
                         <v-btn class="mr-1"
+                               target="_blank"
                                href="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack/issues/new/choose">
                             Java版
                         </v-btn>
                         <v-btn class="mr-1"
+                               target="_blank"
                                href="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock/issues/new/choose">
                             基岩版
                         </v-btn>
                         <v-btn class="mr-1"
+                               target="_blank"
                                href="https://github.com/Teahouse-Studios/mcwzh-meme-web-builder/issues/new/choose">网页构建
                         </v-btn>
                     </p>
                     <h2 class="text-h5 mb-1">由以下技术驱动</h2>
                     <p class="text-body-1">
-                        <v-btn class="mr-1" icon href="https://github.com/Teahouse-Studios/mcwzh-meme-web-builder">
+                        <v-btn target="_blank" class="mr-1" icon href="https://github.com/Teahouse-Studios/mcwzh-meme-web-builder">
                             <v-icon>mdi-github</v-icon>
                         </v-btn>
-                        <v-btn class="mr-1" icon href="https://analytics.google.com/analytics/web/">
+                        <v-btn target="_blank"class="mr-1" icon href="https://analytics.google.com/analytics/web/">
                             <v-icon>mdi-google-analytics</v-icon>
                         </v-btn>
-                        <v-btn class="mr-1" icon href="https://vuetifyjs.com/">
+                        <v-btn target="_blank"class="mr-1" icon href="https://vuetifyjs.com/">
                             <v-icon>mdi-vuetify</v-icon>
                         </v-btn>
-                        <v-btn class="mr-1" icon href="https://cn.vuejs.org/">
+                        <v-btn target="_blank"class="mr-1" icon href="https://cn.vuejs.org/">
                             <v-icon>mdi-vuejs</v-icon>
                         </v-btn>
-                        <v-btn class="mr-1" icon href="https://materialdesignicons.com/">
+                        <v-btn target="_blank" class="mr-1" icon href="https://materialdesignicons.com/">
                             <v-icon>mdi-vector-square</v-icon>
                         </v-btn>
                     </p>
@@ -512,7 +523,7 @@
                 },
                 watch: {
                     resource(newVal, oldVal) {
-                        this.$emit('change', newVal)
+                        this.$emit('change', newVal.filter(v => v !== undefined))
                     }
                 },
                 methods: {
@@ -588,8 +599,8 @@
             }
         },
         watch: {
-            tab() {
-                this.input.resource = []
+            tab(newTab) {
+                this.input.resource = newTab ? this.consts.be_modules.resource.map(v => v.name) : []
             }
         },
         vuetify: new Vuetify(),
