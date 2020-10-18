@@ -1,11 +1,13 @@
+import asyncio
+import importlib
 import os
 import time
-import asyncio
-import jinja2
-import importlib
-import aiohttp_jinja2
 from asyncio import subprocess
 from concurrent.futures import ThreadPoolExecutor
+from os.path import join
+
+import aiohttp_jinja2
+import jinja2
 from aiohttp import web
 
 app = web.Application()
@@ -22,14 +24,14 @@ def get_env():
     mods = map(lambda file: f"mods/{file}", os.listdir('meme-pack-java/mods'))
     enmods = map(lambda file: f"en-mods/{file}",
                  os.listdir('meme-pack-java/en-mods'))
-    language_modules = map(
-        lambda module: f"modules/{module}", je_builder.module_checker().language_module_list)
-    resource_modules = map(
-        lambda module: f"modules/{module}", je_builder.module_checker().resource_module_list)
-    return dict(mods=list(mods), enmods=list(enmods), language=list(language_modules), resource=list(resource_modules),
-                manifests=je_builder.module_checker().manifests,
-                be_resource=be_builder.module_checker().module_list,
-                be_manifests=be_builder.module_checker().manifests)
+    je_checker = je_builder.module_checker(join('meme-pack-java', "modules"))
+    je_checker.check_module()
+    je_modules = je_checker.module_info['modules']
+    be_checker = be_builder.module_checker(join('meme-pack-bedrock', "modules"))
+    be_checker.check_module()
+    be_modules = be_checker.module_info['modules']
+    return dict(mods=list(mods), enmods=list(enmods),
+                je_modules=je_modules, be_modules=be_modules)
 
 
 @aiohttp_jinja2.template("index.html")
@@ -79,6 +81,7 @@ app.add_routes([
 
 if __name__ == '__main__':
     import sys
+
     if sys.hexversion < 0x030500F0:
         raise RuntimeError(
             "This program uses features introduced in Python 3.5, please update your Python interpreter.") from None

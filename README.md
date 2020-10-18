@@ -6,7 +6,7 @@
 
 clone本仓库时请注意子模块，使用 ```git clone --recursive https://github.com/Teahouse-Studios/mcwzh-meme-web-builder/``` 确保子模块内容一并拉取。
 
-运行网页构建环境要求Python版本最低为3.6，推荐使用最新的稳定版，并安装依赖：
+运行网页构建环境要求Python版本最低为3.9，推荐使用最新的稳定版，并安装依赖：
 
 ``` bash
 pip install -r requirements.txt

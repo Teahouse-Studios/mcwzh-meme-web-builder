@@ -152,7 +152,7 @@
                                 />
                             </v-col>
                             <v-col cols="12" sm="4">
-                                <resource-selector/>
+                                <resource-selector type="je"/>
                             </v-col>
                             <v-col cols="12" sm="4">
                                 <v-select
@@ -205,7 +205,7 @@
                                 />
                             </v-col>
                             <v-col cols="6" sm="6">
-                                <resource-selector></resource-selector>
+                                <resource-selector type="be"></resource-selector>
                             </v-col>
                         </v-row>
                         <v-checkbox
@@ -217,7 +217,8 @@
                         />
                     </v-tab-item>
                 </v-tabs-items>
-                <v-alert type="info" dense outlined icon="mdi-information-outline" class="mt-3 mb-3 text-body-2">{% raw %}{{ consts.hints[hint] }}{% endraw %}</v-alert>
+                <v-alert type="info" dense outlined icon="mdi-information-outline"
+                         class="mt-3 mb-3 text-body-2">{% raw %}{{ consts.hints[hint] }}{% endraw %}</v-alert>
                 <v-btn color="primary" @click="submit" :disabled="loading" :loading="loading">
                     <v-icon left>mdi-cloud-download</v-icon>
                     提交构建选项
@@ -297,7 +298,8 @@
                         </v-card>
                     </v-col>
                 </v-row>
-                <div class="text-body-2 mb-3 pa-1" style="color: rgba(0,0,0,.6);">这些赞助者均未给予 Teahouse Studios 梗体中文团队真实金钱，亦未强迫 Teahouse Studios
+                <div class="text-body-2 mb-3 pa-1" style="color: rgba(0,0,0,.6);">这些赞助者均未给予 Teahouse Studios
+                    梗体中文团队真实金钱，亦未强迫 Teahouse Studios
                     梗体中文团队将其添加至赞助者列表——这只是 Teahouse Studios 梗体中文团队对他们的支持最诚挚的感谢。❤️
                 </div>
             </v-container>
@@ -306,55 +308,77 @@
         <v-dialog v-model="dialog" scrollable max-width="700px">
             <template v-slot:activator="{ on, attrs }">
                 <v-btn
-                    color="primary"
-                    fab large fixed bottom right
-                    v-bind="attrs"
-                    v-on="on"
-                ><v-icon class="rotate-question">mdi-help</v-icon></v-btn>
+                        color="primary"
+                        fab large fixed bottom right
+                        v-bind="attrs"
+                        v-on="on"
+                >
+                    <v-icon class="rotate-question">mdi-help</v-icon>
+                </v-btn>
             </template>
             <v-card>
                 <v-card-title>
                     帮助 & 关于
-                    <v-btn icon @click="dialog = false" class="ml-auto"><v-icon>mdi-close</v-icon></v-btn>
+                    <v-btn icon @click="dialog = false" class="ml-auto">
+                        <v-icon>mdi-close</v-icon>
+                    </v-btn>
                 </v-card-title>
                 <v-divider class="mb-3"></v-divider>
                 <v-card-text style="height: 500px;">
                     <h2 class="text-h5 mb-1">你是否有很多问号?¿?¿?¿</h2>
                     <p class="text-body-1">
                         在问问题前，先想想！
-                        <ul>
-                            <li>你是否已经读过每一个选项框下方的提示？</li>
-                            <li>你是否阅读过下载按钮前面的滚动提示？</li>
-                            <li>有没有考虑过是你自己游戏、Mod的问题？</li>
-                        </ul>
+                    <ul>
+                        <li>你是否已经读过每一个选项框下方的提示？</li>
+                        <li>你是否阅读过下载按钮前面的滚动提示？</li>
+                        <li>有没有考虑过是你自己游戏、Mod的问题？</li>
+                    </ul>
                     </p>
                     <p class="text-body-1">
                         如果你确信梗体中文有问题，你便可以向我们汇报。如果你有一个建议，也是可以的！
                     </p>
                     <p class="text-body-1">
                         你需要知道的是：
-                        <ul>
-                            <li>根据协议，开发者没有义务解决每一个问题。</li>
-                            <li>请使用正式的普通话。</li>
-                            <li>过多的垃圾问题可能导致你被封禁。</li>
-                            <li>请在对应的项目提出对应的问题。</li>
-                        </ul>
+                    <ul>
+                        <li>根据协议，开发者没有义务解决每一个问题。</li>
+                        <li>请使用正式的普通话。</li>
+                        <li>过多的垃圾问题可能导致你被封禁。</li>
+                        <li>请在对应的项目提出对应的问题。</li>
+                    </ul>
                     </p>
                     <p class="text-body-1">
                         好了，准备好提交问题了吗？
                     </p>
                     <p class="text-body-1">
-                        <v-btn class="mr-1" href="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack/issues/new/choose">Java版</v-btn>
-                        <v-btn class="mr-1" href="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock/issues/new/choose">基岩版</v-btn>
-                        <v-btn class="mr-1" href="https://github.com/Teahouse-Studios/mcwzh-meme-web-builder/issues/new/choose">网页构建</v-btn>
+                        <v-btn class="mr-1"
+                               href="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack/issues/new/choose">
+                            Java版
+                        </v-btn>
+                        <v-btn class="mr-1"
+                               href="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock/issues/new/choose">
+                            基岩版
+                        </v-btn>
+                        <v-btn class="mr-1"
+                               href="https://github.com/Teahouse-Studios/mcwzh-meme-web-builder/issues/new/choose">网页构建
+                        </v-btn>
                     </p>
                     <h2 class="text-h5 mb-1">由以下技术驱动</h2>
                     <p class="text-body-1">
-                        <v-btn class="mr-1" icon href="https://github.com/Teahouse-Studios/mcwzh-meme-web-builder"><v-icon>mdi-github</v-icon></v-btn>
-                        <v-btn class="mr-1" icon href="https://analytics.google.com/analytics/web/"><v-icon>mdi-google-analytics</v-icon></v-btn>
-                        <v-btn class="mr-1" icon href="https://vuetifyjs.com/"><v-icon>mdi-vuetify</v-icon></v-btn>
-                        <v-btn class="mr-1" icon href="https://cn.vuejs.org/"><v-icon>mdi-vuejs</v-icon></v-btn>
-                        <v-btn class="mr-1" icon href="https://materialdesignicons.com/"><v-icon>mdi-vector-square</v-icon></v-btn>
+                        <v-btn class="mr-1" icon href="https://github.com/Teahouse-Studios/mcwzh-meme-web-builder">
+                            <v-icon>mdi-github</v-icon>
+                        </v-btn>
+                        <v-btn class="mr-1" icon href="https://analytics.google.com/analytics/web/">
+                            <v-icon>mdi-google-analytics</v-icon>
+                        </v-btn>
+                        <v-btn class="mr-1" icon href="https://vuetifyjs.com/">
+                            <v-icon>mdi-vuetify</v-icon>
+                        </v-btn>
+                        <v-btn class="mr-1" icon href="https://cn.vuejs.org/">
+                            <v-icon>mdi-vuejs</v-icon>
+                        </v-btn>
+                        <v-btn class="mr-1" icon href="https://materialdesignicons.com/">
+                            <v-icon>mdi-vector-square</v-icon>
+                        </v-btn>
                     </p>
                 </v-card-text>
             </v-card>
@@ -462,25 +486,26 @@
         }),
         beforeMount() {
             let that = this
+            {% raw %}
             Vue.component('resource-selector', {
                 template: `
     <v-select label="附加内容/材质选择" multiple
-                          :items="consts.resourceList" v-model="resource" hint="请选择您需要的附加内容模块。" persistent-hint>
+                          :items="list" v-model="resource" hint="请选择您需要的附加内容模块。" persistent-hint>
                           <template v-slot:selection="{ item, index }">
         <v-chip v-if="index === 0">
-          <span>{% raw %}{{ item }}</span>
+          <span>{{ item.text.name }}</span>
         </v-chip>
         <span
           v-if="index === 1"
           class="grey--text caption"
         >
-          (+ {{ resource.length - 1 }} 项){% endraw %}
+          (+ {{ resource.length - 1 }} 项)
         </span>
       </template>
                     <template v-slot:prepend-item>
                         <v-list-item ripple @click="toggleResource">
                             <v-list-item-action>
-                                <v-icon>{% raw %} {{ resourceIcon }}{% endraw %}</v-icon>
+                                <v-icon> {{ resourceIcon }}</v-icon>
                             </v-list-item-action>
                             <v-list-item-content>
                                 <v-list-item-title>全选</v-list-item-title>
@@ -495,19 +520,31 @@
                                             @change="data.parent.$emit('select')"></v-checkbox>
                             </v-list-item-action>
                             <v-list-item-content>
-                                <v-list-item-title>{% raw %} {{ data.item }} {% endraw %}</v-list-item-title>
-                                <v-list-item-subtitle>{% raw %} {{ getManifest(data.item)
-                                    }}{% endraw %}</v-list-item-subtitle>
+                                <v-list-item-title>{{ data.item.text.name }} </v-list-item-title>
+                                <v-list-item-subtitle>{{ data.item.text.description }} <a v-if="data.item.text.author">
+           · 作者 {{ data.item.text.author }}
+</a>
+</v-list-item-subtitle>
                             </v-list-item-content>
                         </v-list-item>
                     </template>
                 </v-select>
   `,
+                props: ['type'],
                 computed: {
+                    constsKey() {
+                        return this.type + '_modules'
+                    },
+                    list() {
+                        return this.consts[this.constsKey].resource.map((v) => ({
+                            value: v.name,
+                            text: v
+                        }))
+                    },
                     resourceIcon() {
                         if (this.resource.length === 0) {
                             return 'mdi-checkbox-blank-outline'
-                        } else if (this.resource.length === that.consts.resourceList.length) {
+                        } else if (this.resource.length === that.consts[this.constsKey].resource.length) {
                             return 'mdi-close-box'
                         } else {
                             return 'mdi-minus-box'
@@ -527,10 +564,10 @@
                         return that.getManifest(arguments)
                     },
                     toggleResource() {
-                        if (this.resource.length === this.consts.resourceList.length) {
+                        if (this.resource.length === this.consts[this.constsKey].resource.length) {
                             this.resource = []
                         } else {
-                            this.resource = this.consts.resourceList
+                            this.resource = this.consts[this.constsKey].resource.map(v => v.name)
                         }
                     },
                 },
@@ -543,8 +580,10 @@
                     }
                 }
             });
+            {% endraw %}
         },
         mounted() {
+            console.log(this.consts)
             let that = this
             setInterval(() => {
                 that.hint = that.hint === 3 ? 0 : ++that.hint
@@ -574,9 +613,8 @@
                         beExtType: ['mcpack', 'zip'],
                         modList: [{header: 'Mod文件'}].concat({{ mods|tojson }}).concat({header: 'Mod文件(未汉化)'})
                             .concat({{ enmods|tojson }}),
-                        languageList: {{ language|tojson }},
-                        resourceList: this.whetherUseBE ? {{ be_resource|tojson }} : {{ resource|tojson }},
-                        manifests: this.whetherUseBE ? {{ be_manifests|tojson }} : {{ manifests|tojson }},
+                        je_modules: {{ je_modules|tojson }},
+                        be_modules:{{ be_modules|tojson }},
                         versions: [{text: '1.16.2+', value: 6}, {text: '1.15 - 1.16.1', value: 5}, {
                             text: '1.13 - 1.14.4', value: 4
                         }, {
