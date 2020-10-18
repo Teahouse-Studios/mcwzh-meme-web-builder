@@ -4,7 +4,7 @@ import os
 import time
 from asyncio import subprocess
 from concurrent.futures import ThreadPoolExecutor
-from os.path import join
+from os.path import join, dirname
 
 import aiohttp_jinja2
 import jinja2
@@ -54,18 +54,32 @@ async def ajax(request: web.Request):
                                                         stdin=subprocess.DEVNULL)
             log.append(str((await proc.communicate())[0], encoding="utf-8", errors="ignore"))
         else:
-            log.append("A cache within 60 seconds is available, skipping update\n")
+            log.append("A cache within 60 seconds is available, skipping update")
         if not data["_be"]:
-            builder = importlib.import_module('meme-pack-java.build').builder()
+            submodule_path = 'meme-pack-java'
+            pack = importlib.import_module('meme-pack-java.build')
         else:
-            builder = importlib.import_module(
-                'meme-pack-bedrock.build').builder()
+            submodule_path = 'meme-pack-bedrock'
+            pack = importlib.import_module(
+                'meme-pack-bedrock.build')
+        pack_builder = pack.pack_builder
         data.setdefault('output', 'builds')
+        module_checker = pack.module_checker(join(submodule_path, "modules"))
+        current_dir = dirname(__file__)
+        module_checker.check_module()
+        if not data["_be"]:
+            builder = pack_builder(
+                join(current_dir, submodule_path, "meme_resourcepack"), module_checker.module_info,
+                join(current_dir, submodule_path, "mods"),
+                join(current_dir, submodule_path, "mappings"))
+        else:
+            builder = pack_builder(
+                join(current_dir, submodule_path, "meme_resourcepack"), module_checker.module_info)
         builder.args = data
         await asyncio.get_event_loop().run_in_executor(executor, builder.build)
-        log.append(builder.logs)
+        log.extend(builder.log_list)
     return web.json_response({"code": 200, "argument": data,
-                              "logs": ''.join(log),
+                              "logs": '\n'.join(log),
                               "filename": builder.filename})
 
 

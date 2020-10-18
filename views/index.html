@@ -152,7 +152,10 @@
                                 />
                             </v-col>
                             <v-col cols="12" sm="4">
-                                <resource-selector type="je"/>
+                                <functional-selector
+                                        v-model="input.resource"
+                                        :items="consts.je_modules.resource"
+                                        label="附加内容/材质选择" hint="请选择您需要的附加内容模块。"/>
                             </v-col>
                             <v-col cols="12" sm="4">
                                 <v-select
@@ -170,7 +173,7 @@
                                         label="语言选择"
                                         :disabled="input.languageOption === 'none'"
                                         multiple
-                                        :items="consts.languageList"
+                                        :items="consts.je_modules.language"
                                         v-model="input.language"
                                         hint="请选择您需要的旧/特殊版本。"
                                         persistent-hint
@@ -184,7 +187,7 @@
                                             <v-list-item-content>
                                                 <v-list-item-title>{% raw %} {{ data.item
                                                     }} {% endraw %}</v-list-item-title>
-                                                <v-list-item-subtitle>{% raw %} {{ getManifest(data.item)
+                                                <v-list-item-subtitle>{% raw %} {{ data.item
                                                     }}{% endraw %}</v-list-item-subtitle>
                                             </v-list-item-content>
                                         </v-list-item>
@@ -205,7 +208,10 @@
                                 />
                             </v-col>
                             <v-col cols="6" sm="6">
-                                <resource-selector type="be"></resource-selector>
+                                <functional-selector
+                                        v-model="input.resource"
+                                        :items="consts.be_modules.resource"
+                                        label="附加内容/材质选择" hint="请选择您需要的附加内容模块。"/>
                             </v-col>
                         </v-row>
                         <v-checkbox
@@ -414,14 +420,16 @@
 
                 let data = Object.assign({}, this.inputBasic, {
                     _be: this.whetherUseBE,
-                    language: [...new Set(
-                        getNames(this.input.languageOption, this.input.language, "modules/")
-                            .concat(this.inputBasic.format === 3 ? ['attributes', 'old_strings', 'diamond_hoe'] : [])
-                    )],
-                    resource: this.input.resource.map(v => v.startsWith("modules/") ? v.slice("modules/".length) : v),
+                    modules: {
+                        language: [...new Set(
+                            getNames(this.input.languageOption, this.input.language, "modules/")
+                                .concat(this.inputBasic.format === 3 ? ['attributes', 'old_strings', 'diamond_hoe'] : [])
+                        )],
+                        resource: this.input.resource.map(v => v.startsWith("modules/") ? v.slice("modules/".length) : v),
+                        mixed: []
+                    },
                     mod: getNames(this.input.modOption, this.input.mod, "mods/"),
                     hash: true,
-                    sfw: this.input.language.includes("modules/sfw"),
                     type: this.inputBasic.format === 3 ? 'legacy' : 'normal'
                 }, this.whetherUseBE && {
                     type: this.input.beExtType,
@@ -457,10 +465,6 @@
                     }.bind(this))
                     this.loading = false
                 }.bind(this))
-            },
-            getManifest(name) {
-                let pureName = name.split("modules/").join('')
-                return this.consts.manifests[pureName] || ""
             }
         },
         data: () => ({
@@ -487,10 +491,10 @@
         beforeMount() {
             let that = this
             {% raw %}
-            Vue.component('resource-selector', {
+            Vue.component('functional-selector', {
                 template: `
-    <v-select label="附加内容/材质选择" multiple
-                          :items="list" v-model="resource" hint="请选择您需要的附加内容模块。" persistent-hint>
+    <v-select :label="label" multiple
+                          :items="list" v-model="resource" :hint="hint" persistent-hint>
                           <template v-slot:selection="{ item, index }">
         <v-chip v-if="index === 0">
           <span>{{ item.text.name }}</span>
@@ -530,13 +534,14 @@
                     </template>
                 </v-select>
   `,
-                props: ['type'],
+                props: ['label', 'hint', 'items', 'resource_parent'],
+                model: {
+                    prop: 'resource_parent',
+                    event: 'change',
+                },
                 computed: {
-                    constsKey() {
-                        return this.type + '_modules'
-                    },
                     list() {
-                        return this.consts[this.constsKey].resource.map((v) => ({
+                        return this.items.map((v) => ({
                             value: v.name,
                             text: v
                         }))
@@ -544,35 +549,29 @@
                     resourceIcon() {
                         if (this.resource.length === 0) {
                             return 'mdi-checkbox-blank-outline'
-                        } else if (this.resource.length === that.consts[this.constsKey].resource.length) {
+                        } else if (this.resource.length === this.items.length) {
                             return 'mdi-close-box'
                         } else {
                             return 'mdi-minus-box'
                         }
-                    },
-                    consts() {
-                        return that.consts
                     }
+                },
+                beforeMount() {
+                    this.resource = this.resource_parent || []
                 },
                 watch: {
                     resource(newVal, oldVal) {
-                        that.input.resource = newVal
+                        this.$emit('change', newVal)
                     }
                 },
                 methods: {
-                    getManifest(arguments) {
-                        return that.getManifest(arguments)
-                    },
                     toggleResource() {
-                        if (this.resource.length === this.consts[this.constsKey].resource.length) {
+                        if (this.resource.length === this.items.length) {
                             this.resource = []
                         } else {
-                            this.resource = this.consts[this.constsKey].resource.map(v => v.name)
+                            this.resource = this.items.map(v => v.name)
                         }
                     },
-                },
-                mounted() {
-                    // this.toggleResource()
                 },
                 data() {
                     return {
