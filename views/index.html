@@ -488,7 +488,7 @@
                             <v-list-item-content>
                                 <v-list-item-title>{{ data.item.text.name }} </v-list-item-title>
                                 <v-list-item-subtitle>{{ data.item.text.description }} <a v-if="data.item.text.author">
-           · 作者 {{ data.item.text.author }}
+           · 作者：{{ data.item.text.author }}
 </a>
 </v-list-item-subtitle>
                             </v-list-item-content>
@@ -572,7 +572,7 @@
                             text: "自定义"
                         }],
                         beExtType: ['mcpack', 'zip'],
-                        modList: [{header: 'Mod文件'}].concat({{ mods|tojson }}).concat({header: 'Mod文件(未汉化)'})
+                        modList: [{header: 'Mod文件'}].concat({{ mods|tojson }}).concat({header: 'Mod文件（未汉化）'})
                             .concat({{ enmods|tojson }}),
                         je_modules: {{ je_modules|tojson }},
                         be_modules:{{ be_modules|tojson }},
