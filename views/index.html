@@ -5,14 +5,25 @@
     <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
           name="viewport">
     <title>梗体中文 · 在线构建</title>
-    <meta content="梗体中文 · 在线构建" property="og:title">
-    <meta content="website" property="og:type">
-    <meta content="梗体中文资源包在线构建系统，帮助用户构建。" property="og:description">
+
+    <meta property="og:title" content="梗体中文 · 在线构建">
+    <meta property="og:type" content="website">
+    <meta property="og:description" content="在线构建梗体中文资源包 - 茶馆工作室出品">
+    <meta property="og:locale" content="zh">
+
+    <meta name="twitter:site" content="@TeahouseStudios">
+
+    <link rel="canonical" href="https://dl.meme.teahou.se/">
+    <meta name="description" content="梗体中文资源包在线构建系统，帮助用户构建。">
+    <meta name="keywords" content="梗体中文, 梗体, 材质包, 资源包, Minecraft, MC, 我的世界, 茶馆工作室">
+    <meta name="creator" content="Teahouse Studios">
+
     <script src="https://cdn.jsdelivr.net/combine/npm/axios@0.19.2/dist/axios.min.js,npm/vue@2,npm/vuetify@2"></script>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500&family=Roboto:wght@100;300;400;500;700;900&display=swap"
           rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+
     <link rel="apple-touch-icon" sizes="180x180" href="static/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="static/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="static/favicon-16x16.png">
@@ -214,7 +225,7 @@
                     <v-expansion-panels v-model="logsPanel" multiple>
                         <v-expansion-panel v-for="(item,i) in logs" :key="i">
                             <v-expansion-panel-header>
-                                {% raw %}{{new Date(Number(item.ts)).toLocaleString()}} {{ item.title }}{% endraw %}
+                                {% raw %}{{ new Date(Number(item.ts)).toLocaleString() }} {{ item.title }}{% endraw %}
                             </v-expansion-panel-header>
                             <v-expansion-panel-content>
                                 <pre style="padding-bottom:15px;white-space: pre-wrap;font-family: 'Cascadia Code', 'Fira Code','Consolas', monospace;">{% raw %}{{item.content}}{% endraw %}</pre>
@@ -349,7 +360,7 @@
                         <v-btn class="mr-1 mb-1"
                                target="_blank"
                                href="https://github.com/Teahouse-Studios/mcwzh-meme-web-builder/issues/new/choose">
-                            网页构建
+                            在线构建
                         </v-btn>
                     </p>
                     <h2 class="text-h5 mb-1">开发者</h2>
