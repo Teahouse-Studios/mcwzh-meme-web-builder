@@ -96,7 +96,7 @@
         </v-tab>
       </v-tabs>
 
-      <v-container v-if="consts !== null" class="mb-12">
+      <v-container class="mb-12">
         <v-tabs-items v-model="tab">
           <v-tab-item>
             <v-row>
@@ -113,10 +113,12 @@
                 <functional-selector
                   v-model="input.resource"
                   :items="consts.je_modules.resource"
+                  :loading="loading_backend"
                   hint="请选择您需要的附加内容模块。" label="附加内容/材质选择"/>
               </v-col>
               <v-col cols="12" sm="4">
                 <functional-selector v-model="input.language" :items="consts.je_modules.language"
+                                     :loading="loading_backend"
                                      hint="请选择您需要的旧/特殊版本字符串。" label="语言选择"
                 ></functional-selector>
               </v-col>
@@ -158,6 +160,7 @@
                 <functional-selector
                   v-model="input.resource"
                   :items="consts.be_modules.resource"
+                  :loading="loading_backend"
                   hint="请选择您需要的附加内容模块。" label="附加内容/材质选择"/>
               </v-col>
             </v-row>
@@ -187,7 +190,9 @@
               </v-expansion-panel-header>
               <v-expansion-panel-content>
                 <pre
-                  style="padding-bottom:15px;white-space: pre-wrap;font-family: 'Cascadia Code', 'Fira Code','Consolas', monospace;">  {{ item.content }}  </pre>
+                  style="padding-bottom:15px;white-space: pre-wrap;font-family: 'Cascadia Code', 'Fira Code','Consolas', monospace;">  {{
+                    item.content
+                  }}  </pre>
                 <v-btn v-if="item.filename" color="indigo"
                        outlined @click="open('builds/' + item.filename)">
                   下载
@@ -259,129 +264,13 @@
         </div>
       </v-container>
     </v-main>
-    <v-dialog v-model="dialog" max-width="700px" scrollable>
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          v-bind="attrs"
-          v-on="on" bottom color="primary" fab fixed
-          large
-          right
-        >
-          <v-icon class="rotate-question">mdi-help</v-icon>
-        </v-btn>
-      </template>
-      <v-card>
-        <v-card-title>
-          帮助 & 关于
-          <v-btn class="ml-auto" icon @click="dialog = false">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </v-card-title>
-        <v-divider class="mb-3"></v-divider>
-        <v-card-text style="height: 500px;">
-          <h2 class="text-h5 mb-1">你是否有很多问号?¿?¿?¿</h2>
-          <p class="text-body-1">
-            在问问题前，先想想！
-          <ul>
-            <li>你是否已经读过每一个选项框下方的提示？</li>
-            <li>你是否阅读过下载按钮前面的滚动提示？</li>
-            <li>有没有考虑过是你自己游戏、Mod的问题？</li>
-          </ul>
-          </p>
-          <p class="text-body-1">
-            如果你确信梗体中文有问题，你便可以向我们汇报。如果你有一个建议，也是可以的！
-          </p>
-          <p class="text-body-1">
-            你需要知道的是：
-          <ul>
-            <li>根据协议，开发者没有义务解决每一个问题。</li>
-            <li>请确保你提交的问题没有被他人提交过。</li>
-            <li>请使用正式的普通话。</li>
-            <li>过多的垃圾问题可能导致你被封禁。</li>
-            <li>请在对应的项目提出对应的问题。</li>
-          </ul>
-          </p>
-          <p class="text-body-1">
-            好了，准备好提交问题了吗？
-          </p>
-          <p class="text-body-1">
-            <v-btn class="mr-1 mb-1"
-                   href="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack/issues/new/choose"
-                   target="_blank">
-              Java版
-            </v-btn>
-            <v-btn class="mr-1 mb-1"
-                   href="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock/issues/new/choose"
-                   target="_blank">
-              基岩版
-            </v-btn>
-            <v-btn class="mr-1 mb-1"
-                   href="https://github.com/Teahouse-Studios/mcwzh-meme-web-builder/issues/new/choose"
-                   target="_blank">
-              在线构建
-            </v-btn>
-          </p>
-          <h2 class="text-h5 mb-1">开发者</h2>
-          <v-list>
-            <v-list-item three-line>
-              <v-list-item-content>
-                <v-list-item-title class="headline mb-1">_LittleC_</v-list-item-title>
-                <v-list-item-subtitle>
-                  梗体中文资源包构建系统核心开发者，梗体中文在线构建前端核心开发者。
-                </v-list-item-subtitle>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item three-line>
-              <v-list-item-content>
-                <v-list-item-title class="headline mb-1">MysticNebula70</v-list-item-title>
-                <v-list-item-subtitle>
-                  梗体中文资源包构建系统核心开发者，梗体中文在线构建后端核心开发者。
-                </v-list-item-subtitle>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item three-line>
-              <v-list-item-content>
-                <v-list-item-title class="headline mb-1">LakeJason</v-list-item-title>
-                <v-list-item-subtitle>
-                  梗体中文资源包构建系统早期开发者，梗体中文在线构建早期核心开发者。
-                </v-list-item-subtitle>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item three-line>
-              <v-list-item-content>
-                <v-list-item-title class="headline mb-1">Dianliang233</v-list-item-title>
-                <v-list-item-subtitle>
-                  梗体中文在线构建前端开发者。
-                </v-list-item-subtitle>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
-          <h2 class="text-h5 mb-1">由以下技术驱动</h2>
-          <p class="text-body-1">
-            <v-btn class="mr-1" href="https://github.com/Teahouse-Studios/mcwzh-meme-web-builder" icon target="_blank">
-              <v-icon>mdi-github</v-icon>
-            </v-btn>
-            <v-btn class="mr-1" href="https://analytics.google.com/analytics/web/" icon target="_blank">
-              <v-icon>mdi-google-analytics</v-icon>
-            </v-btn>
-            <v-btn class="mr-1" href="https://vuetifyjs.com/" icon target="_blank">
-              <v-icon>mdi-vuetify</v-icon>
-            </v-btn>
-            <v-btn class="mr-1" href="https://cn.vuejs.org/" icon target="_blank">
-              <v-icon>mdi-vuejs</v-icon>
-            </v-btn>
-            <v-btn class="mr-1" href="https://materialdesignicons.com/" icon target="_blank">
-              <v-icon>mdi-vector-square</v-icon>
-            </v-btn>
-          </p>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
+    <help/>
   </v-app>
 </template>
 <script>
 import axios from 'axios'
 import functionalSelector from "@/components/functionalSelector";
+import help from './components/help'
 
 export default {
   methods: {
@@ -440,10 +329,10 @@ export default {
     }
   },
   components: {
-    'functional-selector': functionalSelector
+    'functional-selector': functionalSelector,
+    help
   },
   data: () => ({
-    dialog: false,
     tab: null,
     logsPanel: [],
     loading: false,
@@ -460,17 +349,8 @@ export default {
       beExtType: 'mcpack'
     },
     hint: 0,
-    consts: null
-  }),
-  async mounted() {
-    let that = this
-    setInterval(() => {
-      that.hint = that.hint === 3 ? 0 : ++that.hint
-    }, 4000)
-    const apiAddress = process.env.NODE_ENV === 'production' ? 'https://dlserver.meme.teahou.se/' : 'http://127.0.0.1:8000/'
-    const req = await axios.get(apiAddress);
-    const backend = req.data
-    this.consts = {
+    loading_backend: true,
+    consts: {
       type: [{text: "1.13以上", value: "normal"}, {text: "1.12.2", value: "compat"}],
       resourceOption: [{text: "所有", value: "all"}, {text: "无", value: "none"}, {
         text: "自定义",
@@ -485,10 +365,7 @@ export default {
         text: "自定义"
       }],
       beExtType: ['mcpack', 'zip'],
-      modList: [{header: 'Mod文件'}].concat(backend.mods).concat({header: 'Mod文件（未汉化）'})
-        .concat(backend.enmods),
-      je_modules: backend.je_modules,
-      be_modules: backend.be_modules,
+      modList: [], je_modules: [], be_modules: [],
       versions: [{text: '1.16.2+', value: 6}, {text: '1.15 - 1.16.1', value: 5}, {
         text: '1.13 - 1.14.4', value: 4
       }, {
@@ -501,7 +378,23 @@ export default {
         "梗体中文是一个持续更新的项目，欢迎常回来看看。"
       ]
     }
-
+  }),
+  async mounted() {
+    let that = this
+    setInterval(() => {
+      that.hint = that.hint === 3 ? 0 : ++that.hint
+    }, 4000)
+    const apiAddress = process.env.NODE_ENV === 'production' ? 'https://dlserver.meme.teahou.se/' : 'http://127.0.0.1:8000/'
+    const req = await axios.get(apiAddress);
+    const backend = req.data
+    this.consts = {
+      ...this.consts,
+      modList: [{header: 'Mod文件'}].concat(backend.mods).concat({header: 'Mod文件（未汉化）'})
+        .concat(backend.enmods),
+      je_modules: backend.je_modules,
+      be_modules: backend.be_modules,
+    }
+    this.loading_backend = false
   },
   computed: {
     whetherUseBE() {

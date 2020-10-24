@@ -1,6 +1,6 @@
 <template>
-  <v-select :label="label" multiple
-            :items="list" v-model="resource" :hint="hint" persistent-hint>
+  <v-select :loading="loading" v-model="resource" :hint="hint"
+            :items="list" :label="label" multiple persistent-hint>
     <template v-slot:selection="{ item, index }">
       <v-chip v-if="index === 0">
         <span>{{ item.text.name }}</span>
@@ -30,7 +30,7 @@
                       @change="data.parent.$emit('select')"></v-checkbox>
         </v-list-item-action>
         <v-list-item-content>
-          <v-list-item-title>{{ data.item.text.name }} </v-list-item-title>
+          <v-list-item-title>{{ data.item.text.name }}</v-list-item-title>
           <v-list-item-subtitle>{{ data.item.text.description }} <a v-if="data.item.text.author">
             · 作者：{{ data.item.text.author }}
           </a>
@@ -43,14 +43,17 @@
 
 <script>
 export default {
-name: "functioanlSelector",
-  props: ['label', 'hint', 'items', 'resource_parent'],
+  name: "functioanlSelector",
+  props: ['label', 'hint', 'items', 'resource_parent', 'loading'],
   model: {
     prop: 'resource_parent',
     event: 'change',
   },
   computed: {
     list() {
+      if (!this.items) {
+        return []
+      }
       return this.items.map((v) => ({
         value: v.name,
         text: v
