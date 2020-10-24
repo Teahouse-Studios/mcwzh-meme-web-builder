@@ -2,8 +2,8 @@
   <v-app>
     <v-main>
       <v-app-bar
-          outlined flat
-          color="white"
+        color="white" flat
+        outlined
       >
         <v-toolbar-title>梗体中文 · 在线构建</v-toolbar-title>
         <v-spacer></v-spacer>
@@ -11,18 +11,18 @@
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
               <div v-bind="attrs"
-                 v-on="on">
-                <v-btn text rel="noopener noreferrer" :href="links.mcbbs">
+                   v-on="on">
+                <v-btn :href="links.mcbbs" rel="noopener noreferrer" text>
                   <v-icon left>mdi-post</v-icon>
                   MCBBS
                 </v-btn>
-                <v-btn text rel="noopener noreferrer"
-                     :href="links.github">
+                <v-btn :href="links.github" rel="noopener noreferrer"
+                       text>
                   <v-icon left>mdi-github</v-icon>
                   GitHub
                 </v-btn>
-                <v-btn text rel="noopener noreferrer"
-                     :href="links.disc">
+                <v-btn :href="links.disc" rel="noopener noreferrer"
+                       text>
                   <v-icon left>mdi-disc</v-icon>
                   唱片包
                 </v-btn>
@@ -35,17 +35,17 @@
           <v-menu bottom left>
             <template v-slot:activator="{ on, attrs }">
               <v-btn
-                icon
                 v-bind="attrs"
                 v-on="on"
+                icon
               >
                 <v-icon>mdi-dots-vertical</v-icon>
               </v-btn>
             </template>
 
             <v-list dense>
-              <v-list-item rel="noopener noreferrer"
-                     :href="links.mcbbs">
+              <v-list-item :href="links.mcbbs"
+                           rel="noopener noreferrer">
                 <v-list-item-icon class="ml-0">
                   <v-icon>mdi-post</v-icon>
                 </v-list-item-icon>
@@ -53,8 +53,8 @@
                   MCBBS
                 </v-list-item-text>
               </v-list-item>
-              <v-list-item rel="noopener noreferrer"
-                     :href="links.github">
+              <v-list-item :href="links.github"
+                           rel="noopener noreferrer">
                 <v-list-item-icon class="ml-0">
                   <v-icon>mdi-github</v-icon>
                 </v-list-item-icon>
@@ -62,8 +62,8 @@
                   GitHub
                 </v-list-item-text>
               </v-list-item>
-              <v-list-item rel="noopener noreferrer"
-                     :href="links.disc">
+              <v-list-item :href="links.disc"
+                           rel="noopener noreferrer">
                 <v-list-item-icon class="ml-0">
                   <v-icon>mdi-disc</v-icon>
                 </v-list-item-icon>
@@ -80,12 +80,13 @@
         tile
         type="info"
       >
-        在线构建尚处于测试阶段。若您发现了任何问题或想提出建议，欢迎进行<a href="https://github.com/Teahouse-Studios/mcwzh-meme-web-builder/issues/new" class="blue--text text--lighten-5">反馈</a>。
+        在线构建尚处于测试阶段。若您发现了任何问题或想提出建议，欢迎进行<a class="blue--text text--lighten-5"
+                                           href="https://github.com/Teahouse-Studios/mcwzh-meme-web-builder/issues/new">反馈</a>。
       </v-alert>
       <v-tabs
-          fixed-tabs
-          background-color="transparent"
-          v-model="tab"
+        v-model="tab"
+        background-color="transparent"
+        fixed-tabs
       >
         <v-tab>
           Java版
@@ -95,49 +96,49 @@
         </v-tab>
       </v-tabs>
 
-      <v-container class="mb-12" v-if="consts !== null">
+      <v-container v-if="consts !== null" class="mb-12">
         <v-tabs-items v-model="tab">
           <v-tab-item>
             <v-row>
               <v-col cols="12" sm="4">
                 <v-select
-                    v-model="inputBasic.format"
-                    :items="consts.versions"
-                    label="游戏版本"
-                    hint="选择您游玩的游戏版本区间。"
-                    persistent-hint
+                  v-model="inputBasic.format"
+                  :items="consts.versions"
+                  hint="选择您游玩的游戏版本区间。"
+                  label="游戏版本"
+                  persistent-hint
                 />
               </v-col>
               <v-col cols="12" sm="4">
                 <functional-selector
-                    v-model="input.resource"
-                    :items="consts.je_modules.resource"
-                    label="附加内容/材质选择" hint="请选择您需要的附加内容模块。"/>
+                  v-model="input.resource"
+                  :items="consts.je_modules.resource"
+                  hint="请选择您需要的附加内容模块。" label="附加内容/材质选择"/>
               </v-col>
               <v-col cols="12" sm="4">
-                <functional-selector label="语言选择" hint="请选择您需要的旧/特殊版本字符串。"
-                           v-model="input.language" :items="consts.je_modules.language"
+                <functional-selector v-model="input.language" :items="consts.je_modules.language"
+                                     hint="请选择您需要的旧/特殊版本字符串。" label="语言选择"
                 ></functional-selector>
               </v-col>
               <v-col cols="6" sm="6">
                 <v-select
-                    label="Mod内容选择"
-                    :items="consts.modOption"
-                    v-model="input.modOption"
-                    hint="您是否需要Mod支持？"
-                    persistent-hint
+                  v-model="input.modOption"
+                  :items="consts.modOption"
+                  hint="您是否需要Mod支持？"
+                  label="Mod内容选择"
+                  persistent-hint
                 />
 
               </v-col>
               <v-col cols="6" sm="6">
                 <v-select
-                    label="Mod内容选择"
-                    :disabled="input.modOption !== 'custom'"
-                    :items="consts.modList"
-                    v-model="input.mod"
-                    multiple
-                    hint="请选择您需要的Mod。"
-                    persistent-hint
+                  v-model="input.mod"
+                  :disabled="input.modOption !== 'custom'"
+                  :items="consts.modList"
+                  hint="请选择您需要的Mod。"
+                  label="Mod内容选择"
+                  multiple
+                  persistent-hint
                 ></v-select>
               </v-col>
             </v-row>
@@ -146,52 +147,54 @@
             <v-row>
               <v-col cols="6" sm="6">
                 <v-select
-                    label="附加包格式"
-                    v-model="input.beExtType"
-                    :items="consts.beExtType"
-                    hint="请选择您需要的附加包格式。"
-                    persistent-hint
+                  v-model="input.beExtType"
+                  :items="consts.beExtType"
+                  hint="请选择您需要的附加包格式。"
+                  label="附加包格式"
+                  persistent-hint
                 />
               </v-col>
               <v-col cols="6" sm="6">
                 <functional-selector
-                    v-model="input.resource"
-                    :items="consts.be_modules.resource"
-                    label="附加内容/材质选择" hint="请选择您需要的附加内容模块。"/>
+                  v-model="input.resource"
+                  :items="consts.be_modules.resource"
+                  hint="请选择您需要的附加内容模块。" label="附加内容/材质选择"/>
               </v-col>
             </v-row>
             <v-checkbox
-                label="使用兼容选项"
-                v-model="input.compatible"
-                hint="使此附加包与其他附加包兼容。此选项只会生成zh_CN.lang，因此在选项中只需选择简体中文即可体验。"
-                persistent-hint
-                class="mb-3"
+              v-model="input.compatible"
+              class="mb-3"
+              hint="使此附加包与其他附加包兼容。此选项只会生成zh_CN.lang，因此在选项中只需选择简体中文即可体验。"
+              label="使用兼容选项"
+              persistent-hint
             />
           </v-tab-item>
         </v-tabs-items>
-        <v-alert type="info" dense outlined icon="mdi-information-outline"
-             class="mt-3 mb-3 text-body-2">  {{ consts.hints[hint] }}  </v-alert>
-        <v-btn color="primary" @click="submit" :disabled="loading" :loading="loading">
+        <v-alert class="mt-3 mb-3 text-body-2" dense icon="mdi-information-outline" outlined
+                 type="info"> {{ consts.hints[hint] }}
+        </v-alert>
+        <v-btn :disabled="loading" :loading="loading" color="primary" @click="submit">
           <v-icon left>mdi-cloud-download</v-icon>
           提交构建选项
         </v-btn>
         <div v-if="logs.length >= 1">
           <v-divider style="margin:15px 0"></v-divider>
-          <p class="headline" ref="logs">构建日志</p>
+          <p ref="logs" class="headline">构建日志</p>
           <v-expansion-panels v-model="logsPanel" multiple>
             <v-expansion-panel v-for="(item,i) in logs" :key="i">
               <v-expansion-panel-header>
-                  {{ new Date(Number(item.ts)).toLocaleString() }} {{ item.title }}
+                {{ new Date(Number(item.ts)).toLocaleString() }} {{ item.title }}
               </v-expansion-panel-header>
               <v-expansion-panel-content>
-                <pre style="padding-bottom:15px;white-space: pre-wrap;font-family: 'Cascadia Code', 'Fira Code','Consolas', monospace;">  {{item.content}}  </pre>
-                <v-btn v-if="item.filename" @click="open('builds/' + item.filename)"
-                     color="indigo" outlined>
+                <pre
+                  style="padding-bottom:15px;white-space: pre-wrap;font-family: 'Cascadia Code', 'Fira Code','Consolas', monospace;">  {{ item.content }}  </pre>
+                <v-btn v-if="item.filename" color="indigo"
+                       outlined @click="open('builds/' + item.filename)">
                   下载
                 </v-btn>
                 <v-btn v-else
-                     @click="open(item.github + '/issues/new/choose')"
-                     dark color="black">
+                       color="black"
+                       dark @click="open(item.github + '/issues/new/choose')">
                   <v-icon left>mdi-bug</v-icon>
                   反馈
                 </v-btn>
@@ -212,16 +215,16 @@
                   </v-list-item-subtitle>
                 </v-list-item-content>
 
-                <v-list-item-avatar tile color="grey" size="80">
+                <v-list-item-avatar color="grey" size="80" tile>
                   <v-img src="https://www.mcbbs.net/uc_server/data/avatar/002/44/43/78_avatar_big.jpg"></v-img>
                 </v-list-item-avatar>
               </v-list-item>
 
               <v-card-actions>
-                <v-btn rel="noopener noreferrer" text href="https://www.mcbbs.net/?2444378">MCBBS 资料页
+                <v-btn href="https://www.mcbbs.net/?2444378" rel="noopener noreferrer" text>MCBBS 资料页
                 </v-btn>
-                <v-btn rel="noopener noreferrer" text
-                     href="https://www.mcbbs.net/thread-926724-1-1.html">《大憨批》介绍
+                <v-btn href="https://www.mcbbs.net/thread-926724-1-1.html" rel="noopener noreferrer"
+                       text>《大憨批》介绍
                 </v-btn>
               </v-card-actions>
             </v-card>
@@ -233,17 +236,17 @@
                   <div class="overline mb-4">SPONSOR</div>
                   <v-list-item-title class="headline mb-1">梗体中文 由 是秋夕呀mua 赞助</v-list-item-title>
                   <v-list-item-subtitle>是秋夕呀mua 是一位 Bilibili UP 主。她向她的 10w+ 粉丝<a
-                      href="https://www.bilibili.com/video/BV1Vt4y1v7jP">推荐了梗体中文</a>。
+                    href="https://www.bilibili.com/video/BV1Vt4y1v7jP">推荐了梗体中文</a>。
                   </v-list-item-subtitle>
                 </v-list-item-content>
 
-                <v-list-item-avatar tile color="grey" size="80">
+                <v-list-item-avatar color="grey" size="80" tile>
                   <v-img src="static/qiuxi.jpg"></v-img>
                 </v-list-item-avatar>
               </v-list-item>
 
               <v-card-actions>
-                <v-btn rel="noopener noreferrer" text href="https://space.bilibili.com/678013610">
+                <v-btn href="https://space.bilibili.com/678013610" rel="noopener noreferrer" text>
                   Bilibili 主页
                 </v-btn>
               </v-card-actions>
@@ -256,13 +259,13 @@
         </div>
       </v-container>
     </v-main>
-    <v-dialog v-model="dialog" scrollable max-width="700px">
+    <v-dialog v-model="dialog" max-width="700px" scrollable>
       <template v-slot:activator="{ on, attrs }">
         <v-btn
-            color="primary"
-            fab large fixed bottom right
-            v-bind="attrs"
-            v-on="on"
+          v-bind="attrs"
+          v-on="on" bottom color="primary" fab fixed
+          large
+          right
         >
           <v-icon class="rotate-question">mdi-help</v-icon>
         </v-btn>
@@ -270,7 +273,7 @@
       <v-card>
         <v-card-title>
           帮助 & 关于
-          <v-btn icon @click="dialog = false" class="ml-auto">
+          <v-btn class="ml-auto" icon @click="dialog = false">
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </v-card-title>
@@ -303,18 +306,18 @@
           </p>
           <p class="text-body-1">
             <v-btn class="mr-1 mb-1"
-                 target="_blank"
-                 href="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack/issues/new/choose">
+                   href="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack/issues/new/choose"
+                   target="_blank">
               Java版
             </v-btn>
             <v-btn class="mr-1 mb-1"
-                 target="_blank"
-                 href="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock/issues/new/choose">
+                   href="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock/issues/new/choose"
+                   target="_blank">
               基岩版
             </v-btn>
             <v-btn class="mr-1 mb-1"
-                 target="_blank"
-                 href="https://github.com/Teahouse-Studios/mcwzh-meme-web-builder/issues/new/choose">
+                   href="https://github.com/Teahouse-Studios/mcwzh-meme-web-builder/issues/new/choose"
+                   target="_blank">
               在线构建
             </v-btn>
           </p>
@@ -355,19 +358,19 @@
           </v-list>
           <h2 class="text-h5 mb-1">由以下技术驱动</h2>
           <p class="text-body-1">
-            <v-btn target="_blank" class="mr-1" icon href="https://github.com/Teahouse-Studios/mcwzh-meme-web-builder">
+            <v-btn class="mr-1" href="https://github.com/Teahouse-Studios/mcwzh-meme-web-builder" icon target="_blank">
               <v-icon>mdi-github</v-icon>
             </v-btn>
-            <v-btn target="_blank" class="mr-1" icon href="https://analytics.google.com/analytics/web/">
+            <v-btn class="mr-1" href="https://analytics.google.com/analytics/web/" icon target="_blank">
               <v-icon>mdi-google-analytics</v-icon>
             </v-btn>
-            <v-btn target="_blank" class="mr-1" icon href="https://vuetifyjs.com/">
+            <v-btn class="mr-1" href="https://vuetifyjs.com/" icon target="_blank">
               <v-icon>mdi-vuetify</v-icon>
             </v-btn>
-            <v-btn target="_blank" class="mr-1" icon href="https://cn.vuejs.org/">
+            <v-btn class="mr-1" href="https://cn.vuejs.org/" icon target="_blank">
               <v-icon>mdi-vuejs</v-icon>
             </v-btn>
-            <v-btn target="_blank" class="mr-1" icon href="https://materialdesignicons.com/">
+            <v-btn class="mr-1" href="https://materialdesignicons.com/" icon target="_blank">
               <v-icon>mdi-vector-square</v-icon>
             </v-btn>
           </p>
@@ -377,232 +380,145 @@
   </v-app>
 </template>
 <script>
-  import axios from 'axios'
-  import Vue from 'vue'
-  export default {
-    methods: {
-      open(name) {
-        window.open(name)
-      },
-      submit() {
-        this.loading = true
+import axios from 'axios'
+import functionalSelector from "@/components/functionalSelector";
 
-        let data = Object.assign({}, this.inputBasic, {
-          _be: this.whetherUseBE,
-          modules: {
-            language: [...new Set(
-              this.input.language.concat(this.inputBasic.format === 3 ? ['attributes', 'old_strings', 'diamond_hoe'] : [])
-            )],
-            resource: this.input.resource,
-            mixed: []
-          },
-          mod: this.input.mod,
-          hash: true,
-          type: this.inputBasic.format === 3 ? 'legacy' : 'normal'
-        }, this.whetherUseBE && {
-          type: this.input.beExtType,
-          compatible: this.input.compatible
+export default {
+  methods: {
+    open(name) {
+      window.open(name)
+    },
+    submit() {
+      this.loading = true
+
+      let data = Object.assign({}, this.inputBasic, {
+        _be: this.whetherUseBE,
+        modules: {
+          language: [...new Set(
+            this.input.language.concat(this.inputBasic.format === 3 ? ['attributes', 'old_strings', 'diamond_hoe'] : [])
+          )],
+          resource: this.input.resource,
+          mixed: []
+        },
+        mod: this.input.mod,
+        hash: true,
+        type: this.inputBasic.format === 3 ? 'legacy' : 'normal'
+      }, this.whetherUseBE && {
+        type: this.input.beExtType,
+        compatible: this.input.compatible
+      })
+      console.log(data)
+      window.location.host === 'dl.meme.teahou.se' && window.ga && window.ga('send', 'event', this.whetherUseBE ? 'be' : 'je', 'build');
+      axios({url: '/ajax', method: 'POST', data}).then(function (res) {
+        console.log(res.data)
+        this.logs.unshift({
+          title: '构建成功',
+          ts: new Date().valueOf(),
+          content: res.data.logs,
+          filename: res.data.filename,
+          github: this.links.github
         })
-        console.log(data)
-        window.location.host === 'dl.meme.teahou.se' && window.ga && window.ga('send', 'event', this.whetherUseBE ? 'be' : 'je', 'build');
-        axios({url: '/ajax', method: 'POST', data}).then(function (res) {
-          console.log(res.data)
-          this.logs.unshift({
-            title: '构建成功',
-            ts: new Date().valueOf(),
-            content: res.data.logs,
-            filename: res.data.filename,
-            github: this.links.github
-          })
-          this.logsPanel = this.logsPanel.map(v => v + 1)
-          this.logsPanel.unshift(0)
-          this.$nextTick(function () {
-            this.$refs.logs.scrollIntoView()
-          }.bind(this))
-          this.loading = false
-        }.bind(this)).catch(function (err) {
-          this.logs.unshift({
-            title: '构建失败',
-            ts: new Date().valueOf(),
-            content: err.toString()
-          })
-          this.logsPanel = this.logsPanel.map(v => v + 1)
-          this.logsPanel.unshift(0)
-          this.$nextTick(function () {
-            this.$refs.logs.scrollIntoView()
-          }.bind(this))
-          this.loading = false
+        this.logsPanel = this.logsPanel.map(v => v + 1)
+        this.logsPanel.unshift(0)
+        this.$nextTick(function () {
+          this.$refs.logs.scrollIntoView()
         }.bind(this))
-      }
+        this.loading = false
+      }.bind(this)).catch(function (err) {
+        this.logs.unshift({
+          title: '构建失败',
+          ts: new Date().valueOf(),
+          content: err.toString()
+        })
+        this.logsPanel = this.logsPanel.map(v => v + 1)
+        this.logsPanel.unshift(0)
+        this.$nextTick(function () {
+          this.$refs.logs.scrollIntoView()
+        }.bind(this))
+        this.loading = false
+      }.bind(this))
+    }
+  },
+  components: {
+    'functional-selector': functionalSelector
+  },
+  data: () => ({
+    dialog: false,
+    tab: null,
+    logsPanel: [],
+    loading: false,
+    inputBasic: {
+      format: 6
     },
-    data: () => ({
-      dialog: false,
-      tab: null,
-      logsPanel: [],
-      loading: false,
-      inputBasic: {
-        format: 6
-      },
-      logs: [],
-      input: {
-        compatible: false,
-        modOption: "all",
-        mod: [],
-        resource: [],
-        language: [],
-        beExtType: 'mcpack'
-      },
-      hint: 0,
-      consts: null
-    }),
-    beforeMount() {
-      Vue.component('functional-selector', {
-        template: `
-  <v-select :label="label" multiple
-              :items="list" v-model="resource" :hint="hint" persistent-hint>
-              <template v-slot:selection="{ item, index }">
-    <v-chip v-if="index === 0">
-      <span>{{ item.text.name }}</span>
-    </v-chip>
-    <span
-      v-if="index === 1"
-      class="grey--text caption"
-    >
-      (+ {{ resource.length - 1 }} 项)
-    </span>
-    </template>
-          <template v-slot:prepend-item>
-            <v-list-item ripple @click="toggleResource">
-              <v-list-item-action>
-                <v-icon> {{ resourceIcon }}</v-icon>
-              </v-list-item-action>
-              <v-list-item-content>
-                <v-list-item-title>全选</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-divider class="mt-2"></v-divider>
-          </template>
-          <template v-slot:item="data">
-            <v-list-item v-bind="data.attrs" v-on="data.on">
-              <v-list-item-action>
-                <v-checkbox v-model="data.attrs.inputValue"
-                      @change="data.parent.$emit('select')"></v-checkbox>
-              </v-list-item-action>
-              <v-list-item-content>
-                <v-list-item-title>{{ data.item.text.name }} </v-list-item-title>
-                <v-list-item-subtitle>{{ data.item.text.description }} <a v-if="data.item.text.author">
-       · 作者：{{ data.item.text.author }}
-</a>
-</v-list-item-subtitle>
-              </v-list-item-content>
-            </v-list-item>
-          </template>
-        </v-select>
-  `,
-        props: ['label', 'hint', 'items', 'resource_parent'],
-        model: {
-          prop: 'resource_parent',
-          event: 'change',
-        },
-        computed: {
-          list() {
-            return this.items.map((v) => ({
-              value: v.name,
-              text: v
-            }))
-          },
-          resourceIcon() {
-            if (this.resource.length === 0) {
-              return 'mdi-checkbox-blank-outline'
-            } else if (this.resource.length === this.items.length) {
-              return 'mdi-close-box'
-            } else {
-              return 'mdi-minus-box'
-            }
-          }
-        },
-        beforeMount() {
-          this.resource = this.resource_parent || []
-        },
-        watch: {
-          resource(newVal) {
-            this.$emit('change', newVal.filter(v => v !== undefined))
-          }
-        },
-        methods: {
-          toggleResource() {
-            if (this.resource.length === this.items.length) {
-              this.resource = []
-            } else {
-              this.resource = this.items.map(v => v.name)
-            }
-          },
-        },
-        data() {
-          return {
-            resource: []
-          }
-        }
-      });
+    logs: [],
+    input: {
+      compatible: false,
+      modOption: "all",
+      mod: [],
+      resource: [],
+      language: [],
+      beExtType: 'mcpack'
     },
-    async mounted() {
-      console.log(this.consts)
-      let that = this
-      setInterval(() => {
-        that.hint = that.hint === 3 ? 0 : ++that.hint
-      }, 4000)
-      const apiAddress = process.env.NODE_ENV === 'production' ? 'https://dlserver.meme.teahou.se/' : 'http://127.0.0.1:8000/'
-      const req = await axios.get(apiAddress);
-      const backend = req.data
-      this.consts =  {
-            type: [{text: "1.13以上", value: "normal"}, {text: "1.12.2", value: "compat"}],
-            resourceOption: [{text: "所有", value: "all"}, {text: "无", value: "none"}, {
-              text: "自定义",
-              value: "custom"
-            }],
-            modOption: [{text: "所有", value: "all"}, {value: "none", text: "无"}, {
-              value: "custom",
-              text: "自定义"
-            }],
-            languageOption: [{value: "none", text: "无"}, {
-              value: "custom",
-              text: "自定义"
-            }],
-            beExtType: ['mcpack', 'zip'],
-            modList: [{header: 'Mod文件'}].concat(backend.mods).concat({header: 'Mod文件（未汉化）'})
-              .concat(backend.enmods),
-            je_modules: backend.je_modules,
-            be_modules: backend.be_modules ,
-            versions: [{text: '1.16.2+', value: 6}, {text: '1.15 - 1.16.1', value: 5}, {
-              text: '1.13 - 1.14.4', value: 4
-            }, {
-              text: '1.11 - 1.12.2', value: 3
-            }],
-            hints: [
-              "若您不知道如何构建，请直接点击下方按钮下载。",
-              "若需要基岩版的MCBBS/GitHub/唱片包，您可以点击基岩版选项卡后，再点击相应跳转按钮。",
-              "若您发现问题，您可以点击上方链接向我们报告。",
-              "梗体中文是一个持续更新的项目，欢迎常回来看看。"
-            ]
-          }
+    hint: 0,
+    consts: null
+  }),
+  async mounted() {
+    let that = this
+    setInterval(() => {
+      that.hint = that.hint === 3 ? 0 : ++that.hint
+    }, 4000)
+    const apiAddress = process.env.NODE_ENV === 'production' ? 'https://dlserver.meme.teahou.se/' : 'http://127.0.0.1:8000/'
+    const req = await axios.get(apiAddress);
+    const backend = req.data
+    this.consts = {
+      type: [{text: "1.13以上", value: "normal"}, {text: "1.12.2", value: "compat"}],
+      resourceOption: [{text: "所有", value: "all"}, {text: "无", value: "none"}, {
+        text: "自定义",
+        value: "custom"
+      }],
+      modOption: [{text: "所有", value: "all"}, {value: "none", text: "无"}, {
+        value: "custom",
+        text: "自定义"
+      }],
+      languageOption: [{value: "none", text: "无"}, {
+        value: "custom",
+        text: "自定义"
+      }],
+      beExtType: ['mcpack', 'zip'],
+      modList: [{header: 'Mod文件'}].concat(backend.mods).concat({header: 'Mod文件（未汉化）'})
+        .concat(backend.enmods),
+      je_modules: backend.je_modules,
+      be_modules: backend.be_modules,
+      versions: [{text: '1.16.2+', value: 6}, {text: '1.15 - 1.16.1', value: 5}, {
+        text: '1.13 - 1.14.4', value: 4
+      }, {
+        text: '1.11 - 1.12.2', value: 3
+      }],
+      hints: [
+        "若您不知道如何构建，请直接点击下方按钮下载。",
+        "若需要基岩版的MCBBS/GitHub/唱片包，您可以点击基岩版选项卡后，再点击相应跳转按钮。",
+        "若您发现问题，您可以点击上方链接向我们报告。",
+        "梗体中文是一个持续更新的项目，欢迎常回来看看。"
+      ]
+    }
 
+  },
+  computed: {
+    whetherUseBE() {
+      return this.tab === 1
     },
-    computed: {
-      whetherUseBE() {
-        return this.tab === 1
-      },
-      links() {
-        return {
-          github: 'https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack' + (this.tab ? '-bedrock' : ''),
-          mcbbs: `https://www.mcbbs.net/thread-${this.tab ? '1005191' : '1004643'}-1-1.html`,
-          disc: 'https://dianliang-oss-1301161188.file.myqcloud.com/zh-meme-respack/' + (this.tab ? 'Meme_resourcepack_records.mcpack' : 'record-java.zip')
-        }
-      }
-    },
-    watch: {
-      tab(newTab) {
-        this.input.resource = newTab ? this.consts.be_modules.resource.map(v => v.name) : []
+    links() {
+      return {
+        github: 'https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack' + (this.tab ? '-bedrock' : ''),
+        mcbbs: `https://www.mcbbs.net/thread-${this.tab ? '1005191' : '1004643'}-1-1.html`,
+        disc: 'https://dianliang-oss-1301161188.file.myqcloud.com/zh-meme-respack/' + (this.tab ? 'Meme_resourcepack_records.mcpack' : 'record-java.zip')
       }
     }
-  };
+  },
+  watch: {
+    tab(newTab) {
+      this.input.resource = newTab ? this.consts.be_modules.resource.map(v => v.name) : []
+    }
+  }
+};
 </script>
