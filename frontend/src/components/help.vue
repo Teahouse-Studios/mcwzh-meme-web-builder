@@ -2,6 +2,7 @@
   <v-dialog v-model="dialog" max-width="700px" scrollable>
     <template v-slot:activator="{ on, attrs }">
       <v-btn
+        aria-label="帮助 & 关于"
         v-bind="attrs"
         v-on="on" bottom color="primary" fab fixed
         large

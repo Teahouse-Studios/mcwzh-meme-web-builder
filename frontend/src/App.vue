@@ -98,7 +98,7 @@
         </v-tab>
       </v-tabs>
 
-      <v-container class="mb-12">
+      <v-container>
         <v-tabs-items v-model="tab">
           <v-tab-item>
             <v-row>
@@ -265,35 +265,7 @@
           梗体中文团队将其添加至赞助者列表——这只是 Teahouse Studios 梗体中文团队对他们的支持最诚挚的感谢。❤️
         </div>
       </v-container>
-      <v-footer color="#323437" dark elevation="6">
-        <v-container>
-          <v-row>
-            <v-col cols="12" class="text-center mb-2 mt-2">
-                <span class="text-body-2">Built with ❤️ ️love, 🔮 fantasies, 🐝 bees and 🤣 memes.</span>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col md="6" sm="12" class="text-md-left test-sm-center">
-              <v-btn href="https://teahou.se/terms/" text class="white--text"><v-icon left>mdi-script</v-icon> 服务条款</v-btn>
-              <v-btn href="https://teahou.se/privacy-policy/" text class="white--text"><v-icon left>mdi-lock</v-icon> 隐私政策</v-btn>
-              <v-btn href="https://teahou.se/donate/" text><v-icon left>mdi-cash-usd</v-icon> 捐款</v-btn>
-            </v-col>
-            <v-col md="6" sm="12" class="text-md-right test-sm-center">
-              <a href="https://teahou.se/">
-                <v-img
-                  src="static/logo.svg"
-                  alt="Teahouse Studios"
-                  contain
-                  transition="scale-transition"
-                  max-height="48"
-                  position="right"
-                  style="filter: invert(1)"
-                />
-              </a>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-footer>
+      <TeahouseFooter></TeahouseFooter>
     </v-main>
     <help/>
   </v-app>
@@ -303,7 +275,7 @@ import axios from 'axios'
 import functionalSelector from "@/components/functionalSelector";
 import help from './components/help'
 import {mdiPost, mdiGithub, mdiDisc, mdiCloudDownload, mdiBug, mdiDotsVertical, mdiInformationOutline} from '@mdi/js'
-
+import TeahouseFooter from '@/components/footer'
 export default {
   methods: {
     open(name) {
@@ -362,7 +334,8 @@ export default {
   },
   components: {
     'functional-selector': functionalSelector,
-    help
+    help,
+    TeahouseFooter
   },
   data: () => ({
     svgPath: {
