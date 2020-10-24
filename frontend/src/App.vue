@@ -39,7 +39,7 @@
                 v-on="on"
                 icon
               >
-                <v-icon>{{svgPath.mdiDotsVertical}}</v-icon>
+                <v-icon>{{ svgPath.mdiDotsVertical }}</v-icon>
               </v-btn>
             </template>
 
@@ -76,6 +76,8 @@
         </div>
       </v-app-bar>
       <v-alert
+        :icon="svgPath.mdiInformationOutline"
+        class="mb-0"
         dense
         tile
         type="info"
@@ -173,7 +175,7 @@
             />
           </v-tab-item>
         </v-tabs-items>
-        <v-alert class="mt-3 mb-3 text-body-2" dense :icon="svgPath.mdiInformationOutline" outlined
+        <v-alert :icon="svgPath.mdiInformationOutline" class="mt-3 mb-3 text-body-2" dense outlined
                  type="info"> {{ consts.hints[hint] }}
         </v-alert>
         <v-btn :disabled="loading" :loading="loading" color="primary" @click="submit">
@@ -200,7 +202,7 @@
                 <v-btn v-else
                        color="black"
                        dark @click="open(item.github + '/issues/new/choose')">
-                  <v-icon left>{{svgPath.mdiBug}}</v-icon>
+                  <v-icon left>{{ svgPath.mdiBug }}</v-icon>
                   反馈
                 </v-btn>
               </v-expansion-panel-content>

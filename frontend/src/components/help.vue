@@ -7,14 +7,14 @@
         large
         right
       >
-        <v-icon class="rotate-question">mdi-help</v-icon>
+        <v-icon class="rotate-question">{{svgPath.mdiHelp}}</v-icon>
       </v-btn>
     </template>
     <v-card>
       <v-card-title>
         帮助 & 关于
         <v-btn class="ml-auto" icon @click="dialog = false">
-          <v-icon>mdi-close</v-icon>
+          <v-icon>{{svgPath.mdiClose}}</v-icon>
         </v-btn>
       </v-card-title>
       <v-divider class="mb-3"></v-divider>
@@ -99,19 +99,19 @@
         <h2 class="text-h5 mb-1">由以下技术驱动</h2>
         <p class="text-body-1">
           <v-btn class="mr-1" href="https://github.com/Teahouse-Studios/mcwzh-meme-web-builder" icon target="_blank">
-            <v-icon>mdi-github</v-icon>
+            <v-icon>{{svgPath.mdiGithub}}</v-icon>
           </v-btn>
           <v-btn class="mr-1" href="https://analytics.google.com/analytics/web/" icon target="_blank">
-            <v-icon>mdi-google-analytics</v-icon>
+            <v-icon>{{svgPath.mdiGoogleAnalytics}}</v-icon>
           </v-btn>
           <v-btn class="mr-1" href="https://vuetifyjs.com/" icon target="_blank">
-            <v-icon>mdi-vuetify</v-icon>
+            <v-icon>{{svgPath.mdiVuetify}}</v-icon>
           </v-btn>
           <v-btn class="mr-1" href="https://cn.vuejs.org/" icon target="_blank">
-            <v-icon>mdi-vuejs</v-icon>
+            <v-icon>{{svgPath.mdiVuejs}}</v-icon>
           </v-btn>
           <v-btn class="mr-1" href="https://materialdesignicons.com/" icon target="_blank">
-            <v-icon>mdi-vector-square</v-icon>
+            <v-icon>{{svgPath.mdiVectorSquare}}</v-icon>
           </v-btn>
         </p>
       </v-card-text>
@@ -120,14 +120,24 @@
 </template>
 
 <script>
+import {mdiGithub, mdiGoogleAnalytics, mdiVuetify, mdiVuejs, mdiVectorSquare, mdiClose, mdiHelp} from '@mdi/js'
 export default {
 name: "help",
   data: () => ({
-    dialog: false
+    dialog: false,
+    svgPath: {
+      mdiGithub, mdiGoogleAnalytics, mdiVuetify, mdiVuejs, mdiVectorSquare, mdiClose, mdiHelp
+    }
   })
 }
 </script>
 
 <style scoped>
+.rotate-question {
+  transform: rotate(180deg);
+}
 
+.rotate-question:hover {
+  transform: rotate(0deg);
+}
 </style>
