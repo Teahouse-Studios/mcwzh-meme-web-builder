@@ -6,12 +6,9 @@ from asyncio import subprocess
 from concurrent.futures import ThreadPoolExecutor
 from os.path import join, dirname
 
-import aiohttp_jinja2
-import jinja2
 from aiohttp import web
 
 app = web.Application()
-aiohttp_jinja2.setup(app, loader=jinja2.FileSystemLoader("./views"))
 executor = ThreadPoolExecutor(8)
 build_time = 0.0
 builder_lock = asyncio.Lock()
@@ -33,14 +30,14 @@ def get_env():
     return dict(mods=list(mods), enmods=list(enmods),
                 je_modules=je_modules, be_modules=be_modules)
 
-
-@aiohttp_jinja2.template("index.html")
 async def index(_):
     if env["update"] + 60 < time.time():
         env["data"] = get_env()
         env["update"] = time.time()
     return env["data"]
 
+async def api():
+    return web.json_response(get_env())
 
 async def ajax(request: web.Request):
     data = await request.json()
@@ -87,9 +84,8 @@ if not os.path.exists("./builds"):
     os.mkdir("builds")
 
 app.add_routes([
-    web.static("/static/", "./static"),
     web.static("/builds/", "./builds"),
-    web.route("GET", "/", index),
+    web.route("GET", "/", api),
     web.route("POST", "/ajax", ajax)
 ])
 
