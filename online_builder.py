@@ -6,12 +6,9 @@ from asyncio import subprocess
 from concurrent.futures import ThreadPoolExecutor
 from os.path import join, dirname
 
-import aiohttp_jinja2
-import jinja2
 from aiohttp import web
 
 app = web.Application()
-aiohttp_jinja2.setup(app, loader=jinja2.FileSystemLoader("./views"))
 executor = ThreadPoolExecutor(8)
 build_time = 0.0
 builder_lock = asyncio.Lock()
@@ -33,14 +30,14 @@ def get_env():
     return dict(mods=list(mods), enmods=list(enmods),
                 je_modules=je_modules, be_modules=be_modules)
 
-
-@aiohttp_jinja2.template("index.html")
 async def index(_):
     if env["update"] + 60 < time.time():
         env["data"] = get_env()
         env["update"] = time.time()
     return env["data"]
 
+async def api(request: web.Request):
+    return web.json_response(get_env(), headers={'Access-Control-Allow-Origin': '*'})
 
 async def ajax(request: web.Request):
     data = await request.json()
@@ -80,17 +77,25 @@ async def ajax(request: web.Request):
         log.extend(builder.log_list)
     return web.json_response({"code": 200, "argument": data,
                               "logs": '\n'.join(log),
-                              "filename": builder.filename})
+                              "filename": builder.filename}, headers={
+        'Access-Control-Allow-Origin': '*'
+    })
+
+async def ajax_preflight(request: web.Request):
+    return web.json_response({}, headers={
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'content-type'
+    })
 
 
 if not os.path.exists("./builds"):
     os.mkdir("builds")
 
 app.add_routes([
-    web.static("/static/", "./static"),
     web.static("/builds/", "./builds"),
-    web.route("GET", "/", index),
-    web.route("POST", "/ajax", ajax)
+    web.route("GET", "/", api),
+    web.route("POST", "/ajax", ajax),
+    web.route("OPTIONS", "/ajax", ajax_preflight)
 ])
 
 if __name__ == '__main__':
