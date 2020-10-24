@@ -246,7 +246,7 @@
                 </v-list-item-content>
 
                 <v-list-item-avatar color="grey" size="80" tile>
-                  <v-img src="static/qiuxi.jpg"></v-img>
+                  <v-img src="./assets/qiuxi.jpg"></v-img>
                 </v-list-item-avatar>
               </v-list-item>
 
