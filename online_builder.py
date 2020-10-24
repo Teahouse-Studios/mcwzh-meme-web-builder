@@ -36,8 +36,8 @@ async def index(_):
         env["update"] = time.time()
     return env["data"]
 
-async def api():
-    return web.json_response(get_env())
+async def api(request: web.Request):
+    return web.json_response(get_env(), headers={'Access-Control-Allow-Origin': '*'})
 
 async def ajax(request: web.Request):
     data = await request.json()
