@@ -6,13 +6,19 @@
 
 clone本仓库时请注意子模块，使用 ```git clone --recursive https://github.com/Teahouse-Studios/mcwzh-meme-web-builder/``` 确保子模块内容一并拉取。
 
-运行网页构建环境要求Python版本最低为3.9（推荐使用最新的稳定版），node版本尽量保持最新版本，并安装依赖：
+运行网页构建环境要求Python版本最低为**3.9**（推荐使用最新的稳定版），Node.js尽量保持最新版本，并安装依赖：
 
 ``` bash
 pip install -r requirements.txt
+
+# 选择包管理器：npm / yarn
+# npm
+npm install
+# yarn
+yarn install
 ```
 
-如何安装，构建Vue项目此处不再赘述，新手建议使用[vue ui](https://cli.vuejs.org/zh/guide/creating-a-project.html#%E4%BD%BF%E7%94%A8%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%95%8C%E9%9D%A2)
+如何安装，构建Vue项目此处不再赘述，新手建议使用[Vue GUI](https://cli.vuejs.org/zh/guide/creating-a-project.html#%E4%BD%BF%E7%94%A8%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%95%8C%E9%9D%A2)。
 
 ```frontend/src/main.js```中，将```https://meme.wd-api.com/```修改为自己的服务器地址。
 
@@ -20,7 +26,7 @@ pip install -r requirements.txt
 
 ```frontend/vue.config.js```中，```publicPath```修改为```/```。
 
-```frontend/package.json```中，```scripts.build```中删除``` && node release.js```。
+```frontend/package.json```中，```scripts.build```中删除```&& node release.js```。
 
 随后自行上传dist文件到服务器。
 
