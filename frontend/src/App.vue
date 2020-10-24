@@ -95,7 +95,7 @@
         </v-tab>
       </v-tabs>
 
-      <v-container class="mb-12">
+      <v-container class="mb-12" v-if="consts !== null">
         <v-tabs-items v-model="tab">
           <v-tab-item>
             <v-row>
@@ -181,7 +181,7 @@
           <v-expansion-panels v-model="logsPanel" multiple>
             <v-expansion-panel v-for="(item,i) in logs" :key="i">
               <v-expansion-panel-header>
-                  {{ new Date(Number(item.ts)).toLocaleString() }} {{ item.title }}  
+                  {{ new Date(Number(item.ts)).toLocaleString() }} {{ item.title }}
               </v-expansion-panel-header>
               <v-expansion-panel-content>
                 <pre style="padding-bottom:15px;white-space: pre-wrap;font-family: 'Cascadia Code', 'Fira Code','Consolas', monospace;">  {{item.content}}  </pre>
@@ -255,7 +255,6 @@
           梗体中文团队将其添加至赞助者列表——这只是 Teahouse Studios 梗体中文团队对他们的支持最诚挚的感谢。❤️
         </div>
       </v-container>
-      {% include './custom/footer.html' ignore missing %}
     </v-main>
     <v-dialog v-model="dialog" scrollable max-width="700px">
       <template v-slot:activator="{ on, attrs }">
@@ -453,7 +452,8 @@
         language: [],
         beExtType: 'mcpack'
       },
-      hint: 0
+      hint: 0,
+      consts: null
     }),
     beforeMount() {
       Vue.component('functional-selector', {
@@ -545,23 +545,16 @@
         }
       });
     },
-    mounted() {
+    async mounted() {
       console.log(this.consts)
       let that = this
       setInterval(() => {
         that.hint = that.hint === 3 ? 0 : ++that.hint
       }, 4000)
-    },
-    computed: {
-      whetherUseBE() {
-        return this.tab === 1
-      },
-      consts: {
-        cache: false,
-        get() {
-          const apiAddress = process.env.NODE_ENV === 'production' ? 'https://dlserver.meme.teahou.se/' : 'http://127.0.0.1:8000/'
-          const backend = axios.get(apiAddress);
-          return {
+      const apiAddress = process.env.NODE_ENV === 'production' ? 'https://dlserver.meme.teahou.se/' : 'http://127.0.0.1:8000/'
+      const req = await axios.get(apiAddress);
+      const backend = req.data
+      this.consts =  {
             type: [{text: "1.13以上", value: "normal"}, {text: "1.12.2", value: "compat"}],
             resourceOption: [{text: "所有", value: "all"}, {text: "无", value: "none"}, {
               text: "自定义",
@@ -592,7 +585,11 @@
               "梗体中文是一个持续更新的项目，欢迎常回来看看。"
             ]
           }
-        }
+
+    },
+    computed: {
+      whetherUseBE() {
+        return this.tab === 1
       },
       links() {
         return {
