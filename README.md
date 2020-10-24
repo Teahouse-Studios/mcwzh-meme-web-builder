@@ -6,17 +6,25 @@
 
 clone本仓库时请注意子模块，使用 ```git clone --recursive https://github.com/Teahouse-Studios/mcwzh-meme-web-builder/``` 确保子模块内容一并拉取。
 
-运行网页构建环境要求Python版本最低为3.9，推荐使用最新的稳定版，并安装依赖：
+运行网页构建环境要求Python版本最低为3.9（推荐使用最新的稳定版），node版本尽量保持最新版本，并安装依赖：
 
 ``` bash
 pip install -r requirements.txt
 ```
 
-## 自定义内容
+如何安装，构建Vue项目此处不再赘述，新手建议使用[vue ui](https://cli.vuejs.org/zh/guide/creating-a-project.html#%E4%BD%BF%E7%94%A8%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%95%8C%E9%9D%A2)
 
-如果你需要在网页Material标题栏下方、AppBar下方或网页脚部自定义内容，请在 `views/custom/` 目录下创建 `header.html`, `notice.html` 或 `footer.html` 。
+```frontend/src/main.js```中，将```https://meme.wd-api.com/```修改为自己的服务器地址。
 
-文件内可使用 `Vuetify` 框架内容。
+目前Teahouse Studios采用的部署方式是网站内容置于服务器，静态资源置于cdn，如果不需要静态文件分离，请按照以下方法操作：
+
+```frontend/vue.config.js```中，```publicPath```修改为```/```。
+
+```frontend/package.json```中，```scripts.build```中删除``` && node release.js```。
+
+随后自行上传dist文件到服务器。
+
+如果您需要静态文件分离，请复制```.env.example```到```.env```，并修改其中内容。
 
 ## 法律
 
