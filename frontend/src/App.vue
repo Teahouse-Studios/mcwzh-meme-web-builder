@@ -3,7 +3,8 @@
     <v-main>
       <v-app-bar
           outlined flat
-          color="white">
+          color="white"
+      >
         <v-toolbar-title>梗体中文 · 在线构建</v-toolbar-title>
         <v-spacer></v-spacer>
         <div v-if="$vuetify.breakpoint.name !== 'xs'">
