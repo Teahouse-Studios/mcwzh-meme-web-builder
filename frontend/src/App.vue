@@ -13,17 +13,17 @@
               <div v-bind="attrs"
                    v-on="on">
                 <v-btn :href="links.mcbbs" rel="noopener noreferrer" text>
-                  <v-icon left>mdi-post</v-icon>
+                  <v-icon left>{{ svgPath.mdiPost }}</v-icon>
                   MCBBS
                 </v-btn>
                 <v-btn :href="links.github" rel="noopener noreferrer"
                        text>
-                  <v-icon left>mdi-github</v-icon>
+                  <v-icon left>{{ svgPath.mdiGithub }}</v-icon>
                   GitHub
                 </v-btn>
                 <v-btn :href="links.disc" rel="noopener noreferrer"
                        text>
-                  <v-icon left>mdi-disc</v-icon>
+                  <v-icon left>{{ svgPath.mdiDisc }}</v-icon>
                   唱片包
                 </v-btn>
               </div>
@@ -39,7 +39,7 @@
                 v-on="on"
                 icon
               >
-                <v-icon>mdi-dots-vertical</v-icon>
+                <v-icon>{{svgPath.mdiDotsVertical}}</v-icon>
               </v-btn>
             </template>
 
@@ -47,7 +47,7 @@
               <v-list-item :href="links.mcbbs"
                            rel="noopener noreferrer">
                 <v-list-item-icon class="ml-0">
-                  <v-icon>mdi-post</v-icon>
+                  <v-icon>{{ svgPath.mdiPost }}</v-icon>
                 </v-list-item-icon>
                 <v-list-item-text>
                   MCBBS
@@ -56,7 +56,7 @@
               <v-list-item :href="links.github"
                            rel="noopener noreferrer">
                 <v-list-item-icon class="ml-0">
-                  <v-icon>mdi-github</v-icon>
+                  <v-icon>{{ svgPath.mdiGithub }}</v-icon>
                 </v-list-item-icon>
                 <v-list-item-text>
                   GitHub
@@ -65,7 +65,7 @@
               <v-list-item :href="links.disc"
                            rel="noopener noreferrer">
                 <v-list-item-icon class="ml-0">
-                  <v-icon>mdi-disc</v-icon>
+                  <v-icon>{{ svgPath.mdiDisc }}</v-icon>
                 </v-list-item-icon>
                 <v-list-item-text>
                   唱片包
@@ -173,11 +173,11 @@
             />
           </v-tab-item>
         </v-tabs-items>
-        <v-alert class="mt-3 mb-3 text-body-2" dense icon="mdi-information-outline" outlined
+        <v-alert class="mt-3 mb-3 text-body-2" dense :icon="svgPath.mdiInformationOutline" outlined
                  type="info"> {{ consts.hints[hint] }}
         </v-alert>
         <v-btn :disabled="loading" :loading="loading" color="primary" @click="submit">
-          <v-icon left>mdi-cloud-download</v-icon>
+          <v-icon left>{{ svgPath.mdiCloudDownload }}</v-icon>
           提交构建选项
         </v-btn>
         <div v-if="logs.length >= 1">
@@ -200,7 +200,7 @@
                 <v-btn v-else
                        color="black"
                        dark @click="open(item.github + '/issues/new/choose')">
-                  <v-icon left>mdi-bug</v-icon>
+                  <v-icon left>{{svgPath.mdiBug}}</v-icon>
                   反馈
                 </v-btn>
               </v-expansion-panel-content>
@@ -271,6 +271,7 @@
 import axios from 'axios'
 import functionalSelector from "@/components/functionalSelector";
 import help from './components/help'
+import {mdiPost, mdiGithub, mdiDisc, mdiCloudDownload, mdiBug, mdiDotsVertical, mdiInformationOutline} from '@mdi/js'
 
 export default {
   methods: {
@@ -333,6 +334,15 @@ export default {
     help
   },
   data: () => ({
+    svgPath: {
+      mdiPost,
+      mdiGithub,
+      mdiDisc,
+      mdiCloudDownload,
+      mdiBug,
+      mdiDotsVertical,
+      mdiInformationOutline
+    },
     tab: null,
     logsPanel: [],
     loading: false,
