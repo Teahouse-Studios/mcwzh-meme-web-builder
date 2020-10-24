@@ -194,7 +194,7 @@
                     item.content
                   }}  </pre>
                 <v-btn v-if="item.filename" color="indigo"
-                       outlined @click="open('builds/' + item.filename)">
+                       outlined @click="open($api + 'builds/' + item.filename)">
                   下载
                 </v-btn>
                 <v-btn v-else
@@ -298,7 +298,7 @@ export default {
       })
       console.log(data)
       window.location.host === 'dl.meme.teahou.se' && window.ga && window.ga('send', 'event', this.whetherUseBE ? 'be' : 'je', 'build');
-      axios({url: '/ajax', method: 'POST', data}).then(function (res) {
+      axios({url: '/ajax', baseURL: this.$api, method: 'POST', data}).then(function (res) {
         console.log(res.data)
         this.logs.unshift({
           title: '构建成功',
@@ -384,8 +384,8 @@ export default {
     setInterval(() => {
       that.hint = that.hint === 3 ? 0 : ++that.hint
     }, 4000)
-    const apiAddress = process.env.NODE_ENV === 'production' ? 'https://dlserver.meme.teahou.se/' : 'http://127.0.0.1:8000/'
-    const req = await axios.get(apiAddress);
+
+    const req = await axios.get(this.$api);
     const backend = req.data
     this.consts = {
       ...this.consts,

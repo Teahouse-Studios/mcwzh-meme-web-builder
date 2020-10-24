@@ -77,7 +77,15 @@ async def ajax(request: web.Request):
         log.extend(builder.log_list)
     return web.json_response({"code": 200, "argument": data,
                               "logs": '\n'.join(log),
-                              "filename": builder.filename})
+                              "filename": builder.filename}, headers={
+        'Access-Control-Allow-Origin': '*'
+    })
+
+async def ajax_preflight(request: web.Request):
+    return web.json_response({}, headers={
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'content-type'
+    })
 
 
 if not os.path.exists("./builds"):
@@ -86,7 +94,8 @@ if not os.path.exists("./builds"):
 app.add_routes([
     web.static("/builds/", "./builds"),
     web.route("GET", "/", api),
-    web.route("POST", "/ajax", ajax)
+    web.route("POST", "/ajax", ajax),
+    web.route("OPTIONS", "/ajax", ajax_preflight)
 ])
 
 if __name__ == '__main__':
