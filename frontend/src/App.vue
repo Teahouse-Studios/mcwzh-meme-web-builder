@@ -82,7 +82,7 @@
         tile
         type="info"
       >
-        在线构建尚处于测试阶段。若您发现了任何问题或想提出建议，欢迎进行<a class="blue--text text--lighten-5"
+        在线构建最近进行了大型重构。若您发现了任何问题或想提出建议，欢迎进行<a class="blue--text text--lighten-5"
                                            href="https://github.com/Teahouse-Studios/mcwzh-meme-web-builder/issues/new">反馈</a>。
       </v-alert>
       <v-tabs
