@@ -1,5 +1,5 @@
 <template>
-  <v-footer color="#323437" dark elevation="6" class="pb-16">
+  <v-footer :color="$vuetify.theme.dark ? '#1E1E1E' : '#323437'" dark elevation="6" class="pb-16">
     <v-container>
       <v-row>
         <v-col class="text-center mb-2 mt-2" cols="12">

@@ -4,7 +4,7 @@
       <v-btn
         aria-label="帮助 & 关于"
         v-bind="attrs"
-        v-on="on" bottom color="primary" fab fixed
+        v-on="on" bottom :color="$vuetify.theme.dark ? 'dark' : 'primary'" fab fixed
         large
         right
       >

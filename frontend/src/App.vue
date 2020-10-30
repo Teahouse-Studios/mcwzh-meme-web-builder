@@ -2,8 +2,7 @@
   <v-app>
     <v-main>
       <v-app-bar
-        color="white" flat
-        outlined
+        :color="$vuetify.theme.dark ? 'dark' : 'white'" flat
       >
         <v-toolbar-title>梗体中文 · 在线构建</v-toolbar-title>
         <v-spacer></v-spacer>
@@ -71,19 +70,23 @@
                   唱片包
                 </v-list-item-text>
               </v-list-item>
+              <div class="text-center">（{{ !this.tab ? 'Java' : '基岩' }}版）</div>
             </v-list>
           </v-menu>
         </div>
+        <v-btn text @click="$vuetify.theme.dark = !$vuetify.theme.dark">
+          <v-icon v-if="$vuetify.theme.dark">{{ svgPath.mdiBrightness7 }}</v-icon>
+          <v-icon v-else>{{ svgPath.mdiBrightness4 }}</v-icon>
+        </v-btn>
       </v-app-bar>
       <v-alert
         :icon="svgPath.mdiInformationOutline"
         class="mb-0"
         dense
         tile
-        type="info"
+        :color="$vuetify.theme.dark ? 'dark' : 'white'"
       >
-        在线构建最近进行了大型重构。若您发现了任何问题或想提出建议，欢迎进行<a class="blue--text text--lighten-5"
-                                           href="https://github.com/Teahouse-Studios/mcwzh-meme-web-builder/issues/new">反馈</a>。
+        在线构建最近进行了大型重构。若您发现了任何问题或想提出建议，欢迎进行<a href="https://github.com/Teahouse-Studios/mcwzh-meme-web-builder/issues/new">反馈</a>。
       </v-alert>
       <v-tabs
         v-model="tab"
@@ -195,12 +198,12 @@
                   style="padding-bottom:15px;white-space: pre-wrap;font-family: 'Cascadia Code', 'Fira Code','Consolas', monospace;">  {{
                     item.content
                   }}  </pre>
-                <v-btn v-if="item.filename" color="indigo"
+                <v-btn v-if="item.filename" :color="$vuetify.theme.dark ? 'white' : 'primary'"
                        outlined @click="open($api + 'builds/' + item.filename)">
                   下载
                 </v-btn>
                 <v-btn v-else
-                       color="black"
+                       :color="$vuetify.theme.dark ? 'dark' : ''"
                        dark @click="open(item.github + '/issues/new/choose')">
                   <v-icon left>{{ svgPath.mdiBug }}</v-icon>
                   反馈
@@ -260,7 +263,7 @@
             </v-card>
           </v-col>
         </v-row>
-        <div class="text-body-2 mb-3 pa-1" style="color: rgba(0,0,0,.6);">这些赞助者均未给予 Teahouse Studios
+        <div class="text-body-2 mb-3 pa-1" :style="$vuetify.theme.dark !== true ? 'color: rgba(0,0,0,.6)' : 'color: rgba(256,256,256,.7)'">这些赞助者均未给予 Teahouse Studios
           梗体中文团队真实金钱，亦未强迫 Teahouse Studios
           梗体中文团队将其添加至赞助者列表——这只是 Teahouse Studios 梗体中文团队对他们的支持最诚挚的感谢。❤️
         </div>
@@ -274,7 +277,7 @@
 import axios from 'axios'
 import functionalSelector from "@/components/functionalSelector";
 import help from './components/help'
-import {mdiPost, mdiGithub, mdiDisc, mdiCloudDownload, mdiBug, mdiDotsVertical, mdiInformationOutline} from '@mdi/js'
+import {mdiPost, mdiGithub, mdiDisc, mdiCloudDownload, mdiBug, mdiDotsVertical, mdiInformationOutline, mdiBrightness4, mdiBrightness7} from '@mdi/js'
 import TeahouseFooter from '@/components/footer'
 export default {
   methods: {
@@ -345,7 +348,9 @@ export default {
       mdiCloudDownload,
       mdiBug,
       mdiDotsVertical,
-      mdiInformationOutline
+      mdiInformationOutline,
+      mdiBrightness4,
+      mdiBrightness7
     },
     tab: null,
     logsPanel: [],
@@ -425,11 +430,31 @@ export default {
   watch: {
     tab(newTab) {
       this.input.resource = newTab ? this.consts.be_modules.resource.map(v => v.name) : []
+    },
+    "$vuetify.theme.dark"(val) {
+      localStorage.setItem("memeDarkMode", val);
     }
+  },
+  created() {
+    if (localStorage.getItem("memeInitialized") !== "true") {
+      localStorage.setItem("memeDarkMode", window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? "true" : "false");
+    }
+    this.$vuetify.theme.dark = localStorage.getItem("memeDarkMode") === "true"
+    localStorage.setItem("memeInitialized", "true");  
   }
 };
 </script>
 <style>
+.v-tabs-items {
+  background-color: inherit !important;
+}
+
+.v-btn__content .v-icon {
+  font-size: 24px;
+  height: 24px;
+  width: 24px;
+}
+
 /* latin */
 @font-face {
   font-family: 'Fira Code';
