@@ -74,10 +74,15 @@
             </v-list>
           </v-menu>
         </div>
-        <v-btn text @click="$vuetify.theme.dark = !$vuetify.theme.dark">
-          <v-icon v-if="$vuetify.theme.dark">{{ svgPath.mdiBrightness7 }}</v-icon>
-          <v-icon v-else>{{ svgPath.mdiBrightness4 }}</v-icon>
-        </v-btn>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn text v-bind="attrs" v-on="on" @click="$vuetify.theme.dark = !$vuetify.theme.dark">
+              <v-icon v-if="$vuetify.theme.dark">{{ svgPath.mdiBrightness7 }}</v-icon>
+              <v-icon v-else>{{ svgPath.mdiBrightness4 }}</v-icon>
+            </v-btn>
+          </template>
+          <span>夜间/日间模式</span>
+        </v-tooltip>
       </v-app-bar>
       <v-alert
         :color="$vuetify.theme.dark ? 'dark' : 'white'"
