@@ -118,10 +118,13 @@ async def github(request: web.Request):
         body = await request.text()
         from hashlib import sha256
         import hmac
-        should_be = hmac.new(GITHUB_SECRET.encode('utf-8'), body.encode('utf-8'), digestmod=sha256).hexdigest()
+        should_be = 'sha256=' + hmac.new(GITHUB_SECRET.encode('utf-8'), body.encode('utf-8'),
+                                         digestmod=sha256).hexdigest()
         client_sign = request.headers.get('X-Hub-Signature-256', '')
         if not hmac.compare_digest(should_be, client_sign):
-            return web.HTTPForbidden()
+            return web.HTTPForbidden(headers={
+                'X-Client-Sign': client_sign
+            })
     pull_logs = await pull()
     return web.json_response(pull_logs)
 
