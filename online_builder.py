@@ -1,4 +1,5 @@
 import asyncio
+import configparser
 import importlib
 import os
 import time
@@ -13,6 +14,16 @@ executor = ThreadPoolExecutor(8)
 build_time = 0.0
 builder_lock = asyncio.Lock()
 env = {"update": 0.0, "data": {}}
+
+config = configparser.ConfigParser()
+config.read('config.ini')
+
+PULLING_WHEN_BUILD = True
+USE_GITHUB_WEBHOOK = False
+if 'MEME' in config.sections():
+    section = config['MEME']
+    PULLING_WHEN_BUILD = section.getboolean('PULLING_WHEN_BUILD', True)
+    USE_GITHUB_WEBHOOK = section.getboolean('USE_GITHUB_WEBHOOK', False)
 
 
 def get_env():
@@ -30,28 +41,39 @@ def get_env():
     return dict(mods=list(mods), enmods=list(enmods),
                 je_modules=je_modules, be_modules=be_modules)
 
+
 async def index(_):
     if env["update"] + 60 < time.time():
         env["data"] = get_env()
         env["update"] = time.time()
     return env["data"]
 
+
 async def api(request: web.Request):
     return web.json_response(get_env(), headers={'Access-Control-Allow-Origin': '*'})
+
+
+async def pull():
+    log = []
+    global build_time
+    if build_time + 60 < time.time():
+        build_time = time.time()
+        proc = await asyncio.create_subprocess_exec("git", "pull", "origin", "master", "--recurse-submodules",
+                                                    stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
+                                                    stdin=subprocess.DEVNULL)
+        log.append(str((await proc.communicate())[0], encoding="utf-8", errors="ignore"))
+    else:
+        log.append("A cache within 60 seconds is available, skipping update")
+    return log
+
 
 async def ajax(request: web.Request):
     data = await request.json()
     log = []
     async with builder_lock:
-        global build_time
-        if build_time + 60 < time.time():
-            build_time = time.time()
-            proc = await asyncio.create_subprocess_exec("git", "pull", "origin", "master", "--recurse-submodules",
-                                                        stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
-                                                        stdin=subprocess.DEVNULL)
-            log.append(str((await proc.communicate())[0], encoding="utf-8", errors="ignore"))
-        else:
-            log.append("A cache within 60 seconds is available, skipping update")
+        if PULLING_WHEN_BUILD:
+            pull_logs = await pull()
+            log.extend(pull_logs)
         if not data["_be"]:
             submodule_path = 'meme-pack-java'
             pack = importlib.import_module('meme-pack-java.build')
@@ -81,6 +103,7 @@ async def ajax(request: web.Request):
         'Access-Control-Allow-Origin': '*'
     })
 
+
 async def ajax_preflight(request: web.Request):
     return web.json_response({}, headers={
         'Access-Control-Allow-Origin': '*',
@@ -88,15 +111,23 @@ async def ajax_preflight(request: web.Request):
     })
 
 
+async def github(request: web.Request):
+    pull_logs = await pull()
+    return web.json_response(pull_logs)
+
+
 if not os.path.exists("./builds"):
     os.mkdir("builds")
 
-app.add_routes([
+routes = [
     web.static("/builds/", "./builds"),
     web.route("GET", "/", api),
     web.route("POST", "/ajax", ajax),
     web.route("OPTIONS", "/ajax", ajax_preflight)
-])
+]
+if USE_GITHUB_WEBHOOK:
+    routes.append(web.route("POST", "/github", github))
+app.add_routes(routes)
 
 if __name__ == '__main__':
     import sys

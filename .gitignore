@@ -6,3 +6,4 @@ Lib/
 Include/
 pyvenv.cfg
 .DS_Store
+config.ini
