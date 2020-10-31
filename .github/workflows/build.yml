@@ -4,8 +4,8 @@ on:
     branches:
       - master
     paths:
-      - "frontend"
-      - ".github/workflows"
+      - "frontend/**"
+      - ".github/workflows/**"
 
 jobs:
   build-and-deploy:
