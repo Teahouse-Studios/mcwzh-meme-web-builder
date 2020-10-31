@@ -27,7 +27,7 @@ async function start() {
     password: process.env.REMOTE_PWD
   })
   await ssh.putFile("dist/index.html", process.env.REMOTE_PATH)
-  
+  await ssh.dispose()
   console.log('done')
 }
 
