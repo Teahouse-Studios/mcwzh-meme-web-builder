@@ -80,13 +80,14 @@
         </v-btn>
       </v-app-bar>
       <v-alert
+        :color="$vuetify.theme.dark ? 'dark' : 'white'"
         :icon="svgPath.mdiInformationOutline"
         class="mb-0"
         dense
         tile
-        :color="$vuetify.theme.dark ? 'dark' : 'white'"
       >
-        在线构建最近进行了大型重构。若您发现了任何问题或想提出建议，欢迎进行<a href="https://github.com/Teahouse-Studios/mcwzh-meme-web-builder/issues/new">反馈</a>。
+        在线构建最近进行了大型重构。若您发现了任何问题或想提出建议，欢迎进行<a
+        href="https://github.com/Teahouse-Studios/mcwzh-meme-web-builder/issues/new">反馈</a>。
       </v-alert>
       <v-tabs
         v-model="tab"
@@ -117,13 +118,14 @@
               <v-col cols="12" sm="4">
                 <functional-selector
                   v-model="input.resource"
+                  :disabled="fetchListIgnored"
                   :items="consts.je_modules.resource"
                   :loading="loading_backend"
                   hint="请选择您需要的附加内容模块。" label="附加内容/材质选择"/>
               </v-col>
               <v-col cols="12" sm="4">
-                <functional-selector v-model="input.language" :items="consts.je_modules.language"
-                                     :loading="loading_backend"
+                <functional-selector v-model="input.language" :disabled="fetchListIgnored"
+                                     :items="consts.je_modules.language" :loading="loading_backend"
                                      hint="请选择您需要的旧/特殊版本字符串。" label="语言选择"
                 ></functional-selector>
               </v-col>
@@ -164,6 +166,7 @@
               <v-col cols="6" sm="6">
                 <functional-selector
                   v-model="input.resource"
+                  :disabled="fetchListIgnored"
                   :items="consts.be_modules.resource"
                   :loading="loading_backend"
                   hint="请选择您需要的附加内容模块。" label="附加内容/材质选择"/>
@@ -195,9 +198,9 @@
               </v-expansion-panel-header>
               <v-expansion-panel-content>
                 <pre
-                  style="padding-bottom:15px;white-space: pre-wrap;font-family: 'Cascadia Code', 'Fira Code','Consolas', monospace;">  {{
+                  style="padding-bottom:15px;white-space: pre-wrap;font-family: 'Cascadia Code', 'Fira Code','Consolas', monospace;">{{
                     item.content
-                  }}  </pre>
+                  }}</pre>
                 <v-btn v-if="item.filename" :color="$vuetify.theme.dark ? 'white' : 'primary'"
                        outlined @click="open($api + 'builds/' + item.filename)">
                   下载
@@ -263,7 +266,9 @@
             </v-card>
           </v-col>
         </v-row>
-        <div class="text-body-2 mb-3 pa-1" :style="$vuetify.theme.dark !== true ? 'color: rgba(0,0,0,.6)' : 'color: rgba(256,256,256,.7)'">这些赞助者均未给予 Teahouse Studios
+        <div :style="$vuetify.theme.dark !== true ? 'color: rgba(0,0,0,.6)' : 'color: rgba(256,256,256,.7)'"
+             class="text-body-2 mb-3 pa-1">这些赞助者均未给予
+          Teahouse Studios
           梗体中文团队真实金钱，亦未强迫 Teahouse Studios
           梗体中文团队将其添加至赞助者列表——这只是 Teahouse Studios 梗体中文团队对他们的支持最诚挚的感谢。❤️
         </div>
@@ -275,9 +280,9 @@
       构建已成功。
       <template v-slot:action="{ attrs }">
         <v-btn
+          v-bind="attrs"
           color="blue"
           text
-          v-bind="attrs"
           @click="snackbarBuildSucceeded = false"
         >
           关闭
@@ -288,17 +293,17 @@
       构建已失败。
       <template v-slot:action="{ attrs }">
         <v-btn
+          v-bind="attrs"
           color="red"
           text
-          v-bind="attrs"
-          @click="open(links.github + '/issues/new/choose')"
+          @click="open(links.web_builder + '/issues/new/choose')"
         >
           汇报问题
         </v-btn>
         <v-btn
+          v-bind="attrs"
           color="blue"
           text
-          v-bind="attrs"
           @click="snackbarBuildSucceeded = false"
         >
           关闭
@@ -319,20 +324,20 @@
           <v-btn
             color="primary"
             text
-            @click="location.reload()"
+            @click="fetchList()"
           >
             重试
           </v-btn>
           <v-btn
             text
-            @click="open(this.link.github + '/issues/new/choose')"
+            @click="open(links.web_builder + '/issues/new/choose')"
           >
             反馈
           </v-btn>
           <v-btn
             color="error"
             text
-            @click="dialogFetchListFailed = false"
+            @click="dialogFetchListFailed = false, fetchListIgnored = true, loading_backend = false"
           >
             忽略
           </v-btn>
@@ -367,12 +372,44 @@
 import axios from 'axios'
 import functionalSelector from "@/components/functionalSelector";
 import help from './components/help'
-import {mdiPost, mdiGithub, mdiDisc, mdiCloudDownload, mdiBug, mdiDotsVertical, mdiInformationOutline, mdiBrightness4, mdiBrightness7} from '@mdi/js'
+import {
+  mdiPost,
+  mdiGithub,
+  mdiDisc,
+  mdiCloudDownload,
+  mdiBug,
+  mdiDotsVertical,
+  mdiInformationOutline,
+  mdiBrightness4,
+  mdiBrightness7
+} from '@mdi/js'
 import TeahouseFooter from '@/components/footer'
+
 export default {
   methods: {
     open(name) {
       window.open(name)
+    },
+    async fetchList() {
+      this.loading_backend = true
+      let req;
+      try {
+        req = await axios.get(this.$api)
+      } catch (e) {
+        this.dialogFetchListFailed = true
+        console.log(e)
+        return;
+      }
+      const backend = req.data
+      this.consts = {
+        ...this.consts,
+        modList: [{header: 'Mod文件'}].concat(backend.mods).concat({header: 'Mod文件（未汉化）'})
+          .concat(backend.enmods),
+        je_modules: backend.je_modules,
+        be_modules: backend.be_modules,
+      }
+      this.loading_backend = false
+      this.dialogFetchListFailed = false
     },
     submit() {
       this.loading = true
@@ -442,6 +479,7 @@ export default {
     snackbarBuildFailed: false,
     dialogFetchListFailed: false,
     dialogModuleConflicted: false,
+    fetchListIgnored: false,
     svgPath: {
       mdiPost,
       mdiGithub,
@@ -505,18 +543,7 @@ export default {
       that.hint = that.hint === 3 ? 0 : ++that.hint
     }, 4000)
 
-    const req = await axios.get(this.$api).catch(function () {
-      this.dialogFetchListFailed = true
-    });
-    const backend = req.data
-    this.consts = {
-      ...this.consts,
-      modList: [{header: 'Mod文件'}].concat(backend.mods).concat({header: 'Mod文件（未汉化）'})
-        .concat(backend.enmods),
-      je_modules: backend.je_modules,
-      be_modules: backend.be_modules,
-    }
-    this.loading_backend = false
+    this.fetchList()
   },
   computed: {
     whetherUseBE() {
@@ -524,6 +551,7 @@ export default {
     },
     links() {
       return {
+        web_builder: 'https://github.com/Teahouse-Studios/mcwzh-meme-web-builder',
         github: 'https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack' + (this.tab ? '-bedrock' : ''),
         mcbbs: `https://www.mcbbs.net/thread-${this.tab ? '1005191' : '1004643'}-1-1.html`,
         disc: 'https://dianliang-oss-1301161188.file.myqcloud.com/zh-meme-respack/' + (this.tab ? 'Meme_resourcepack_records.mcpack' : 'record-java.zip')
@@ -532,7 +560,7 @@ export default {
   },
   watch: {
     tab(newTab) {
-      this.input.resource = newTab ? this.consts.be_modules.resource.map(v => v.name) : []
+      this.input.resource = newTab ? (this.consts.be_modules.resource || []).map(v => v.name) : []
     },
     "$vuetify.theme.dark"(val) {
       localStorage.setItem("memeDarkMode", val);
@@ -543,7 +571,7 @@ export default {
       localStorage.setItem("memeDarkMode", window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? "true" : "false");
     }
     this.$vuetify.theme.dark = localStorage.getItem("memeDarkMode") === "true"
-    localStorage.setItem("memeInitialized", "true");  
+    localStorage.setItem("memeInitialized", "true");
   }
 };
 </script>
@@ -566,6 +594,7 @@ export default {
   font-display: swap;
   src: url(https://fonts.gstatic.com/s/firacode/v9/uU9eCBsR6Z2vfE9aq3bL0fxyUs4tcw4W_A9sJVD7MOzlojwUKQ.woff) format('woff');
 }
+
 /* latin */
 @font-face {
   font-family: 'Roboto';
@@ -574,6 +603,7 @@ export default {
   font-display: swap;
   src: local('Roboto Thin'), local('Roboto-Thin'), url(https://fonts.gstatic.com/s/roboto/v20/KFOkCnqEu92Fr1MmgVxIIzIXKMny.woff2) format('woff2');
 }
+
 /* latin */
 @font-face {
   font-family: 'Roboto';
@@ -582,6 +612,7 @@ export default {
   font-display: swap;
   src: local('Roboto Light'), local('Roboto-Light'), url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmSU5fBBc4AMP6lQ.woff2) format('woff2');
 }
+
 /* latin */
 @font-face {
   font-family: 'Roboto';
@@ -590,6 +621,7 @@ export default {
   font-display: swap;
   src: local('Roboto'), local('Roboto-Regular'), url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2) format('woff2');
 }
+
 /* latin */
 @font-face {
   font-family: 'Roboto';
@@ -598,6 +630,7 @@ export default {
   font-display: swap;
   src: local('Roboto Medium'), local('Roboto-Medium'), url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmEU9fBBc4AMP6lQ.woff2) format('woff2');
 }
+
 /* latin */
 @font-face {
   font-family: 'Roboto';
@@ -606,6 +639,7 @@ export default {
   font-display: swap;
   src: local('Roboto Bold'), local('Roboto-Bold'), url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmWUlfBBc4AMP6lQ.woff2) format('woff2');
 }
+
 /* latin */
 @font-face {
   font-family: 'Roboto';

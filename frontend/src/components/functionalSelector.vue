@@ -1,6 +1,6 @@
 <template>
   <v-select v-model="resource" :hint="hint" :items="list"
-            :label="label" :loading="loading" multiple persistent-hint>
+            :disabled="disabled || false" :label="label" :loading="loading" multiple persistent-hint>
     <template v-slot:selection="{ item, index }">
       <v-chip v-if="index === 0">
         <span>{{ item.text.name }}</span>
@@ -46,7 +46,7 @@ import {mdiCheckboxBlankOutline, mdiCloseBox, mdiMinusBox} from '@mdi/js'
 
 export default {
   name: "functioanlSelector",
-  props: ['label', 'hint', 'items', 'resource_parent', 'loading'],
+  props: ['label', 'hint', 'items', 'resource_parent', 'loading', 'disabled'],
   model: {
     prop: 'resource_parent',
     event: 'change',
