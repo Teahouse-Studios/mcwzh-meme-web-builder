@@ -29,26 +29,26 @@ if 'MEME' in config.sections():
 
 
 def get_env():
+    t = time.time()
+    timing = []
     je_builder = importlib.import_module('meme-pack-java.build')
     be_builder = importlib.import_module('meme-pack-bedrock.build')
+    timing.append(f'import module: {time.time() - t}')
+    t = time.time()
     mods = map(lambda file: f"mods/{file}", os.listdir('meme-pack-java/mods'))
     enmods = map(lambda file: f"en-mods/{file}",
                  os.listdir('meme-pack-java/en-mods'))
     je_checker = je_builder.module_checker(join('meme-pack-java', "modules"))
     je_checker.check_module()
+    timing.append(f'je check modules: {time.time() - t}')
     je_modules = je_checker.module_info['modules']
     be_checker = be_builder.module_checker(join('meme-pack-bedrock', "modules"))
     be_checker.check_module()
+    timing.append(f'be check modules: {time.time() - t}')
     be_modules = be_checker.module_info['modules']
+    print(timing)
     return dict(mods=list(mods), enmods=list(enmods),
                 je_modules=je_modules, be_modules=be_modules)
-
-
-async def index(_):
-    if env["update"] + 60 < time.time():
-        env["data"] = get_env()
-        env["update"] = time.time()
-    return env["data"]
 
 
 async def api(request: web.Request):
