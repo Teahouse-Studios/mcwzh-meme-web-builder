@@ -20,10 +20,12 @@ config.read('config.ini')
 
 PULLING_WHEN_BUILD = True
 USE_GITHUB_WEBHOOK = False
+GITHUB_SECRET = ''
 if 'MEME' in config.sections():
     section = config['MEME']
     PULLING_WHEN_BUILD = section.getboolean('PULLING_WHEN_BUILD', True)
     USE_GITHUB_WEBHOOK = section.getboolean('USE_GITHUB_WEBHOOK', False)
+    GITHUB_SECRET = section.get('GITHUB_SECRET', '')
 
 
 def get_env():
@@ -112,6 +114,14 @@ async def ajax_preflight(request: web.Request):
 
 
 async def github(request: web.Request):
+    if GITHUB_SECRET:
+        body = await request.text()
+        from hashlib import sha256
+        import hmac
+        should_be = hmac.new(GITHUB_SECRET.encode('utf-8'), body.encode('utf-8'), digestmod=sha256).hexdigest()
+        client_sign = request.headers.get('X-Hub-Signature-256', '')
+        if not hmac.compare_digest(should_be, client_sign):
+            return web.HTTPForbidden()
     pull_logs = await pull()
     return web.json_response(pull_logs)
 
