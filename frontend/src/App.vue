@@ -271,6 +271,96 @@
       <TeahouseFooter></TeahouseFooter>
     </v-main>
     <help/>
+    <v-snackbar v-model="snackbarBuildSucceeded">
+      构建已成功。
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="blue"
+          text
+          v-bind="attrs"
+          @click="snackbarBuildSucceeded = false"
+        >
+          关闭
+        </v-btn>
+      </template>
+    </v-snackbar>
+    <v-snackbar v-model="snackbarBuildFailed">
+      构建已失败。
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="red"
+          text
+          v-bind="attrs"
+          @click="open(links.github + '/issues/new/choose')"
+        >
+          汇报问题
+        </v-btn>
+        <v-btn
+          color="blue"
+          text
+          v-bind="attrs"
+          @click="snackbarBuildSucceeded = false"
+        >
+          关闭
+        </v-btn>
+      </template>
+    </v-snackbar>
+    <v-dialog
+      v-model="dialogFetchListFailed"
+      width="500"
+    >
+      <v-card>
+        <v-card-title class="headline">错误</v-card-title>
+        <v-card-text>
+          在向服务器请求资源模块列表时发生了错误。
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="primary"
+            text
+            @click="location.reload()"
+          >
+            重试
+          </v-btn>
+          <v-btn
+            text
+            @click="open(this.link.github + '/issues/new/choose')"
+          >
+            反馈
+          </v-btn>
+          <v-btn
+            color="error"
+            text
+            @click="dialogFetchListFailed = false"
+          >
+            忽略
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-dialog
+      v-model="dialogModuleConflicted"
+      width="500"
+    >
+      <v-card>
+        <v-card-title class="headline">错误</v-card-title>
+        <v-card-text>
+          <p>在提交构建时检查到模块冲突。请您检查是否选中了不兼容的模块。</p>
+          <p>不兼容的模块：<code>questioning_totem</code> 和 <code>totem_model</code></p>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="primary"
+            text
+            @click="dialogModuleConflicted = false"
+          >
+            去修复
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-app>
 </template>
 <script>
@@ -287,52 +377,59 @@ export default {
     submit() {
       this.loading = true
 
-      let data = Object.assign({}, this.inputBasic, {
-        _be: this.whetherUseBE,
-        modules: {
-          language: [...new Set(
-            this.input.language.concat(this.inputBasic.format === 3 ? ['attributes', 'old_strings', 'diamond_hoe'] : [])
-          )],
-          resource: this.input.resource,
-          mixed: []
-        },
-        mod: this.input.mod,
-        hash: true,
-        type: this.inputBasic.format === 3 ? 'legacy' : 'normal'
-      }, this.whetherUseBE && {
-        type: this.input.beExtType,
-        compatible: this.input.compatible
-      })
-      console.log(data)
-      window.location.host === 'dl.meme.teahou.se' && window.ga && window.ga('send', 'event', this.whetherUseBE ? 'be' : 'je', 'build');
-      axios({url: '/ajax', baseURL: this.$api, method: 'POST', data}).then(function (res) {
-        console.log(res.data)
-        this.logs.unshift({
-          title: '构建成功',
-          ts: new Date().valueOf(),
-          content: res.data.logs,
-          filename: res.data.filename,
-          github: this.links.github
-        })
-        this.logsPanel = this.logsPanel.map(v => v + 1)
-        this.logsPanel.unshift(0)
-        this.$nextTick(function () {
-          this.$refs.logs.scrollIntoView()
-        }.bind(this))
+      if (this.input.resource.includes('questioning_totem') && this.input.resource.includes('totem_model')) {
+        this.dialogModuleConflicted = true
         this.loading = false
-      }.bind(this)).catch(function (err) {
-        this.logs.unshift({
-          title: '构建失败',
-          ts: new Date().valueOf(),
-          content: err.toString()
+      } else {
+        let data = Object.assign({}, this.inputBasic, {
+          _be: this.whetherUseBE,
+          modules: {
+            language: [...new Set(
+              this.input.language.concat(this.inputBasic.format === 3 ? ['attributes', 'old_strings', 'diamond_hoe'] : [])
+            )],
+            resource: this.input.resource,
+            mixed: []
+          },
+          mod: this.input.mod,
+          hash: true,
+          type: this.inputBasic.format === 3 ? 'legacy' : 'normal'
+        }, this.whetherUseBE && {
+          type: this.input.beExtType,
+          compatible: this.input.compatible
         })
-        this.logsPanel = this.logsPanel.map(v => v + 1)
-        this.logsPanel.unshift(0)
-        this.$nextTick(function () {
-          this.$refs.logs.scrollIntoView()
+        console.log(data)
+        window.location.host === 'dl.meme.teahou.se' && window.ga && window.ga('send', 'event', this.whetherUseBE ? 'be' : 'je', 'build');
+        axios({url: '/ajax', baseURL: this.$api, method: 'POST', data}).then(function (res) {
+          console.log(res.data)
+          this.logs.unshift({
+            title: '构建成功',
+            ts: new Date().valueOf(),
+            content: res.data.logs,
+            filename: res.data.filename,
+            github: this.links.github
+          })
+          this.logsPanel = this.logsPanel.map(v => v + 1)
+          this.logsPanel.unshift(0)
+          this.$nextTick(function () {
+            this.$refs.logs.scrollIntoView()
+          }.bind(this))
+          this.snackbarBuildSucceeded = true
+          this.loading = false
+        }.bind(this)).catch(function (err) {
+          this.logs.unshift({
+            title: '构建失败',
+            ts: new Date().valueOf(),
+            content: err.toString()
+          })
+          this.logsPanel = this.logsPanel.map(v => v + 1)
+          this.logsPanel.unshift(0)
+          this.$nextTick(function () {
+            this.$refs.logs.scrollIntoView()
+          }.bind(this))
+          this.snackbarBuildFailed = true
+          this.loading = false
         }.bind(this))
-        this.loading = false
-      }.bind(this))
+      }
     }
   },
   components: {
@@ -341,6 +438,10 @@ export default {
     TeahouseFooter
   },
   data: () => ({
+    snackbarBuildSucceeded: false,
+    snackbarBuildFailed: false,
+    dialogFetchListFailed: false,
+    dialogModuleConflicted: false,
     svgPath: {
       mdiPost,
       mdiGithub,
@@ -404,7 +505,9 @@ export default {
       that.hint = that.hint === 3 ? 0 : ++that.hint
     }, 4000)
 
-    const req = await axios.get(this.$api);
+    const req = await axios.get(this.$api).catch(function () {
+      this.dialogFetchListFailed = true
+    });
     const backend = req.data
     this.consts = {
       ...this.consts,
