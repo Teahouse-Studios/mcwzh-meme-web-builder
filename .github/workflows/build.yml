@@ -31,7 +31,7 @@ jobs:
       - name: Install and Build
         run: |
           cd frontend
-          yarn --no-lockfile --production
+          yarn --no-lockfile
           yarn build
         env:
           VUE_APP_I18N_LOCALE: zh-hans
