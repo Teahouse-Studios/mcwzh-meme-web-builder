@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialogHelp" max-width="700px" scrollable>
+  <v-dialog v-model="dialog" max-width="700px" scrollable>
     <template v-slot:activator="{ on, attrs }">
       <v-btn
         aria-label="帮助 & 关于"
@@ -125,7 +125,7 @@ import {mdiGithub, mdiGoogleAnalytics, mdiVuetify, mdiVuejs, mdiVectorSquare, md
 export default {
 name: "help",
   data: () => ({
-    dialogHelp: false,
+    dialog: false,
     svgPath: {
       mdiGithub, mdiGoogleAnalytics, mdiVuetify, mdiVuejs, mdiVectorSquare, mdiClose, mdiHelp
     }
