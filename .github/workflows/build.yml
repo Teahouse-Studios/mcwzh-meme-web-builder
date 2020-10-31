@@ -5,6 +5,7 @@ on:
       - master
     paths:
       - "frontend"
+      - ".github/workflows"
 
 jobs:
   build-and-deploy:
