@@ -76,7 +76,7 @@
         </div>
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn text v-bind="attrs" v-on="on" @click="$vuetify.theme.dark = !$vuetify.theme.dark">
+            <v-btn v-bind="attrs" v-on="on" text @click="$vuetify.theme.dark = !$vuetify.theme.dark">
               <v-icon v-if="$vuetify.theme.dark">{{ svgPath.mdiBrightness7 }}</v-icon>
               <v-icon v-else>{{ svgPath.mdiBrightness4 }}</v-icon>
             </v-btn>
@@ -565,7 +565,7 @@ export default {
   },
   watch: {
     tab(newTab) {
-      this.input.resource = newTab ? (this.consts.be_modules.resource || []).map(v => v.name) : []
+      this.input.resource = newTab ? (this.consts.be_modules.resource || []).map(v => v.name) : ["questioning_totem", "Lie-nus_and_more_things", "BUGJUMP", "meme_splashes", "grass_enchanted", "bee_pickaxe", "a_letter", "observer_think", "map_override", "mopemope", "red_leaf_valley", "disco_ball"]
     },
     "$vuetify.theme.dark"(val) {
       localStorage.setItem("memeDarkMode", val);
