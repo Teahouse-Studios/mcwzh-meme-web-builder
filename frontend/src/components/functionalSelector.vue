@@ -64,7 +64,7 @@ export default {
     resourceIcon() {
       if (this.resource.length === 0) {
         return mdiCheckboxBlankOutline
-      } else if (this.resource.length === this.items.length) {
+      } else if (this.resource.length === this.items?.length) {
         return mdiCloseBox
       } else {
         return mdiMinusBox
