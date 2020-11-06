@@ -31,7 +31,7 @@
         </v-list-item-action>
         <v-list-item-content>
           <v-list-item-title>{{ data.item.text.name }}</v-list-item-title>
-          <v-list-item-subtitle>{{ data.item.text.description }} <a v-if="data.item.text.author">
+          <v-list-item-subtitle style="white-space: pre-wrap">{{ data.item.text.description }} <a v-if="data.item.text.author">
             · 作者：{{ data.item.text.author }}
           </a>
           </v-list-item-subtitle>

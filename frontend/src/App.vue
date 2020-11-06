@@ -124,7 +124,7 @@
                 <functional-selector
                   v-model="input.resource"
                   :disabled="fetchListIgnored"
-                  :items="consts.je_modules.resource"
+                  :items="consts.je_modules.resource.concat(consts.je_modules.mixed)"
                   :loading="loading_backend"
                   hint="请选择您需要的附加内容模块。" label="附加内容/材质选择"/>
               </v-col>
@@ -134,13 +134,7 @@
                                      hint="请选择您需要的旧/特殊版本字符串。" label="语言选择"
                 ></functional-selector>
               </v-col>
-              <v-col cols="12" sm="4">
-                <functional-selector v-model="input.mixed" :disabled="fetchListIgnored"
-                                     :items="consts.je_modules.mixed" :loading="loading_backend"
-                                     hint="请选择您需要的混合模块。" label="混合模块"
-                ></functional-selector>
-              </v-col>
-              <v-col cols="6" sm="4">
+              <v-col cols="6" sm="6">
                 <v-select
                   v-model="input.modOption"
                   :items="consts.modOption"
@@ -150,7 +144,7 @@
                 />
 
               </v-col>
-              <v-col cols="6" sm="4">
+              <v-col cols="6" sm="6">
                 <v-select
                   v-model="input.mod"
                   :disabled="input.modOption !== 'custom'"
@@ -435,8 +429,10 @@ export default {
             language: [...new Set(
               this.input.language.concat(this.inputBasic.format === 3 ? ['attributes', 'old_strings', 'diamond_hoe'] : [])
             )],
-            resource: this.input.resource,
-            mixed: this.input.mixed
+            resource: this.whetherUseBE ? this.input.resource :
+              this.input.resource.filter(v => !this.consts.je_modules.mixed.map(v => v.name).includes(v)),
+            mixed: this.whetherUseBE ? this.input.resource :
+              this.input.resource.filter(v => this.consts.je_modules.mixed.map(v => v.name).includes(v)),
           },
           mod: this.input.mod,
           hash: true,
@@ -535,7 +531,13 @@ export default {
         text: "自定义"
       }],
       beExtType: ['mcpack', 'zip'],
-      modList: [], je_modules: [], be_modules: [],
+      modList: [], je_modules: {
+        language: [],
+        mixed: [],
+        resource: []
+      }, be_modules: {
+        resource: []
+      },
       versions: [{text: '1.16.2+', value: 6}, {text: '1.15 - 1.16.1', value: 5}, {
         text: '1.13 - 1.14.4', value: 4
       }, {
