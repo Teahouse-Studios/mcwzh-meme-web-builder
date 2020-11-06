@@ -134,7 +134,13 @@
                                      hint="请选择您需要的旧/特殊版本字符串。" label="语言选择"
                 ></functional-selector>
               </v-col>
-              <v-col cols="6" sm="6">
+              <v-col cols="12" sm="4">
+                <functional-selector v-model="input.mixed" :disabled="fetchListIgnored"
+                                     :items="consts.je_modules.mixed" :loading="loading_backend"
+                                     hint="请选择您需要的混合模块。" label="混合模块"
+                ></functional-selector>
+              </v-col>
+              <v-col cols="6" sm="4">
                 <v-select
                   v-model="input.modOption"
                   :items="consts.modOption"
@@ -144,7 +150,7 @@
                 />
 
               </v-col>
-              <v-col cols="6" sm="6">
+              <v-col cols="6" sm="4">
                 <v-select
                   v-model="input.mod"
                   :disabled="input.modOption !== 'custom'"
@@ -430,7 +436,7 @@ export default {
               this.input.language.concat(this.inputBasic.format === 3 ? ['attributes', 'old_strings', 'diamond_hoe'] : [])
             )],
             resource: this.input.resource,
-            mixed: []
+            mixed: this.input.mixed
           },
           mod: this.input.mod,
           hash: true,
@@ -509,6 +515,7 @@ export default {
       mod: [],
       resource: [],
       language: [],
+      mixed: [],
       beExtType: 'mcpack'
     },
     hint: 0,
