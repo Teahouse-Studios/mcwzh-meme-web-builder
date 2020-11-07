@@ -78,7 +78,7 @@
         </div>
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn text v-bind="attrs" v-on="on" @click="$vuetify.theme.dark = !$vuetify.theme.dark">
+            <v-btn v-bind="attrs" v-on="on" text @click="$vuetify.theme.dark = !$vuetify.theme.dark">
               <v-icon v-if="$vuetify.theme.dark">{{ svgPath.mdiBrightness7 }}</v-icon>
               <v-icon v-else>{{ svgPath.mdiBrightness4 }}</v-icon>
             </v-btn>
@@ -125,7 +125,7 @@
                 <functional-selector
                   v-model="input.resource"
                   :disabled="fetchListIgnored"
-                  :items="consts.je_modules.resource"
+                  :items="consts.je_modules.resource.concat(consts.je_modules.mixed)"
                   :loading="loading_backend"
                   :hint="$t('form.resource.hint')"
                   :label="$t('form.resource.label')"
@@ -433,8 +433,10 @@ export default {
             language: [...new Set(
               this.input.language.concat(this.inputBasic.format === 3 ? ['attributes', 'old_strings', 'diamond_hoe'] : [])
             )],
-            resource: this.input.resource,
-            mixed: []
+            resource: this.whetherUseBE ? this.input.resource :
+              this.input.resource.filter(v => !this.consts.je_modules.mixed.map(v => v.name).includes(v)),
+            mixed: this.whetherUseBE ? this.input.resource :
+              this.input.resource.filter(v => this.consts.je_modules.mixed.map(v => v.name).includes(v)),
           },
           mod: this.input.mod,
           hash: true,
@@ -514,6 +516,7 @@ export default {
       mod: [],
       resource: [],
       language: [],
+      mixed: [],
       beExtType: 'mcpack'
     },
     hint: 0,
@@ -524,7 +527,13 @@ export default {
         text: "自定义"
       }],
       beExtType: ['mcpack', 'zip'],
-      modList: [], je_modules: [], be_modules: [],
+      modList: [], je_modules: {
+        language: [],
+        mixed: [],
+        resource: []
+      }, be_modules: {
+        resource: []
+      },
       versions: [{text: '1.16.2+', value: 6}, {text: '1.15 - 1.16.1', value: 5}, {
         text: '1.13 - 1.14.4', value: 4
       }, {
@@ -555,7 +564,7 @@ export default {
   },
   watch: {
     tab(newTab) {
-      this.input.resource = newTab ? (this.consts.be_modules.resource || []).map(v => v.name) : []
+      this.input.resource = newTab ? (this.consts.be_modules.resource || []).map(v => v.name) : ["questioning_totem", "Lie-nus_and_more_things", "BUGJUMP", "meme_splashes", "grass_enchanted", "bee_pickaxe", "a_letter", "observer_think", "map_override", "mopemope", "red_leaf_valley", "disco_ball"]
     },
     "$vuetify.theme.dark"(val) {
       localStorage.setItem("memeDarkMode", val);

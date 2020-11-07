@@ -30,7 +30,6 @@
               position="right"
               src="../assets/logo.svg"
               style="filter: invert(1)"
-              transition="scale-transition"
             />
           </a>
         </v-col>
