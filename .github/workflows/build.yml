@@ -34,8 +34,6 @@ jobs:
           yarn --no-lockfile
           yarn build
         env:
-          VUE_APP_I18N_LOCALE: zh-hans
-          VUE_APP_I18N_FALLBACK_LOCALE: zh-hans
           AL_FE_KEYID: ${{ secrets.AL_FE_KEYID }}
           AL_FE_SECRET: ${{ secrets.AL_FE_SECRET }}
           AL_FE_BUCKET: ${{ secrets.AL_FE_BUCKET }}
