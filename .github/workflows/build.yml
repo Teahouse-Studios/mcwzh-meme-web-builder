@@ -28,11 +28,24 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-      - name: Install and Build
+      - name: Cache Node Modules
+        id: node-cache
+        uses: actions/cache@v2
+        with:
+          path: frontend/node_modules
+          key: node-modules-${{ hashFiles('frontend/yarn.lock') }}
+
+      - name: Install
+        if: steps.cache.outputs.cache-hit != 'true'
         run: |
           cd frontend
           yarn --no-lockfile
-          yarn build
+
+      - name: Build
+        run: yarn build
+
+      - name: Release
+        run: yarn release
         env:
           AL_FE_KEYID: ${{ secrets.AL_FE_KEYID }}
           AL_FE_SECRET: ${{ secrets.AL_FE_SECRET }}

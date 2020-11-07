@@ -26,8 +26,6 @@ yarn install
 
 ```frontend/vue.config.js```中，```publicPath```修改为```/```。
 
-```frontend/package.json```中，```scripts.build```中删除```&& node release.js```。
-
 随后自行上传dist文件到服务器。
 
 如果您需要静态文件分离，请复制```.env.example```到```.env```，并修改其中内容。

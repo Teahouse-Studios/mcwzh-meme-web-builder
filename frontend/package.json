@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --modern && node release.js",
+    "build": "vue-cli-service build --modern",
+    "release": "node release.js",
     "lint": "vue-cli-service lint",
     "ana": "cross-env ANALYZER=true vue-cli-service build",
     "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'"
