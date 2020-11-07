@@ -4,7 +4,7 @@
       <v-app-bar
         :color="$vuetify.theme.dark ? 'dark' : 'white'" flat
       >
-        <v-toolbar-title>梗体中文 · 在线构建</v-toolbar-title>
+        <v-toolbar-title>{{ $t("appbar.title") }}</v-toolbar-title>
         <v-spacer></v-spacer>
         <div v-if="$vuetify.breakpoint.name !== 'xs'">
           <v-tooltip bottom>
@@ -13,21 +13,22 @@
                    v-on="on">
                 <v-btn :href="links.mcbbs" rel="noopener noreferrer" text>
                   <v-icon left>{{ svgPath.mdiPost }}</v-icon>
-                  MCBBS
+                  {{ $t("appbar.mcbbs") }}
                 </v-btn>
                 <v-btn :href="links.github" rel="noopener noreferrer"
                        text>
                   <v-icon left>{{ svgPath.mdiGithub }}</v-icon>
-                  GitHub
+                  {{ $t("appbar.github") }}
                 </v-btn>
                 <v-btn :href="links.disc" rel="noopener noreferrer"
                        text>
                   <v-icon left>{{ svgPath.mdiDisc }}</v-icon>
-                  唱片包
+                  {{ $t("appbar.discPack") }}
                 </v-btn>
+                <langMenu />
               </div>
             </template>
-            <span>{{ !this.tab ? 'Java' : '基岩' }}版</span>
+            <span>{{ !this.tab ? $t("java") : $t("bedrock") }}</span>
           </v-tooltip>
         </div>
         <div v-else>
@@ -49,7 +50,7 @@
                   <v-icon>{{ svgPath.mdiPost }}</v-icon>
                 </v-list-item-icon>
                 <v-list-item-text>
-                  MCBBS
+                  {{ $t("appbar.mcbbs") }}
                 </v-list-item-text>
               </v-list-item>
               <v-list-item :href="links.github"
@@ -58,7 +59,7 @@
                   <v-icon>{{ svgPath.mdiGithub }}</v-icon>
                 </v-list-item-icon>
                 <v-list-item-text>
-                  GitHub
+                  {{ $t("appbar.github") }}
                 </v-list-item-text>
               </v-list-item>
               <v-list-item :href="links.disc"
@@ -67,10 +68,11 @@
                   <v-icon>{{ svgPath.mdiDisc }}</v-icon>
                 </v-list-item-icon>
                 <v-list-item-text>
-                  唱片包
+                  {{ $t("appbar.discPack") }}
                 </v-list-item-text>
               </v-list-item>
-              <div class="text-center">（{{ !this.tab ? 'Java' : '基岩' }}版）</div>
+              <langMenu />
+              <div class="text-center">（{{ !this.tab ? $t("java") : $t("bedrock") }}）</div>
             </v-list>
           </v-menu>
         </div>
@@ -81,7 +83,7 @@
               <v-icon v-else>{{ svgPath.mdiBrightness4 }}</v-icon>
             </v-btn>
           </template>
-          <span>夜间/日间模式</span>
+          <span>{{ $t("appbar.nightModeSwitch") }}</span>
         </v-tooltip>
       </v-app-bar>
       <v-alert
@@ -91,8 +93,7 @@
         dense
         tile
       >
-        在线构建最近进行了大型重构。若您发现了任何问题或想提出建议，欢迎进行<a
-        href="https://github.com/Teahouse-Studios/mcwzh-meme-web-builder/issues/new">反馈</a>。
+        {{ $t("alert.main") }}<a href="https://github.com/Teahouse-Studios/mcwzh-meme-web-builder/issues/new">{{ $t("alert.feedback")}}</a>{{ $t("alert.period") }}
       </v-alert>
       <v-tabs
         v-model="tab"
@@ -100,10 +101,10 @@
         fixed-tabs
       >
         <v-tab>
-          Java版
+          {{ $t("java") }}
         </v-tab>
         <v-tab>
-          基岩版
+          {{ $t("bedrock") }}
         </v-tab>
       </v-tabs>
 
@@ -115,8 +116,8 @@
                 <v-select
                   v-model="inputBasic.format"
                   :items="consts.versions"
-                  hint="选择您游玩的游戏版本区间。"
-                  label="游戏版本"
+                  :hint="$t('form.version.hint')"
+                  :label="$t('form.version.label')"
                   persistent-hint
                 />
               </v-col>
@@ -126,20 +127,23 @@
                   :disabled="fetchListIgnored"
                   :items="consts.je_modules.resource"
                   :loading="loading_backend"
-                  hint="请选择您需要的附加内容模块。" label="附加内容/材质选择"/>
+                  :hint="$t('form.resource.hint')"
+                  :label="$t('form.resource.label')"
+                />
               </v-col>
               <v-col cols="12" sm="4">
                 <functional-selector v-model="input.language" :disabled="fetchListIgnored"
                                      :items="consts.je_modules.language" :loading="loading_backend"
-                                     hint="请选择您需要的旧/特殊版本字符串。" label="语言选择"
+                                     :hint="$t('form.language.hint')"
+                                     :label="$t('form.resource.label')"
                 ></functional-selector>
               </v-col>
               <v-col cols="6" sm="6">
                 <v-select
                   v-model="input.modOption"
                   :items="consts.modOption"
-                  hint="您是否需要Mod支持？"
-                  label="Mod内容选择"
+                  :hint="$t('form.mod.option.hint')"
+                  :label="$t('form.mod.option.label')"
                   persistent-hint
                 />
 
@@ -149,8 +153,8 @@
                   v-model="input.mod"
                   :disabled="input.modOption !== 'custom'"
                   :items="consts.modList"
-                  hint="请选择您需要的Mod。"
-                  label="Mod内容选择"
+                  :hint="$t('form.mod.list.hint')"
+                  :label="$t('form.mod.list.label')"
                   multiple
                   persistent-hint
                 ></v-select>
@@ -163,8 +167,8 @@
                 <v-select
                   v-model="input.beExtType"
                   :items="consts.beExtType"
-                  hint="请选择您需要的附加包格式。"
-                  label="附加包格式"
+                  :hint="$t('form.beExtType.hint')"
+                  :label="$t('form.beExtType.hint')"
                   persistent-hint
                 />
               </v-col>
@@ -174,28 +178,28 @@
                   :disabled="fetchListIgnored"
                   :items="consts.be_modules.resource"
                   :loading="loading_backend"
-                  hint="请选择您需要的附加内容模块。" label="附加内容/材质选择"/>
+                  :hint="$t('form.resource.hint')" :label="$t('form.resource.label')"/>
               </v-col>
             </v-row>
             <v-checkbox
               v-model="input.compatible"
               class="mb-3"
-              hint="使此附加包与其他附加包兼容。此选项只会生成zh_CN.lang，因此在选项中只需选择简体中文即可体验。"
-              label="使用兼容选项"
+              :hint="$t('form.compatible.hint')"
+              :label="$t('form.compatible.label')"
               persistent-hint
             />
           </v-tab-item>
         </v-tabs-items>
         <v-alert :icon="svgPath.mdiInformationOutline" class="mt-3 mb-3 text-body-2" dense outlined
-                 type="info"> {{ consts.hints[hint] }}
+                 type="info">{{ $t('hints')[hint] }}
         </v-alert>
         <v-btn :disabled="loading" :loading="loading" color="primary" @click="submit">
           <v-icon left>{{ svgPath.mdiCloudDownload }}</v-icon>
-          提交构建选项
+            {{ $t("form.submit") }}
         </v-btn>
         <div v-if="logs.length >= 1">
           <v-divider style="margin:15px 0"></v-divider>
-          <p ref="logs" class="headline">构建日志</p>
+          <p ref="logs" class="headline">{{ $t("log.headline") }}</p>
           <v-expansion-panels v-model="logsPanel" multiple>
             <v-expansion-panel v-for="(item,i) in logs" :key="i">
               <v-expansion-panel-header>
@@ -208,13 +212,13 @@
                   }}</pre>
                 <v-btn v-if="item.filename" :color="$vuetify.theme.dark ? 'white' : 'primary'"
                        outlined @click="open($api + 'builds/' + item.filename)">
-                  下载
+                  {{ $t("log.download") }}
                 </v-btn>
                 <v-btn v-else
                        :color="$vuetify.theme.dark ? 'dark' : ''"
                        dark @click="open(item.github + '/issues/new/choose')">
                   <v-icon left>{{ svgPath.mdiBug }}</v-icon>
-                  反馈
+                  {{ $t("log.feedback") }}
                 </v-btn>
               </v-expansion-panel-content>
             </v-expansion-panel>
@@ -226,10 +230,10 @@
             <v-card>
               <v-list-item three-line>
                 <v-list-item-content>
-                  <div class="overline mb-4">SPONSOR</div>
-                  <v-list-item-title class="headline mb-1">梗体中文 由 SPGoding 赞助</v-list-item-title>
-                  <v-list-item-subtitle>SPGoding 是一位 Mojira 管理员、MCBBS 艺术家，代表作《大憨批》VSCode 插件。ta
-                    热心的赠送了梗体中文 7 天的 MCBBS 广告位。
+                  <div class="overline mb-4">{{ $t("sponsor.overline") }}</div>
+                  <v-list-item-title class="headline mb-1">{{ $t("sponsor.spg.headline") }}</v-list-item-title>
+                  <v-list-item-subtitle>
+                    {{ $t("sponsor.spg.subtitle") }}
                   </v-list-item-subtitle>
                 </v-list-item-content>
 
@@ -239,10 +243,11 @@
               </v-list-item>
 
               <v-card-actions>
-                <v-btn href="https://www.mcbbs.net/?2444378" rel="noopener noreferrer" text>MCBBS 资料页
+                <v-btn href="https://www.mcbbs.net/?2444378" rel="noopener noreferrer" text>{{ $t("sponsor.spg.mcbbs") }}
                 </v-btn>
                 <v-btn href="https://www.mcbbs.net/thread-926724-1-1.html" rel="noopener noreferrer"
-                       text>《大憨批》介绍
+                       text>
+                  {{ $t("sponsor.spg.dhp") }}
                 </v-btn>
               </v-card-actions>
             </v-card>
@@ -251,10 +256,10 @@
             <v-card>
               <v-list-item three-line>
                 <v-list-item-content>
-                  <div class="overline mb-4">SPONSOR</div>
-                  <v-list-item-title class="headline mb-1">梗体中文 由 是秋夕呀mua 赞助</v-list-item-title>
-                  <v-list-item-subtitle>是秋夕呀mua 是一位 Bilibili UP 主。她向她的 10w+ 粉丝<a
-                    href="https://www.bilibili.com/video/BV1Vt4y1v7jP">推荐了梗体中文</a>。
+                  <div class="overline mb-4">{{ $t("sponsor.overline") }}</div>
+                  <v-list-item-title class="headline mb-1">{{ $t("sponsor.qiuxi.headline") }}</v-list-item-title>
+                  <v-list-item-subtitle>
+                    {{ $t("sponsor.qiuxi.subtitle") }}
                   </v-list-item-subtitle>
                 </v-list-item-content>
 
@@ -265,24 +270,22 @@
 
               <v-card-actions>
                 <v-btn href="https://space.bilibili.com/678013610" rel="noopener noreferrer" text>
-                  Bilibili 主页
+                  {{ $t("sponsor.qiuxi.bilibili") }}
                 </v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
         </v-row>
         <div :style="$vuetify.theme.dark !== true ? 'color: rgba(0,0,0,.6)' : 'color: rgba(256,256,256,.7)'"
-             class="text-body-2 mb-3 pa-1">这些赞助者均未给予
-          Teahouse Studios
-          梗体中文团队真实金钱，亦未强迫 Teahouse Studios
-          梗体中文团队将其添加至赞助者列表——这只是 Teahouse Studios 梗体中文团队对他们的支持最诚挚的感谢。❤️
+             class="text-body-2 mb-3 pa-1">
+          {{ $t("sponsor.disclaimer") }}
         </div>
       </v-container>
       <TeahouseFooter></TeahouseFooter>
     </v-main>
     <help/>
     <v-snackbar v-model="snackbarBuildSucceeded">
-      构建已成功。
+      {{ $t("snackbar.buildSucceeded") }}
       <template v-slot:action="{ attrs }">
         <v-btn
           v-bind="attrs"
@@ -290,12 +293,12 @@
           text
           @click="snackbarBuildSucceeded = false"
         >
-          关闭
+          {{ $t("snackbar.close") }}
         </v-btn>
       </template>
     </v-snackbar>
     <v-snackbar v-model="snackbarBuildFailed">
-      构建已失败。
+      {{ $t("snackbar.buildFailed") }}
       <template v-slot:action="{ attrs }">
         <v-btn
           v-bind="attrs"
@@ -303,7 +306,7 @@
           text
           @click="open(links.web_builder + '/issues/new/choose')"
         >
-          汇报问题
+          {{ $t("snackbar.feedback") }}
         </v-btn>
         <v-btn
           v-bind="attrs"
@@ -311,7 +314,7 @@
           text
           @click="snackbarBuildSucceeded = false"
         >
-          关闭
+          {{ $t("snackbar.close") }}
         </v-btn>
       </template>
     </v-snackbar>
@@ -320,9 +323,9 @@
       width="500"
     >
       <v-card>
-        <v-card-title class="headline">错误</v-card-title>
+        <v-card-title class="headline">{{ $t("dialog.fetchListFailed.headline") }}</v-card-title>
         <v-card-text>
-          在向服务器请求资源模块列表时发生了错误。
+          {{ $t("dialog.fetchListFailed.text") }}
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -331,20 +334,20 @@
             text
             @click="fetchList()"
           >
-            重试
+            {{ $t("dialog.fetchListFailed.retry") }}
           </v-btn>
           <v-btn
             text
             @click="open(links.web_builder + '/issues/new/choose')"
           >
-            反馈
+            {{ $t("dialog.fetchListFailed.feedback") }}
           </v-btn>
           <v-btn
             color="error"
             text
             @click="dialogFetchListFailed = false, fetchListIgnored = true, loading_backend = false"
           >
-            忽略
+            {{ $t("dialog.fetchListFailed.ignore") }}
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -354,10 +357,10 @@
       width="500"
     >
       <v-card>
-        <v-card-title class="headline">错误</v-card-title>
+        <v-card-title class="headline">{{ $t("dialog.moduleConflicted.headline") }}</v-card-title>
         <v-card-text>
-          <p>在提交构建时检查到模块冲突。请您检查是否选中了不兼容的模块。</p>
-          <p>不兼容的模块：<code>questioning_totem</code> 和 <code>totem_model</code></p>
+          <p>{{ $t("dialog.moduleConflicted.text.main") }}</p>
+          <p>{{ $t("dialog.moduleConflicted.text.conflicted") }}<code>questioning_totem</code> {{ $t("dialog.moduleConflicted.text.and") }} <code>totem_model</code></p>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -366,7 +369,7 @@
             text
             @click="dialogModuleConflicted = false"
           >
-            去修复
+            {{ $t("dialog.moduleConflicted.fix") }}
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -377,6 +380,7 @@
 import axios from 'axios'
 import functionalSelector from "@/components/functionalSelector";
 import help from './components/help'
+import langMenu from './components/langMenu'
 import {
   mdiPost,
   mdiGithub,
@@ -408,7 +412,7 @@ export default {
       const backend = req.data
       this.consts = {
         ...this.consts,
-        modList: [{header: 'Mod文件'}].concat(backend.mods).concat({header: 'Mod文件（未汉化）'})
+        modList: [{header: this.$t("form.mod.header")}].concat(backend.mods).concat({header: this.$t("form.mod.enHeader")})
           .concat(backend.enmods),
         je_modules: backend.je_modules,
         be_modules: backend.be_modules,
@@ -444,7 +448,7 @@ export default {
         axios({url: '/ajax', baseURL: this.$api, method: 'POST', data}).then(function (res) {
           console.log(res.data)
           this.logs.unshift({
-            title: '构建成功',
+            title: this.$t("log.buildSucceeded"),
             ts: new Date().valueOf(),
             content: res.data.logs,
             filename: res.data.filename,
@@ -459,7 +463,7 @@ export default {
           this.loading = false
         }.bind(this)).catch(function (err) {
           this.logs.unshift({
-            title: '构建失败',
+            title: this.$t("log.buildFailed"),
             ts: new Date().valueOf(),
             content: err.toString()
           })
@@ -477,6 +481,7 @@ export default {
   components: {
     'functional-selector': functionalSelector,
     help,
+    langMenu,
     TeahouseFooter
   },
   data: () => ({
@@ -514,16 +519,7 @@ export default {
     hint: 0,
     loading_backend: true,
     consts: {
-      type: [{text: "1.13以上", value: "normal"}, {text: "1.12.2", value: "compat"}],
-      resourceOption: [{text: "所有", value: "all"}, {text: "无", value: "none"}, {
-        text: "自定义",
-        value: "custom"
-      }],
       modOption: [{text: "所有", value: "all"}, {value: "none", text: "无"}, {
-        value: "custom",
-        text: "自定义"
-      }],
-      languageOption: [{value: "none", text: "无"}, {
         value: "custom",
         text: "自定义"
       }],
@@ -533,13 +529,7 @@ export default {
         text: '1.13 - 1.14.4', value: 4
       }, {
         text: '1.11 - 1.12.2', value: 3
-      }],
-      hints: [
-        "若您不知道如何构建，请直接点击下方按钮下载。",
-        "若需要基岩版的MCBBS/GitHub/唱片包，您可以点击基岩版选项卡后，再点击相应跳转按钮。",
-        "若您发现问题，您可以点击上方链接向我们报告。",
-        "梗体中文是一个持续更新的项目，欢迎常回来看看。"
-      ]
+      }]
     }
   }),
   async mounted() {
@@ -576,6 +566,7 @@ export default {
       localStorage.setItem("memeDarkMode", window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? "true" : "false");
     }
     this.$vuetify.theme.dark = localStorage.getItem("memeDarkMode") === "true"
+    this.$i18n.locale = localStorage.getItem("memeLang");
     localStorage.setItem("memeInitialized", "true");
   }
 };

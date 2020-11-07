@@ -9,7 +9,7 @@
         v-if="index === 1"
         class="grey--text caption"
       >
-      (+ {{ resource.length - 1 }} 项)
+      (+ {{ resource.length - 1 }} {{ $t("form.item") }})
     </span>
     </template>
     <template v-slot:prepend-item>
@@ -18,7 +18,7 @@
           <v-icon> {{ resourceIcon }}</v-icon>
         </v-list-item-action>
         <v-list-item-content>
-          <v-list-item-title>全选</v-list-item-title>
+          <v-list-item-title>{{ $t("form.selectAll") }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
       <v-divider class="mt-2"></v-divider>
@@ -32,7 +32,7 @@
         <v-list-item-content>
           <v-list-item-title>{{ data.item.text.name }}</v-list-item-title>
           <v-list-item-subtitle>{{ data.item.text.description }} <a v-if="data.item.text.author">
-            · 作者：{{ data.item.text.author }}
+            · {{ $t("form.author") }}{{ data.item.text.author }}
           </a>
           </v-list-item-subtitle>
         </v-list-item-content>
