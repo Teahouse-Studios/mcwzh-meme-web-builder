@@ -25,7 +25,7 @@
                   <v-icon left>{{ svgPath.mdiDisc }}</v-icon>
                   {{ $t("appbar.discPack") }}
                 </v-btn>
-                <langMenu />
+                <langMenu/>
               </div>
             </template>
             <span>{{ !this.tab ? $t("java") : $t("bedrock") }}</span>
@@ -71,7 +71,7 @@
                   {{ $t("appbar.discPack") }}
                 </v-list-item-text>
               </v-list-item>
-              <langMenu />
+              <langMenu/>
               <div class="text-center">（{{ !this.tab ? $t("java") : $t("bedrock") }}）</div>
             </v-list>
           </v-menu>
@@ -93,7 +93,10 @@
         dense
         tile
       >
-        {{ $t("alert.main") }}<a href="https://github.com/Teahouse-Studios/mcwzh-meme-web-builder/issues/new">{{ $t("alert.feedback")}}</a>{{ $t("alert.period") }}
+        {{ $t("alert.main") }}<a
+        href="https://github.com/Teahouse-Studios/mcwzh-meme-web-builder/issues/new">{{ $t("alert.feedback") }}</a>{{
+          $t("alert.period")
+        }}
       </v-alert>
       <v-tabs
         v-model="tab"
@@ -115,8 +118,8 @@
               <v-col cols="12" sm="4">
                 <v-select
                   v-model="inputBasic.format"
-                  :items="consts.versions"
                   :hint="$t('form.version.hint')"
+                  :items="consts.versions"
                   :label="$t('form.version.label')"
                   persistent-hint
                 />
@@ -125,24 +128,24 @@
                 <functional-selector
                   v-model="input.resource"
                   :disabled="fetchListIgnored"
-                  :items="consts.je_modules.resource.concat(consts.je_modules.mixed)"
-                  :loading="loading_backend"
                   :hint="$t('form.resource.hint')"
+                  :items="consts.je_modules.resource.concat(consts.je_modules.mixed)"
                   :label="$t('form.resource.label')"
+                  :loading="loading_backend"
                 />
               </v-col>
               <v-col cols="12" sm="4">
                 <functional-selector v-model="input.language" :disabled="fetchListIgnored"
-                                     :items="consts.je_modules.language" :loading="loading_backend"
-                                     :hint="$t('form.language.hint')"
+                                     :hint="$t('form.language.hint')" :items="consts.je_modules.language"
                                      :label="$t('form.resource.label')"
+                                     :loading="loading_backend"
                 ></functional-selector>
               </v-col>
               <v-col cols="6" sm="6">
                 <v-select
                   v-model="input.modOption"
-                  :items="consts.modOption"
                   :hint="$t('form.mod.option.hint')"
+                  :items="consts.modOption"
                   :label="$t('form.mod.option.label')"
                   persistent-hint
                 />
@@ -152,8 +155,8 @@
                 <v-select
                   v-model="input.mod"
                   :disabled="input.modOption !== 'custom'"
-                  :items="consts.modList"
                   :hint="$t('form.mod.list.hint')"
+                  :items="consts.modList"
                   :label="$t('form.mod.list.label')"
                   multiple
                   persistent-hint
@@ -166,8 +169,8 @@
               <v-col cols="6" sm="6">
                 <v-select
                   v-model="input.beExtType"
-                  :items="consts.beExtType"
                   :hint="$t('form.beExtType.hint')"
+                  :items="consts.beExtType"
                   :label="$t('form.beExtType.hint')"
                   persistent-hint
                 />
@@ -176,16 +179,16 @@
                 <functional-selector
                   v-model="input.resource"
                   :disabled="fetchListIgnored"
+                  :hint="$t('form.resource.hint')"
                   :items="consts.be_modules.resource"
-                  :loading="loading_backend"
-                  :hint="$t('form.resource.hint')" :label="$t('form.resource.label')"/>
+                  :label="$t('form.resource.label')" :loading="loading_backend"/>
               </v-col>
             </v-row>
             <v-checkbox
               v-model="input.compatible"
-              class="mb-3"
               :hint="$t('form.compatible.hint')"
               :label="$t('form.compatible.label')"
+              class="mb-3"
               persistent-hint
             />
           </v-tab-item>
@@ -195,7 +198,7 @@
         </v-alert>
         <v-btn :disabled="loading" :loading="loading" color="primary" @click="submit">
           <v-icon left>{{ svgPath.mdiCloudDownload }}</v-icon>
-            {{ $t("form.submit") }}
+          {{ $t("form.submit") }}
         </v-btn>
         <div v-if="logs.length >= 1">
           <v-divider style="margin:15px 0"></v-divider>
@@ -243,7 +246,9 @@
               </v-list-item>
 
               <v-card-actions>
-                <v-btn href="https://www.mcbbs.net/?2444378" rel="noopener noreferrer" text>{{ $t("sponsor.spg.mcbbs") }}
+                <v-btn href="https://www.mcbbs.net/?2444378" rel="noopener noreferrer" text>{{
+                    $t("sponsor.spg.mcbbs")
+                  }}
                 </v-btn>
                 <v-btn href="https://www.mcbbs.net/thread-926724-1-1.html" rel="noopener noreferrer"
                        text>
@@ -360,7 +365,8 @@
         <v-card-title class="headline">{{ $t("dialog.moduleConflicted.headline") }}</v-card-title>
         <v-card-text>
           <p>{{ $t("dialog.moduleConflicted.text.main") }}</p>
-          <p>{{ $t("dialog.moduleConflicted.text.conflicted") }}<code>questioning_totem</code> {{ $t("dialog.moduleConflicted.text.and") }} <code>totem_model</code></p>
+          <p>{{ $t("dialog.moduleConflicted.text.conflicted") }}<code>questioning_totem</code>
+            {{ $t("dialog.moduleConflicted.text.and") }} <code>totem_model</code></p>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -558,7 +564,7 @@ export default {
         web_builder: 'https://github.com/Teahouse-Studios/mcwzh-meme-web-builder',
         github: 'https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack' + (this.tab ? '-bedrock' : ''),
         mcbbs: `https://www.mcbbs.net/thread-${this.tab ? '1005191' : '1004643'}-1-1.html`,
-        disc: 'https://dianliang-oss-1301161188.file.myqcloud.com/zh-meme-respack/' + (this.tab ? 'Meme_resourcepack_records.mcpack' : 'record-java.zip')
+        disc: this.tab ? 'https://dianliang-oss-1301161188.file.myqcloud.com/zh-meme-respack/Meme_resourcepack_records.mcpack' : 'https://wdf.ink/record-java'
       }
     }
   },
@@ -575,7 +581,12 @@ export default {
       localStorage.setItem("memeDarkMode", window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? "true" : "false");
     }
     this.$vuetify.theme.dark = localStorage.getItem("memeDarkMode") === "true"
-    this.$i18n.locale = localStorage.getItem("memeLang");
+    let memeLang = localStorage.getItem("memeLang");
+    if (memeLang !== "zhHans" && memeLang !== "zhMeme") {
+      localStorage.removeItem("memeLang")
+      memeLang = "zhHans"
+    }
+    this.$i18n.locale = memeLang;
     localStorage.setItem("memeInitialized", "true");
   }
 };

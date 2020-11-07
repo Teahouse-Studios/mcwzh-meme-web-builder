@@ -4,8 +4,8 @@ import VueI18n from 'vue-i18n'
 Vue.use(VueI18n)
 
 export default new VueI18n({
-  locale: process.env.VUE_APP_I18N_LOCALE || 'zh-Hans',
-  fallbackLocale: process.env.VUE_APP_I18N_FALLBACK_LOCALE || 'zh-Meme',
+  locale: 'zhHans',
+  fallbackLocale: 'zhMeme',
   messages: {
     zhHans: require('./locales/zh-Hans.json'),
     zhMeme: require('./locales/zh-Meme.json')
