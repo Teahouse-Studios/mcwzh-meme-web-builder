@@ -36,7 +36,7 @@ jobs:
           key: node-modules-${{ hashFiles('frontend/yarn.lock') }}
 
       - name: Install
-        if: steps.cache.outputs.cache-hit != 'true'
+        if: steps.node-cache.outputs.cache-hit != 'true'
         run: |
           cd frontend
           yarn --no-lockfile
@@ -45,6 +45,9 @@ jobs:
         run: |
           cd frontend
           yarn build
+        env:
+          PROJ_NAME: ${{ secrets.PROJ_NAME }}
+          FE_DOMAIN: ${{ secrets.FE_DOMAIN }}
 
       - name: Release
         run: |
