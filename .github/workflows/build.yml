@@ -42,10 +42,14 @@ jobs:
           yarn --no-lockfile
 
       - name: Build
-        run: yarn build
+        run: |
+          cd frontend
+          yarn build
 
       - name: Release
-        run: yarn release
+        run: |
+          cd frontend
+          yarn release
         env:
           AL_FE_KEYID: ${{ secrets.AL_FE_KEYID }}
           AL_FE_SECRET: ${{ secrets.AL_FE_SECRET }}
