@@ -103,6 +103,9 @@ export default {
   watch: {
     resource(newVal) {
       this.$emit('change', newVal.filter(v => v !== undefined))
+    },
+    fixedItems(){
+      this.combinedItems = this.combinedItems.concat([])
     }
   },
   methods: {

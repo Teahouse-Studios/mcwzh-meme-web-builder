@@ -165,7 +165,8 @@
                 ></v-select>
               </v-col>
               <v-col cols="12">
-                <functional-selector v-model="input.collection" :items="consts.je_modules.collection" label="模块集合选择">
+                <functional-selector v-model="input.collection" :items="consts.je_modules.collection"
+                                     :label="$t(`form.collections.label`)">
                   <template v-slot:before-author="data">
                     {{ collectionDesc(data.item) }}
                   </template>
@@ -414,10 +415,10 @@ export default {
     collectionDesc(item) {
       let result = []
       if (item['contains']?.resource?.length) {
-        result.push(`共${item['contains']?.resource.length}个附加内容`)
+        result.push(`${this.$t("form.collections.description_prefix")}${item['contains']?.resource.length}${this.$t("form.collections.resource_suffix")}`)
       }
       if (item['contains']?.language?.length) {
-        result.push(`共${item['contains']?.language.length}个语言内容`)
+        result.push(`${this.$t("form.collections.description_prefix")}${item['contains']?.language.length}${this.$t("form.collections.language_suffix")}`)
       }
       if (result.length) {
         return `(${result.join(", ")})`

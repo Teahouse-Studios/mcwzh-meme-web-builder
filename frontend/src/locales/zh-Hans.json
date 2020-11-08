@@ -52,7 +52,13 @@
     "submit": "提交构建选项",
     "selectAll": "全选",
     "author": "作者：",
-    "item": "项"
+    "item": "项",
+    "collections": {
+      "label": "模块集合选择",
+      "description_prefix": "共",
+      "resource_suffix": "个附加内容",
+      "language_suffix": "个语言内容"
+    }
   },
 
   "hints": [
