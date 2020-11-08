@@ -1,5 +1,5 @@
 <template>
-  <v-select v-model="resource" :disabled="disabled || false" :hint="hint"
+  <v-select v-model="combinedItems" :disabled="disabled || false" :hint="hint"
             :items="list" :label="label" :loading="loading" multiple persistent-hint>
     <template v-slot:selection="{ item, index }">
       <v-chip v-if="index === 0">
@@ -9,7 +9,7 @@
         v-if="index === 1"
         class="grey--text caption"
       >
-      (+ {{ resource.length - 1 }} {{ $t("form.item") }})
+      (+ {{ combinedItems.length - 1 }} {{ $t("form.item") }})
     </span>
     </template>
     <template v-slot:prepend-item>
@@ -27,7 +27,6 @@
       <v-list-item v-bind="data.attrs" v-on="data.on" :disabled="fixedItems.includes(data.item.text.name) || false">
         <v-list-item-action>
           <v-checkbox v-model="data.attrs.inputValue"
-                      :indeterminate="fixedItems.includes(data.item.text.name) || false"
                       :disabled="fixedItems.includes(data.item.text.name) || false"
                       @change="data.parent.$emit('select')"></v-checkbox>
         </v-list-item-action>
@@ -86,6 +85,14 @@ export default {
       } else {
         return mdiMinusBox
       }
+    },
+    combinedItems: {
+      get() {
+        return [...new Set([...this.resource, ...this.fixedItems])]
+      },
+      set(val) {
+        this.resource = val
+      }
     }
   },
   beforeMount() {
@@ -101,7 +108,7 @@ export default {
       if (this.resource.length === this.items.length) {
         this.resource = []
       } else {
-        this.resource = this.items.map(v => v.name)
+        this.resource = this.items.map(v => v.name).filter(v => !this.fixedItems.includes(v))
       }
     },
   },
