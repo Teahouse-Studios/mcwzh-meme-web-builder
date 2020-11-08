@@ -32,7 +32,9 @@
         </v-list-item-action>
         <v-list-item-content>
           <v-list-item-title>{{ data.item.text.name }}</v-list-item-title>
-          <v-list-item-subtitle style="white-space: pre-wrap">{{ data.item.text.description }} <a
+          <v-list-item-subtitle style="white-space: pre-wrap">{{ data.item.text.description }}
+            <slot name="before-author" v-bind:item="data.item.text"/>
+            <a
             v-if="data.item.text.author">
             · {{ $t("form.author") }}{{ data.item.text.author }}
           </a>
@@ -91,7 +93,7 @@ export default {
         return [...new Set([...this.resource, ...this.fixedItems])]
       },
       set(val) {
-        this.resource = val
+        this.resource = val.filter(v => !this.fixedItems.includes(v))
       }
     }
   },
@@ -105,7 +107,7 @@ export default {
   },
   methods: {
     toggleResource() {
-      if (this.resource.length === this.items.length) {
+      if (this.resource.length === this.items.length - this.fixedItems.length) {
         this.resource = []
       } else {
         this.resource = this.items.map(v => v.name).filter(v => !this.fixedItems.includes(v))

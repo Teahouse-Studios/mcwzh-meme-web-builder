@@ -126,9 +126,9 @@
               </v-col>
               <v-col cols="12" sm="4">
                 <functional-selector
-                  :fixed-items="fixedItems.resource"
                   v-model="input.resource"
                   :disabled="fetchListIgnored"
+                  :fixed-items="fixedItems.resource"
                   :hint="$t('form.resource.hint')"
                   :items="consts.je_modules.resource.concat(consts.je_modules.mixed)"
                   :label="$t('form.resource.label')"
@@ -137,7 +137,7 @@
               </v-col>
               <v-col cols="12" sm="4">
                 <functional-selector v-model="input.language"
-                                     :fixedItems="fixedItems.language" :disabled="fetchListIgnored"
+                                     :disabled="fetchListIgnored" :fixedItems="fixedItems.language"
                                      :hint="$t('form.language.hint')" :items="consts.je_modules.language"
                                      :label="$t('form.language.label')"
                                      :loading="loading_backend"
@@ -165,7 +165,11 @@
                 ></v-select>
               </v-col>
               <v-col cols="12">
-                <functional-selector :items="consts.je_modules.collection" v-model="input.collection" label="模块集合选择" />
+                <functional-selector v-model="input.collection" :items="consts.je_modules.collection" label="模块集合选择">
+                  <template v-slot:before-author="data">
+                    {{ collectionDesc(data.item) }}
+                  </template>
+                </functional-selector>
               </v-col>
             </v-row>
           </v-tab-item>
@@ -407,6 +411,19 @@ import TeahouseFooter from '@/components/footer'
 
 export default {
   methods: {
+    collectionDesc(item) {
+      let result = []
+      if (item['contains']?.resource?.length) {
+        result.push(`共${item['contains']?.resource.length}个附加内容`)
+      }
+      if (item['contains']?.language?.length) {
+        result.push(`共${item['contains']?.language.length}个语言内容`)
+      }
+      if (result.length) {
+        return `(${result.join(", ")})`
+      }
+      return ''
+    },
     open(name) {
       window.open(name)
     },
@@ -567,7 +584,7 @@ export default {
     whetherUseBE() {
       return this.tab === 1
     },
-    fixedItems(){
+    fixedItems() {
       let items = this.consts.je_modules.collection.filter(v => this.input.collection.includes(v.name))
       return {
         resource: items.map(v => v['contains'].resource || []).flat(),
