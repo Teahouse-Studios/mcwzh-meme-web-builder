@@ -126,6 +126,7 @@
               </v-col>
               <v-col cols="12" sm="4">
                 <functional-selector
+                  :fixed-items="fixedItems.resource"
                   v-model="input.resource"
                   :disabled="fetchListIgnored"
                   :hint="$t('form.resource.hint')"
@@ -135,9 +136,10 @@
                 />
               </v-col>
               <v-col cols="12" sm="4">
-                <functional-selector v-model="input.language" :disabled="fetchListIgnored"
+                <functional-selector v-model="input.language"
+                                     :fixedItems="fixedItems.language" :disabled="fetchListIgnored"
                                      :hint="$t('form.language.hint')" :items="consts.je_modules.language"
-                                     :label="$t('form.resource.label')"
+                                     :label="$t('form.language.label')"
                                      :loading="loading_backend"
                 ></functional-selector>
               </v-col>
@@ -161,6 +163,9 @@
                   multiple
                   persistent-hint
                 ></v-select>
+              </v-col>
+              <v-col cols="12">
+                <functional-selector :items="consts.je_modules.collection" v-model="input.collection" label="模块集合选择" />
               </v-col>
             </v-row>
           </v-tab-item>
@@ -443,6 +448,7 @@ export default {
               this.input.resource.filter(v => !this.consts.je_modules.mixed.map(v => v.name).includes(v)),
             mixed: this.whetherUseBE ? this.input.resource :
               this.input.resource.filter(v => this.consts.je_modules.mixed.map(v => v.name).includes(v)),
+            collection: this.input.collection
           },
           mod: this.input.mod,
           hash: true,
@@ -522,6 +528,7 @@ export default {
       mod: [],
       resource: [],
       language: [],
+      collection: [],
       mixed: [],
       beExtType: 'mcpack'
     },
@@ -536,7 +543,8 @@ export default {
       modList: [], je_modules: {
         language: [],
         mixed: [],
-        resource: []
+        resource: [],
+        collection: []
       }, be_modules: {
         resource: []
       },
@@ -559,6 +567,13 @@ export default {
     whetherUseBE() {
       return this.tab === 1
     },
+    fixedItems(){
+      let items = this.consts.je_modules.collection.filter(v => this.input.collection.includes(v.name))
+      return {
+        resource: items.map(v => v['contains'].resource || []).flat(),
+        language: items.map(v => v['contains'].language || []).flat()
+      }
+    },
     links() {
       return {
         web_builder: 'https://github.com/Teahouse-Studios/mcwzh-meme-web-builder',
@@ -570,7 +585,7 @@ export default {
   },
   watch: {
     tab(newTab) {
-      this.input.resource = newTab ? (this.consts.be_modules.resource || []).map(v => v.name) : ["questioning_totem", "Lie-nus_and_more_things", "BUGJUMP", "meme_splashes", "grass_enchanted", "bee_pickaxe", "a_letter", "observer_think", "map_override", "mopemope", "red_leaf_valley", "disco_ball"]
+      this.input.resource = newTab ? (this.consts.be_modules.resource || []).map(v => v.name) : []
     },
     "$vuetify.theme.dark"(val) {
       localStorage.setItem("memeDarkMode", val);
