@@ -448,6 +448,7 @@ export default {
       }
       this.loading_backend = false
       this.dialogFetchListFailed = false
+      this.input.collection = ['choice_modules_1']
     },
     submit() {
       this.loading = true

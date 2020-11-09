@@ -6,7 +6,9 @@ import vuetify from './plugins/vuetify';
 
 Vue.config.productionTip = false
 Vue.prototype.$api = process.env.NODE_ENV === 'production' ? 'https://meme.wd-api.com/' : 'http://127.0.0.1:8000/'
-
+if(process.env.NODE_ENV === 'development'){
+  Vue.config.devtools = true
+}
 new Vue({
   vuetify,
   i18n,

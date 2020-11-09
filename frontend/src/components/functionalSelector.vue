@@ -90,7 +90,7 @@ export default {
     },
     combinedItems: {
       get() {
-        return [...new Set([...this.resource, ...this.fixedItems])]
+        return [...new Set([...this.resource, ...this.resource_parent, ...this.fixedItems])]
       },
       set(val) {
         this.resource = val.filter(v => !this.fixedItems.includes(v))
