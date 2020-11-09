@@ -54,6 +54,7 @@ jobs:
           cd frontend
           yarn release
         env:
+          AL_FE_REGION: ${{ secrets.AL_FE_REGION }}
           AL_FE_KEYID: ${{ secrets.AL_FE_KEYID }}
           AL_FE_SECRET: ${{ secrets.AL_FE_SECRET }}
           AL_FE_BUCKET: ${{ secrets.AL_FE_BUCKET }}
