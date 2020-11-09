@@ -2,7 +2,7 @@ require('dotenv').config()
 const OSS = require('ali-oss')
 const glob = require("glob")
 const client = new OSS({
-  region: "oss-cn-shanghai",
+  region: process.env.AL_FE_REGION,
   bucket: process.env.AL_FE_BUCKET,
   accessKeyId: process.env.AL_FE_KEYID,
   accessKeySecret: process.env.AL_FE_SECRET
