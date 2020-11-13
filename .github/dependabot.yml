@@ -13,6 +13,9 @@ updates:
       separator: "-"
     commit-message:
       prefix: "⬆️ "
+    labels:
+      - "后端"
+      - "依赖"
 
   - package-ecosystem: "npm"
     directory: "frontend"
@@ -22,6 +25,9 @@ updates:
       separator: "-"
     commit-message:
       prefix: "⬆️ "
+    labels:
+      - "前端"
+      - "依赖"
 
   - package-ecosystem: "gitsubmodule"
     directory: "/"
@@ -31,3 +37,6 @@ updates:
       separator: "-"
     commit-message:
       prefix: "⬆️ 🚑 "
+    labels:
+      - "后端"
+      - "依赖"
