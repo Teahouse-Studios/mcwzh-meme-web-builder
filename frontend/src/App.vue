@@ -166,7 +166,7 @@
               </v-col>
               <v-col cols="12">
                 <functional-selector v-model="input.collection" :items="consts.je_modules.collection"
-                                     :label="$t(`form.collections.label`)">
+                                     :label="$t(`form.collections.label`)" :hint="$t('form.collections.hint')">
                   <template v-slot:before-author="data">
                     {{ collectionDesc(data.item) }}
                   </template>

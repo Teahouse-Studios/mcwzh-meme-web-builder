@@ -54,6 +54,7 @@
     "author": "作者：",
     "item": "项",
     "collections": {
+      "hint": "请选择我们预先挑选的模块集合。",
       "label": "模块集合选择",
       "description_prefix": "共",
       "resource_suffix": "个附加内容",
