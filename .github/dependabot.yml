@@ -9,13 +9,25 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    pull-request-branch-name:
+      separator: "-"
+    commit-message:
+      prefix: "⬆️ "
+
   - package-ecosystem: "npm"
+    directory: "frontend"
+    schedule:
+      interval: "daily"
+    pull-request-branch-name:
+      separator: "-"
+    commit-message:
+      prefix: "⬆️ "
+
+  - package-ecosystem: "gitsubmodule"
     directory: "/"
     schedule:
       interval: "daily"
-
-pull-request-branch-name:
-  separator: "-"
-
-commit-message:
-      prefix: "⬆️ "
+    pull-request-branch-name:
+      separator: "-"
+    commit-message:
+      prefix: "⬆️ 🚑 "
