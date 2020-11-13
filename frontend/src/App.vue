@@ -165,8 +165,8 @@
                 ></v-select>
               </v-col>
               <v-col cols="12">
-                <functional-selector v-model="input.collection" :items="consts.je_modules.collection"
-                                     :label="$t(`form.collections.label`)" :hint="$t('form.collections.hint')">
+                <functional-selector v-model="input.collection" :hint="$t('form.collections.hint')"
+                                     :items="consts.je_modules.collection" :label="$t(`form.collections.label`)">
                   <template v-slot:before-author="data">
                     {{ collectionDesc(data.item) }}
                   </template>
@@ -398,15 +398,15 @@ import functionalSelector from "@/components/functionalSelector";
 import help from './components/help'
 import langMenu from './components/langMenu'
 import {
-  mdiPost,
-  mdiGithub,
-  mdiDisc,
-  mdiCloudDownload,
-  mdiBug,
-  mdiDotsVertical,
-  mdiInformationOutline,
   mdiBrightness4,
-  mdiBrightness7
+  mdiBrightness7,
+  mdiBug,
+  mdiCloudDownload,
+  mdiDisc,
+  mdiDotsVertical,
+  mdiGithub,
+  mdiInformationOutline,
+  mdiPost
 } from '@mdi/js'
 import TeahouseFooter from '@/components/footer'
 
@@ -467,7 +467,7 @@ export default {
               this.input.resource.filter(v => !this.consts.je_modules.mixed.map(v => v.name).includes(v)),
             mixed: this.whetherUseBE ? this.input.resource :
               this.input.resource.filter(v => this.consts.je_modules.mixed.map(v => v.name).includes(v)),
-            collection: this.input.collection
+            collection: this.whetherUseBE ? [] : this.input.collection
           },
           mod: this.input.mod,
           hash: true,
