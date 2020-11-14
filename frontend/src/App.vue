@@ -181,7 +181,7 @@
                   v-model="input.beExtType"
                   :hint="$t('form.beExtType.hint')"
                   :items="consts.beExtType"
-                  :label="$t('form.beExtType.hint')"
+                  :label="$t('form.beExtType.label')"
                   persistent-hint
                 />
               </v-col>

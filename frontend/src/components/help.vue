@@ -62,7 +62,7 @@
             {{ $t("dialog.help.webBuilder") }}
           </v-btn>
         </p>
-        <h2 class="text-h5 mb-1"></h2>
+        <h2 class="text-h5 mb-1">{{ $t("dialog.help.dev.title") }}</h2>
         <v-list>
           <v-list-item three-line>
             <v-list-item-content>
