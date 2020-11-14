@@ -1,6 +1,6 @@
 {
   "java": "爪哇版",
-  "bedrock": "基岩版",
+  "bedrock": "床石版",
 
   "appbar": {
     "title": "梗体中文 · 懒人构建",
@@ -63,8 +63,8 @@
   },
 
   "hints": [
-    "若您不知道如何构建，直接点击下方按钮下载。",
-    "若需要基岩版的MCSSB/GayHub/劲 歌 金 曲，您可以点击基岩版选项卡后，再点击相应跳转按钮。",
+    "若您不知道如何构建，点击下方按钮来直接生草。",
+    "若需要床石版的MCSSB/GayHub/劲 歌 金 曲，您可以点击床石版选项卡后，再点击相应跳转按钮。",
     "您可以点击上方链接把 bug 丢给我们。",
     "梗体中文是一个持续更新的项目，欢迎 常 回 家 看 看。"
   ],
@@ -88,13 +88,13 @@
     "qiuxi": {
       "headline": "梗体中文 由 是秋夕呀mua 赞助",
       "subtitle": "是秋夕呀mua 是一位破站 UP 主。她向她的 10w+ 粉丝推荐了梗体中文。",
-      "bilibili": "破站主页"
+      "bilibili": "小破站主页"
     },
     "disclaimer": "这些金主爸爸均未给予 Teahouse Studios 梗体中文团队真实金钱，亦未强迫 Teahouse Studios 梗体中文团队将其添加至赞助者列表——这只是 Teahouse Studios 梗体中文团队对他们的支持最诚挚的感谢。❤️"
   },
 
   "snackbar": {
-    "close": "我不听我不听",
+    "close": "关掉！关掉！",
     "feedback": "投诉开发者",
     "buildSucceeded": "构建成了。",
     "buildFailed": "构建 大 失 败。"
@@ -106,7 +106,7 @@
       "text": "在向服务器 拉 清 单 时发生了错误。",
       "retry": "再来",
       "feedback": "控诉开发者",
-      "ignore": "我不听我不听"
+      "ignore": "关掉！关掉！"
     },
     "moduleConflicted": {
       "headline": "哎呦",
