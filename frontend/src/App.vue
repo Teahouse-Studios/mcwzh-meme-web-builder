@@ -440,7 +440,6 @@ export default {
     submit() {
       this.loading = true
 
-      // @TODO: 不兼容检测
       const base = this.whetherUseBE ? this.consts.be_modules : this.consts.je_modules
       const inputBase = this.whetherUseBE ? this.input.be : this.input.je
       let data = Object.assign({}, this.inputBasic, {
