@@ -126,7 +126,7 @@
               </v-col>
               <v-col cols="12" sm="4">
                 <functional-selector
-                  v-model="input.resource"
+                  v-model="input.je.resource"
                   :disabled="fetchListIgnored"
                   :fixed-items="fixedItems.resource"
                   :hint="$t('form.resource.hint')"
@@ -136,7 +136,7 @@
                 />
               </v-col>
               <v-col cols="12" sm="4">
-                <functional-selector v-model="input.language"
+                <functional-selector v-model="input.je.language"
                                      :disabled="fetchListIgnored" :fixedItems="fixedItems.language"
                                      :hint="$t('form.language.hint')" :items="consts.je_modules.language"
                                      :label="$t('form.language.label')"
@@ -145,7 +145,7 @@
               </v-col>
               <v-col cols="6" sm="6">
                 <v-select
-                  v-model="input.modOption"
+                  v-model="input.je.modOption"
                   :hint="$t('form.mod.option.hint')"
                   :items="consts.modOption"
                   :label="$t('form.mod.option.label')"
@@ -155,7 +155,7 @@
               </v-col>
               <v-col cols="6" sm="6">
                 <v-select
-                  v-model="input.mod"
+                  v-model="input.je.mod"
                   :disabled="input.modOption !== 'custom'"
                   :hint="$t('form.mod.list.hint')"
                   :items="consts.modList"
@@ -165,7 +165,7 @@
                 ></v-select>
               </v-col>
               <v-col cols="12">
-                <functional-selector v-model="input.collection" :hint="$t('form.collections.hint')"
+                <functional-selector v-model="input.je.collection" :hint="$t('form.collections.hint')"
                                      :items="consts.je_modules.collection" :label="$t(`form.collections.label`)">
                   <template v-slot:before-author="data">
                     {{ collectionDesc(data.item) }}
@@ -178,7 +178,7 @@
             <v-row>
               <v-col cols="6" sm="6">
                 <v-select
-                  v-model="input.beExtType"
+                  v-model="input.be.extType"
                   :hint="$t('form.beExtType.hint')"
                   :items="consts.beExtType"
                   :label="$t('form.beExtType.label')"
@@ -187,7 +187,7 @@
               </v-col>
               <v-col cols="6" sm="6">
                 <functional-selector
-                  v-model="input.resource"
+                  v-model="input.be.resource"
                   :disabled="fetchListIgnored"
                   :fixed-items="fixedItems.resource"
                   :hint="$t('form.resource.hint')"
@@ -195,7 +195,7 @@
                   :label="$t('form.resource.label')" :loading="loading_backend"/>
               </v-col>
               <v-col cols="12">
-                <functional-selector v-model="input.collection" :hint="$t('form.collections.hint')"
+                <functional-selector v-model="input.be.collection" :hint="$t('form.collections.hint')"
                                      :items="consts.be_modules.collection" :label="$t(`form.collections.label`)">
                   <template v-slot:before-author="data">
                     {{ collectionDesc(data.item) }}
@@ -204,7 +204,7 @@
               </v-col>
             </v-row>
             <v-checkbox
-              v-model="input.compatible"
+              v-model="input.be.compatible"
               :hint="$t('form.compatible.hint')"
               :label="$t('form.compatible.label')"
               class="mb-3"
@@ -457,64 +457,62 @@ export default {
       }
       this.loading_backend = false
       this.dialogFetchListFailed = false
-      this.input.collection = this.tab ? ['no_blue_ui'] : ['choice_modules_1']
+      this.input.be.collection = ['no_blue_ui']
+      this.input.je.collection = ['choice_modules_1']
     },
     submit() {
       this.loading = true
 
-      if (this.input.resource.includes('questioning_totem') && this.input.resource.includes('totem_model')) {
-        this.dialogModuleConflicted = true
-        this.loading = false
-      } else {
-        const base = this.whetherUseBE ? this.consts.be_modules : this.consts.je_modules
-        let data = Object.assign({}, this.inputBasic, {
-          _be: this.whetherUseBE,
-          modules: {
-            language: this.input.language,
-            resource: this.input.resource.filter(v => !(base.mixed || []).map(v => v.name).includes(v)),
-            mixed: this.input.resource.filter(v => (base.mixed || []).map(v => v.name).includes(v)),
-            collection: this.input.collection
-          },
-          mod: this.input.mod,
-          hash: true,
-          type: this.inputBasic.format === 3 ? 'legacy' : 'normal'
-        }, this.whetherUseBE && {
-          type: this.input.beExtType,
-          compatible: this.input.compatible
+      // @TODO: 不兼容检测
+      const base = this.whetherUseBE ? this.consts.be_modules : this.consts.je_modules
+      const inputBase = this.whetherUseBE ? this.input.be : this.input.je
+      let data = Object.assign({}, this.inputBasic, {
+        _be: this.whetherUseBE,
+        modules: {
+          language: inputBase.language,
+          resource: inputBase.resource.filter(v => !(base.mixed || []).map(v => v.name).includes(v)),
+          mixed: inputBase.resource.filter(v => (base.mixed || []).map(v => v.name).includes(v)),
+          collection: inputBase.collection
+        },
+        mod: this.input.je.mod,
+        hash: true,
+        type: this.inputBasic.format === 3 ? 'legacy' : 'normal'
+      }, this.whetherUseBE && {
+        type: this.input.be.extType,
+        compatible: this.input.be.compatible
+      })
+      console.log(data)
+      window.location.host === 'dl.meme.teahou.se' && window.ga && window.ga('send', 'event', this.whetherUseBE ? 'be' : 'je', 'build');
+      axios({url: '/ajax', baseURL: this.$api, method: 'POST', data}).then(function (res) {
+        console.log(res.data)
+        this.logs.unshift({
+          title: this.$t("log.buildSucceeded"),
+          ts: new Date().valueOf(),
+          content: res.data.logs,
+          filename: res.data.filename,
+          github: this.links.github
         })
-        console.log(data)
-        window.location.host === 'dl.meme.teahou.se' && window.ga && window.ga('send', 'event', this.whetherUseBE ? 'be' : 'je', 'build');
-        axios({url: '/ajax', baseURL: this.$api, method: 'POST', data}).then(function (res) {
-          console.log(res.data)
-          this.logs.unshift({
-            title: this.$t("log.buildSucceeded"),
-            ts: new Date().valueOf(),
-            content: res.data.logs,
-            filename: res.data.filename,
-            github: this.links.github
-          })
-          this.logsPanel = this.logsPanel.map(v => v + 1)
-          this.logsPanel.unshift(0)
-          this.$nextTick(function () {
-            this.$refs.logs.scrollIntoView()
-          }.bind(this))
-          this.snackbarBuildSucceeded = true
-          this.loading = false
-        }.bind(this)).catch(function (err) {
-          this.logs.unshift({
-            title: this.$t("log.buildFailed"),
-            ts: new Date().valueOf(),
-            content: err.toString()
-          })
-          this.logsPanel = this.logsPanel.map(v => v + 1)
-          this.logsPanel.unshift(0)
-          this.$nextTick(function () {
-            this.$refs.logs.scrollIntoView()
-          }.bind(this))
-          this.snackbarBuildFailed = true
-          this.loading = false
+        this.logsPanel = this.logsPanel.map(v => v + 1)
+        this.logsPanel.unshift(0)
+        this.$nextTick(function () {
+          this.$refs.logs.scrollIntoView()
         }.bind(this))
-      }
+        this.snackbarBuildSucceeded = true
+        this.loading = false
+      }.bind(this)).catch(function (err) {
+        this.logs.unshift({
+          title: this.$t("log.buildFailed"),
+          ts: new Date().valueOf(),
+          content: err.toString()
+        })
+        this.logsPanel = this.logsPanel.map(v => v + 1)
+        this.logsPanel.unshift(0)
+        this.$nextTick(function () {
+          this.$refs.logs.scrollIntoView()
+        }.bind(this))
+        this.snackbarBuildFailed = true
+        this.loading = false
+      }.bind(this))
     }
   },
   components: {
@@ -548,14 +546,22 @@ export default {
     },
     logs: [],
     input: {
-      compatible: false,
-      modOption: "all",
-      mod: [],
-      resource: [],
-      language: [],
-      collection: [],
-      mixed: [],
-      beExtType: 'mcpack'
+      be: {
+        extType: 'mcpack',
+        compatible: false,
+        resource: [],
+        language: [],
+        collection: [],
+        mixed: []
+      },
+      je: {
+        modOption: "all",
+        mod: [],
+        resource: [],
+        language: [],
+        collection: [],
+        mixed: []
+      }
     },
     hint: 0,
     loading_backend: true,
