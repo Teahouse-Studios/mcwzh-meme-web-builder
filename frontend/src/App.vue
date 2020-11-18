@@ -189,9 +189,18 @@
                 <functional-selector
                   v-model="input.resource"
                   :disabled="fetchListIgnored"
+                  :fixed-items="fixedItems.resource"
                   :hint="$t('form.resource.hint')"
                   :items="consts.be_modules.resource"
                   :label="$t('form.resource.label')" :loading="loading_backend"/>
+              </v-col>
+              <v-col cols="12">
+                <functional-selector v-model="input.collection" :hint="$t('form.collections.hint')"
+                                     :items="consts.be_modules.collection" :label="$t(`form.collections.label`)">
+                  <template v-slot:before-author="data">
+                    {{ collectionDesc(data.item) }}
+                  </template>
+                </functional-selector>
               </v-col>
             </v-row>
             <v-checkbox
@@ -448,7 +457,7 @@ export default {
       }
       this.loading_backend = false
       this.dialogFetchListFailed = false
-      this.input.collection = ['choice_modules_1']
+      this.input.collection = this.tab ? ['no_blue_ui'] : ['choice_modules_1']
     },
     submit() {
       this.loading = true
@@ -457,17 +466,14 @@ export default {
         this.dialogModuleConflicted = true
         this.loading = false
       } else {
+        const base = this.whetherUseBE ? this.consts.be_modules : this.consts.je_modules
         let data = Object.assign({}, this.inputBasic, {
           _be: this.whetherUseBE,
           modules: {
-            language: [...new Set(
-              this.input.language.concat(this.inputBasic.format === 3 ? ['attributes', 'old_strings', 'diamond_hoe'] : [])
-            )],
-            resource: this.whetherUseBE ? this.input.resource :
-              this.input.resource.filter(v => !this.consts.je_modules.mixed.map(v => v.name).includes(v)),
-            mixed: this.whetherUseBE ? this.input.resource :
-              this.input.resource.filter(v => this.consts.je_modules.mixed.map(v => v.name).includes(v)),
-            collection: this.whetherUseBE ? [] : this.input.collection
+            language: this.input.language,
+            resource: this.input.resource.filter(v => !(base.mixed || []).map(v => v.name).includes(v)),
+            mixed: this.input.resource.filter(v => (base.mixed || []).map(v => v.name).includes(v)),
+            collection: this.input.collection
           },
           mod: this.input.mod,
           hash: true,
@@ -565,7 +571,10 @@ export default {
         resource: [],
         collection: []
       }, be_modules: {
-        resource: []
+        language: [],
+        mixed: [],
+        resource: [],
+        collection: []
       },
       versions: [{text: '1.16.2+', value: 6}, {text: '1.15 - 1.16.1', value: 5}, {
         text: '1.13 - 1.14.4', value: 4
@@ -587,7 +596,8 @@ export default {
       return this.tab === 1
     },
     fixedItems() {
-      let items = this.consts.je_modules.collection.filter(v => this.input.collection.includes(v.name))
+      const base = this.whetherUseBE ? this.consts.be_modules : this.consts.je_modules
+      let items = base.collection.filter(v => this.input.collection.includes(v.name))
       return {
         resource: items.map(v => v['contains'].resource || []).flat(),
         language: items.map(v => v['contains'].language || []).flat()
@@ -604,7 +614,7 @@ export default {
   },
   watch: {
     tab(newTab) {
-      this.input.resource = newTab ? (this.consts.be_modules.resource || []).map(v => v.name) : []
+      this.input.collection = newTab ? ['no_blue_ui'] : ['choice_modules_1']
     },
     "$vuetify.theme.dark"(val) {
       localStorage.setItem("memeDarkMode", val);
