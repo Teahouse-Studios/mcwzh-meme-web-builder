@@ -24,10 +24,11 @@
       <v-divider class="mt-2"></v-divider>
     </template>
     <template v-slot:item="data">
-      <v-list-item v-bind="data.attrs" v-on="data.on" :disabled="fixedItems.includes(data.item.text.name) || false">
+      <v-list-item v-bind="data.attrs" v-on="data.on"
+                   :disabled="fixedItems.includes(data.item.text.name) || checkIncompatible(data.item.text.name) || false">
         <v-list-item-action>
           <v-checkbox v-model="data.attrs.inputValue"
-                      :disabled="fixedItems.includes(data.item.text.name) || false"
+                      :disabled="fixedItems.includes(data.item.text.name) || checkIncompatible(data.item.text.name) || false"
                       @change="data.parent.$emit('select')"></v-checkbox>
         </v-list-item-action>
         <v-list-item-content>
@@ -35,9 +36,12 @@
           <v-list-item-subtitle style="white-space: pre-wrap">{{ data.item.text.description }}
             <slot name="before-author" v-bind:item="data.item.text"/>
             <a
-            v-if="data.item.text.author">
-            · {{ $t("form.author") }}{{ data.item.text.author }}
-          </a>
+              v-if="data.item.text.author">
+              · {{ $t("form.author") }}{{ data.item.text.author }}
+            </a>
+            <a v-if="(data.item.text.incompatible_with || []).length >= 1" class="red--text">
+              （与 {{ data.item.text.incompatible_with.join(", ") }} 不兼容）
+            </a>
           </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
@@ -99,27 +103,40 @@ export default {
   },
   beforeMount() {
     this.resource = this.resource_parent || []
+    this.items.forEach(v => {
+      if (v.incompatible_with?.length) {
+        v.incompatible_with.map(item => {
+          this.incompatibleMap[item] ||= []
+          this.incompatibleMap[item].push(v.name)
+        })
+      }
+    })
+    console.log(this.incompatibleMap)
   },
   watch: {
     resource(newVal) {
       this.$emit('change', newVal.filter(v => v !== undefined))
     },
-    fixedItems(){
+    fixedItems() {
       this.combinedItems = this.combinedItems.concat([])
     }
   },
   methods: {
+    checkIncompatible(name) {
+      return (this.incompatibleMap[name] || []).filter(v => this.resource.includes(v)).length >= 1
+    },
     toggleResource() {
-      if (this.resource.length === this.items.length - this.fixedItems.length) {
+      if (this.resource.length === this.items.length - this.fixedItems.length - Object.keys(this.incompatibleMap).length) {
         this.resource = []
       } else {
-        this.resource = this.items.map(v => v.name).filter(v => !this.fixedItems.includes(v))
+        this.resource = this.items.map(v => v.name).filter(v => !this.fixedItems.includes(v)).filter(v => !Object.keys(this.incompatibleMap).includes(v))
       }
     },
   },
   data() {
     return {
-      resource: []
+      resource: [],
+      incompatibleMap: {}
     }
   }
 }
