@@ -40,7 +40,8 @@
               · {{ $t("form.author") }}{{ data.item.text.author }}
             </a>
             <a v-if="(data.item.text.incompatible_with || []).length >= 1" class="red--text">
-              （与 {{ data.item.text.incompatible_with.join(", ") }} 不兼容）
+              {{ $t("form.incompatible_prefix") }} {{ data.item.text.incompatible_with.join(", ") }}
+              {{ $t("form.incompatible_suffix") }}
             </a>
           </v-list-item-subtitle>
         </v-list-item-content>

@@ -376,29 +376,6 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-dialog
-      v-model="dialogModuleConflicted"
-      width="500"
-    >
-      <v-card>
-        <v-card-title class="headline">{{ $t("dialog.moduleConflicted.headline") }}</v-card-title>
-        <v-card-text>
-          <p>{{ $t("dialog.moduleConflicted.text.main") }}</p>
-          <p>{{ $t("dialog.moduleConflicted.text.conflicted") }}<code>questioning_totem</code>
-            {{ $t("dialog.moduleConflicted.text.and") }} <code>totem_model</code></p>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="primary"
-            text
-            @click="dialogModuleConflicted = false"
-          >
-            {{ $t("dialog.moduleConflicted.fix") }}
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
   </v-app>
 </template>
 <script>
@@ -525,7 +502,6 @@ export default {
     snackbarBuildSucceeded: false,
     snackbarBuildFailed: false,
     dialogFetchListFailed: false,
-    dialogModuleConflicted: false,
     fetchListIgnored: false,
     svgPath: {
       mdiPost,

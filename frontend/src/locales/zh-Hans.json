@@ -59,7 +59,9 @@
       "description_prefix": "共",
       "resource_suffix": "个附加内容",
       "language_suffix": "个语言内容"
-    }
+    },
+    "incompatible_prefix": "（与",
+    "incompatible_suffix": "不兼容）"
   },
 
   "hints": [
@@ -107,15 +109,6 @@
       "retry": "重试",
       "feedback": "反馈",
       "ignore": "忽略"
-    },
-    "moduleConflicted": {
-      "headline": "错误",
-      "text": {
-        "main": "在提交构建时检查到模块冲突。请您检查是否选中了不兼容的模块。",
-        "conflicted": "不兼容的模块：",
-        "and": "和"
-      },
-      "fix": "去修复"
     },
     "help": {
       "title": "帮助 & 关于",
