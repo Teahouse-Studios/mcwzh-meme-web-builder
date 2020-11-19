@@ -100,11 +100,19 @@ export default {
       set(val) {
         this.resource = val.filter(v => !this.fixedItems.includes(v))
       }
+    },
+    incompatibleMap() {
+      return this.items.filter(v => v.incompatible_with?.length).reduce((v, obj) => {
+        obj.incompatible_with.map(item => {
+          v[item] ||= []
+          v[item].push(obj.name)
+        })
+        return v
+      }, {})
     }
   },
   beforeMount() {
     this.resource = this.resource_parent || []
-    this.updateMap()
   },
   watch: {
     resource(newVal) {
@@ -112,23 +120,9 @@ export default {
     },
     fixedItems() {
       this.combinedItems = this.combinedItems.concat([])
-    },
-    resource_parent(){
-      this.updateMap()
     }
   },
   methods: {
-    updateMap(){
-      this.items.forEach(v => {
-        if (v.incompatible_with?.length) {
-          v.incompatible_with.map(item => {
-            this.incompatibleMap[item] ||= []
-            this.incompatibleMap[item].push(v.name)
-          })
-        }
-      })
-      console.log(this.incompatibleMap)
-    },
     checkIncompatible(name) {
       return (this.incompatibleMap[name] || []).filter(v => this.resource.includes(v)).length >= 1
     },
@@ -142,8 +136,7 @@ export default {
   },
   data() {
     return {
-      resource: [],
-      incompatibleMap: {}
+      resource: []
     }
   }
 }
