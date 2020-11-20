@@ -16,7 +16,7 @@
     "core-js": "^3.7.0",
     "vue": "^2.6.11",
     "vue-cli-plugin-i18n": "^1.0.1",
-    "vue-i18n": "^8.17.3",
+    "vue-i18n": "^8.22.2",
     "vuetify": "^2.3.17"
   },
   "devDependencies": {
