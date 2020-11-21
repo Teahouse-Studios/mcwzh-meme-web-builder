@@ -3,9 +3,6 @@ on:
   push:
     branches:
       - master
-    paths:
-      - "frontend/**"
-      - ".github/workflows/**"
 
 jobs:
   build-and-deploy:
