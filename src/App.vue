@@ -156,7 +156,7 @@
               <v-col cols="6" sm="6">
                 <v-select
                   v-model="input.je.mod"
-                  :disabled="input.modOption !== 'custom'"
+                  :disabled="input.je.modOption !== 'custom'"
                   :hint="$t('form.mod.list.hint')"
                   :items="consts.modList"
                   :label="$t('form.mod.list.label')"
