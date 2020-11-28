@@ -578,7 +578,7 @@ export default {
     },
     fixedItems() {
       const base = this.whetherUseBE ? this.consts.be_modules : this.consts.je_modules
-      let items = base.collection.filter(v => this.input.collection.includes(v.name))
+      let items = base.collection.filter(v => this.input[this.whetherUseBE ? 'be' : 'je'].collection.includes(v.name))
       return {
         resource: items.map(v => v['contains'].resource || []).flat(),
         language: items.map(v => v['contains'].language || []).flat()
@@ -594,9 +594,6 @@ export default {
     }
   },
   watch: {
-    tab(newTab) {
-      this.input.collection = newTab ? ['no_blue_ui'] : ['choice_modules_1']
-    },
     "$vuetify.theme.dark"(val) {
       localStorage.setItem("memeDarkMode", val);
     }
