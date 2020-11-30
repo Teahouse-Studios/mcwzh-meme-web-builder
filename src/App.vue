@@ -126,7 +126,6 @@
               </v-col>
               <v-col cols="12" sm="4">
                 <functional-selector
-                  help="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack/wiki/%E6%A2%97%E4%BD%93%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9%E5%88%97%E8%A1%A8"
                   v-model="input.je.resource"
                   :disabled="fetchListIgnored"
                   :fixed-items="fixedItems.resource"
@@ -134,6 +133,8 @@
                   :items="consts.je_modules.resource.concat(consts.je_modules.mixed)"
                   :label="$t('form.resource.label')"
                   :loading="loading_backend"
+                  help="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack/wiki/%E6%A2%97%E4%BD%93%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9%E5%88%97%E8%A1%A8"
+                  @help="sendHelpTrack('je_resource')"
                 />
               </v-col>
               <v-col cols="12" sm="4">
@@ -188,13 +189,14 @@
               </v-col>
               <v-col cols="6" sm="6">
                 <functional-selector
-                  help="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock/wiki/%E6%A2%97%E4%BD%93%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9%E5%88%97%E8%A1%A8"
                   v-model="input.be.resource"
                   :disabled="fetchListIgnored"
                   :fixed-items="fixedItems.resource"
                   :hint="$t('form.resource.hint')"
                   :items="consts.be_modules.resource"
-                  :label="$t('form.resource.label')" :loading="loading_backend"/>
+                  :label="$t('form.resource.label')"
+                  :loading="loading_backend"
+                  help="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock/wiki/%E6%A2%97%E4%BD%93%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9%E5%88%97%E8%A1%A8" @help="sendHelpTrack('be_resource')"/>
               </v-col>
               <v-col cols="12">
                 <functional-selector v-model="input.be.collection" :hint="$t('form.collections.hint')"
@@ -400,6 +402,9 @@ import TeahouseFooter from '@/components/footer'
 
 export default {
   methods: {
+    sendHelpTrack(label) {
+      window.location.host === 'dl.meme.teahou.se' && window.ga && window.ga('send', 'event', 'help', label);
+    },
     trackBuild(item) {
       window.location.host === 'dl.meme.teahou.se' && window.ga && window.ga('send', 'event', 'build', 'download', item.filename);
     },

@@ -3,7 +3,7 @@
             :items="list" :label="label" :loading="loading" multiple persistent-hint>
     <template v-slot:message="{message}">
       {{ message }}
-      <v-btn v-if="help" :href="help" icon small target="_blank">
+      <v-btn v-if="help" :href="help" icon small target="_blank" @click="$emit('help')">
         <v-icon>
           {{ mdiHelpCircleOutline }}
         </v-icon>
