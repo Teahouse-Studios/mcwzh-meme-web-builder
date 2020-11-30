@@ -236,7 +236,6 @@
                   }}</pre>
                 <v-btn v-if="item.filename" :color="$vuetify.theme.dark ? 'white' : 'primary'"
                        outlined @click="() => {open($api + 'builds/' + item.filename);trackBuild(item)}">
-                  }
                   {{ $t("log.download") }}
                 </v-btn>
                 <v-btn v-else
