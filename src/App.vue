@@ -126,6 +126,7 @@
               </v-col>
               <v-col cols="12" sm="4">
                 <functional-selector
+                  help="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack/wiki/%E6%A2%97%E4%BD%93%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9%E5%88%97%E8%A1%A8"
                   v-model="input.je.resource"
                   :disabled="fetchListIgnored"
                   :fixed-items="fixedItems.resource"
@@ -187,6 +188,7 @@
               </v-col>
               <v-col cols="6" sm="6">
                 <functional-selector
+                  help="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock/wiki/%E6%A2%97%E4%BD%93%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9%E5%88%97%E8%A1%A8"
                   v-model="input.be.resource"
                   :disabled="fetchListIgnored"
                   :fixed-items="fixedItems.resource"
@@ -233,7 +235,8 @@
                     item.content
                   }}</pre>
                 <v-btn v-if="item.filename" :color="$vuetify.theme.dark ? 'white' : 'primary'"
-                       outlined @click="open($api + 'builds/' + item.filename)">
+                       outlined @click="() => {open($api + 'builds/' + item.filename);trackBuild(item)}">
+                  }
                   {{ $t("log.download") }}
                 </v-btn>
                 <v-btn v-else
@@ -398,6 +401,9 @@ import TeahouseFooter from '@/components/footer'
 
 export default {
   methods: {
+    trackBuild(item) {
+      window.location.host === 'dl.meme.teahou.se' && window.ga && window.ga('send', 'event', 'build', 'download', item.filename);
+    },
     collectionDesc(item) {
       let result = []
       if (item['contains']?.resource?.length) {

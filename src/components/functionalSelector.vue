@@ -1,6 +1,14 @@
 <template>
   <v-select v-model="combinedItems" :disabled="disabled || false" :hint="hint"
             :items="list" :label="label" :loading="loading" multiple persistent-hint>
+    <template v-slot:message="{message}">
+      {{ message }}
+      <v-btn v-if="help" :href="help" icon small target="_blank">
+        <v-icon>
+          {{ mdiHelpCircleOutline }}
+        </v-icon>
+      </v-btn>
+    </template>
     <template v-slot:selection="{ item, index }">
       <v-chip v-if="index === 0">
         <span>{{ item.text.name }}</span>
@@ -51,7 +59,7 @@
 </template>
 
 <script>
-import {mdiCheckboxBlankOutline, mdiCloseBox, mdiMinusBox} from '@mdi/js'
+import {mdiCheckboxBlankOutline, mdiCloseBox, mdiMinusBox, mdiHelpCircleOutline} from '@mdi/js'
 
 export default {
   name: "functioanlSelector",
@@ -68,6 +76,10 @@ export default {
     fixedItems: {
       type: Array,
       default: () => []
+    },
+    help: {
+      type: String,
+      default: ''
     }
   },
   model: {
@@ -136,12 +148,9 @@ export default {
   },
   data() {
     return {
-      resource: []
+      resource: [],
+      mdiHelpCircleOutline
     }
   }
 }
 </script>
-
-<style scoped>
-
-</style>
