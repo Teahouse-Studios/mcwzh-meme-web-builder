@@ -5,18 +5,6 @@
 
 version: 2
 updates:
-  - package-ecosystem: "pip"
-    directory: "/"
-    schedule:
-      interval: "daily"
-    pull-request-branch-name:
-      separator: "-"
-    commit-message:
-      prefix: "⬆️ "
-    labels:
-      - "后端"
-      - "依赖"
-
   - package-ecosystem: "npm"
     directory: "frontend"
     schedule:
@@ -27,16 +15,4 @@ updates:
       prefix: "⬆️ "
     labels:
       - "前端"
-      - "依赖"
-
-  - package-ecosystem: "gitsubmodule"
-    directory: "/"
-    schedule:
-      interval: "daily"
-    pull-request-branch-name:
-      separator: "-"
-    commit-message:
-      prefix: "⬆️ 🚑 "
-    labels:
-      - "后端"
       - "依赖"
