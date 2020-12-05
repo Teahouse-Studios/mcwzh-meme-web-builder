@@ -40,7 +40,7 @@
           <li>{{ $t("dialog.help.needToKnowList.2") }}</li>
           <li>{{ $t("dialog.help.needToKnowList.3") }}</li>
           <li>{{ $t("dialog.help.needToKnowList.4") }}</li>
-          <li>{{ $t("dialog.help.needToKnowList.5") }}</li>
+          <li class="text-body-1 red--text text--lighten-1">{{ $t("dialog.help.needToKnowList.5") }}</li>
         </ul>
         </p>
         <p class="text-body-1">
