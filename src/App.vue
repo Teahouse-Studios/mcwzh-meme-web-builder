@@ -196,7 +196,8 @@
                   :items="consts.be_modules.resource"
                   :label="$t('form.resource.label')"
                   :loading="loading_backend"
-                  help="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock/wiki/%E6%A2%97%E4%BD%93%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9%E5%88%97%E8%A1%A8" @help="sendHelpTrack('be_resource')"/>
+                  help="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock/wiki/%E6%A2%97%E4%BD%93%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9%E5%88%97%E8%A1%A8"
+                  @help="sendHelpTrack('be_resource')"/>
               </v-col>
               <v-col cols="12">
                 <functional-selector v-model="input.be.collection" :hint="$t('form.collections.hint')"
@@ -460,7 +461,9 @@ export default {
           mixed: inputBase.resource.filter(v => (base.mixed || []).map(v => v.name).includes(v)),
           collection: inputBase.collection
         },
-        mod: this.input.je.mod,
+        mod: this.input.je.modOption === 'all' ? ['all'] : (
+          this.input.je.modOption === 'custom' ? this.input.je.mod : []
+        ),
         hash: true,
         type: this.inputBasic.format === 3 ? 'legacy' : 'normal'
       }, this.whetherUseBE && {
