@@ -10,9 +10,11 @@ module.exports = {
     if (process.env.ANALYZER) {
       config.plugins.push(new BundleAnalyzerPlugin())
     }
-    return {
-      externals: {
-        vue: 'Vue'
+    if (config.mode === 'production') {
+      return {
+        externals: {
+          vue: 'Vue'
+        }
       }
     }
   },

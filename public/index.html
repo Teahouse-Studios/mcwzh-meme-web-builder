@@ -19,7 +19,9 @@
       <meta name="keywords" content="梗体中文, 梗体, 材质包, 资源包, Minecraft, MC, 我的世界, 茶馆工作室">
       <meta name="creator" content="Teahouse Studios">
 
+      <% if(process.env.NODE_ENV === 'production'){ %>
       <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.min.js" integrity="sha256-KSlsysqp7TXtFo/FHjb1T9b425x3hrvzjMWaJyKbpcI=" crossorigin="anonymous"></script>
+      <% } %>
 
       <!-- Google Analytics -->
       <script>

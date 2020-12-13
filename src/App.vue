@@ -94,7 +94,7 @@
         tile
       >
         {{ $t("alert.main") }}<a
-        href="https://github.com/Teahouse-Studios/mcwzh-meme-web-builder/issues/new">{{ $t("alert.feedback") }}</a>{{
+        @click="$refs.help.dialog = true">{{ $t("alert.feedback") }}</a>{{
           $t("alert.period")
         }}
       </v-alert>
@@ -312,7 +312,7 @@
       </v-container>
       <TeahouseFooter></TeahouseFooter>
     </v-main>
-    <help/>
+    <help ref="help"/>
     <v-snackbar v-model="snackbarBuildSucceeded">
       {{ $t("snackbar.buildSucceeded") }}
       <template v-slot:action="{ attrs }">
