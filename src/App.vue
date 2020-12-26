@@ -86,6 +86,18 @@
           <span>{{ $t("appbar.nightModeSwitch") }}</span>
         </v-tooltip>
       </v-app-bar>
+      <v-alert
+        :color="$vuetify.theme.dark ? 'dark' : 'white'"
+        :icon="svgPath.mdiInformationOutline"
+        class="mb-0"
+        dense
+        tile
+      >
+        {{ $t("alert.main") }}<a
+        @click="$refs.help.dialog = true">{{ $t("alert.feedback") }}</a>{{
+          $t("alert.period")
+        }}
+      </v-alert>
       <v-tabs
         v-model="tab"
         background-color="transparent"

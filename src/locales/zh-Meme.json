@@ -10,6 +10,12 @@
     "nightModeSwitch": "开关灯"
   },
 
+  "alert": {
+    "main": "懒人构建最近进行了大型改造。若您认为 不 对 劲 或想控诉开发者，欢迎",
+    "feedback": "把 issue 扔给我们",
+    "period": "。"
+  },
+
   "form": {
     "version": {
       "hint": "选择您耍的版本。",
