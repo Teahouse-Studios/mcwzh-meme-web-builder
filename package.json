@@ -18,7 +18,7 @@
     "vue-cli-plugin-i18n": "^1.0.1",
     "vue-i18n": "^8.22.2",
     "vuetify": "^2.4.2",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^1.1.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.9",
