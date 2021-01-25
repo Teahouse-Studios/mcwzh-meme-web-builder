@@ -13,17 +13,17 @@
   "dependencies": {
     "@mdi/js": "^5.8.55",
     "axios": "^0.21.1",
-    "core-js": "^3.8.2",
+    "core-js": "^3.8.3",
     "vue": "^2.6.11",
     "vue-cli-plugin-i18n": "^1.0.1",
     "vue-i18n": "^8.22.2",
     "vuetify": "^2.4.2",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^1.1.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.9",
     "@vue/cli-plugin-eslint": "~4.5.9",
-    "@vue/cli-service": "~4.5.9",
+    "@vue/cli-service": "~4.5.11",
     "ali-oss": "^6.13.1",
     "babel-eslint": "^10.1.0",
     "cross-env": "^7.0.3",
