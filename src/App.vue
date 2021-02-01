@@ -193,7 +193,7 @@
                   :disabled="fetchListIgnored"
                   :fixed-items="fixedItems.resource"
                   :hint="$t('form.resource.hint')"
-                  :items="consts.be_modules.resource"
+                  :items="consts.be_modules.resource.concat(consts.be_modules.mixed)"
                   :label="$t('form.resource.label')"
                   :loading="loading_backend"
                   help="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock/wiki/%E6%A2%97%E4%BD%93%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9%E5%88%97%E8%A1%A8"
