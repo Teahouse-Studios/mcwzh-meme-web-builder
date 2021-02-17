@@ -35,7 +35,7 @@ jobs:
 
       - name: Install
         if: steps.node-cache.outputs.cache-hit != 'true'
-        run: yarn --no-lockfile
+        run: yarn
 
       - name: Build
         run: yarn build
