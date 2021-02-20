@@ -93,8 +93,7 @@
         dense
         tile
       >
-        {{ $t("alert.main") }}<a
-        @click="$refs.help.dialog = true">{{ $t("alert.feedback") }}</a>{{
+        {{ $t("alert.main") }}<a href="https://teahou.se/memepack-1st-anniversary/">{{ $t("alert.feedback") }}</a>{{
           $t("alert.period")
         }}
       </v-alert>
