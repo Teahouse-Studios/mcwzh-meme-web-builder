@@ -129,7 +129,7 @@
                   :disabled="fetchListIgnored"
                   :fixed-items="fixedItems.resource"
                   :hint="$t('form.resource.hint')"
-                  :items="consts.je_modules.resource.concat(consts.je_modules.mixed)"
+                  :items="consts.je_modules.resource.filter(v => v.classifier.includes('modified_resource'))"
                   :label="$t('form.resource.label')"
                   :loading="loading_backend"
                   help="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack/wiki/%E6%A2%97%E4%BD%93%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9%E5%88%97%E8%A1%A8"
@@ -139,7 +139,7 @@
               <v-col cols="12" sm="4">
                 <functional-selector v-model="input.je.language"
                                      :disabled="fetchListIgnored" :fixedItems="fixedItems.language"
-                                     :hint="$t('form.language.hint')" :items="consts.je_modules.language"
+                                     :hint="$t('form.language.hint')" :items="consts.je_modules.resource.filter(v => v.classifier.includes('modified_language'))"
                                      :label="$t('form.language.label')"
                                      :loading="loading_backend"
                 ></functional-selector>
@@ -192,7 +192,7 @@
                   :disabled="fetchListIgnored"
                   :fixed-items="fixedItems.resource"
                   :hint="$t('form.resource.hint')"
-                  :items="consts.be_modules.resource.concat(consts.be_modules.mixed)"
+                  :items="consts.be_modules.resource"
                   :label="$t('form.resource.label')"
                   :loading="loading_backend"
                   help="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock/wiki/%E6%A2%97%E4%BD%93%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9%E5%88%97%E8%A1%A8"
@@ -457,7 +457,6 @@ export default {
         modules: {
           language: inputBase.language,
           resource: inputBase.resource.filter(v => !(base.mixed || []).map(v => v.name).includes(v)),
-          mixed: inputBase.resource.filter(v => (base.mixed || []).map(v => v.name).includes(v)),
           collection: inputBase.collection
         },
         mod: this.input.je.modOption === 'all' ? ['all'] : (
@@ -539,7 +538,6 @@ export default {
         resource: [],
         language: [],
         collection: [],
-        mixed: []
       },
       je: {
         modOption: "all",
@@ -547,7 +545,6 @@ export default {
         resource: [],
         language: [],
         collection: [],
-        mixed: []
       }
     },
     hint: 0,
@@ -559,13 +556,9 @@ export default {
       }],
       beExtType: ['mcpack', 'zip'],
       modList: [], je_modules: {
-        language: [],
-        mixed: [],
         resource: [],
         collection: []
       }, be_modules: {
-        language: [],
-        mixed: [],
         resource: [],
         collection: []
       },
