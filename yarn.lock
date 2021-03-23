@@ -1625,10 +1625,10 @@ ajv@^6.1.0, ajv@^6.10.0, ajv@^6.10.2, ajv@^6.12.3, ajv@^6.12.4, ajv@^6.12.5:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
-ali-oss@^6.13.2:
-  version "6.13.2"
-  resolved "https://registry.yarnpkg.com/ali-oss/-/ali-oss-6.13.2.tgz#ebd965b935bb8f436c5c5ef0fc03fd228fbf00a7"
-  integrity sha512-85z+2Cd3ydCmdw/l6oFkaMmyswPVXm2r6a8GI+738s7O6YsDHDSogQ04joymUT2gdFNVWHYWTmXWLKEkD19eEQ==
+ali-oss@^6.14.0:
+  version "6.14.0"
+  resolved "https://registry.yarnpkg.com/ali-oss/-/ali-oss-6.14.0.tgz#e2369acd0954a7e0c9e9aa75e4a32457ad99244d"
+  integrity sha512-zzOfk9nPgVOpgpfyFIve/TU/v3znXO1DhVLSCPdq/DiMAC3CVrU3zb7LhPkYdDVvN2nO7jJaPbxqCMyK4UOCaQ==
   dependencies:
     address "^1.0.0"
     agentkeepalive "^3.4.1"
@@ -3638,10 +3638,10 @@ eslint-loader@^2.2.1:
     object-hash "^1.1.4"
     rimraf "^2.6.1"
 
-eslint-plugin-vue@^7.7.0:
-  version "7.7.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-vue/-/eslint-plugin-vue-7.7.0.tgz#a90df4595e670821bf243bd2750ededdb74948b8"
-  integrity sha512-mYz4bpLGv5jx6YG/GvKkqbGSfV7uma2u1P3mLA41Q5vQl8W1MeuTneB8tfsLq6xxxesFubcrOC0BZBJ5R+eaCQ==
+eslint-plugin-vue@^7.8.0:
+  version "7.8.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-vue/-/eslint-plugin-vue-7.8.0.tgz#cb0e85d65b65fa8d15e783fbb03c049d2c4cfdae"
+  integrity sha512-OGrnPz+PuYL2HmVyBHxm4mRjxW2kfFCQE6Hw9G6qOHs/Pcu0srOlCCW0FMa8SLzIEqxl8WuKoBSPcMnrjUG2vw==
   dependencies:
     eslint-utils "^2.1.0"
     natural-compare "^1.4.0"
