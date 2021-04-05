@@ -1,19 +1,14 @@
 require('dotenv').config()
 const OSS = require('ali-oss')
 const glob = require("glob")
-const client = new OSS({
-  region: process.env.AL_FE_REGION,
-  bucket: process.env.AL_FE_BUCKET,
-  accessKeyId: process.env.AL_FE_KEYID,
-  accessKeySecret: process.env.AL_FE_SECRET
-})
-
-const {NodeSSH} = require('node-ssh')
-
-const ssh = new NodeSSH()
-
-
 async function start() {
+  const client = new OSS({
+    region: process.env.AL_FE_REGION,
+    bucket: process.env.AL_FE_BUCKET,
+    accessKeyId: process.env.AL_FE_KEYID,
+    accessKeySecret: process.env.AL_FE_SECRET
+  })
+  
   const prefix = 'dist/'
   let tasks = glob.sync(`${prefix}/**/*.*`).map(v => v.substr(prefix.length))
   for (let task of tasks) {
@@ -21,13 +16,14 @@ async function start() {
     console.log(result.url)
   }
   
-  await ssh.connect({
-    host: process.env.REMOTE_HOST,
-    username: process.env.REMOTE_USER,
-    password: process.env.REMOTE_PWD
+  const client2 = new OSS({
+    region: process.env.AL_FE_REGION,
+    bucket: process.env.AL_BUCKET,
+    accessKeyId: process.env.AL_FE_KEYID,
+    accessKeySecret: process.env.AL_FE_SECRET
   })
-  await ssh.putFile("dist/index.html", process.env.REMOTE_PATH)
-  await ssh.dispose()
+  
+  await client2.put('/index.html', __dirname + '/dist/index.html')
   console.log('done')
 }
 
