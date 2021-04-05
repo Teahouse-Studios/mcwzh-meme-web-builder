@@ -4,9 +4,10 @@ import App from './App.vue'
 import vuetify from './plugins/vuetify';
 
 import {getCLS, getFID, getLCP} from 'web-vitals';
+import allowGa from "@/allowGa";
 
 function sendToGoogleAnalytics({name, delta, id}) {
-  if (window.location.host === "dl.meme.teahou.se" && window.ga) {
+  if (allowGa() && window.ga) {
     window.ga('send', 'event', {
       eventCategory: 'Web Vitals',
       eventAction: name,

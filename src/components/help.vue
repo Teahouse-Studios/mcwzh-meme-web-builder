@@ -123,6 +123,7 @@
 
 <script>
 import {mdiGithub, mdiGoogleAnalytics, mdiVuetify, mdiVuejs, mdiVectorSquare, mdiClose, mdiHelp} from '@mdi/js'
+import allowGa from "@/allowGa";
 
 export default {
   name: "help",
@@ -134,7 +135,7 @@ export default {
   }),
   methods: {
     send() {
-      window.location.host === 'dl.meme.teahou.se' && window.ga && window.ga('send', 'event', 'help', 'openDialog');
+      allowGa() && window.ga?.('send', 'event', 'help', 'openDialog');
     }
   }
 }

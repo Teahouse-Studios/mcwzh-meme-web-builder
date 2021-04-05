@@ -399,14 +399,15 @@ import {
   mdiPost
 } from '@mdi/js'
 import TeahouseFooter from '@/components/footer'
+import allowGa from "@/allowGa";
 
 export default {
   methods: {
     sendHelpTrack(label) {
-      window.location.host === 'dl.meme.teahou.se' && window.ga && window.ga('send', 'event', 'help', label);
+      allowGa() && window.ga?.('send', 'event', 'help', label);
     },
     trackBuild(item) {
-      window.location.host === 'dl.meme.teahou.se' && window.ga && window.ga('send', 'event', 'build', 'download', item.filename);
+      allowGa() && window.ga?.('send', 'event', 'build', 'download', item.filename);
     },
     collectionDesc(item) {
       let result = []
@@ -469,7 +470,7 @@ export default {
         compatible: this.input.be.compatible
       })
       console.log(data)
-      window.location.host === 'dl.meme.teahou.se' && window.ga && window.ga('send', 'event', this.whetherUseBE ? 'be' : 'je', 'build');
+      allowGa() && window.ga?.('send', 'event', this.whetherUseBE ? 'be' : 'je', 'build');
       axios({url: '/ajax', baseURL: this.$api, method: 'POST', data}).then(function (res) {
         console.log(res.data)
         this.logs.unshift({
