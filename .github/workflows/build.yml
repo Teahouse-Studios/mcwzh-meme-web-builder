@@ -50,7 +50,6 @@ jobs:
           AL_FE_KEYID: ${{ secrets.AL_FE_KEYID }}
           AL_FE_SECRET: ${{ secrets.AL_FE_SECRET }}
           AL_FE_BUCKET: ${{ secrets.AL_FE_BUCKET }}
-          AL_BUCKET: ${{ secrets.AL_BUCKET }}
           PROJ_NAME: ${{ secrets.PROJ_NAME }}
           FE_DOMAIN: ${{ secrets.FE_DOMAIN }}
 

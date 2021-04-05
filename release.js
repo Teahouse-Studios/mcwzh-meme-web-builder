@@ -15,15 +15,6 @@ async function start() {
     let result = await client.put(`${process.env.PROJ_NAME}/${task}`, `${prefix}${task}`)
     console.log(result.url)
   }
-  
-  const client2 = new OSS({
-    region: process.env.AL_FE_REGION,
-    bucket: process.env.AL_BUCKET,
-    accessKeyId: process.env.AL_FE_KEYID,
-    accessKeySecret: process.env.AL_FE_SECRET
-  })
-  
-  await client2.put('/index.html', __dirname + '/dist/index.html')
   console.log('done')
 }
 
