@@ -13,7 +13,7 @@
   "dependencies": {
     "@mdi/js": "^5.9.55",
     "axios": "^0.21.1",
-    "core-js": "^3.9.1",
+    "core-js": "^3.10.0",
     "vue": "^2.6.11",
     "vue-cli-plugin-i18n": "^2.0.3",
     "vue-i18n": "^8.24.2",
