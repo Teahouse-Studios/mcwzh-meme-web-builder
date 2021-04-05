@@ -584,9 +584,10 @@ export default {
     fixedItems() {
       const base = this.whetherUseBE ? this.consts.be_modules : this.consts.je_modules
       let items = base.collection.filter(v => this.input[this.whetherUseBE ? 'be' : 'je'].collection.includes(v.name))
+      const data = items.map(v => v['contains']).flat()
       return {
-        resource: items.map(v => v['contains'].resource || []).flat(),
-        language: items.map(v => v['contains'].language || []).flat()
+        resource: data.filter(v => base.resource.find(r => r.name === v).classifier.includes('modified_resource')),
+        language: data.filter(v => base.resource.find(r => r.name === v).classifier.includes('modified_language')),
       }
     },
     links() {
