@@ -8794,10 +8794,10 @@ vm-browserify@^1.0.1:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
-vue-cli-plugin-i18n@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/vue-cli-plugin-i18n/-/vue-cli-plugin-i18n-2.0.3.tgz#0d4fd3088552ac38f773fa0d03e81229fc3909d3"
-  integrity sha512-yhCXj8Lod8NHKMUnEFFN5bNeW7zcMsfqNBDSfZz9pw5fCpV7cw8tSyZ/s6suRC6hTEcO3ZVgHpSyH5ME8cHNtA==
+vue-cli-plugin-i18n@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/vue-cli-plugin-i18n/-/vue-cli-plugin-i18n-2.1.0.tgz#2b6b0e07c42680558bff0ac42b74bce6015f29b8"
+  integrity sha512-YBLaoY61eQP1BoSu29xK5711HghTooLmtYbxdXHNz9pOjN4/kX1MDpl6hMaHNkec4/r2hR3MHDWyJqed51Iuaw==
   dependencies:
     debug "^4.3.0"
     deepmerge "^4.2.0"
