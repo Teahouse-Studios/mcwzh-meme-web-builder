@@ -34,6 +34,22 @@
           </a>
         </v-col>
       </v-row>
+      <div class="text-right body-2 mt-2">
+        <a
+          v-if="beian"
+          class="white--text text-decoration-none"
+          href="https://beian.miit.gov.cn/">
+          蜀 ICP 备 19006420 号-1
+        </a>
+        <span> | </span>
+        <a
+          v-if="beian"
+          class="white--text text-decoration-none"
+          href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=51010502011232">
+          <img src="https://attachment.mcbbs.net/data/myattachment/forum/201904/18/174618efzrjz22n825mfds.png" height="14px">
+          蜀公网安备 11010102002019 号
+        </a>
+      </div>
     </v-container>
   </v-footer>
 </template>
@@ -44,7 +60,8 @@ import {mdiScript, mdiLock, mdiCashUsd} from '@mdi/js'
 export default {
   name: "footer",
   data: () => ({
-    mdiCashUsd, mdiLock, mdiScript
+    mdiCashUsd, mdiLock, mdiScript,
+    beian: window.location.host === 'meme.wd-ljt.com' || process.env.NODE_ENV === 'development'
   })
 }
 </script>

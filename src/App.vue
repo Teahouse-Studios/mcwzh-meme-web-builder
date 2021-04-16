@@ -346,7 +346,7 @@
               </v-list-item>
 
               <v-card-actions>
-                <v-btn href="https://www.mcbbs.net/?2444378" rel="noopener noreferrer" text>{{
+                <v-btn href="https://www.wd-ljt.com/" rel="noopener noreferrer" text>{{
                     $t("sponsor.liu.website")
                   }}
                 </v-btn>
