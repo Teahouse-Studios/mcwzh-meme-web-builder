@@ -102,17 +102,17 @@
         background-color="transparent"
         fixed-tabs
       >
-        <v-tab>
+        <v-tab href="#tab_je">
           {{ $t("java") }}
         </v-tab>
-        <v-tab>
+        <v-tab href="#tab_be">
           {{ $t("bedrock") }}
         </v-tab>
       </v-tabs>
 
       <v-container>
         <v-tabs-items v-model="tab">
-          <v-tab-item>
+          <v-tab-item value="tab_je">
             <v-row>
               <v-col cols="12" sm="4">
                 <v-select
@@ -175,7 +175,7 @@
               </v-col>
             </v-row>
           </v-tab-item>
-          <v-tab-item>
+          <v-tab-item value="tab_be">
             <v-row>
               <v-col cols="6" sm="6">
                 <v-select
@@ -396,6 +396,18 @@
         </v-btn>
       </template>
     </v-snackbar>
+    <v-snackbar v-model="shareLinkParsed">
+      {{ $t("snackbar.shareLinkParsed") }}
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          v-bind="attrs"
+          text
+          @click="shareLinkParsed = false"
+        >
+          {{ $t("snackbar.close") }}
+        </v-btn>
+      </template>
+    </v-snackbar>
     <v-dialog
       persistent
       v-model="dialogFetchListFailed"
@@ -452,6 +464,8 @@ import {
 import TeahouseFooter from '@/components/footer'
 import allowGa from "@/allowGa";
 
+const urlParam = new URLSearchParams(location.search.substring(1))
+
 export default {
   methods: {
     sendHelpTrack(label) {
@@ -496,8 +510,8 @@ export default {
       }
       this.loading_backend = false
       this.dialogFetchListFailed = false
-      this.input.be.collection = ['no_blue_ui']
-      this.input.je.collection = ['choice_modules_1']
+      this.input.be.collection = urlParam.get('be_collection') || ['no_blue_ui']
+      this.input.je.collection = urlParam.get('je_collection') || ['choice_modules_1']
     },
     submit() {
       this.loading = true
@@ -565,6 +579,7 @@ export default {
     snackbarBuildFailed: false,
     dialogFetchListFailed: false,
     fetchListIgnored: false,
+    shareLinkParsed: false,
     svgPath: {
       mdiPost,
       mdiGithub,
@@ -576,27 +591,27 @@ export default {
       mdiBrightness4,
       mdiBrightness7
     },
-    tab: null,
+    tab: urlParam.get('tab') || null,
     logsPanel: [],
     loading: false,
     inputBasic: {
-      format: 6
+      format: urlParam.get('pack_format') || 6
     },
     logs: [],
     input: {
       be: {
-        extType: 'mcpack',
-        compatible: false,
-        resource: [],
-        language: [],
-        collection: [],
+        extType: urlParam.get('be_ext_type') || 'mcpack',
+        compatible: urlParam.get('be_compatible') || false,
+        resource: urlParam.getAll('be_resource') || [],
+        language: urlParam.getAll('be_language') || [],
+        collection: urlParam.getAll('be_collection') || [],
       },
       je: {
-        modOption: "all",
-        mod: [],
-        resource: [],
-        language: [],
-        collection: [],
+        modOption: urlParam.get('je_modOption') || "all",
+        mod: urlParam.getAll('je_mod') || [],
+        resource: urlParam.getAll('je_resource') || [],
+        language: urlParam.getAll('je_language') || [],
+        collection: urlParam.getAll('je_collection') || [],
       }
     },
     hint: 0,
@@ -668,6 +683,13 @@ export default {
     }
     this.$i18n.locale = memeLang;
     localStorage.setItem("memeInitialized", "true");
+
+    for (let pair of urlParam.entries()) {
+      if (pair[0].startsWith('be_') || pair[0].startsWith('je_') || pair[0] === 'tab') {
+        this.shareLinkParsed = true
+        break
+      }
+    }
   }
 };
 </script>
