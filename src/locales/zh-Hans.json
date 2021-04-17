@@ -109,8 +109,7 @@
     "close": "关闭",
     "feedback": "反馈",
     "buildSucceeded": "构建已成功。",
-    "buildFailed": "构建已失败。",
-    "shareLinkParsed": "成功解析配置分享链接。"
+    "buildFailed": "构建已失败。"
   },
 
   "dialog": {
