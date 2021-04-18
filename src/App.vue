@@ -499,7 +499,7 @@ export default {
         text: '你的好友给你分享了 ta 的配置！',
         url: path,
       }
-      if (navigator.share(shareContent)) {
+      if (navigator.share) {
         navigator.share(shareContent)
       } else {
         navigator.clipboard.writeText(path)
