@@ -109,7 +109,8 @@
     "close": "关掉！关掉！",
     "feedback": "投诉开发者",
     "buildSucceeded": "构建成了。",
-    "buildFailed": "构建 大 失 败。"
+    "buildFailed": "构建 大 失 败。",
+    "shareLinkParsed": "成功解析你朋友（不知道是不是你自己）发过来的配置链接。"
   },
 
   "dialog": {

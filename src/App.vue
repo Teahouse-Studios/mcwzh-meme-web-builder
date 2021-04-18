@@ -139,7 +139,8 @@
               <v-col cols="12" sm="4">
                 <functional-selector v-model="input.je.language"
                                      :disabled="fetchListIgnored" :fixedItems="fixedItems.language"
-                                     :hint="$t('form.language.hint')" :items="consts.je_modules.resource.filter(v => v.classifier.includes('modified_language'))"
+                                     :hint="$t('form.language.hint')"
+                                     :items="consts.je_modules.resource.filter(v => v.classifier.includes('modified_language'))"
                                      :label="$t('form.language.label')"
                                      :loading="loading_backend"
                 ></functional-selector>
@@ -240,6 +241,10 @@
                        outlined @click="() => {open($api + 'builds/' + item.filename);trackBuild(item)}">
                   {{ $t("log.download") }}
                 </v-btn>
+                <v-btn v-if="item.filename" :color="$vuetify.theme.dark ? 'white' : 'primary'" class="ml-2"
+                       outlined @click="() => {share(item); trackShare(item)}">
+                  {{ $t("log.share") }}
+                </v-btn>
                 <v-btn v-else
                        :color="$vuetify.theme.dark ? 'dark' : ''"
                        dark @click="open(item.github + '/issues/new/choose')">
@@ -304,7 +309,7 @@
             </v-card>
           </v-col>
         </v-row>
-                <v-row class="mb-3">
+        <v-row class="mb-3">
           <v-col col="12" md="6">
             <v-card>
               <v-list-item three-line>
@@ -329,7 +334,7 @@
               </v-card-actions>
             </v-card>
           </v-col>
-                    <v-col col="12" md="6">
+          <v-col col="12" md="6">
             <v-card>
               <v-list-item three-line>
                 <v-list-item-content>
@@ -370,6 +375,18 @@
           color="blue"
           text
           @click="snackbarBuildSucceeded = false"
+        >
+          {{ $t("snackbar.close") }}
+        </v-btn>
+      </template>
+    </v-snackbar>
+    <v-snackbar v-model="shareLinkParsed">
+      {{ $t("snackbar.shareLinkParsed") }}
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          v-bind="attrs"
+          text
+          @click="shareLinkParsed = false"
         >
           {{ $t("snackbar.close") }}
         </v-btn>
@@ -454,8 +471,20 @@ import allowGa from "@/allowGa";
 
 export default {
   methods: {
+    share(item) {
+      let p = new URLSearchParams()
+      p.set("type", item.isBe ? 'be' : 'je')
+      p.set("ver", "1")
+      p.set("input", JSON.stringify(this.input[p.get('type')]))
+      p.set("inputBasic", JSON.stringify(this.inputBasic))
+      let path = `${window.location.href.slice(0, -window.location.search.length)}?${p.toString()}`
+      navigator.clipboard.writeText(path)
+    },
     sendHelpTrack(label) {
       allowGa() && window.ga?.('send', 'event', 'help', label);
+    },
+    trackShare(item) {
+      allowGa() && window.ga?.('send', 'event', 'build', 'share', item.filename);
     },
     trackBuild(item) {
       allowGa() && window.ga?.('send', 'event', 'build', 'download', item.filename);
@@ -498,6 +527,25 @@ export default {
       this.dialogFetchListFailed = false
       this.input.be.collection = ['no_blue_ui']
       this.input.je.collection = ['choice_modules_1']
+
+      let p = new URLSearchParams(window.location.search)
+      let type = p.get('type')
+      let ver = p.get('ver')
+      let inputBasic = p.get('inputBasic')
+      let input = p.get('input')
+      if (['je', 'be'].includes(type) && inputBasic && ver === '1') {
+        let _inputBasic, _input
+        try {
+          _inputBasic = JSON.parse(inputBasic)
+          _input = JSON.parse(input)
+        } catch (e) {
+          return;
+        }
+        this.shareLinkParsed = true
+        this.tab = type === 'je' ? 0 : 1
+        this.input[type] = _input
+        this.inputBasic = _inputBasic
+      }
     },
     submit() {
       this.loading = true
@@ -529,7 +577,8 @@ export default {
           ts: new Date().valueOf(),
           content: res.data.logs,
           filename: res.data.filename,
-          github: this.links.github
+          github: this.links.github,
+          isBe: this.whetherUseBE
         })
         this.logsPanel = this.logsPanel.map(v => v + 1)
         this.logsPanel.unshift(0)
@@ -565,6 +614,7 @@ export default {
     snackbarBuildFailed: false,
     dialogFetchListFailed: false,
     fetchListIgnored: false,
+    shareLinkParsed: false,
     svgPath: {
       mdiPost,
       mdiGithub,

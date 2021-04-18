@@ -76,6 +76,7 @@
     "buildFailed": "构建失败",
     "headline": "构建日志",
     "download": "下载",
+    "share": "分享配置",
     "feedback": "反馈"
   },
 
@@ -109,7 +110,8 @@
     "close": "关闭",
     "feedback": "反馈",
     "buildSucceeded": "构建已成功。",
-    "buildFailed": "构建已失败。"
+    "buildFailed": "构建已失败。",
+    "shareLinkParsed": "成功解析配置分享链接。"
   },
 
   "dialog": {
