@@ -6,15 +6,13 @@ import vuetify from './plugins/vuetify';
 import {getCLS, getFID, getLCP} from 'web-vitals';
 import allowGa from "@/allowGa";
 
-function sendToGoogleAnalytics({name, delta, id}) {
-  if (allowGa() && window.ga) {
-    window.ga('send', 'event', {
-      eventCategory: 'Web Vitals',
-      eventAction: name,
-      eventValue: Math.round(name === 'CLS' ? delta * 1000 : delta),
-      eventLabel: id,
-      nonInteraction: true,
-      transport: 'beacon',
+function sendToGoogleAnalytics({name, delta, value, id}) {
+  if (allowGa() && window.gtag) {
+    window.gtag('event', name, {
+      value: delta,
+      metric_id: id,
+      metric_value: value,
+      metric_delta: delta,
     });
   } else {
     console.log(arguments)

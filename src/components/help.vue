@@ -135,7 +135,9 @@ export default {
   }),
   methods: {
     send() {
-      allowGa() && window.ga?.('send', 'event', 'help', 'openDialog');
+      allowGa() && window.gtag?.('event', 'help',{
+        eventCategory: 'openDialog'
+      });
     }
   }
 }
