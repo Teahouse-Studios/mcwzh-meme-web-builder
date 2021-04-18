@@ -239,11 +239,12 @@
                   }}</pre>
                 <v-btn v-if="item.filename" :color="$vuetify.theme.dark ? 'white' : 'primary'"
                        outlined @click="() => {open($api + 'builds/' + item.filename);trackBuild(item)}">
+                  <v-icon left>{{ svgPath.mdiCloudDownload }}</v-icon>
                   {{ $t("log.download") }}
                 </v-btn>
                 <v-btn v-if="item.filename" :color="$vuetify.theme.dark ? 'white' : 'primary'" class="ml-2"
-                       outlined @click="() => {share(item); trackShare(item)}">
-                  {{ $t("log.share") }}
+                        icon @click="() => {share(item); trackShare(item)}">
+                  <v-icon>{{ svgPath.mdiShareVariant }}</v-icon>
                 </v-btn>
                 <v-btn v-else
                        :color="$vuetify.theme.dark ? 'dark' : ''"
@@ -386,7 +387,21 @@
         <v-btn
           v-bind="attrs"
           text
+          color="primary"
           @click="shareLinkParsed = false"
+        >
+          {{ $t("snackbar.close") }}
+        </v-btn>
+      </template>
+    </v-snackbar>
+    <v-snackbar v-model="shareCopyedToClipboard">
+      {{ $t("snackbar.shareCopyedToClipboard") }}
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          v-bind="attrs"
+          text
+          color="primary"
+          @click="shareCopyedToClipboard = false"
         >
           {{ $t("snackbar.close") }}
         </v-btn>
@@ -464,7 +479,8 @@ import {
   mdiDotsVertical,
   mdiGithub,
   mdiInformationOutline,
-  mdiPost
+  mdiPost,
+  mdiShareVariant
 } from '@mdi/js'
 import TeahouseFooter from '@/components/footer'
 import allowGa from "@/allowGa";
@@ -478,7 +494,17 @@ export default {
       p.set("input", JSON.stringify(this.input[p.get('type')]))
       p.set("inputBasic", JSON.stringify(this.inputBasic))
       let path = `${window.location.href.split("#")[0].split("?")[0]}?${p.toString()}`
-      navigator.clipboard.writeText(path)
+      let shareContent = {
+        title: '梗体中文构建配置分享',
+        text: '你的好友给你分享了 ta 的配置！',
+        url: path,
+      }
+      if (navigator.share(shareContent)) {
+        navigator.share(shareContent)
+      } else {
+        navigator.clipboard.writeText(path)
+        this.shareCopyedToClipboard = true
+      }
     },
     sendHelpTrack(label) {
       allowGa() && window.ga?.('send', 'event', 'help', label);
@@ -615,6 +641,7 @@ export default {
     dialogFetchListFailed: false,
     fetchListIgnored: false,
     shareLinkParsed: false,
+    shareCopyedToClipboard: false,
     svgPath: {
       mdiPost,
       mdiGithub,
@@ -624,7 +651,8 @@ export default {
       mdiDotsVertical,
       mdiInformationOutline,
       mdiBrightness4,
-      mdiBrightness7
+      mdiBrightness7,
+      mdiShareVariant
     },
     tab: null,
     logsPanel: [],
