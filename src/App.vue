@@ -477,7 +477,7 @@ export default {
       p.set("ver", "1")
       p.set("input", JSON.stringify(this.input[p.get('type')]))
       p.set("inputBasic", JSON.stringify(this.inputBasic))
-      let path = `${window.location.href.slice(0, -window.location.search.length)}?${p.toString()}`
+      let path = `${window.location.href.split("#")[0].split("?")[0]}?${p.toString()}`
       navigator.clipboard.writeText(path)
     },
     sendHelpTrack(label) {
