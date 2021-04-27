@@ -45,7 +45,7 @@
             <slot name="before-author" v-bind:item="data.item.text"/>
             <a
               v-if="data.item.text.author">
-              · {{ $t("form.author") }}{{ data.item.text.author }}
+              · {{ $t("form.author") }}{{ data.item.text.author.join(", ") }}
             </a>
             <a v-if="(data.item.text.incompatible_with || []).length >= 1" class="red--text">
               {{ $t("form.incompatible_prefix") }} {{ data.item.text.incompatible_with.join(", ") }}
