@@ -463,6 +463,21 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-dialog v-model="dialogNews" max-width="700px" scrollable>
+      <v-card>
+        <v-card-title>
+          梗中新闻 #{{ news.id }} - {{ news.title }}
+          <v-btn class="ml-auto" icon @click="newsIgnore()">
+            <v-icon>{{ svgPath.mdiClose }}</v-icon>
+          </v-btn>
+        </v-card-title>
+        <v-img :src="news.image" class="mb-4"></v-img>
+        <v-card-text style="height: 500px;">
+          <div v-html="news.content"></div>
+          <v-btn :href="news.detail" plain><v-icon left>{{ svgPath.mdiArrowRight }}</v-icon> 阅读更多</v-btn>
+        </v-card-text>
+      </v-card>
+  </v-dialog>
   </v-app>
 </template>
 <script>
@@ -471,10 +486,12 @@ import functionalSelector from "@/components/functionalSelector";
 import help from './components/help'
 import langMenu from './components/langMenu'
 import {
+  mdiArrowRight,
   mdiBrightness4,
   mdiBrightness7,
   mdiBug,
   mdiCloudDownload,
+  mdiClose,
   mdiDisc,
   mdiDotsVertical,
   mdiGithub,
@@ -487,6 +504,10 @@ import allowGa from "@/allowGa";
 
 export default {
   methods: {
+    newsIgnore() {
+      this.dialogNews = false
+      localStorage.memeNewsIgnored = this.news.id
+    },
     share(item) {
       let p = new URLSearchParams()
       p.set("type", item.isBe ? 'be' : 'je')
@@ -646,13 +667,16 @@ export default {
     TeahouseFooter
   },
   data: () => ({
+    news: null,
     snackbarBuildSucceeded: false,
     snackbarBuildFailed: false,
     dialogFetchListFailed: false,
+    dialogNews: false,
     fetchListIgnored: false,
     shareLinkParsed: false,
     shareCopyedToClipboard: false,
     svgPath: {
+      mdiArrowRight,
       mdiPost,
       mdiGithub,
       mdiDisc,
@@ -662,7 +686,8 @@ export default {
       mdiInformationOutline,
       mdiBrightness4,
       mdiBrightness7,
-      mdiShareVariant
+      mdiShareVariant,
+      mdiClose
     },
     tab: null,
     logsPanel: [],
@@ -716,6 +741,11 @@ export default {
     }, 4000)
 
     this.fetchList()
+
+    await axios
+      .get('https://cdn.jsdelivr.net/gh/Teahouse-Studios/mcwzh-meme-resourcepack@master/news.json')
+      .then(response => (this.news = response.data))
+      .then(() => {this.dialogNews = this.news.id > localStorage.getItem("memeNewsIgnored")})
   },
   computed: {
     whetherUseBE() {
@@ -747,6 +777,7 @@ export default {
   created() {
     if (localStorage.getItem("memeInitialized") !== "true") {
       localStorage.setItem("memeDarkMode", window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? "true" : "false");
+      localStorage.setItem("memeNewsIgnored", "0")
     }
     this.$vuetify.theme.dark = localStorage.getItem("memeDarkMode") === "true"
     let memeLang = localStorage.getItem("memeLang");
