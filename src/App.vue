@@ -756,8 +756,8 @@ export default {
       let items = base.collection.filter(v => this.input[this.whetherUseBE ? 'be' : 'je'].collection.includes(v.name))
       const data = items.map(v => v['contains']).flat()
       return {
-        resource: data.filter(v => base.resource.find(r => r.name === v).classifier.includes('modified_resource')),
-        language: data.filter(v => base.resource.find(r => r.name === v).classifier.includes('modified_language')),
+        resource: data.filter(!v => base.resource.find(r => r.name === v).name.startsWith('lang_')),
+        language: data.filter(v => base.resource.find(r => r.name === v).name.startsWith('lang_')),
       }
     },
     links() {
