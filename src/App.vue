@@ -463,7 +463,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-dialog v-model="dialogNews" max-width="700px" scrollable>
+    <v-dialog v-model="dialogNews" max-width="700px" scrollable v-if="news">
       <v-card>
         <v-card-title>
           梗中新闻 #{{ news.id }} - {{ news.title }}
