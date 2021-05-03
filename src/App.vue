@@ -129,7 +129,7 @@
                   :disabled="fetchListIgnored"
                   :fixed-items="fixedItems.resource"
                   :hint="$t('form.resource.hint')"
-                  :items="consts.je_modules.resource.filter(v => v.classifier.includes('modified_resource'))"
+                  :items="consts.je_modules.resource.filter(v => !v.name.startsWith('lang_'))"
                   :label="$t('form.resource.label')"
                   :loading="loading_backend"
                   help="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack/wiki/%E6%A2%97%E4%BD%93%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9%E5%88%97%E8%A1%A8"
@@ -140,7 +140,7 @@
                 <functional-selector v-model="input.je.language"
                                      :disabled="fetchListIgnored" :fixedItems="fixedItems.language"
                                      :hint="$t('form.language.hint')"
-                                     :items="consts.je_modules.resource.filter(v => v.classifier.includes('modified_language'))"
+                                     :items="consts.je_modules.resource.filter(v => v.name.startsWith('lang_'))"
                                      :label="$t('form.language.label')"
                                      :loading="loading_backend"
                 ></functional-selector>
@@ -756,7 +756,7 @@ export default {
       let items = base.collection.filter(v => this.input[this.whetherUseBE ? 'be' : 'je'].collection.includes(v.name))
       const data = items.map(v => v['contains']).flat()
       return {
-        resource: data.filter(!v => base.resource.find(r => r.name === v).name.startsWith('lang_')),
+        resource: data.filter(v => !base.resource.find(r => r.name === v).name.startsWith('lang_')),
         language: data.filter(v => base.resource.find(r => r.name === v).name.startsWith('lang_')),
       }
     },
