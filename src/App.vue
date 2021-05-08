@@ -471,10 +471,11 @@
             <v-icon>{{ svgPath.mdiClose }}</v-icon>
           </v-btn>
         </v-card-title>
-        <v-img :src="news.image" class="mb-4"></v-img>
+        <v-img v-if="news.image" :src="news.image" class="mb-4"></v-img>
+        <v-divider v-else class="mb-4"></v-divider>
         <v-card-text style="height: 500px;">
           <div v-html="news.content"></div>
-          <v-btn :href="news.detail" plain><v-icon left>{{ svgPath.mdiArrowRight }}</v-icon> 阅读更多</v-btn>
+          <v-btn v-if="news.detail" :href="news.detail" plain><v-icon left>{{ svgPath.mdiArrowRight }}</v-icon> 阅读更多</v-btn>
         </v-card-text>
       </v-card>
   </v-dialog>
