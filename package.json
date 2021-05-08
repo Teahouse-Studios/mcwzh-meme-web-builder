@@ -30,7 +30,7 @@
     "dotenv": "^8.2.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.9.0",
-    "glob": "^7.1.6",
+    "glob": "^7.1.7",
     "sass": "^1.32.12",
     "sass-loader": "^10.1.1",
     "vue-cli-plugin-vuetify": "^2.4.0",
