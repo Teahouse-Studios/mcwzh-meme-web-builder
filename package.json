@@ -21,7 +21,7 @@
     "web-vitals": "^1.1.2"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.12",
+    "@vue/cli-plugin-babel": "~4.5.13",
     "@vue/cli-plugin-eslint": "~4.5.12",
     "@vue/cli-service": "~4.5.12",
     "ali-oss": "^6.15.2",
