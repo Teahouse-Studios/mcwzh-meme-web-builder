@@ -1,31 +1,26 @@
 <template>
   <v-app>
     <v-main>
-      <v-app-bar
-        :color="$vuetify.theme.dark ? 'dark' : 'white'" flat
-      >
+      <v-app-bar :color="$vuetify.theme.dark ? 'dark' : 'white'" flat>
         <v-toolbar-title>{{ $t("appbar.title") }}</v-toolbar-title>
         <v-spacer></v-spacer>
         <div v-if="$vuetify.breakpoint.name !== 'xs'">
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
-              <div v-bind="attrs"
-                   v-on="on">
+              <div v-bind="attrs" v-on="on">
                 <v-btn :href="links.mcbbs" rel="noopener noreferrer" text>
                   <v-icon left>{{ svgPath.mdiPost }}</v-icon>
                   {{ $t("appbar.mcbbs") }}
                 </v-btn>
-                <v-btn :href="links.github" rel="noopener noreferrer"
-                       text>
+                <v-btn :href="links.github" rel="noopener noreferrer" text>
                   <v-icon left>{{ svgPath.mdiGithub }}</v-icon>
                   {{ $t("appbar.github") }}
                 </v-btn>
-                <v-btn :href="links.disc" rel="noopener noreferrer"
-                       text>
+                <v-btn :href="links.disc" rel="noopener noreferrer" text>
                   <v-icon left>{{ svgPath.mdiDisc }}</v-icon>
                   {{ $t("appbar.discPack") }}
                 </v-btn>
-                <langMenu/>
+                <langMenu />
               </div>
             </template>
             <span>{{ !this.tab ? $t("java") : $t("bedrock") }}</span>
@@ -34,18 +29,13 @@
         <div v-else>
           <v-menu bottom left>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                v-bind="attrs"
-                v-on="on"
-                icon
-              >
+              <v-btn v-bind="attrs" v-on="on" icon>
                 <v-icon>{{ svgPath.mdiDotsVertical }}</v-icon>
               </v-btn>
             </template>
 
             <v-list dense>
-              <v-list-item :href="links.mcbbs"
-                           rel="noopener noreferrer">
+              <v-list-item :href="links.mcbbs" rel="noopener noreferrer">
                 <v-list-item-icon class="ml-0">
                   <v-icon>{{ svgPath.mdiPost }}</v-icon>
                 </v-list-item-icon>
@@ -53,8 +43,7 @@
                   {{ $t("appbar.mcbbs") }}
                 </v-list-item-text>
               </v-list-item>
-              <v-list-item :href="links.github"
-                           rel="noopener noreferrer">
+              <v-list-item :href="links.github" rel="noopener noreferrer">
                 <v-list-item-icon class="ml-0">
                   <v-icon>{{ svgPath.mdiGithub }}</v-icon>
                 </v-list-item-icon>
@@ -62,8 +51,7 @@
                   {{ $t("appbar.github") }}
                 </v-list-item-text>
               </v-list-item>
-              <v-list-item :href="links.disc"
-                           rel="noopener noreferrer">
+              <v-list-item :href="links.disc" rel="noopener noreferrer">
                 <v-list-item-icon class="ml-0">
                   <v-icon>{{ svgPath.mdiDisc }}</v-icon>
                 </v-list-item-icon>
@@ -71,15 +59,24 @@
                   {{ $t("appbar.discPack") }}
                 </v-list-item-text>
               </v-list-item>
-              <langMenu/>
-              <div class="text-center">（{{ !this.tab ? $t("java") : $t("bedrock") }}）</div>
+              <langMenu />
+              <div class="text-center">
+                （{{ !this.tab ? $t("java") : $t("bedrock") }}）
+              </div>
             </v-list>
           </v-menu>
         </div>
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn v-bind="attrs" v-on="on" text @click="$vuetify.theme.dark = !$vuetify.theme.dark">
-              <v-icon v-if="$vuetify.theme.dark">{{ svgPath.mdiBrightness7 }}</v-icon>
+            <v-btn
+              v-bind="attrs"
+              v-on="on"
+              text
+              @click="$vuetify.theme.dark = !$vuetify.theme.dark"
+            >
+              <v-icon v-if="$vuetify.theme.dark">{{
+                svgPath.mdiBrightness7
+              }}</v-icon>
               <v-icon v-else>{{ svgPath.mdiBrightness4 }}</v-icon>
             </v-btn>
           </template>
@@ -93,15 +90,13 @@
         dense
         tile
       >
-        {{ $t("alert.main") }}<a href="https://teahou.se/memepack-1st-anniversary/">{{ $t("alert.feedback") }}</a>{{
-          $t("alert.period")
-        }}
+        {{ $t("alert.main")
+        }}<a href="https://teahou.se/memepack-1st-anniversary/">{{
+          $t("alert.feedback")
+        }}</a
+        >{{ $t("alert.period") }}
       </v-alert>
-      <v-tabs
-        v-model="tab"
-        background-color="transparent"
-        fixed-tabs
-      >
+      <v-tabs v-model="tab" background-color="transparent" fixed-tabs>
         <v-tab>
           {{ $t("java") }}
         </v-tab>
@@ -129,7 +124,11 @@
                   :disabled="fetchListIgnored"
                   :fixed-items="fixedItems.resource"
                   :hint="$t('form.resource.hint')"
-                  :items="consts.je_modules.resource.filter(v => !v.name.startsWith('lang_'))"
+                  :items="
+                    consts.je_modules.resource.filter(
+                      (v) => !v.name.startsWith('lang_')
+                    )
+                  "
                   :label="$t('form.resource.label')"
                   :loading="loading_backend"
                   help="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack/wiki/%E6%A2%97%E4%BD%93%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9%E5%88%97%E8%A1%A8"
@@ -137,12 +136,18 @@
                 />
               </v-col>
               <v-col cols="12" sm="4">
-                <functional-selector v-model="input.je.language"
-                                     :disabled="fetchListIgnored" :fixedItems="fixedItems.language"
-                                     :hint="$t('form.language.hint')"
-                                     :items="consts.je_modules.resource.filter(v => v.name.startsWith('lang_'))"
-                                     :label="$t('form.language.label')"
-                                     :loading="loading_backend"
+                <functional-selector
+                  v-model="input.je.language"
+                  :disabled="fetchListIgnored"
+                  :fixedItems="fixedItems.language"
+                  :hint="$t('form.language.hint')"
+                  :items="
+                    consts.je_modules.resource.filter((v) =>
+                      v.name.startsWith('lang_')
+                    )
+                  "
+                  :label="$t('form.language.label')"
+                  :loading="loading_backend"
                 ></functional-selector>
               </v-col>
               <v-col cols="6" sm="6">
@@ -153,7 +158,6 @@
                   :label="$t('form.mod.option.label')"
                   persistent-hint
                 />
-
               </v-col>
               <v-col cols="6" sm="6">
                 <v-select
@@ -167,8 +171,12 @@
                 ></v-select>
               </v-col>
               <v-col cols="12">
-                <functional-selector v-model="input.je.collection" :hint="$t('form.collections.hint')"
-                                     :items="consts.je_modules.collection" :label="$t(`form.collections.label`)">
+                <functional-selector
+                  v-model="input.je.collection"
+                  :hint="$t('form.collections.hint')"
+                  :items="consts.je_modules.collection"
+                  :label="$t(`form.collections.label`)"
+                >
                   <template v-slot:before-author="data">
                     {{ collectionDesc(data.item) }}
                   </template>
@@ -197,11 +205,16 @@
                   :label="$t('form.resource.label')"
                   :loading="loading_backend"
                   help="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock/wiki/%E6%A2%97%E4%BD%93%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9%E5%88%97%E8%A1%A8"
-                  @help="sendHelpTrack('be_resource')"/>
+                  @help="sendHelpTrack('be_resource')"
+                />
               </v-col>
               <v-col cols="12">
-                <functional-selector v-model="input.be.collection" :hint="$t('form.collections.hint')"
-                                     :items="consts.be_modules.collection" :label="$t(`form.collections.label`)">
+                <functional-selector
+                  v-model="input.be.collection"
+                  :hint="$t('form.collections.hint')"
+                  :items="consts.be_modules.collection"
+                  :label="$t(`form.collections.label`)"
+                >
                   <template v-slot:before-author="data">
                     {{ collectionDesc(data.item) }}
                   </template>
@@ -217,10 +230,20 @@
             />
           </v-tab-item>
         </v-tabs-items>
-        <v-alert :icon="svgPath.mdiInformationOutline" class="mt-3 mb-3 text-body-2" dense outlined
-                 type="info">{{ $t('hints')[hint] }}
+        <v-alert
+          :icon="svgPath.mdiInformationOutline"
+          class="mt-3 mb-3 text-body-2"
+          dense
+          outlined
+          type="info"
+          >{{ $t("hints")[hint] }}
         </v-alert>
-        <v-btn :disabled="loading" :loading="loading" color="primary" @click="submit">
+        <v-btn
+          :disabled="loading"
+          :loading="loading"
+          color="primary"
+          @click="submit"
+        >
           <v-icon left>{{ svgPath.mdiCloudDownload }}</v-icon>
           {{ $t("form.submit") }}
         </v-btn>
@@ -228,27 +251,50 @@
           <v-divider style="margin:15px 0"></v-divider>
           <p ref="logs" class="headline">{{ $t("log.headline") }}</p>
           <v-expansion-panels v-model="logsPanel" multiple>
-            <v-expansion-panel v-for="(item,i) in logs" :key="i">
+            <v-expansion-panel v-for="(item, i) in logs" :key="i">
               <v-expansion-panel-header>
-                {{ new Date(Number(item.ts)).toLocaleString() }} {{ item.title }}
+                {{ new Date(Number(item.ts)).toLocaleString() }}
+                {{ item.title }}
               </v-expansion-panel-header>
               <v-expansion-panel-content>
                 <pre
-                  style="padding-bottom:15px;white-space: pre-wrap;font-family: 'Cascadia Code', 'Fira Code','Consolas', monospace;">{{
-                    item.content
-                  }}</pre>
-                <v-btn v-if="item.filename" :color="$vuetify.theme.dark ? 'white' : 'primary'"
-                       outlined @click="() => {open($api + 'builds/' + item.filename);trackBuild(item)}">
+                  style="padding-bottom:15px;white-space: pre-wrap;font-family: 'Cascadia Code', 'Fira Code','Consolas', monospace;"
+                  >{{ item.content }}</pre
+                >
+                <v-btn
+                  v-if="item.filename"
+                  :color="$vuetify.theme.dark ? 'white' : 'primary'"
+                  outlined
+                  @click="
+                    () => {
+                      open($api + 'builds/' + item.filename);
+                      trackBuild(item);
+                    }
+                  "
+                >
                   <v-icon left>{{ svgPath.mdiCloudDownload }}</v-icon>
                   {{ $t("log.download") }}
                 </v-btn>
-                <v-btn v-if="item.filename" :color="$vuetify.theme.dark ? 'white' : 'primary'" class="ml-2"
-                        icon @click="() => {share(item); trackShare(item)}">
+                <v-btn
+                  v-if="item.filename"
+                  :color="$vuetify.theme.dark ? 'white' : 'primary'"
+                  class="ml-2"
+                  icon
+                  @click="
+                    () => {
+                      share(item);
+                      trackShare(item);
+                    }
+                  "
+                >
                   <v-icon>{{ svgPath.mdiShareVariant }}</v-icon>
                 </v-btn>
-                <v-btn v-else
-                       :color="$vuetify.theme.dark ? 'dark' : ''"
-                       dark @click="open(item.github + '/issues/new/choose')">
+                <v-btn
+                  v-else
+                  :color="$vuetify.theme.dark ? 'dark' : ''"
+                  dark
+                  @click="open(item.github + '/issues/new/choose')"
+                >
                   <v-icon left>{{ svgPath.mdiBug }}</v-icon>
                   {{ $t("log.feedback") }}
                 </v-btn>
@@ -263,24 +309,33 @@
               <v-list-item three-line>
                 <v-list-item-content>
                   <div class="overline mb-4">{{ $t("sponsor.overline") }}</div>
-                  <v-list-item-title class="headline mb-1">{{ $t("sponsor.spg.headline") }}</v-list-item-title>
+                  <v-list-item-title class="headline mb-1">{{
+                    $t("sponsor.spg.headline")
+                  }}</v-list-item-title>
                   <v-list-item-subtitle>
                     {{ $t("sponsor.spg.subtitle") }}
                   </v-list-item-subtitle>
                 </v-list-item-content>
 
                 <v-list-item-avatar color="grey" size="80" tile>
-                  <v-img src="https://www.mcbbs.net/uc_server/data/avatar/002/44/43/78_avatar_big.jpg"></v-img>
+                  <v-img
+                    src="https://www.mcbbs.net/uc_server/data/avatar/002/44/43/78_avatar_big.jpg"
+                  ></v-img>
                 </v-list-item-avatar>
               </v-list-item>
 
               <v-card-actions>
-                <v-btn href="https://www.mcbbs.net/?2444378" rel="noopener noreferrer" text>{{
-                    $t("sponsor.spg.mcbbs")
-                  }}
+                <v-btn
+                  href="https://www.mcbbs.net/?2444378"
+                  rel="noopener noreferrer"
+                  text
+                  >{{ $t("sponsor.spg.mcbbs") }}
                 </v-btn>
-                <v-btn href="https://www.mcbbs.net/thread-926724-1-1.html" rel="noopener noreferrer"
-                       text>
+                <v-btn
+                  href="https://www.mcbbs.net/thread-926724-1-1.html"
+                  rel="noopener noreferrer"
+                  text
+                >
                   {{ $t("sponsor.spg.dhp") }}
                 </v-btn>
               </v-card-actions>
@@ -291,7 +346,9 @@
               <v-list-item three-line>
                 <v-list-item-content>
                   <div class="overline mb-4">{{ $t("sponsor.overline") }}</div>
-                  <v-list-item-title class="headline mb-1">{{ $t("sponsor.qiuxi.headline") }}</v-list-item-title>
+                  <v-list-item-title class="headline mb-1">{{
+                    $t("sponsor.qiuxi.headline")
+                  }}</v-list-item-title>
                   <v-list-item-subtitle>
                     {{ $t("sponsor.qiuxi.subtitle") }}
                   </v-list-item-subtitle>
@@ -303,7 +360,11 @@
               </v-list-item>
 
               <v-card-actions>
-                <v-btn href="https://space.bilibili.com/678013610" rel="noopener noreferrer" text>
+                <v-btn
+                  href="https://space.bilibili.com/678013610"
+                  rel="noopener noreferrer"
+                  text
+                >
                   {{ $t("sponsor.qiuxi.bilibili") }}
                 </v-btn>
               </v-card-actions>
@@ -316,21 +377,27 @@
               <v-list-item three-line>
                 <v-list-item-content>
                   <div class="overline mb-4">{{ $t("sponsor.overline") }}</div>
-                  <v-list-item-title class="headline mb-1">{{ $t("sponsor.kkg.headline") }}</v-list-item-title>
+                  <v-list-item-title class="headline mb-1">{{
+                    $t("sponsor.kkg.headline")
+                  }}</v-list-item-title>
                   <v-list-item-subtitle>
                     {{ $t("sponsor.kkg.subtitle") }}
                   </v-list-item-subtitle>
                 </v-list-item-content>
 
                 <v-list-item-avatar color="grey" size="80" tile>
-                  <v-img src="https://attachment.mcbbs.net/uc_server/data/avatar/000/01/02/40_avatar_big.jpg"></v-img>
+                  <v-img
+                    src="https://attachment.mcbbs.net/uc_server/data/avatar/000/01/02/40_avatar_big.jpg"
+                  ></v-img>
                 </v-list-item-avatar>
               </v-list-item>
 
               <v-card-actions>
-                <v-btn href="https://www.mcbbs.net/?10240" rel="noopener noreferrer" text>{{
-                    $t("sponsor.kkg.mcbbs")
-                  }}
+                <v-btn
+                  href="https://www.mcbbs.net/?10240"
+                  rel="noopener noreferrer"
+                  text
+                  >{{ $t("sponsor.kkg.mcbbs") }}
                 </v-btn>
               </v-card-actions>
             </v-card>
@@ -340,34 +407,46 @@
               <v-list-item three-line>
                 <v-list-item-content>
                   <div class="overline mb-4">{{ $t("sponsor.overline") }}</div>
-                  <v-list-item-title class="headline mb-1">{{ $t("sponsor.liu.headline") }}</v-list-item-title>
+                  <v-list-item-title class="headline mb-1">{{
+                    $t("sponsor.liu.headline")
+                  }}</v-list-item-title>
                   <v-list-item-subtitle>
                     {{ $t("sponsor.liu.subtitle") }}
                   </v-list-item-subtitle>
                 </v-list-item-content>
 
                 <v-list-item-avatar color="transparent" size="80" tile>
-                  <v-img src="https://avatars.githubusercontent.com/u/65127014"></v-img>
+                  <v-img
+                    src="https://avatars.githubusercontent.com/u/65127014"
+                  ></v-img>
                 </v-list-item-avatar>
               </v-list-item>
 
               <v-card-actions>
-                <v-btn href="https://www.wd-ljt.com/" rel="noopener noreferrer" text>{{
-                    $t("sponsor.liu.website")
-                  }}
+                <v-btn
+                  href="https://www.wd-ljt.com/"
+                  rel="noopener noreferrer"
+                  text
+                  >{{ $t("sponsor.liu.website") }}
                 </v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
         </v-row>
-        <div :style="$vuetify.theme.dark !== true ? 'color: rgba(0,0,0,.6)' : 'color: rgba(256,256,256,.7)'"
-             class="text-body-2 mb-3 pa-1">
+        <div
+          :style="
+            $vuetify.theme.dark !== true
+              ? 'color: rgba(0,0,0,.6)'
+              : 'color: rgba(256,256,256,.7)'
+          "
+          class="text-body-2 mb-3 pa-1"
+        >
           {{ $t("sponsor.disclaimer") }}
         </div>
       </v-container>
       <TeahouseFooter></TeahouseFooter>
     </v-main>
-    <help ref="help"/>
+    <help ref="help" />
     <v-snackbar v-model="snackbarBuildSucceeded">
       {{ $t("snackbar.buildSucceeded") }}
       <template v-slot:action="{ attrs }">
@@ -428,35 +507,33 @@
         </v-btn>
       </template>
     </v-snackbar>
-    <v-dialog
-      persistent
-      v-model="dialogFetchListFailed"
-      width="500"
-    >
+    <v-dialog persistent v-model="dialogFetchListFailed" width="500">
       <v-card>
-        <v-card-title class="headline">{{ $t("dialog.fetchListFailed.headline") }}</v-card-title>
+        <v-card-title class="headline">{{
+          $t("dialog.fetchListFailed.headline")
+        }}</v-card-title>
         <v-card-text>
           {{ $t("dialog.fetchListFailed.text") }}
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn
-            color="primary"
-            text
-            @click="fetchList()"
-          >
+          <v-btn color="primary" text @click="fetchList()">
             {{ $t("dialog.fetchListFailed.retry") }}
           </v-btn>
           <v-btn
             text
-            @click="dialogFetchListFailed = false, $refs.help.dialog = true"
+            @click="(dialogFetchListFailed = false), ($refs.help.dialog = true)"
           >
             {{ $t("dialog.fetchListFailed.feedback") }}
           </v-btn>
           <v-btn
             color="error"
             text
-            @click="dialogFetchListFailed = false, fetchListIgnored = true, loading_backend = false"
+            @click="
+              (dialogFetchListFailed = false),
+                (fetchListIgnored = true),
+                (loading_backend = false)
+            "
           >
             {{ $t("dialog.fetchListFailed.ignore") }}
           </v-btn>
@@ -471,21 +548,37 @@
             <v-icon>{{ svgPath.mdiClose }}</v-icon>
           </v-btn>
         </v-card-title>
-        <v-img v-if="news.image" :src="news.image" class="mb-4"></v-img>
+        <v-sheet v-if="news.video" class="v-card--hero mb-4">
+          <v-lazy min-height="300">
+            <iframe
+              class="v-card--hero__iframe"
+              :src="news.video"
+              scrolling="no"
+              border="0"
+              frameborder="no"
+              framespacing="0"
+              allowfullscreen="true"
+            >
+            </iframe>
+          </v-lazy>
+        </v-sheet>
+        <v-img v-else-if="news.image" :src="news.image" class="mb-4"></v-img>
         <v-divider v-else class="mb-4"></v-divider>
         <v-card-text style="height: 500px;">
           <div v-html="news.content"></div>
-          <v-btn v-if="news.detail" :href="news.detail" plain><v-icon left>{{ svgPath.mdiArrowRight }}</v-icon> 阅读更多</v-btn>
+          <v-btn v-if="news.detail" :href="news.detail" plain
+            ><v-icon left>{{ svgPath.mdiArrowRight }}</v-icon> 阅读更多</v-btn
+          >
         </v-card-text>
       </v-card>
-  </v-dialog>
+    </v-dialog>
   </v-app>
 </template>
 <script>
-import axios from 'axios'
+import axios from "axios";
 import functionalSelector from "@/components/functionalSelector";
-import help from './components/help'
-import langMenu from './components/langMenu'
+import help from "./components/help";
+import langMenu from "./components/langMenu";
 import {
   mdiArrowRight,
   mdiBrightness4,
@@ -498,174 +591,212 @@ import {
   mdiGithub,
   mdiInformationOutline,
   mdiPost,
-  mdiShareVariant
-} from '@mdi/js'
-import TeahouseFooter from '@/components/footer'
+  mdiShareVariant,
+} from "@mdi/js";
+import TeahouseFooter from "@/components/footer";
 import allowGa from "@/allowGa";
 
 export default {
   methods: {
     newsIgnore() {
-      this.dialogNews = false
-      localStorage.memeNewsIgnored = this.news.id
+      this.dialogNews = false;
+      localStorage.memeNewsIgnored = this.news.id;
     },
     share(item) {
-      let p = new URLSearchParams()
-      p.set("type", item.isBe ? 'be' : 'je')
-      p.set("ver", "1")
-      p.set("input", JSON.stringify(this.input[p.get('type')]))
-      p.set("inputBasic", JSON.stringify(this.inputBasic))
-      let path = `${window.location.href.split("#")[0].split("?")[0]}?${p.toString()}`
+      let p = new URLSearchParams();
+      p.set("type", item.isBe ? "be" : "je");
+      p.set("ver", "1");
+      p.set("input", JSON.stringify(this.input[p.get("type")]));
+      p.set("inputBasic", JSON.stringify(this.inputBasic));
+      let path = `${
+        window.location.href.split("#")[0].split("?")[0]
+      }?${p.toString()}`;
       let shareContent = {
-        title: '梗体中文构建配置分享',
-        text: '你的好友给你分享了 ta 的配置！',
+        title: "梗体中文构建配置分享",
+        text: "你的好友给你分享了 ta 的配置！",
         url: path,
-      }
+      };
       if (navigator.share) {
-        navigator.share(shareContent)
+        navigator.share(shareContent);
       } else {
-        navigator.clipboard.writeText(path)
-        this.shareCopyedToClipboard = true
+        navigator.clipboard.writeText(path);
+        this.shareCopyedToClipboard = true;
       }
     },
     sendHelpTrack(label) {
-      allowGa() && window.gtag?.('event', 'help', {
-        eventCategory: label
-      });
+      allowGa() &&
+        window.gtag?.("event", "help", {
+          eventCategory: label,
+        });
     },
     trackShare(item) {
-      allowGa() && window.gtag?.('event', 'share',{
-        eventLabel: item.filename,
-        eventType: item.isBe ? 'be' : 'je'
-      });
+      allowGa() &&
+        window.gtag?.("event", "share", {
+          eventLabel: item.filename,
+          eventType: item.isBe ? "be" : "je",
+        });
     },
     trackBuild(item) {
-      allowGa() && window.gtag?.('event', 'download',{
-        eventLabel: item.filename,
-        eventType: item.isBe ? 'be' : 'je'
-      });
+      allowGa() &&
+        window.gtag?.("event", "download", {
+          eventLabel: item.filename,
+          eventType: item.isBe ? "be" : "je",
+        });
     },
     collectionDesc(item) {
-      let result = []
-      if (item['contains']?.resource?.length) {
-        result.push(`${this.$t("form.collections.description_prefix")}${item['contains']?.resource.length}${this.$t("form.collections.resource_suffix")}`)
+      let result = [];
+      if (item["contains"]?.resource?.length) {
+        result.push(
+          `${this.$t("form.collections.description_prefix")}${
+            item["contains"]?.resource.length
+          }${this.$t("form.collections.resource_suffix")}`
+        );
       }
-      if (item['contains']?.language?.length) {
-        result.push(`${this.$t("form.collections.description_prefix")}${item['contains']?.language.length}${this.$t("form.collections.language_suffix")}`)
+      if (item["contains"]?.language?.length) {
+        result.push(
+          `${this.$t("form.collections.description_prefix")}${
+            item["contains"]?.language.length
+          }${this.$t("form.collections.language_suffix")}`
+        );
       }
       if (result.length) {
-        return `(${result.join(", ")})`
+        return `(${result.join(", ")})`;
       }
-      return ''
+      return "";
     },
     open(name) {
-      window.open(name)
+      window.open(name);
     },
     async fetchList() {
-      this.loading_backend = true
+      this.loading_backend = true;
       let req;
       try {
-        req = await axios.get(this.$api)
+        req = await axios.get(this.$api);
       } catch (e) {
-        this.dialogFetchListFailed = true
-        console.log(e)
+        this.dialogFetchListFailed = true;
+        console.log(e);
         return;
       }
-      const backend = req.data
+      const backend = req.data;
       this.consts = {
         ...this.consts,
-        modList: [{header: this.$t("form.mod.header")}].concat(backend.mods).concat({header: this.$t("form.mod.enHeader")})
+        modList: [{ header: this.$t("form.mod.header") }]
+          .concat(backend.mods)
+          .concat({ header: this.$t("form.mod.enHeader") })
           .concat(backend.enmods),
         je_modules: backend.je_modules,
         be_modules: backend.be_modules,
-      }
-      this.loading_backend = false
-      this.dialogFetchListFailed = false
-      this.input.be.collection = ['no_blue_ui']
-      this.input.je.collection = ['choice_modules_1']
+      };
+      this.loading_backend = false;
+      this.dialogFetchListFailed = false;
+      this.input.be.collection = ["no_blue_ui"];
+      this.input.je.collection = ["choice_modules_1"];
 
-      let p = new URLSearchParams(window.location.search)
-      let type = p.get('type')
-      let ver = p.get('ver')
-      let inputBasic = p.get('inputBasic')
-      let input = p.get('input')
-      if (['je', 'be'].includes(type) && inputBasic && ver === '1') {
-        let _inputBasic, _input
+      let p = new URLSearchParams(window.location.search);
+      let type = p.get("type");
+      let ver = p.get("ver");
+      let inputBasic = p.get("inputBasic");
+      let input = p.get("input");
+      if (["je", "be"].includes(type) && inputBasic && ver === "1") {
+        let _inputBasic, _input;
         try {
-          _inputBasic = JSON.parse(inputBasic)
-          _input = JSON.parse(input)
+          _inputBasic = JSON.parse(inputBasic);
+          _input = JSON.parse(input);
         } catch (e) {
           return;
         }
-        this.shareLinkParsed = true
-        this.tab = type === 'je' ? 0 : 1
-        this.input[type] = _input
-        this.inputBasic = _inputBasic
+        this.shareLinkParsed = true;
+        this.tab = type === "je" ? 0 : 1;
+        this.input[type] = _input;
+        this.inputBasic = _inputBasic;
       }
     },
     submit() {
-      this.loading = true
+      this.loading = true;
 
-      const base = this.whetherUseBE ? this.consts.be_modules : this.consts.je_modules
-      const inputBase = this.whetherUseBE ? this.input.be : this.input.je
-      let data = Object.assign({}, this.inputBasic, {
-        _be: this.whetherUseBE,
-        modules: {
-          language: inputBase.language,
-          resource: inputBase.resource.filter(v => !(base.mixed || []).map(v => v.name).includes(v)),
-          collection: inputBase.collection
+      const base = this.whetherUseBE
+        ? this.consts.be_modules
+        : this.consts.je_modules;
+      const inputBase = this.whetherUseBE ? this.input.be : this.input.je;
+      let data = Object.assign(
+        {},
+        this.inputBasic,
+        {
+          _be: this.whetherUseBE,
+          modules: {
+            language: inputBase.language,
+            resource: inputBase.resource.filter(
+              (v) => !(base.mixed || []).map((v) => v.name).includes(v)
+            ),
+            collection: inputBase.collection,
+          },
+          mod:
+            this.input.je.modOption === "all"
+              ? ["all"]
+              : this.input.je.modOption === "custom"
+              ? this.input.je.mod
+              : [],
+          hash: true,
+          type: this.inputBasic.format === 3 ? "legacy" : "normal",
         },
-        mod: this.input.je.modOption === 'all' ? ['all'] : (
-          this.input.je.modOption === 'custom' ? this.input.je.mod : []
-        ),
-        hash: true,
-        type: this.inputBasic.format === 3 ? 'legacy' : 'normal'
-      }, this.whetherUseBE && {
-        type: this.input.be.extType,
-        compatible: this.input.be.compatible
-      })
-      console.log(data)
-      allowGa() && window.gtag?.('event', 'build',{
-        eventType: this.whetherUseBE ? 'be' : 'je'
-      });
-      axios({url: '/ajax', baseURL: this.$api, method: 'POST', data}).then(function (res) {
-        console.log(res.data)
-        this.logs.unshift({
-          title: this.$t("log.buildSucceeded"),
-          ts: new Date().valueOf(),
-          content: res.data.logs,
-          filename: res.data.filename,
-          github: this.links.github,
-          isBe: this.whetherUseBE
-        })
-        this.logsPanel = this.logsPanel.map(v => v + 1)
-        this.logsPanel.unshift(0)
-        this.$nextTick(function () {
-          this.$refs.logs.scrollIntoView()
-        }.bind(this))
-        this.snackbarBuildSucceeded = true
-        this.loading = false
-      }.bind(this)).catch(function (err) {
-        this.logs.unshift({
-          title: this.$t("log.buildFailed"),
-          ts: new Date().valueOf(),
-          content: err.toString()
-        })
-        this.logsPanel = this.logsPanel.map(v => v + 1)
-        this.logsPanel.unshift(0)
-        this.$nextTick(function () {
-          this.$refs.logs.scrollIntoView()
-        }.bind(this))
-        this.snackbarBuildFailed = true
-        this.loading = false
-      }.bind(this))
-    }
+        this.whetherUseBE && {
+          type: this.input.be.extType,
+          compatible: this.input.be.compatible,
+        }
+      );
+      console.log(data);
+      allowGa() &&
+        window.gtag?.("event", "build", {
+          eventType: this.whetherUseBE ? "be" : "je",
+        });
+      axios({ url: "/ajax", baseURL: this.$api, method: "POST", data })
+        .then(
+          function(res) {
+            console.log(res.data);
+            this.logs.unshift({
+              title: this.$t("log.buildSucceeded"),
+              ts: new Date().valueOf(),
+              content: res.data.logs,
+              filename: res.data.filename,
+              github: this.links.github,
+              isBe: this.whetherUseBE,
+            });
+            this.logsPanel = this.logsPanel.map((v) => v + 1);
+            this.logsPanel.unshift(0);
+            this.$nextTick(
+              function() {
+                this.$refs.logs.scrollIntoView();
+              }.bind(this)
+            );
+            this.snackbarBuildSucceeded = true;
+            this.loading = false;
+          }.bind(this)
+        )
+        .catch(
+          function(err) {
+            this.logs.unshift({
+              title: this.$t("log.buildFailed"),
+              ts: new Date().valueOf(),
+              content: err.toString(),
+            });
+            this.logsPanel = this.logsPanel.map((v) => v + 1);
+            this.logsPanel.unshift(0);
+            this.$nextTick(
+              function() {
+                this.$refs.logs.scrollIntoView();
+              }.bind(this)
+            );
+            this.snackbarBuildFailed = true;
+            this.loading = false;
+          }.bind(this)
+        );
+    },
   },
   components: {
-    'functional-selector': functionalSelector,
+    "functional-selector": functionalSelector,
     help,
     langMenu,
-    TeahouseFooter
+    TeahouseFooter,
   },
   data: () => ({
     news: null,
@@ -688,18 +819,18 @@ export default {
       mdiBrightness4,
       mdiBrightness7,
       mdiShareVariant,
-      mdiClose
+      mdiClose,
     },
     tab: null,
     logsPanel: [],
     loading: false,
     inputBasic: {
-      format: 6
+      format: 6,
     },
     logs: [],
     input: {
       be: {
-        extType: 'mcpack',
+        extType: "mcpack",
         compatible: false,
         resource: [],
         language: [],
@@ -711,87 +842,127 @@ export default {
         resource: [],
         language: [],
         collection: [],
-      }
+      },
     },
     hint: 0,
     loading_backend: true,
     consts: {
-      modOption: [{text: "所有", value: "all"}, {value: "none", text: "无"}, {
-        value: "custom",
-        text: "自定义"
-      }],
-      beExtType: ['mcpack', 'zip'],
-      modList: [], je_modules: {
+      modOption: [
+        { text: "所有", value: "all" },
+        { value: "none", text: "无" },
+        {
+          value: "custom",
+          text: "自定义",
+        },
+      ],
+      beExtType: ["mcpack", "zip"],
+      modList: [],
+      je_modules: {
         resource: [],
-        collection: []
-      }, be_modules: {
-        resource: [],
-        collection: []
+        collection: [],
       },
-      versions: [{text: '1.16.2+', value: 6}, {text: '1.15 - 1.16.1', value: 5}, {
-        text: '1.13 - 1.14.4', value: 4
-      }, {
-        text: '1.11 - 1.12.2', value: 3
-      }]
-    }
+      be_modules: {
+        resource: [],
+        collection: [],
+      },
+      versions: [
+        { text: "1.16.2+", value: 6 },
+        { text: "1.15 - 1.16.1", value: 5 },
+        {
+          text: "1.13 - 1.14.4",
+          value: 4,
+        },
+        {
+          text: "1.11 - 1.12.2",
+          value: 3,
+        },
+      ],
+    },
   }),
   async mounted() {
-    let that = this
+    let that = this;
     setInterval(() => {
-      that.hint = that.hint === 3 ? 0 : ++that.hint
-    }, 4000)
+      that.hint = that.hint === 3 ? 0 : ++that.hint;
+    }, 4000);
 
-    this.fetchList()
+    this.fetchList();
 
     await axios
-      .get('https://cdn.jsdelivr.net/gh/Teahouse-Studios/mcwzh-meme-resourcepack@master/news.json')
-      .then(response => (this.news = response.data))
-      .then(() => {this.dialogNews = this.news.id > localStorage.getItem("memeNewsIgnored")})
+      .get(
+        "https://cdn.jsdelivr.net/gh/Teahouse-Studios/mcwzh-meme-resourcepack@master/news.json"
+      )
+      .then((response) => (this.news = response.data))
+      .then(() => {
+        this.dialogNews =
+          this.news.id > localStorage.getItem("memeNewsIgnored");
+      });
   },
   computed: {
     whetherUseBE() {
-      return this.tab === 1
+      return this.tab === 1;
     },
     fixedItems() {
-      const base = this.whetherUseBE ? this.consts.be_modules : this.consts.je_modules
-      let items = base.collection.filter(v => this.input[this.whetherUseBE ? 'be' : 'je'].collection.includes(v.name))
-      const data = items.map(v => v['contains']).flat()
+      const base = this.whetherUseBE
+        ? this.consts.be_modules
+        : this.consts.je_modules;
+      let items = base.collection.filter((v) =>
+        this.input[this.whetherUseBE ? "be" : "je"].collection.includes(v.name)
+      );
+      const data = items.map((v) => v["contains"]).flat();
       return {
-        resource: data.filter(v => !base.resource.find(r => r.name === v).name.startsWith('lang_')),
-        language: data.filter(v => base.resource.find(r => r.name === v).name.startsWith('lang_')),
-      }
+        resource: data.filter(
+          (v) =>
+            !base.resource.find((r) => r.name === v).name.startsWith("lang_")
+        ),
+        language: data.filter((v) =>
+          base.resource.find((r) => r.name === v).name.startsWith("lang_")
+        ),
+      };
     },
     links() {
       return {
-        web_builder: 'https://github.com/Teahouse-Studios/mcwzh-meme-web-builder',
-        github: 'https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack' + (this.tab ? '-bedrock' : ''),
-        mcbbs: `https://www.mcbbs.net/thread-${this.tab ? '1005191' : '1004643'}-1-1.html`,
-        disc: this.tab ? 'https://dianliang-oss-1301161188.file.myqcloud.com/zh-meme-respack/Meme_resourcepack_records.mcpack' : 'https://wdf.ink/record-java'
-      }
-    }
+        web_builder:
+          "https://github.com/Teahouse-Studios/mcwzh-meme-web-builder",
+        github:
+          "https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack" +
+          (this.tab ? "-bedrock" : ""),
+        mcbbs: `https://www.mcbbs.net/thread-${
+          this.tab ? "1005191" : "1004643"
+        }-1-1.html`,
+        disc: this.tab
+          ? "https://dianliang-oss-1301161188.file.myqcloud.com/zh-meme-respack/Meme_resourcepack_records.mcpack"
+          : "https://wdf.ink/record-java",
+      };
+    },
   },
   watch: {
     "$vuetify.theme.dark"(val) {
       localStorage.setItem("memeDarkMode", val);
-    }
+    },
   },
   created() {
     if (localStorage.getItem("memeInitialized") !== "true") {
-      localStorage.setItem("memeDarkMode", window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? "true" : "false");
-      localStorage.setItem("memeNewsIgnored", "0")
+      localStorage.setItem(
+        "memeDarkMode",
+        window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "true"
+          : "false"
+      );
+      localStorage.setItem("memeNewsIgnored", "0");
     }
-    this.$vuetify.theme.dark = localStorage.getItem("memeDarkMode") === "true"
+    this.$vuetify.theme.dark = localStorage.getItem("memeDarkMode") === "true";
     let memeLang = localStorage.getItem("memeLang");
     if (memeLang !== "zhHans" && memeLang !== "zhMeme") {
-      localStorage.removeItem("memeLang")
-      memeLang = "zhHans"
+      localStorage.removeItem("memeLang");
+      memeLang = "zhHans";
     }
     this.$i18n.locale = memeLang;
     localStorage.setItem("memeInitialized", "true");
-  }
+  },
 };
 </script>
-<style>
+<style lang="scss">
 .v-tabs-items {
   background-color: inherit !important;
 }
@@ -800,6 +971,27 @@ export default {
   font-size: 24px;
   height: 24px;
   width: 24px;
+}
+
+.v-card--hero {
+  background: #000;
+  border-radius: 6px;
+  height: 0;
+  margin: 0;
+  overflow: hidden;
+  padding-bottom: 70%;
+  position: relative;
+  width: 100%;
+}
+
+.v-card--hero__iframe {
+  display: block;
+  vertical-align: middle;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 /* latin */
