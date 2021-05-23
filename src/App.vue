@@ -72,7 +72,7 @@
               v-bind="attrs"
               v-on="on"
               icon
-              @click="switchYou()"
+              @click="you = !you"
             >
               <v-icon>{{
                 svgPath.mdiAbTesting
@@ -623,10 +623,6 @@ import allowGa from "@/allowGa";
 
 export default {
   methods: {
-    switchYou() {
-      this.you = !this.you
-      this.$emit('you', this.you)
-    },
     newsIgnore() {
       this.dialogNews = false;
       localStorage.memeNewsIgnored = this.news.id;
