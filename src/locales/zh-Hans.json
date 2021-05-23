@@ -1,21 +1,19 @@
 {
   "java": "Java版",
   "bedrock": "基岩版",
-
   "appbar": {
     "title": "梗体中文 · 在线构建",
     "mcbbs": "MCBBS",
     "github": "GitHub",
     "discPack": "唱片包",
-    "nightModeSwitch": "夜间/日间模式"
+    "nightModeSwitch": "夜间/日间模式",
+    "superSecretSetting": "超级秘密设置"
   },
-
   "alert": {
     "main": "梗体中文一周年啦！🎉 来看看",
     "feedback": "我们写的贺词",
     "period": "？"
   },
-
   "form": {
     "version": {
       "hint": "请选择您游玩的游戏版本区间。",
@@ -63,14 +61,12 @@
     "incompatible_prefix": "（与",
     "incompatible_suffix": "不兼容）"
   },
-
   "hints": [
     "若您不知道如何构建，请直接点击下方按钮下载。",
     "若需要基岩版的MCBBS/GitHub/唱片包，您可以在点击基岩版选项卡后，再点击相应跳转按钮。",
     "若您发现问题，您可以点击右下角的  向我们报告。",
     "梗体中文是一个持续更新的项目，欢迎常回来看看。"
   ],
-
   "log": {
     "buildSucceeded": "构建成功",
     "buildFailed": "构建失败",
@@ -79,7 +75,6 @@
     "share": "分享配置",
     "feedback": "反馈"
   },
-
   "sponsor": {
     "overline": "SPONSOR",
     "spg": {
@@ -105,7 +100,6 @@
     },
     "disclaimer": "这些赞助者均未给予 Teahouse Studios 梗体中文团队真实金钱，亦未强迫 Teahouse Studios 梗体中文团队将其添加至赞助者列表——这只是 Teahouse Studios 梗体中文团队对他们的支持最诚挚的感谢。❤️"
   },
-
   "snackbar": {
     "close": "关闭",
     "feedback": "反馈",
@@ -114,7 +108,6 @@
     "shareLinkParsed": "成功解析配置分享链接。",
     "shareCopyedToClipboard": "已将配置链接复制到剪贴板。"
   },
-
   "dialog": {
     "fetchListFailed": {
       "headline": "错误",

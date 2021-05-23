@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app :class="{you: you}">
     <v-main>
       <v-app-bar :color="$vuetify.theme.dark ? 'dark' : 'white'" flat>
         <v-toolbar-title>{{ $t("appbar.title") }}</v-toolbar-title>
@@ -71,7 +71,22 @@
             <v-btn
               v-bind="attrs"
               v-on="on"
-              text
+              icon
+              @click="switchYou()"
+            >
+              <v-icon>{{
+                svgPath.mdiAbTesting
+              }}</v-icon>
+            </v-btn>
+          </template>
+          <span>{{ $t("appbar.superSecretSetting") }}</span>
+        </v-tooltip>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              v-bind="attrs"
+              v-on="on"
+              icon
               @click="$vuetify.theme.dark = !$vuetify.theme.dark"
             >
               <v-icon v-if="$vuetify.theme.dark">{{
@@ -106,7 +121,7 @@
       </v-tabs>
 
       <v-container>
-        <v-tabs-items v-model="tab">
+        <v-tabs-items v-model="tab" class="pt-2">
           <v-tab-item>
             <v-row>
               <v-col cols="12" sm="4">
@@ -115,6 +130,7 @@
                   :hint="$t('form.version.hint')"
                   :items="consts.versions"
                   :label="$t('form.version.label')"
+                  :outlined="you"
                   persistent-hint
                 />
               </v-col>
@@ -131,6 +147,7 @@
                   "
                   :label="$t('form.resource.label')"
                   :loading="loading_backend"
+                  :outlined="you"
                   help="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack/wiki/%E6%A2%97%E4%BD%93%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9%E5%88%97%E8%A1%A8"
                   @help="sendHelpTrack('je_resource')"
                 />
@@ -148,6 +165,7 @@
                   "
                   :label="$t('form.language.label')"
                   :loading="loading_backend"
+                  :outlined="you"
                 ></functional-selector>
               </v-col>
               <v-col cols="6" sm="6">
@@ -156,6 +174,7 @@
                   :hint="$t('form.mod.option.hint')"
                   :items="consts.modOption"
                   :label="$t('form.mod.option.label')"
+                  :outlined="you"
                   persistent-hint
                 />
               </v-col>
@@ -166,6 +185,7 @@
                   :hint="$t('form.mod.list.hint')"
                   :items="consts.modList"
                   :label="$t('form.mod.list.label')"
+                  :outlined="you"
                   multiple
                   persistent-hint
                 ></v-select>
@@ -176,6 +196,7 @@
                   :hint="$t('form.collections.hint')"
                   :items="consts.je_modules.collection"
                   :label="$t(`form.collections.label`)"
+                  :outlined="you"
                 >
                   <template v-slot:before-author="data">
                     {{ collectionDesc(data.item) }}
@@ -192,6 +213,7 @@
                   :hint="$t('form.beExtType.hint')"
                   :items="consts.beExtType"
                   :label="$t('form.beExtType.label')"
+                  :outlined="you"
                   persistent-hint
                 />
               </v-col>
@@ -204,6 +226,7 @@
                   :items="consts.be_modules.resource"
                   :label="$t('form.resource.label')"
                   :loading="loading_backend"
+                  :outlined="you"
                   help="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock/wiki/%E6%A2%97%E4%BD%93%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9%E5%88%97%E8%A1%A8"
                   @help="sendHelpTrack('be_resource')"
                 />
@@ -214,6 +237,7 @@
                   :hint="$t('form.collections.hint')"
                   :items="consts.be_modules.collection"
                   :label="$t(`form.collections.label`)"
+                  :outlined="you"
                 >
                   <template v-slot:before-author="data">
                     {{ collectionDesc(data.item) }}
@@ -234,7 +258,7 @@
           :icon="svgPath.mdiInformationOutline"
           class="mt-3 mb-3 text-body-2"
           dense
-          outlined
+          :outlined="!you"
           type="info"
           >{{ $t("hints")[hint] }}
         </v-alert>
@@ -580,6 +604,7 @@ import functionalSelector from "@/components/functionalSelector";
 import help from "./components/help";
 import langMenu from "./components/langMenu";
 import {
+  mdiAbTesting,
   mdiArrowRight,
   mdiBrightness4,
   mdiBrightness7,
@@ -598,6 +623,10 @@ import allowGa from "@/allowGa";
 
 export default {
   methods: {
+    switchYou() {
+      this.you = !this.you
+      this.$emit('you', this.you)
+    },
     newsIgnore() {
       this.dialogNews = false;
       localStorage.memeNewsIgnored = this.news.id;
@@ -799,6 +828,7 @@ export default {
     TeahouseFooter,
   },
   data: () => ({
+    you: true,
     news: null,
     snackbarBuildSucceeded: false,
     snackbarBuildFailed: false,
@@ -809,6 +839,7 @@ export default {
     shareCopyedToClipboard: false,
     svgPath: {
       mdiArrowRight,
+      mdiAbTesting,
       mdiPost,
       mdiGithub,
       mdiDisc,
@@ -992,6 +1023,67 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+
+/* Material "NEXT" / "YOU" */
+#app.you {
+  .v-dialog {
+    box-shadow: none;
+  }
+  .v-menu__content {
+    box-shadow: none;
+    >.theme--light {
+      background: #fafafa;
+    }
+  }
+  .v-card {
+    box-shadow: none;
+    &.theme--light {
+      background: #f8f9fa;
+    }
+  }
+  .v-chip.theme--light {
+    background: #efefef;
+  }
+  .primary {
+    background-color: #4285F4 !important;
+  }
+  .v-btn--is-elevated {
+    box-shadow: none;
+  }
+  .v-sheet.v-card {
+    border-radius: 12px;
+  }
+  .v-app-bar.theme--light {
+    background: #f8f9fa !important;
+  }
+  .v-alert.theme--light {
+    background: #fafafa !important;
+  }
+  .info {
+    &.theme--light {
+      background-color: #4f90f7 !important;
+    }
+    &.theme--dark {
+      background: #4285f4 !important;
+    }
+  }
+  .v-btn:not(.v-btn--fab) {
+    border-radius: 24px;
+  }
+  .v-expansion-panel {
+    &::before {
+      box-shadow: none;
+    }
+    &.theme--light {
+      background: #f8f9fa;
+    }
+    border-radius: 12px;
+  }
+}
+.theme--light.v-btn.v-btn--icon {
+  color: inherit;
 }
 
 /* latin */

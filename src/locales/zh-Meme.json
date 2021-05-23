@@ -1,21 +1,19 @@
 {
   "java": "爪哇版",
   "bedrock": "床石版",
-
   "appbar": {
     "title": "梗体中文 · 懒人构建",
     "mcbbs": "MCSSB",
     "github": "GayHub",
     "discPack": "劲歌金曲",
-    "nightModeSwitch": "开关灯"
+    "nightModeSwitch": "开关灯",
+    "superSecretSetting": "吊炸天设置"
   },
-
   "alert": {
     "main": "梗体中文一周年啦！🎉 来看看",
     "feedback": "我们写的贺词",
     "period": "？"
   },
-
   "form": {
     "version": {
       "hint": "选择您耍的版本。",
@@ -63,14 +61,12 @@
     "incompatible_prefix": "（与",
     "incompatible_suffix": "不兼容）"
   },
-
   "hints": [
     "若您不知道如何构建，点击下方按钮来直接生草。",
     "若需要床石版的MCSSB/GayHub/劲 歌 金 曲，您可以点击床石版选项卡后，再点击相应跳转按钮。",
     "您可以点击上方链接把 bug 丢给我们。",
     "梗体中文是一个持续更新的项目，欢迎 常 回 家 看 看。"
   ],
-
   "log": {
     "buildSucceeded": "构建成了",
     "buildFailed": "构建 大 失 败",
@@ -78,7 +74,6 @@
     "download": "下载",
     "feedback": "控诉开发者"
   },
-
   "sponsor": {
     "overline": "金主爸爸",
     "spg": {
@@ -104,7 +99,6 @@
     },
     "disclaimer": "这些金主爸爸均未给予 Teahouse Studios 梗体中文团队真实金钱，亦未强迫 Teahouse Studios 梗体中文团队将其添加至赞助者列表——这只是 Teahouse Studios 梗体中文团队对他们的支持最诚挚的感谢。❤️"
   },
-
   "snackbar": {
     "close": "关掉！关掉！",
     "feedback": "投诉开发者",
@@ -113,7 +107,6 @@
     "shareLinkParsed": "成功解析你朋友（不知道是不是你自己）发过来的配置链接。",
     "shareCopyedToClipboard": "已经把你的专属链接拷贝到你的剪贴板了。发给朋友就行，你可别乱发。"
   },
-
   "dialog": {
     "fetchListFailed": {
       "headline": "哎呦",
