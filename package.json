@@ -15,7 +15,7 @@
     "axios": "^0.21.1",
     "core-js": "^3.12.1",
     "vue": "^2.6.11",
-    "vue-cli-plugin-i18n": "^2.1.0",
+    "vue-cli-plugin-i18n": "^2.1.1",
     "vue-i18n": "^8.24.4",
     "vuetify": "^2.5.0",
     "web-vitals": "^1.1.2"
