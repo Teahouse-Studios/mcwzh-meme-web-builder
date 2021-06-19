@@ -55,8 +55,3 @@ jobs:
           AL_FE_BUCKET: ${{ secrets.AL_FE_BUCKET }}
           PROJ_NAME: ${{ secrets.PROJ_NAME }}
           FE_DOMAIN: ${{ secrets.FE_DOMAIN }}
-
-          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-          REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          REMOTE_PWD: ${{ secrets.REMOTE_PWD }}
-          REMOTE_PATH: ${{ secrets.REMOTE_PATH }}
