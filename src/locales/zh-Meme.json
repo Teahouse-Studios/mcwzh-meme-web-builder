@@ -104,8 +104,7 @@
     "feedback": "投诉开发者",
     "buildSucceeded": "构建成了。",
     "buildFailed": "构建 大 失 败。",
-    "shareLinkParsed": "成功解析你朋友（不知道是不是你自己）发过来的配置链接。",
-    "shareCopyedToClipboard": "已经把你的专属链接拷贝到你的剪贴板了。发给朋友就行，你可别乱发。"
+    "shareLinkParsed": "成功解析你朋友（不知道是不是你自己）发过来的配置链接。"
   },
   "dialog": {
     "fetchListFailed": {

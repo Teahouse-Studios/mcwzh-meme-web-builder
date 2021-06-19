@@ -105,8 +105,7 @@
     "feedback": "反馈",
     "buildSucceeded": "构建已成功。",
     "buildFailed": "构建已失败。",
-    "shareLinkParsed": "成功解析配置分享链接。",
-    "shareCopyedToClipboard": "已将配置链接复制到剪贴板。"
+    "shareLinkParsed": "成功解析配置分享链接。"
   },
   "dialog": {
     "fetchListFailed": {

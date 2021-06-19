@@ -824,7 +824,7 @@ export default {
     TeahouseFooter,
   },
   data: () => ({
-    you: true,
+    you: false,
     news: null,
     snackbarBuildSucceeded: false,
     snackbarBuildFailed: false,
@@ -966,8 +966,14 @@ export default {
     "$vuetify.theme.dark"(val) {
       localStorage.setItem("memeDarkMode", val);
     },
+    "you"(val) {
+      localStorage.setItem("memeYou", val);
+    }
   },
   created() {
+    if (localStorage.getItem("memeYou") !== "true" && localStorage.getItem("memeYou") !== "false") {
+      localStorage.setItem("memeYou", Math.round(Math.random()) ? true : false) // A/B testing
+    }
     if (localStorage.getItem("memeInitialized") !== "true") {
       localStorage.setItem(
         "memeDarkMode",
@@ -977,6 +983,7 @@ export default {
           : "false"
       );
       localStorage.setItem("memeNewsIgnored", "0");
+      localStorage.setItem("memeYou", Math.round(Math.random()) ? true : false)
     }
     this.$vuetify.theme.dark = localStorage.getItem("memeDarkMode") === "true";
     let memeLang = localStorage.getItem("memeLang");
@@ -985,6 +992,9 @@ export default {
       memeLang = "zhHans";
     }
     this.$i18n.locale = memeLang;
+    if (localStorage.getItem("memeYou") === "true") {
+      this.you = true
+    }
     localStorage.setItem("memeInitialized", "true");
   },
 };
@@ -1072,10 +1082,29 @@ export default {
     &::before {
       box-shadow: none;
     }
-    &.theme--light {
-      background: #f8f9fa;
-    }
     border-radius: 12px;
+  }
+  .theme--light.v-expansion-panels .v-expansion-panel {
+    background: #f8f9fa;
+  }
+  .v-expansion-panels > *:not(.v-expansion-panel--active) {
+    border-radius: unset;
+  }
+  .v-expansion-panels:not(.v-expansion-panels--accordion):not(.v-expansion-panels--tile) > .v-expansion-panel--active + .v-expansion-panel,
+  .v-expansion-panels > *:first-child {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+  }
+  .v-expansion-panels:not(.v-expansion-panels--accordion):not(.v-expansion-panels--tile) > .v-expansion-panel--next-active,
+  .v-expansion-panels > *:last-child {
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+  }
+  .v-expansion-panel--active {
+    border-radius: 12px;
+  }
+  .v-snack__wrapper:not(.v-sheet--outlined) {
+    box-shadow: none;
   }
 }
 .theme--light.v-btn.v-btn--icon {
