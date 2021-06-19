@@ -852,7 +852,7 @@ export default {
     logsPanel: [],
     loading: false,
     inputBasic: {
-      format: 6,
+      format: 7,
     },
     logs: [],
     input: {
