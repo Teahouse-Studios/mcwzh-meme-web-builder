@@ -16,3 +16,5 @@ updates:
     labels:
       - "前端"
       - "依赖"
+    allow:
+      - dependency-type: production
