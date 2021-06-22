@@ -10,13 +10,13 @@ module.exports = {
     if (process.env.ANALYZER) {
       config.plugins.push(new BundleAnalyzerPlugin())
     }
-    if (config.mode === 'production') {
+    /*if (config.mode === 'production') {
       return {
         externals: {
           vue: 'Vue'
         }
       }
-    }
+    }*/
   },
   pluginOptions: {
     i18n: {
