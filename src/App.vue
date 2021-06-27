@@ -1,5 +1,5 @@
 <template>
-  <v-app :class="{you: you}">
+  <v-app :class="{ you: you }">
     <v-main>
       <v-app-bar :color="$vuetify.theme.dark ? 'dark' : 'white'" flat>
         <v-toolbar-title>{{ $t("appbar.title") }}</v-toolbar-title>
@@ -68,15 +68,8 @@
         </div>
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              v-bind="attrs"
-              v-on="on"
-              icon
-              @click="you = !you"
-            >
-              <v-icon>{{
-                svgPath.mdiAbTesting
-              }}</v-icon>
+            <v-btn v-bind="attrs" v-on="on" icon @click="you = !you">
+              <v-icon>{{ svgPath.mdiAbTesting }}</v-icon>
             </v-btn>
           </template>
           <span>{{ $t("appbar.superSecretSetting") }}</span>
@@ -327,7 +320,7 @@
           </v-expansion-panels>
         </div>
         <v-divider style="margin:15px 0"></v-divider>
-        <Sponsors/>
+        <Sponsors />
       </v-container>
       <TeahouseFooter></TeahouseFooter>
     </v-main>
@@ -457,6 +450,43 @@
         </v-card-text>
       </v-card>
     </v-dialog>
+    <v-dialog
+      v-model="dialogWebview"
+      fullscreen
+      hide-overlay
+      transition="dialog-bottom-transition"
+    >
+      <v-card tile>
+        <v-toolbar>
+          <v-toolbar-title>梗体中文 · 在线构建 - 啊这！</v-toolbar-title>
+        </v-toolbar>
+
+        <v-container class="mt-6">
+          <h2 class="text-h4 mb-4">您被困在了第三方 App 的世界里。</h2>
+          <p class="text-body-1">
+            梗中在线构建在第三方 App
+            的内置浏览器中会出现<b>无法正常下载</b>的情况。请使用<b>其他浏览器</b>打开在线构建。
+          </p>
+          <h3 class="text-h5 mb-4">让我出去！</h3>
+          <p class="text-body-1" v-if="dialogWebviewProvider === 'wechat'">
+            （微信）请点击右上角的
+            <v-icon>{{ svgPath.mdiDotsHorizontal }}</v-icon> “更多” →
+            <v-icon color="blue darken-3">{{ svgPath.mdiEarth }}</v-icon>
+            “<b>在浏览器中打开</b>”。
+          </p>
+          <p class="text-body-1" v-if="dialogWebviewProvider === 'qq'">
+            （QQ）请点击右上角的 <v-icon>{{ svgPath.mdiPlus }}</v-icon> “更多” →
+            <v-icon color="blue darken-3">{{ svgPath.mdiEarth }}</v-icon>
+            “<b>浏览器</b>”。
+          </p>
+          <p class="text-body-1" v-if="dialogWebviewProvider === 'bilibili'">
+            （哔哩哔哩）请点击右上角的
+            <v-icon>{{ svgPath.mdiDotsVertical }}</v-icon> “更多” →
+            <v-icon>{{ svgPath.mdiCompass }}</v-icon> <b>“浏览器</b>”。
+          </p>
+        </v-container>
+      </v-card>
+    </v-dialog>
   </v-app>
 </template>
 <script>
@@ -472,16 +502,20 @@ import {
   mdiBug,
   mdiCloudDownload,
   mdiClose,
+  mdiCompass,
   mdiDisc,
+  mdiDotsHorizontal,
   mdiDotsVertical,
+  mdiEarth,
   mdiGithub,
   mdiInformationOutline,
+  mdiPlus,
   mdiPost,
   mdiShareVariant,
 } from "@mdi/js";
 import TeahouseFooter from "@/components/footer";
 import allowGa from "@/allowGa";
-import Sponsors from './components/sponsors'
+import Sponsors from "./components/sponsors";
 
 export default {
   methods: {
@@ -693,6 +727,8 @@ export default {
     snackbarBuildFailed: false,
     dialogFetchListFailed: false,
     dialogNews: false,
+    dialogWebview: false,
+    dialogWebviewProvider: null,
     fetchListIgnored: false,
     shareLinkParsed: false,
     shareCopyedToClipboard: false,
@@ -710,6 +746,10 @@ export default {
       mdiBrightness7,
       mdiShareVariant,
       mdiClose,
+      mdiCompass,
+      mdiDotsHorizontal,
+      mdiEarth,
+      mdiPlus,
     },
     tab: null,
     logsPanel: [],
@@ -781,6 +821,19 @@ export default {
         this.dialogNews =
           this.news.id > localStorage.getItem("memeNewsIgnored");
       });
+
+    const UA = navigator.userAgent;
+
+    if (UA.includes("MicroMessenger/")) {
+      this.dialogWebview = true;
+      this.dialogWebviewProvider = "wechat";
+    } else if (UA.includes("QQ/")) {
+      this.dialogWebview = true;
+      this.dialogWebviewProvider = "qq";
+    } else if (UA.includes("BiliApp/")) {
+      this.dialogWebview = true;
+      this.dialogWebviewProvider = "bilibili";
+    }
   },
   computed: {
     whetherUseBE() {
@@ -824,13 +877,16 @@ export default {
     "$vuetify.theme.dark"(val) {
       localStorage.setItem("memeDarkMode", val);
     },
-    "you"(val) {
+    you(val) {
       localStorage.setItem("memeYou", val);
-    }
+    },
   },
   created() {
-    if (localStorage.getItem("memeYou") !== "true" && localStorage.getItem("memeYou") !== "false") {
-      localStorage.setItem("memeYou", Math.round(Math.random()) ? true : false) // A/B testing
+    if (
+      localStorage.getItem("memeYou") !== "true" &&
+      localStorage.getItem("memeYou") !== "false"
+    ) {
+      localStorage.setItem("memeYou", Math.round(Math.random()) ? true : false); // A/B testing
     }
     if (localStorage.getItem("memeInitialized") !== "true") {
       localStorage.setItem(
@@ -841,7 +897,7 @@ export default {
           : "false"
       );
       localStorage.setItem("memeNewsIgnored", "0");
-      localStorage.setItem("memeYou", Math.round(Math.random()) ? true : false)
+      localStorage.setItem("memeYou", Math.round(Math.random()) ? true : false);
     }
     this.$vuetify.theme.dark = localStorage.getItem("memeDarkMode") === "true";
     let memeLang = localStorage.getItem("memeLang");
@@ -851,7 +907,7 @@ export default {
     }
     this.$i18n.locale = memeLang;
     if (localStorage.getItem("memeYou") === "true") {
-      this.you = true
+      this.you = true;
     }
     localStorage.setItem("memeInitialized", "true");
   },
@@ -889,7 +945,6 @@ export default {
   height: 100%;
 }
 
-
 /* Material "NEXT" / "YOU" */
 #app.you {
   .v-dialog {
@@ -897,7 +952,7 @@ export default {
   }
   .v-menu__content {
     box-shadow: none;
-    >.theme--light {
+    > .theme--light {
       background: #fafafa;
     }
   }
@@ -911,7 +966,7 @@ export default {
     background: #efefef;
   }
   .primary {
-    background-color: #4285F4 !important;
+    background-color: #4285f4 !important;
   }
   .v-btn--is-elevated {
     box-shadow: none;
@@ -948,12 +1003,15 @@ export default {
   .v-expansion-panels > *:not(.v-expansion-panel--active) {
     border-radius: unset;
   }
-  .v-expansion-panels:not(.v-expansion-panels--accordion):not(.v-expansion-panels--tile) > .v-expansion-panel--active + .v-expansion-panel,
+  .v-expansion-panels:not(.v-expansion-panels--accordion):not(.v-expansion-panels--tile)
+    > .v-expansion-panel--active
+    + .v-expansion-panel,
   .v-expansion-panels > *:first-child {
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
   }
-  .v-expansion-panels:not(.v-expansion-panels--accordion):not(.v-expansion-panels--tile) > .v-expansion-panel--next-active,
+  .v-expansion-panels:not(.v-expansion-panels--accordion):not(.v-expansion-panels--tile)
+    > .v-expansion-panel--next-active,
   .v-expansion-panels > *:last-child {
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
@@ -971,64 +1029,77 @@ export default {
 
 /* latin */
 @font-face {
-  font-family: 'Fira Code';
+  font-family: "Fira Code";
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/firacode/v9/uU9eCBsR6Z2vfE9aq3bL0fxyUs4tcw4W_A9sJVD7MOzlojwUKQ.woff) format('woff');
+  src: url(https://fonts.gstatic.com/s/firacode/v9/uU9eCBsR6Z2vfE9aq3bL0fxyUs4tcw4W_A9sJVD7MOzlojwUKQ.woff)
+    format("woff");
 }
 
 /* latin */
 @font-face {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-style: normal;
   font-weight: 100;
   font-display: swap;
-  src: local('Roboto Thin'), local('Roboto-Thin'), url(https://fonts.gstatic.com/s/roboto/v20/KFOkCnqEu92Fr1MmgVxIIzIXKMny.woff2) format('woff2');
+  src: local("Roboto Thin"), local("Roboto-Thin"),
+    url(https://fonts.gstatic.com/s/roboto/v20/KFOkCnqEu92Fr1MmgVxIIzIXKMny.woff2)
+      format("woff2");
 }
 
 /* latin */
 @font-face {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: local('Roboto Light'), local('Roboto-Light'), url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmSU5fBBc4AMP6lQ.woff2) format('woff2');
+  src: local("Roboto Light"), local("Roboto-Light"),
+    url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmSU5fBBc4AMP6lQ.woff2)
+      format("woff2");
 }
 
 /* latin */
 @font-face {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: local('Roboto'), local('Roboto-Regular'), url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2) format('woff2');
+  src: local("Roboto"), local("Roboto-Regular"),
+    url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2)
+      format("woff2");
 }
 
 /* latin */
 @font-face {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: local('Roboto Medium'), local('Roboto-Medium'), url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmEU9fBBc4AMP6lQ.woff2) format('woff2');
+  src: local("Roboto Medium"), local("Roboto-Medium"),
+    url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmEU9fBBc4AMP6lQ.woff2)
+      format("woff2");
 }
 
 /* latin */
 @font-face {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: local('Roboto Bold'), local('Roboto-Bold'), url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmWUlfBBc4AMP6lQ.woff2) format('woff2');
+  src: local("Roboto Bold"), local("Roboto-Bold"),
+    url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmWUlfBBc4AMP6lQ.woff2)
+      format("woff2");
 }
 
 /* latin */
 @font-face {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-style: normal;
   font-weight: 900;
   font-display: swap;
-  src: local('Roboto Black'), local('Roboto-Black'), url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmYUtfBBc4AMP6lQ.woff2) format('woff2');
+  src: local("Roboto Black"), local("Roboto-Black"),
+    url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmYUtfBBc4AMP6lQ.woff2)
+      format("woff2");
 }
 </style>
