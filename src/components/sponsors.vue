@@ -67,8 +67,6 @@
           </v-card-actions>
         </v-card>
       </v-col>
-    </v-row>
-    <v-row class="mb-3">
       <v-col col="12" md="6">
         <v-card>
           <v-list-item three-line>
@@ -125,6 +123,33 @@
               rel="noopener noreferrer"
               text
             >{{ $t("sponsor.liu.website") }}
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+      <v-col col="12" md="6">
+        <v-card>
+          <v-list-item three-line>
+            <v-list-item-content>
+              <div class="overline mb-4">{{ $t("sponsor.overline") }}</div>
+              <v-list-item-title class="headline mb-1">{{ $t("sponsor.suda.headline") }}</v-list-item-title>
+              <v-list-item-subtitle>
+                {{ $t("sponsor.suda.subtitle") }}
+              </v-list-item-subtitle>
+            </v-list-item-content>
+
+            <v-list-item-avatar color="grey" size="80" tile>
+              <v-img src="../assets/suda.jpg"></v-img>
+            </v-list-item-avatar>
+          </v-list-item>
+
+          <v-card-actions>
+            <v-btn
+              href="https://space.bilibili.com/691415738"
+              rel="noopener noreferrer"
+              text
+            >
+              {{ $t("sponsor.suda.bilibili") }}
             </v-btn>
           </v-card-actions>
         </v-card>
