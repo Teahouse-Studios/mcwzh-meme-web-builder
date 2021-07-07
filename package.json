@@ -54,8 +54,9 @@
     "rules": {}
   },
   "browserslist": [
-    "> 1%",
-    "last 2 versions",
+    "> 1% in CN",
+    "last 2 major versions",
+    "not IE",
     "not dead"
   ]
 }
