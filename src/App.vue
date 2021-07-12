@@ -821,7 +821,7 @@ export default {
           this.tab ? "1005191" : "1004643"
         }-1-1.html`,
         disc: this.tab
-          ? "https://dianliang-oss-1301161188.file.myqcloud.com/zh-meme-respack/Meme_resourcepack_records.mcpack"
+          ? "https://wdf.ink/record-bedrock"
           : "https://wdf.ink/record-java",
       };
     },
