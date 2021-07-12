@@ -56,7 +56,6 @@
   "browserslist": [
     "> 1% in CN",
     "last 2 major versions",
-    "not IE",
     "not dead"
   ]
 }
