@@ -94,15 +94,13 @@
       <v-alert
         :color="$vuetify.theme.dark ? 'dark' : 'white'"
         :icon="svgPath.mdiInformationOutline"
+        v-for="a in alert"
+        :key="a.name"
         class="mb-0"
         dense
         tile
       >
-        {{ $t("alert.main")
-        }}<a href="https://teahou.se/memepack-1st-anniversary/">{{
-          $t("alert.feedback")
-        }}</a
-        >{{ $t("alert.period") }}
+        <span v-html="a.message"></span>
       </v-alert>
       <v-tabs v-model="tab" background-color="transparent" fixed-tabs>
         <v-tab>
@@ -480,7 +478,7 @@ import {
 import TeahouseFooter from "@/components/footer";
 import allowGa from "@/allowGa";
 import Sponsors from "./components/sponsors";
-import webview from './components/webview'
+import webview from "./components/webview";
 
 export default {
   methods: {
@@ -684,11 +682,12 @@ export default {
     help,
     langMenu,
     TeahouseFooter,
-    webview
+    webview,
   },
   data: () => ({
     you: false,
     news: null,
+    alerts: [],
     snackbarBuildSucceeded: false,
     snackbarBuildFailed: false,
     dialogFetchListFailed: false,
@@ -787,6 +786,11 @@ export default {
         this.dialogNews =
           this.news.id > localStorage.getItem("memeNewsIgnored");
       });
+    await axios
+      .get(
+        "https://cdn.jsdelivr.net/gh/Teahouse-Studios/mcwzh-meme-resourcepack@master/alerts.json"
+      )
+      .then((response) => (this.alert = response.data));
   },
   computed: {
     whetherUseBE() {
