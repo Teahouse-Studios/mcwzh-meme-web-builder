@@ -574,7 +574,7 @@ export default {
       };
       this.loading_backend = false;
       this.dialogFetchListFailed = false;
-      this.input.be.collection = ["no_blue_ui"];
+      this.input.be.collection = ["choice_modules_1"];
       this.input.je.collection = ["choice_modules_1"];
 
       let p = new URLSearchParams(window.location.search);
