@@ -95,7 +95,7 @@
     "kkg": {
       "headline": "Brought to you by Kakagou",
       "subtitle": "Kakagou is an MCBBS artist. He kindly gave us 9 days of MCBBS ad.",
-      "mcbbs": "MCBBS 资料页"
+      "mcbbs": "MCBBS profile"
     },
     "liu": {
       "headline": "Brought to you by WDLJT",
@@ -164,9 +164,9 @@
   },
   "footer": {
     "slogan": "Built with ❤️ ️love, 🔮 fantasies, 🐝 bees and 🤣 memes.",
-    "terms": "服务条款",
-    "privacy": "隐私政策",
-    "donate": "捐款"
+    "terms": "Terms",
+    "privacy": "Privacy",
+    "donate": "Donate"
   },
   "languages": "Languages"
 }
