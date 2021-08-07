@@ -243,7 +243,11 @@
               class="mb-3"
               persistent-hint
             />
-          <p class="text-body-2">{{$t("bedrock_hint")}}<a href="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock" target="_blank" rel="nofollow noopener">README.md</a></p>
+            <p class="text-body-2">
+              <i18n path="bedrock_hint.text" tag="label" for="bedrock_hint.readme">
+                <a href="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock" target="_blank" rel="nofollow noopener">{{$t("bedrock_hint.readme")}}</a>
+              </i18n>
+            </p>
           </v-tab-item>
         </v-tabs-items>
         <v-alert

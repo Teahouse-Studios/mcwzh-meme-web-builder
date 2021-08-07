@@ -8,6 +8,7 @@ export default new VueI18n({
   fallbackLocale: 'zhMeme',
   messages: {
     zhHans: require('./locales/zh-Hans.json'),
-    zhMeme: require('./locales/zh-Meme.json')
+    zhMeme: require('./locales/zh-Meme.json'),
+    en: require('./locales/en.json')
   }
 })

@@ -7,7 +7,7 @@
         v-on="on"
       >
         <v-icon left>{{mdiTranslate}}</v-icon>
-        语言
+        {{ $t('languages') }}
         <v-icon right>{{mdiMenuDown}}</v-icon>
       </v-btn>
     </template>
@@ -21,6 +21,11 @@
         @click="switchLang('zhMeme')"
       >
         <v-list-item-title>梗体中文</v-list-item-title>
+      </v-list-item>
+      <v-list-item
+        @click="switchLang('en')"
+      >
+        <v-list-item-title>English</v-list-item-title>
       </v-list-item>
     </v-list>
   </v-menu>
