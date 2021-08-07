@@ -863,7 +863,7 @@ export default {
     }
     this.$vuetify.theme.dark = localStorage.getItem("memeDarkMode") === "true";
     let memeLang = localStorage.getItem("memeLang");
-    if (memeLang !== "zhHans" && memeLang !== "zhMeme") {
+    if (memeLang !== "zhHans" && memeLang !== "zhMeme" && memeLang !== "en") {
       localStorage.removeItem("memeLang");
       memeLang = "zhHans";
     }
