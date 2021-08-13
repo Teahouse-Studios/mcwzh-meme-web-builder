@@ -429,45 +429,12 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-dialog v-model="dialogNews" max-width="700px" scrollable v-if="news">
-      <v-card>
-        <v-card-title>
-          梗中新闻 #{{ news.id }} - {{ news.title }}
-          <v-btn class="ml-auto" icon @click="newsIgnore()">
-            <v-icon>{{ svgPath.mdiClose }}</v-icon>
-          </v-btn>
-        </v-card-title>
-        <v-sheet v-if="news.video" class="v-card--hero mb-4">
-          <v-lazy min-height="300">
-            <iframe
-              class="v-card--hero__iframe"
-              :src="news.video"
-              scrolling="no"
-              border="0"
-              frameborder="no"
-              framespacing="0"
-              allowfullscreen="true"
-            >
-            </iframe>
-          </v-lazy>
-        </v-sheet>
-        <v-img v-else-if="news.image" :src="news.image" class="mb-4"></v-img>
-        <v-divider v-else class="mb-4"></v-divider>
-        <v-card-text style="height: 500px;">
-          <div v-html="news.content"></div>
-          <v-btn v-if="news.detail" :href="news.detail" plain
-          >
-            <v-icon left>{{ svgPath.mdiArrowRight }}</v-icon>
-            阅读更多
-          </v-btn
-          >
-        </v-card-text>
-      </v-card>
-    </v-dialog>
+    <news/>
     <webview/>
   </v-app>
 </template>
 <script>
+import './app.scss'
 import axios from "axios";
 import functionalSelector from "@/components/functionalSelector";
 import help from "./components/help";
@@ -495,13 +462,10 @@ import TeahouseFooter from "@/components/footer";
 import allowGa from "@/allowGa";
 import Sponsors from "./components/sponsors";
 import webview from "./components/webview";
+import news from './components/news'
 
 export default {
   methods: {
-    newsIgnore() {
-      this.dialogNews = false;
-      localStorage.memeNewsIgnored = this.news.id;
-    },
     share(item) {
       let p = new URLSearchParams();
       p.set("type", item.isBe ? "be" : "je");
@@ -702,15 +666,14 @@ export default {
     langMenu,
     TeahouseFooter,
     webview,
+    news
   },
   data: () => ({
     you: false,
-    news: null,
     alerts: [],
     snackbarBuildSucceeded: false,
     snackbarBuildFailed: false,
     dialogFetchListFailed: false,
-    dialogNews: false,
     dialogWebview: false,
     dialogWebviewProvider: null,
     fetchListIgnored: false,
@@ -800,15 +763,6 @@ export default {
 
     await axios
       .get(
-        "https://cdn.jsdelivr.net/gh/Teahouse-Studios/mcwzh-meme-resourcepack@master/news.json"
-      )
-      .then((response) => (this.news = response.data))
-      .then(() => {
-        this.dialogNews =
-          this.news.id > localStorage.getItem("memeNewsIgnored");
-      });
-    await axios
-      .get(
         "https://cdn.jsdelivr.net/gh/Teahouse-Studios/mcwzh-meme-resourcepack@master/alerts.json"
       )
       .then((response) => (this.alert = response.data));
@@ -891,208 +845,3 @@ export default {
   },
 };
 </script>
-<style lang="scss">
-.v-tabs-items {
-  background-color: inherit !important;
-}
-
-.v-btn__content .v-icon {
-  font-size: 24px;
-  height: 24px;
-  width: 24px;
-}
-
-.v-card--hero {
-  background: #000;
-  border-radius: 6px;
-  height: 0;
-  margin: 0;
-  overflow: hidden;
-  padding-bottom: 70%;
-  position: relative;
-  width: 100%;
-}
-
-.v-card--hero__iframe {
-  display: block;
-  vertical-align: middle;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-/* Material "NEXT" / "YOU" */
-#app.you {
-  .v-dialog {
-    box-shadow: none;
-  }
-
-  .v-menu__content {
-    box-shadow: none;
-
-    > .theme--light {
-      background: #fafafa;
-    }
-  }
-
-  .v-card {
-    box-shadow: none;
-
-    &.theme--light {
-      background: #f8f9fa;
-    }
-  }
-
-  .v-chip.theme--light {
-    background: #efefef;
-  }
-
-  .primary {
-    background-color: #4285f4 !important;
-  }
-
-  .v-btn--is-elevated {
-    box-shadow: none;
-  }
-
-  .v-sheet.v-card {
-    border-radius: 12px;
-  }
-
-  .v-app-bar.theme--light {
-    background: #f8f9fa !important;
-  }
-
-  .v-alert.theme--light {
-    background: #fafafa !important;
-  }
-
-  .info {
-    &.theme--light {
-      background-color: #4f90f7 !important;
-    }
-
-    &.theme--dark {
-      background: #4285f4 !important;
-    }
-  }
-
-  .v-btn:not(.v-btn--fab) {
-    border-radius: 24px;
-  }
-
-  .v-expansion-panel {
-    &::before {
-      box-shadow: none;
-    }
-
-    border-radius: 12px;
-  }
-
-  .theme--light.v-expansion-panels .v-expansion-panel {
-    background: #f8f9fa;
-  }
-
-  .v-expansion-panels > *:not(.v-expansion-panel--active) {
-    border-radius: unset;
-  }
-
-  .v-expansion-panels:not(.v-expansion-panels--accordion):not(.v-expansion-panels--tile)
-  > .v-expansion-panel--active
-  + .v-expansion-panel,
-  .v-expansion-panels > *:first-child {
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-  }
-
-  .v-expansion-panels:not(.v-expansion-panels--accordion):not(.v-expansion-panels--tile)
-  > .v-expansion-panel--next-active,
-  .v-expansion-panels > *:last-child {
-    border-bottom-left-radius: 12px;
-    border-bottom-right-radius: 12px;
-  }
-
-  .v-expansion-panel--active {
-    border-radius: 12px;
-  }
-
-  .v-snack__wrapper:not(.v-sheet--outlined) {
-    box-shadow: none;
-  }
-}
-
-.theme--light.v-btn.v-btn--icon {
-  color: inherit;
-}
-
-/* latin */
-@font-face {
-  font-family: "Fira Code";
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/firacode/v9/uU9eCBsR6Z2vfE9aq3bL0fxyUs4tcw4W_A9sJVD7MOzlojwUKQ.woff) format("woff");
-}
-
-/* latin */
-@font-face {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 100;
-  font-display: swap;
-  src: local("Roboto Thin"), local("Roboto-Thin"),
-  url(https://fonts.gstatic.com/s/roboto/v20/KFOkCnqEu92Fr1MmgVxIIzIXKMny.woff2) format("woff2");
-}
-
-/* latin */
-@font-face {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 300;
-  font-display: swap;
-  src: local("Roboto Light"), local("Roboto-Light"),
-  url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmSU5fBBc4AMP6lQ.woff2) format("woff2");
-}
-
-/* latin */
-@font-face {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: local("Roboto"), local("Roboto-Regular"),
-  url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2) format("woff2");
-}
-
-/* latin */
-@font-face {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: local("Roboto Medium"), local("Roboto-Medium"),
-  url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmEU9fBBc4AMP6lQ.woff2) format("woff2");
-}
-
-/* latin */
-@font-face {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: local("Roboto Bold"), local("Roboto-Bold"),
-  url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmWUlfBBc4AMP6lQ.woff2) format("woff2");
-}
-
-/* latin */
-@font-face {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 900;
-  font-display: swap;
-  src: local("Roboto Black"), local("Roboto-Black"),
-  url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmYUtfBBc4AMP6lQ.woff2) format("woff2");
-}
-</style>
