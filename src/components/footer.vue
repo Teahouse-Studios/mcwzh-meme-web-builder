@@ -34,16 +34,14 @@
           </a>
         </v-col>
       </v-row>
-      <div class="text-right body-2 mt-2">
+      <div class="text-right body-2 mt-2" v-if="beian">
         <a
-          v-if="beian"
           class="white--text text-decoration-none"
           href="https://beian.miit.gov.cn/">
           蜀 ICP 备 19006420 号-1
         </a>
         <span> | </span>
         <a
-          v-if="beian"
           class="white--text text-decoration-none"
           href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=51010502011232">
           <img height="14px"
@@ -59,7 +57,7 @@
 import {mdiScript, mdiLock, mdiCashUsd} from '@mdi/js'
 
 export default {
-  name: "footer",
+  name: "teahouse-footer",
   data: () => ({
     mdiCashUsd, mdiLock, mdiScript,
     beian: window.location.host === 'meme.wd-ljt.com' || process.env.NODE_ENV === 'development',

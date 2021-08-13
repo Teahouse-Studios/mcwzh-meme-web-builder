@@ -93,10 +93,10 @@
         </v-tooltip>
       </v-app-bar>
       <v-alert
+        v-for="a in alerts"
+        :key="a.name"
         :color="$vuetify.theme.dark ? 'dark' : 'white'"
         :icon="svgPath.mdiInformationOutline"
-        v-for="a in alert"
-        :key="a.name"
         class="mb-0"
         dense
         tile
@@ -245,18 +245,18 @@
               persistent-hint
             />
             <p class="text-body-2">
-              <i18n path="bedrock_hint.text" tag="label" for="bedrock_hint.readme">
-                <a href="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock" target="_blank"
-                   rel="nofollow noopener">{{ $t("bedrock_hint.readme") }}</a>
+              <i18n for="bedrock_hint.readme" path="bedrock_hint.text" tag="label">
+                <a href="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock" rel="nofollow noopener"
+                   target="_blank">{{ $t("bedrock_hint.readme") }}</a>
               </i18n>
             </p>
           </v-tab-item>
         </v-tabs-items>
         <v-alert
           :icon="svgPath.mdiInformationOutline"
+          :outlined="!you"
           class="mt-3 mb-3 text-body-2"
           dense
-          :outlined="!you"
           type="info"
         >{{ $t("hints")[hint] }}
         </v-alert>
@@ -270,8 +270,9 @@
             <v-icon left>{{ svgPath.mdiCloudDownload }}</v-icon>
             {{ $t("form.submit") }}
           </v-btn>
-          <p style="display:inline-block;vertical-align: middle; margin: auto" class="ml-2 caption" v-if="consts.be_modified && consts.je_modified">
-            {{$t('form.modified')}}
+          <p v-if="consts.be_modified && consts.je_modified" class="ml-2 caption"
+             style="display:inline-block;vertical-align: middle; margin: auto">
+            {{ $t('form.modified') }}
             {{ new Date(tab === 0 ? consts.je_modified : consts.be_modified).toLocaleString() }}</p>
         </div>
         <div v-if="logs.length >= 1">
@@ -332,7 +333,7 @@
         <v-divider style="margin:15px 0"></v-divider>
         <Sponsors/>
       </v-container>
-      <TeahouseFooter></TeahouseFooter>
+      <teahouse-footer/>
     </v-main>
     <help ref="help"/>
     <v-snackbar v-model="snackbarBuildSucceeded">
@@ -353,8 +354,8 @@
       <template v-slot:action="{ attrs }">
         <v-btn
           v-bind="attrs"
-          text
           color="primary"
+          text
           @click="shareLinkParsed = false"
         >
           {{ $t("snackbar.close") }}
@@ -366,8 +367,8 @@
       <template v-slot:action="{ attrs }">
         <v-btn
           v-bind="attrs"
-          text
           color="primary"
+          text
           @click="shareCopyedToClipboard = false"
         >
           {{ $t("snackbar.close") }}
@@ -395,7 +396,7 @@
         </v-btn>
       </template>
     </v-snackbar>
-    <v-dialog persistent v-model="dialogFetchListFailed" width="500">
+    <v-dialog v-model="dialogFetchListFailed" persistent width="500">
       <v-card>
         <v-card-title class="headline">{{
             $t("dialog.fetchListFailed.headline")
@@ -458,9 +459,9 @@ import {
   mdiPost,
   mdiShareVariant,
 } from "@mdi/js";
-import TeahouseFooter from "@/components/footer";
+import footer from "@/components/footer";
 import allowGa from "@/allowGa";
-import Sponsors from "./components/sponsors";
+import sponsors from "./components/sponsors";
 import webview from "./components/webview";
 import news from './components/news'
 
@@ -660,11 +661,11 @@ export default {
     },
   },
   components: {
-    Sponsors,
+    Sponsors: sponsors,
     "functional-selector": functionalSelector,
     help,
     langMenu,
-    TeahouseFooter,
+    "teahouse-footer": footer,
     webview,
     news
   },
@@ -674,8 +675,6 @@ export default {
     snackbarBuildSucceeded: false,
     snackbarBuildFailed: false,
     dialogFetchListFailed: false,
-    dialogWebview: false,
-    dialogWebviewProvider: null,
     fetchListIgnored: false,
     shareLinkParsed: false,
     shareCopyedToClipboard: false,
@@ -765,7 +764,7 @@ export default {
       .get(
         "https://cdn.jsdelivr.net/gh/Teahouse-Studios/mcwzh-meme-resourcepack@master/alerts.json"
       )
-      .then((response) => (this.alert = response.data));
+      .then((response) => (this.alerts = response.data));
   },
   computed: {
     whetherUseBE() {
