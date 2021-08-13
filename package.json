@@ -57,7 +57,9 @@
     "parserOptions": {
       "parser": "@typescript-eslint/parser"
     },
-    "rules": {}
+    "rules": {
+      "vue/script-setup-uses-vars": "off"
+    }
   },
   "browserslist": [
     "> 1% in CN",
