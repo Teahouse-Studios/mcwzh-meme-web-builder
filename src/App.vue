@@ -465,11 +465,11 @@ import sponsors from "./components/sponsors.vue";
 import webview from "./components/webview.vue";
 import news from './components/news.vue'
 import Vue from 'vue'
-import {ICollection, IResource, IResp} from "@/types";
+import {ICollection, ILog, IResource, IResp} from "@/types";
 
 export default Vue.extend({
   methods: {
-    share(item: any) {
+    share(item: ILog) {
       let p = new URLSearchParams();
       const type = item.isBe ? "be" : "je"
       p.set("type", type);
@@ -517,26 +517,10 @@ export default Vue.extend({
         eventType: item.isBe ? "be" : "je",
       });
     },
-    collectionDesc(item: any) {
-      let result = [];
-      if (item["contains"]?.resource?.length) {
-        result.push(
-          `${this.$t("form.collections.description_prefix")}${
-            item["contains"]?.resource.length
-          }${this.$t("form.collections.resource_suffix")}`
-        );
-      }
-      if (item["contains"]?.language?.length) {
-        result.push(
-          `${this.$t("form.collections.description_prefix")}${
-            item["contains"]?.language.length
-          }${this.$t("form.collections.language_suffix")}`
-        );
-      }
-      if (result.length) {
-        return `(${result.join(", ")})`;
-      }
-      return "";
+    collectionDesc(item: ICollection) {
+      return `(${this.$t("form.collections.description_prefix")}${
+        item["contains"].length
+      }${this.$t("form.collections.resource_suffix")})`
     },
     open(name: string) {
       window.open(name);
@@ -708,14 +692,7 @@ export default Vue.extend({
     inputBasic: {
       format: 7,
     },
-    logs: [] as {
-      title: string;
-      ts: number;
-      content: string;
-      filename?: string;
-      github?: string;
-      isBe?: boolean
-    }[],
+    logs: [] as ILog[],
     input: {
       be: {
         extType: "mcpack",
@@ -788,7 +765,10 @@ export default Vue.extend({
     whetherUseBE(): boolean {
       return this.tab === 1;
     },
-    fixedItems() {
+    fixedItems(): {
+      resource: string[];
+      language: string[]
+    } {
       // @ts-ignore
       const base = this.whetherUseBE
         ? this.consts.be_modules

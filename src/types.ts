@@ -25,3 +25,12 @@ export interface IResource {
 export interface ICollection extends IResource {
   contains: string[]
 }
+
+export interface ILog {
+  title: string;
+  ts: number;
+  content: string;
+  filename?: string;
+  github?: string;
+  isBe?: boolean
+}
