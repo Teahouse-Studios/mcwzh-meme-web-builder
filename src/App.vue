@@ -273,7 +273,7 @@
           <p v-if="consts.be_modified && consts.je_modified" class="ml-2 caption"
              style="display:inline-block;vertical-align: middle; margin: auto">
             {{ $t('form.modified') }}
-            {{ new Date(tab === 0 ? consts.je_modified : consts.be_modified).toLocaleString() }}</p>
+            {{ new Date(tab === 0 ? consts.je_modified : consts.be_modified).toLocaleString($t("metadata.dateLocale".toString())) }}</p>
         </div>
         <div v-if="logs.length >= 1">
           <v-divider style="margin:15px 0"></v-divider>
@@ -281,7 +281,7 @@
           <v-expansion-panels v-model="logsPanel" multiple>
             <v-expansion-panel v-for="(item, i) in logs" :key="i">
               <v-expansion-panel-header>
-                {{ new Date(Number(item.ts)).toLocaleString() }}
+                {{ new Date(Number(item.ts)).toLocaleString($t("metadata.dateLocale".toString())) }}
                 {{ item.title }}
               </v-expansion-panel-header>
               <v-expansion-panel-content>
