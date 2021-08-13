@@ -13,8 +13,7 @@
     "baseUrl": ".",
     "types": [
       "webpack-env",
-      "vuetify",
-      "gtag.ts"
+      "vuetify"
     ],
     "paths": {
       "@/*": [
