@@ -1,12 +1,13 @@
 import Vue from 'vue'
+// @ts-ignore
 import i18n from './i18n';
 import App from './App.vue'
 import vuetify from './plugins/vuetify';
 
 import {getCLS, getFID, getLCP} from 'web-vitals';
-import allowGa from "@/allowGa";
+import allowGa from "./allowGa";
 
-function sendToGoogleAnalytics({name, delta, value, id}) {
+function sendToGoogleAnalytics({name, delta, value, id}: any) {
   if (allowGa() && window.gtag) {
     window.gtag('event', name, {
       value: delta,
@@ -14,8 +15,6 @@ function sendToGoogleAnalytics({name, delta, value, id}) {
       metric_value: value,
       metric_delta: delta,
     });
-  } else {
-    console.log(arguments)
   }
 }
 

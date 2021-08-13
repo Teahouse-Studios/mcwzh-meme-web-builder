@@ -5,10 +5,10 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --modern",
-    "release": "node release.js",
     "lint": "vue-cli-service lint",
     "ana": "cross-env ANALYZER=true vue-cli-service build",
-    "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'"
+    "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'",
+    "release": "node release.js"
   },
   "dependencies": {
     "@mdi/js": "^5.9.55",
@@ -21,9 +21,13 @@
     "web-vitals": "^1.1.2"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.18.0",
+    "@typescript-eslint/parser": "^4.18.0",
     "@vue/cli-plugin-babel": "~4.5.13",
     "@vue/cli-plugin-eslint": "~4.5.13",
+    "@vue/cli-plugin-typescript": "~4.5.0",
     "@vue/cli-service": "~4.5.13",
+    "@vue/eslint-config-typescript": "^7.0.0",
     "aws-sdk": "^2.912.0",
     "babel-eslint": "^10.1.0",
     "cross-env": "^7.0.3",
@@ -34,6 +38,7 @@
     "mime-types": "^2.1.30",
     "sass": "^1.34.0",
     "sass-loader": "^10.1.1",
+    "typescript": "~4.1.5",
     "vue-cli-plugin-vuetify": "^2.4.0",
     "vue-template-compiler": "^2.6.14",
     "vuetify-loader": "^1.7.2",
@@ -46,10 +51,11 @@
     },
     "extends": [
       "plugin:vue/essential",
-      "eslint:recommended"
+      "eslint:recommended",
+      "@vue/typescript"
     ],
     "parserOptions": {
-      "parser": "babel-eslint"
+      "parser": "@typescript-eslint/parser"
     },
     "rules": {}
   },
