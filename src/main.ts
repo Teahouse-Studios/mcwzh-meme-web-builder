@@ -4,11 +4,15 @@ import App from './App.vue'
 import vuetify from './plugins/vuetify';
 
 import {getCLS, getFID, getLCP} from 'web-vitals';
-import allowGa from "./allowGa";
+import allowGa, { gtag } from "./allowGa";
+
+declare module 'vue/types/vue' {
+  interface Vue {
+    $api: string
+  }
+}
 
 function sendToGoogleAnalytics({name, delta, value, id}: any) {
-  // @ts-ignore
-  const gtag = window.gtag as any
   if (allowGa() && gtag) {
     gtag('event', name, {
       value: delta,

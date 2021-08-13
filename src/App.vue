@@ -434,12 +434,12 @@
     <webview/>
   </v-app>
 </template>
-<script>
+<script lang="ts">
 import './app.scss'
-import axios from "axios";
-import functionalSelector from "@/components/functionalSelector";
-import help from "./components/help";
-import langMenu from "./components/langMenu";
+import axios, {AxiosResponse} from "axios";
+import functionalSelector from "@/components/functionalSelector.vue";
+import help from "./components/help.vue";
+import langMenu from "./components/langMenu.vue";
 import {
   mdiAbTesting,
   mdiArrowRight,
@@ -459,19 +459,22 @@ import {
   mdiPost,
   mdiShareVariant,
 } from "@mdi/js";
-import footer from "@/components/footer";
-import allowGa from "@/allowGa";
-import sponsors from "./components/sponsors";
-import webview from "./components/webview";
-import news from './components/news'
+import footer from "./components/footer.vue";
+import allowGa, { gtag } from "@/allowGa";
+import sponsors from "./components/sponsors.vue";
+import webview from "./components/webview.vue";
+import news from './components/news.vue'
+import Vue from 'vue'
+import {ICollection, IResource, IResp} from "@/types";
 
-export default {
+export default Vue.extend({
   methods: {
-    share(item) {
+    share(item: any) {
       let p = new URLSearchParams();
-      p.set("type", item.isBe ? "be" : "je");
+      const type = item.isBe ? "be" : "je"
+      p.set("type", type);
       p.set("ver", "1");
-      p.set("input", JSON.stringify(this.input[p.get("type")]));
+      p.set("input", JSON.stringify(this.input[type]));
       p.set("inputBasic", JSON.stringify(this.inputBasic));
       let path = `${
         window.location.href.split("#")[0].split("?")[0]
@@ -488,27 +491,33 @@ export default {
         this.shareCopyedToClipboard = true;
       }
     },
-    sendHelpTrack(label) {
+    sendHelpTrack(label: string) {
       allowGa() &&
-      window.gtag?.("event", "help", {
+      gtag?.("event", "help", {
         eventCategory: label,
       });
     },
-    trackShare(item) {
+    trackShare(item: {
+      filename: string
+      isBe: boolean
+    }) {
       allowGa() &&
-      window.gtag?.("event", "share", {
+      gtag?.("event", "share", {
         eventLabel: item.filename,
         eventType: item.isBe ? "be" : "je",
       });
     },
-    trackBuild(item) {
+    trackBuild(item: {
+      filename: string
+      isBe: boolean
+    }) {
       allowGa() &&
-      window.gtag?.("event", "download", {
+      gtag?.("event", "download", {
         eventLabel: item.filename,
         eventType: item.isBe ? "be" : "je",
       });
     },
-    collectionDesc(item) {
+    collectionDesc(item: any) {
       let result = [];
       if (item["contains"]?.resource?.length) {
         result.push(
@@ -529,12 +538,12 @@ export default {
       }
       return "";
     },
-    open(name) {
+    open(name: string) {
       window.open(name);
     },
     async fetchList() {
       this.loading_backend = true;
-      let req;
+      let req: AxiosResponse<IResp>;
       try {
         req = await axios.get(this.$api);
       } catch (e) {
@@ -545,9 +554,12 @@ export default {
       const backend = req.data;
       this.consts = {
         ...this.consts,
-        modList: [{header: this.$t("form.mod.header")}]
+        // @ts-ignore
+        modList: [{header: this.$t("form.mod.header").toString()}]
+        // @ts-ignore
           .concat(backend.mods)
-          .concat({header: this.$t("form.mod.enHeader")})
+          .concat({header: this.$t("form.mod.enHeader").toString()})
+        // @ts-ignore
           .concat(backend.enmods),
         je_modules: backend.je_modules,
         be_modules: backend.be_modules,
@@ -558,10 +570,10 @@ export default {
       this.input.je.collection = ["choice_modules_1"];
 
       let p = new URLSearchParams(window.location.search);
-      let type = p.get("type");
+      let type = p.get("type") as string;
       let ver = p.get("ver");
       let inputBasic = p.get("inputBasic");
-      let input = p.get("input");
+      let input = p.get("input") as "be" | "je";
       if (["je", "be"].includes(type) && inputBasic && ver === "1") {
         let _inputBasic, _input;
         try {
@@ -572,6 +584,7 @@ export default {
         }
         this.shareLinkParsed = true;
         this.tab = type === "je" ? 0 : 1;
+        // @ts-ignore
         this.input[type] = _input;
         this.inputBasic = _inputBasic;
       }
@@ -579,12 +592,9 @@ export default {
       this.consts.be_modified = backend.be_modified
       this.consts.je_modified = backend.je_modified
     },
-    submit() {
+    async submit() {
       this.loading = true;
 
-      const base = this.whetherUseBE
-        ? this.consts.be_modules
-        : this.consts.je_modules;
       const inputBase = this.whetherUseBE ? this.input.be : this.input.je;
       let data = Object.assign(
         {},
@@ -593,9 +603,7 @@ export default {
           _be: this.whetherUseBE,
           modules: {
             language: inputBase.language,
-            resource: inputBase.resource.filter(
-              (v) => !(base.mixed || []).map((v) => v.name).includes(v)
-            ),
+            resource: inputBase.resource,
             collection: inputBase.collection,
           },
           mod:
@@ -613,50 +621,47 @@ export default {
         }
       );
       console.log(data);
-      allowGa() &&
-      window.gtag?.("event", "build", {
+      allowGa() && gtag?.("event", "build", {
         eventType: this.whetherUseBE ? "be" : "je",
       });
+      const that = this
       axios({url: "/ajax", baseURL: this.$api, method: "POST", data})
         .then(
-          function (res) {
+          res => {
             console.log(res.data);
-            this.logs.unshift({
-              title: this.$t("log.buildSucceeded"),
+            that.logs.unshift({
+              title: that.$t("log.buildSucceeded") as string,
               ts: new Date().valueOf(),
               content: res.data.logs,
               filename: res.data.filename,
-              github: this.links.github,
-              isBe: this.whetherUseBE,
+              github: that.links.github,
+              isBe: that.whetherUseBE,
             });
-            this.logsPanel = this.logsPanel.map((v) => v + 1);
-            this.logsPanel.unshift(0);
-            this.$nextTick(
-              function () {
-                this.$refs.logs.scrollIntoView();
-              }.bind(this)
-            );
-            this.snackbarBuildSucceeded = true;
-            this.loading = false;
-          }.bind(this)
+            that.logsPanel = that.logsPanel.map((v) => v + 1);
+            that.logsPanel.unshift(0);
+            that.$nextTick(() => {
+              (that.$refs.logs as Element).scrollIntoView()
+            });
+            
+            that.snackbarBuildSucceeded = true;
+            that.loading = false;
+          }
         )
         .catch(
-          function (err) {
-            this.logs.unshift({
-              title: this.$t("log.buildFailed"),
+          err => {
+            that.logs.unshift({
+              title: that.$t("log.buildFailed") as string,
               ts: new Date().valueOf(),
               content: err.toString(),
             });
-            this.logsPanel = this.logsPanel.map((v) => v + 1);
-            this.logsPanel.unshift(0);
-            this.$nextTick(
-              function () {
-                this.$refs.logs.scrollIntoView();
-              }.bind(this)
-            );
-            this.snackbarBuildFailed = true;
-            this.loading = false;
-          }.bind(this)
+            that.logsPanel = that.logsPanel.map((v) => v + 1);
+            that.logsPanel.unshift(0);
+            that.$nextTick(() => {
+              (that.$refs.logs as Element).scrollIntoView()
+            });
+            that.snackbarBuildFailed = true;
+            that.loading = false;
+          }
         );
     },
   },
@@ -697,27 +702,34 @@ export default {
       mdiEarth,
       mdiPlus,
     },
-    tab: null,
-    logsPanel: [],
+    tab: 0 as 0 | 1,
+    logsPanel: [] as number[],
     loading: false,
     inputBasic: {
       format: 7,
     },
-    logs: [],
+    logs: [] as {
+      title: string;
+      ts: number;
+      content: string;
+      filename?: string;
+      github?: string;
+      isBe?: boolean
+    }[],
     input: {
       be: {
         extType: "mcpack",
         compatible: false,
-        resource: [],
-        language: [],
-        collection: [],
+        resource: [] as string[],
+        language: [] as string[],
+        collection: [] as string[],
       },
       je: {
         modOption: "all",
-        mod: [],
-        resource: [],
-        language: [],
-        collection: [],
+        mod: [] as string[],
+        resource: [] as string[],
+        language: [] as string[],
+        collection: [] as string[],
       },
     },
     hint: 0,
@@ -734,14 +746,20 @@ export default {
         },
       ],
       beExtType: ["mcpack", "zip"],
-      modList: [],
+      modList: [] as {
+  text: string | number | object,
+  value: string | number | object,
+  disabled: boolean,
+  divider: boolean,
+  header: string
+}[],
       je_modules: {
-        resource: [],
-        collection: [],
+        resource: [] as IResource[],
+        collection: [] as ICollection[],
       },
       be_modules: {
-        resource: [],
-        collection: [],
+        resource: [] as IResource[],
+        collection: [] as ICollection[],
       },
       versions: [
         {text: "1.17+", value: 7},
@@ -767,28 +785,35 @@ export default {
       .then((response) => (this.alerts = response.data));
   },
   computed: {
-    whetherUseBE() {
+    whetherUseBE(): boolean {
       return this.tab === 1;
     },
     fixedItems() {
+      // @ts-ignore
       const base = this.whetherUseBE
         ? this.consts.be_modules
         : this.consts.je_modules;
       let items = base.collection.filter((v) =>
+        // @ts-ignore
         this.input[this.whetherUseBE ? "be" : "je"].collection.includes(v.name)
       );
       const data = items.map((v) => v["contains"]).flat();
       return {
         resource: data.filter(
           (v) =>
-            !base.resource.find((r) => r.name === v).name.startsWith("lang_")
+            !base.resource.find((r) => r.name === v)!.name.startsWith("lang_")
         ),
         language: data.filter((v) =>
-          base.resource.find((r) => r.name === v).name.startsWith("lang_")
+          base.resource.find((r) => r.name === v)!.name.startsWith("lang_")
         ),
       };
     },
-    links() {
+    links(): {
+      web_builder: string;
+      github: string;
+      mcbbs: string;
+      disc: string;
+    } {
       return {
         web_builder:
           "https://github.com/Teahouse-Studios/mcwzh-meme-web-builder",
@@ -813,11 +838,12 @@ export default {
     },
   },
   created() {
+
     if (
       localStorage.getItem("memeYou") !== "true" &&
       localStorage.getItem("memeYou") !== "false"
     ) {
-      localStorage.setItem("memeYou", Math.round(Math.random()) ? true : false); // A/B testing
+      localStorage.setItem("memeYou", (Math.round(Math.random()) ? true : false).toString()); // A/B testing
     }
     if (localStorage.getItem("memeInitialized") !== "true") {
       localStorage.setItem(
@@ -828,7 +854,7 @@ export default {
           : "false"
       );
       localStorage.setItem("memeNewsIgnored", "0");
-      localStorage.setItem("memeYou", Math.round(Math.random()) ? true : false);
+      localStorage.setItem("memeYou", (Math.round(Math.random()) ? true : false).toString());
     }
     this.$vuetify.theme.dark = localStorage.getItem("memeDarkMode") === "true";
     let memeLang = localStorage.getItem("memeLang");
@@ -842,5 +868,5 @@ export default {
     }
     localStorage.setItem("memeInitialized", "true");
   },
-};
+});
 </script>
