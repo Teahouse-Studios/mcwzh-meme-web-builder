@@ -20,7 +20,7 @@
                   <v-icon left>{{ svgPath.mdiDisc }}</v-icon>
                   {{ $t("appbar.discPack") }}
                 </v-btn>
-                <langMenu />
+                <langMenu/>
               </div>
             </template>
             <span>{{ !this.tab ? $t("java") : $t("bedrock") }}</span>
@@ -59,7 +59,7 @@
                   {{ $t("appbar.discPack") }}
                 </v-list-item-text>
               </v-list-item>
-              <langMenu />
+              <langMenu/>
               <div class="text-center">
                 （{{ !this.tab ? $t("java") : $t("bedrock") }}）
               </div>
@@ -83,8 +83,9 @@
               @click="$vuetify.theme.dark = !$vuetify.theme.dark"
             >
               <v-icon v-if="$vuetify.theme.dark">{{
-                svgPath.mdiBrightness7
-              }}</v-icon>
+                  svgPath.mdiBrightness7
+                }}
+              </v-icon>
               <v-icon v-else>{{ svgPath.mdiBrightness4 }}</v-icon>
             </v-btn>
           </template>
@@ -245,7 +246,8 @@
             />
             <p class="text-body-2">
               <i18n path="bedrock_hint.text" tag="label" for="bedrock_hint.readme">
-                <a href="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock" target="_blank" rel="nofollow noopener">{{$t("bedrock_hint.readme")}}</a>
+                <a href="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock" target="_blank"
+                   rel="nofollow noopener">{{ $t("bedrock_hint.readme") }}</a>
               </i18n>
             </p>
           </v-tab-item>
@@ -256,17 +258,22 @@
           dense
           :outlined="!you"
           type="info"
-          >{{ $t("hints")[hint] }}
+        >{{ $t("hints")[hint] }}
         </v-alert>
-        <v-btn
-          :disabled="loading"
-          :loading="loading"
-          color="primary"
-          @click="submit"
-        >
-          <v-icon left>{{ svgPath.mdiCloudDownload }}</v-icon>
-          {{ $t("form.submit") }}
-        </v-btn>
+        <div>
+          <v-btn
+            :disabled="loading"
+            :loading="loading"
+            color="primary"
+            @click="submit"
+          >
+            <v-icon left>{{ svgPath.mdiCloudDownload }}</v-icon>
+            {{ $t("form.submit") }}
+          </v-btn>
+          <p style="display:inline-block;vertical-align: middle; margin: auto" class="ml-2 caption" v-if="consts.be_modified && consts.je_modified">
+            {{$t('form.modified')}}
+            {{ new Date(tab === 0 ? consts.je_modified : consts.be_modified).toLocaleString() }}</p>
+        </div>
         <div v-if="logs.length >= 1">
           <v-divider style="margin:15px 0"></v-divider>
           <p ref="logs" class="headline">{{ $t("log.headline") }}</p>
@@ -279,7 +286,7 @@
               <v-expansion-panel-content>
                 <pre
                   style="padding-bottom:15px;white-space: pre-wrap;font-family: 'Cascadia Code', 'Fira Code','Consolas', monospace;"
-                  >{{ item.content }}</pre
+                >{{ item.content }}</pre
                 >
                 <v-btn
                   v-if="item.filename"
@@ -323,11 +330,11 @@
           </v-expansion-panels>
         </div>
         <v-divider style="margin:15px 0"></v-divider>
-        <Sponsors />
+        <Sponsors/>
       </v-container>
       <TeahouseFooter></TeahouseFooter>
     </v-main>
-    <help ref="help" />
+    <help ref="help"/>
     <v-snackbar v-model="snackbarBuildSucceeded">
       {{ $t("snackbar.buildSucceeded") }}
       <template v-slot:action="{ attrs }">
@@ -391,8 +398,9 @@
     <v-dialog persistent v-model="dialogFetchListFailed" width="500">
       <v-card>
         <v-card-title class="headline">{{
-          $t("dialog.fetchListFailed.headline")
-        }}</v-card-title>
+            $t("dialog.fetchListFailed.headline")
+          }}
+        </v-card-title>
         <v-card-text>
           {{ $t("dialog.fetchListFailed.text") }}
         </v-card-text>
@@ -448,12 +456,15 @@
         <v-card-text style="height: 500px;">
           <div v-html="news.content"></div>
           <v-btn v-if="news.detail" :href="news.detail" plain
-            ><v-icon left>{{ svgPath.mdiArrowRight }}</v-icon> 阅读更多</v-btn
+          >
+            <v-icon left>{{ svgPath.mdiArrowRight }}</v-icon>
+            阅读更多
+          </v-btn
           >
         </v-card-text>
       </v-card>
     </v-dialog>
-    <webview />
+    <webview/>
   </v-app>
 </template>
 <script>
@@ -467,8 +478,8 @@ import {
   mdiBrightness4,
   mdiBrightness7,
   mdiBug,
-  mdiCloudDownload,
   mdiClose,
+  mdiCloudDownload,
   mdiCompass,
   mdiDisc,
   mdiDotsHorizontal,
@@ -514,23 +525,23 @@ export default {
     },
     sendHelpTrack(label) {
       allowGa() &&
-        window.gtag?.("event", "help", {
-          eventCategory: label,
-        });
+      window.gtag?.("event", "help", {
+        eventCategory: label,
+      });
     },
     trackShare(item) {
       allowGa() &&
-        window.gtag?.("event", "share", {
-          eventLabel: item.filename,
-          eventType: item.isBe ? "be" : "je",
-        });
+      window.gtag?.("event", "share", {
+        eventLabel: item.filename,
+        eventType: item.isBe ? "be" : "je",
+      });
     },
     trackBuild(item) {
       allowGa() &&
-        window.gtag?.("event", "download", {
-          eventLabel: item.filename,
-          eventType: item.isBe ? "be" : "je",
-        });
+      window.gtag?.("event", "download", {
+        eventLabel: item.filename,
+        eventType: item.isBe ? "be" : "je",
+      });
     },
     collectionDesc(item) {
       let result = [];
@@ -569,9 +580,9 @@ export default {
       const backend = req.data;
       this.consts = {
         ...this.consts,
-        modList: [{ header: this.$t("form.mod.header") }]
+        modList: [{header: this.$t("form.mod.header")}]
           .concat(backend.mods)
-          .concat({ header: this.$t("form.mod.enHeader") })
+          .concat({header: this.$t("form.mod.enHeader")})
           .concat(backend.enmods),
         je_modules: backend.je_modules,
         be_modules: backend.be_modules,
@@ -599,6 +610,9 @@ export default {
         this.input[type] = _input;
         this.inputBasic = _inputBasic;
       }
+
+      this.consts.be_modified = backend.be_modified
+      this.consts.je_modified = backend.je_modified
     },
     submit() {
       this.loading = true;
@@ -635,12 +649,12 @@ export default {
       );
       console.log(data);
       allowGa() &&
-        window.gtag?.("event", "build", {
-          eventType: this.whetherUseBE ? "be" : "je",
-        });
-      axios({ url: "/ajax", baseURL: this.$api, method: "POST", data })
+      window.gtag?.("event", "build", {
+        eventType: this.whetherUseBE ? "be" : "je",
+      });
+      axios({url: "/ajax", baseURL: this.$api, method: "POST", data})
         .then(
-          function(res) {
+          function (res) {
             console.log(res.data);
             this.logs.unshift({
               title: this.$t("log.buildSucceeded"),
@@ -653,7 +667,7 @@ export default {
             this.logsPanel = this.logsPanel.map((v) => v + 1);
             this.logsPanel.unshift(0);
             this.$nextTick(
-              function() {
+              function () {
                 this.$refs.logs.scrollIntoView();
               }.bind(this)
             );
@@ -662,7 +676,7 @@ export default {
           }.bind(this)
         )
         .catch(
-          function(err) {
+          function (err) {
             this.logs.unshift({
               title: this.$t("log.buildFailed"),
               ts: new Date().valueOf(),
@@ -671,7 +685,7 @@ export default {
             this.logsPanel = this.logsPanel.map((v) => v + 1);
             this.logsPanel.unshift(0);
             this.$nextTick(
-              function() {
+              function () {
                 this.$refs.logs.scrollIntoView();
               }.bind(this)
             );
@@ -747,9 +761,11 @@ export default {
     hint: 0,
     loading_backend: true,
     consts: {
+      je_modified: 0,
+      be_modified: 0,
       modOption: [
-        { text: "所有", value: "all" },
-        { value: "none", text: "无" },
+        {text: "所有", value: "all"},
+        {value: "none", text: "无"},
         {
           value: "custom",
           text: "自定义",
@@ -766,11 +782,11 @@ export default {
         collection: [],
       },
       versions: [
-        { text: "1.17+", value: 7 },
-        { text: "1.16.2 - 1.16.5", value: 6 },
-        { text: "1.15 - 1.16.1", value: 5 },
-        { text: "1.13 - 1.14.4", value: 4 },
-        { text: "1.11 - 1.12.2", value: 3 },
+        {text: "1.17+", value: 7},
+        {text: "1.16.2 - 1.16.5", value: 6},
+        {text: "1.15 - 1.16.1", value: 5},
+        {text: "1.13 - 1.14.4", value: 4},
+        {text: "1.11 - 1.12.2", value: 3},
       ],
     },
   }),
@@ -854,7 +870,7 @@ export default {
       localStorage.setItem(
         "memeDarkMode",
         window.matchMedia &&
-          window.matchMedia("(prefers-color-scheme: dark)").matches
+        window.matchMedia("(prefers-color-scheme: dark)").matches
           ? "true"
           : "false"
       );
@@ -912,79 +928,101 @@ export default {
   .v-dialog {
     box-shadow: none;
   }
+
   .v-menu__content {
     box-shadow: none;
+
     > .theme--light {
       background: #fafafa;
     }
   }
+
   .v-card {
     box-shadow: none;
+
     &.theme--light {
       background: #f8f9fa;
     }
   }
+
   .v-chip.theme--light {
     background: #efefef;
   }
+
   .primary {
     background-color: #4285f4 !important;
   }
+
   .v-btn--is-elevated {
     box-shadow: none;
   }
+
   .v-sheet.v-card {
     border-radius: 12px;
   }
+
   .v-app-bar.theme--light {
     background: #f8f9fa !important;
   }
+
   .v-alert.theme--light {
     background: #fafafa !important;
   }
+
   .info {
     &.theme--light {
       background-color: #4f90f7 !important;
     }
+
     &.theme--dark {
       background: #4285f4 !important;
     }
   }
+
   .v-btn:not(.v-btn--fab) {
     border-radius: 24px;
   }
+
   .v-expansion-panel {
     &::before {
       box-shadow: none;
     }
+
     border-radius: 12px;
   }
+
   .theme--light.v-expansion-panels .v-expansion-panel {
     background: #f8f9fa;
   }
+
   .v-expansion-panels > *:not(.v-expansion-panel--active) {
     border-radius: unset;
   }
+
   .v-expansion-panels:not(.v-expansion-panels--accordion):not(.v-expansion-panels--tile)
-    > .v-expansion-panel--active
-    + .v-expansion-panel,
+  > .v-expansion-panel--active
+  + .v-expansion-panel,
   .v-expansion-panels > *:first-child {
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
   }
+
   .v-expansion-panels:not(.v-expansion-panels--accordion):not(.v-expansion-panels--tile)
-    > .v-expansion-panel--next-active,
+  > .v-expansion-panel--next-active,
   .v-expansion-panels > *:last-child {
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
   }
+
   .v-expansion-panel--active {
     border-radius: 12px;
   }
+
   .v-snack__wrapper:not(.v-sheet--outlined) {
     box-shadow: none;
   }
 }
+
 .theme--light.v-btn.v-btn--icon {
   color: inherit;
 }
@@ -995,8 +1033,7 @@ export default {
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/firacode/v9/uU9eCBsR6Z2vfE9aq3bL0fxyUs4tcw4W_A9sJVD7MOzlojwUKQ.woff)
-    format("woff");
+  src: url(https://fonts.gstatic.com/s/firacode/v9/uU9eCBsR6Z2vfE9aq3bL0fxyUs4tcw4W_A9sJVD7MOzlojwUKQ.woff) format("woff");
 }
 
 /* latin */
@@ -1006,8 +1043,7 @@ export default {
   font-weight: 100;
   font-display: swap;
   src: local("Roboto Thin"), local("Roboto-Thin"),
-    url(https://fonts.gstatic.com/s/roboto/v20/KFOkCnqEu92Fr1MmgVxIIzIXKMny.woff2)
-      format("woff2");
+  url(https://fonts.gstatic.com/s/roboto/v20/KFOkCnqEu92Fr1MmgVxIIzIXKMny.woff2) format("woff2");
 }
 
 /* latin */
@@ -1017,8 +1053,7 @@ export default {
   font-weight: 300;
   font-display: swap;
   src: local("Roboto Light"), local("Roboto-Light"),
-    url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmSU5fBBc4AMP6lQ.woff2)
-      format("woff2");
+  url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmSU5fBBc4AMP6lQ.woff2) format("woff2");
 }
 
 /* latin */
@@ -1028,8 +1063,7 @@ export default {
   font-weight: 400;
   font-display: swap;
   src: local("Roboto"), local("Roboto-Regular"),
-    url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2)
-      format("woff2");
+  url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2) format("woff2");
 }
 
 /* latin */
@@ -1039,8 +1073,7 @@ export default {
   font-weight: 500;
   font-display: swap;
   src: local("Roboto Medium"), local("Roboto-Medium"),
-    url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmEU9fBBc4AMP6lQ.woff2)
-      format("woff2");
+  url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmEU9fBBc4AMP6lQ.woff2) format("woff2");
 }
 
 /* latin */
@@ -1050,8 +1083,7 @@ export default {
   font-weight: 700;
   font-display: swap;
   src: local("Roboto Bold"), local("Roboto-Bold"),
-    url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmWUlfBBc4AMP6lQ.woff2)
-      format("woff2");
+  url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmWUlfBBc4AMP6lQ.woff2) format("woff2");
 }
 
 /* latin */
@@ -1061,7 +1093,6 @@ export default {
   font-weight: 900;
   font-display: swap;
   src: local("Roboto Black"), local("Roboto-Black"),
-    url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmYUtfBBc4AMP6lQ.woff2)
-      format("woff2");
+  url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmYUtfBBc4AMP6lQ.woff2) format("woff2");
 }
 </style>

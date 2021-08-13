@@ -112,7 +112,7 @@
 
             <v-list-item-avatar color="transparent" size="80" tile>
               <v-img
-                src="https://avatars.githubusercontent.com/u/65127014"
+                src="https://static.wd-ljt.com/logo/full.png?x-oss-process=image/resize,h_128"
               ></v-img>
             </v-list-item-avatar>
           </v-list-item>
