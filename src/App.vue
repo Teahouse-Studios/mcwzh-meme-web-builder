@@ -20,7 +20,7 @@
                   <v-icon left>{{ svgPath.mdiDisc }}</v-icon>
                   {{ $t("appbar.discPack") }}
                 </v-btn>
-                <langMenu/>
+                <langMenu />
               </div>
             </template>
             <span>{{ !this.tab ? $t("java") : $t("bedrock") }}</span>
@@ -59,7 +59,7 @@
                   {{ $t("appbar.discPack") }}
                 </v-list-item-text>
               </v-list-item>
-              <langMenu/>
+              <langMenu />
               <div class="text-center">
                 （{{ !this.tab ? $t("java") : $t("bedrock") }}）
               </div>
@@ -82,9 +82,8 @@
               icon
               @click="$vuetify.theme.dark = !$vuetify.theme.dark"
             >
-              <v-icon v-if="$vuetify.theme.dark">{{
-                  svgPath.mdiBrightness7
-                }}
+              <v-icon v-if="$vuetify.theme.dark"
+                >{{ svgPath.mdiBrightness7 }}
               </v-icon>
               <v-icon v-else>{{ svgPath.mdiBrightness4 }}</v-icon>
             </v-btn>
@@ -195,6 +194,16 @@
                   </template>
                 </functional-selector>
               </v-col>
+              <v-col cols="12">
+                <v-checkbox
+                  v-model="input.je.compatible"
+                  :disabled="inputBasic.format === 3"
+                  :hint="inputBasic.format === 3 ? $t('form.compatible.disabled') : $t('form.compatible.hint')"
+                  :label="$t('form.compatible.label')"
+                  class="mt-n2 mb-3"
+                  persistent-hint
+                />
+              </v-col>
             </v-row>
           </v-tab-item>
           <v-tab-item>
@@ -245,9 +254,17 @@
               persistent-hint
             />
             <p class="text-body-2">
-              <i18n for="bedrock_hint.readme" path="bedrock_hint.text" tag="label">
-                <a href="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock" rel="nofollow noopener"
-                   target="_blank">{{ $t("bedrock_hint.readme") }}</a>
+              <i18n
+                for="bedrock_hint.readme"
+                path="bedrock_hint.text"
+                tag="label"
+              >
+                <a
+                  href="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock"
+                  rel="nofollow noopener"
+                  target="_blank"
+                  >{{ $t("bedrock_hint.readme") }}</a
+                >
               </i18n>
             </p>
           </v-tab-item>
@@ -258,7 +275,7 @@
           class="mt-3 mb-3 text-body-2"
           dense
           type="info"
-        >{{ $t("hints")[hint] }}
+          >{{ $t("hints")[hint] }}
         </v-alert>
         <div>
           <v-btn
@@ -270,10 +287,18 @@
             <v-icon left>{{ svgPath.mdiCloudDownload }}</v-icon>
             {{ $t("form.submit") }}
           </v-btn>
-          <p v-if="consts.be_modified && consts.je_modified" class="ml-2 caption"
-             style="display:inline-block;vertical-align: middle; margin: auto">
-            {{ $t('form.modified') }}
-            {{ new Date(tab === 0 ? consts.je_modified : consts.be_modified).toLocaleString($t("metadata.dateLocale".toString())) }}</p>
+          <p
+            v-if="consts.be_modified && consts.je_modified"
+            class="ml-2 caption"
+            style="display:inline-block;vertical-align: middle; margin: auto"
+          >
+            {{ $t("form.modified") }}
+            {{
+              new Date(
+                tab === 0 ? consts.je_modified : consts.be_modified
+              ).toLocaleString($t("metadata.dateLocale".toString()))
+            }}
+          </p>
         </div>
         <div v-if="logs.length >= 1">
           <v-divider style="margin:15px 0"></v-divider>
@@ -281,13 +306,17 @@
           <v-expansion-panels v-model="logsPanel" multiple>
             <v-expansion-panel v-for="(item, i) in logs" :key="i">
               <v-expansion-panel-header>
-                {{ new Date(Number(item.ts)).toLocaleString($t("metadata.dateLocale".toString())) }}
+                {{
+                  new Date(Number(item.ts)).toLocaleString(
+                    $t("metadata.dateLocale".toString())
+                  )
+                }}
                 {{ item.title }}
               </v-expansion-panel-header>
               <v-expansion-panel-content>
                 <pre
                   style="padding-bottom:15px;white-space: pre-wrap;font-family: 'Cascadia Code', 'Fira Code','Consolas', monospace;"
-                >{{ item.content }}</pre
+                  >{{ item.content }}</pre
                 >
                 <v-btn
                   v-if="item.filename"
@@ -331,11 +360,11 @@
           </v-expansion-panels>
         </div>
         <v-divider style="margin:15px 0"></v-divider>
-        <Sponsors/>
+        <Sponsors />
       </v-container>
-      <teahouse-footer/>
+      <teahouse-footer />
     </v-main>
-    <help ref="help"/>
+    <help ref="help" />
     <v-snackbar v-model="snackbarBuildSucceeded">
       {{ $t("snackbar.buildSucceeded") }}
       <template v-slot:action="{ attrs }">
@@ -398,9 +427,8 @@
     </v-snackbar>
     <v-dialog v-model="dialogFetchListFailed" persistent width="500">
       <v-card>
-        <v-card-title class="headline">{{
-            $t("dialog.fetchListFailed.headline")
-          }}
+        <v-card-title class="headline"
+          >{{ $t("dialog.fetchListFailed.headline") }}
         </v-card-title>
         <v-card-text>
           {{ $t("dialog.fetchListFailed.text") }}
@@ -430,13 +458,13 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <news/>
-    <webview/>
+    <news />
+    <webview />
   </v-app>
 </template>
 <script lang="ts">
-import './app.scss'
-import axios, {AxiosResponse} from "axios";
+import "./app.scss";
+import axios, { AxiosResponse } from "axios";
 import functionalSelector from "@/components/functionalSelector.vue";
 import help from "./components/help.vue";
 import langMenu from "./components/langMenu.vue";
@@ -463,15 +491,15 @@ import footer from "./components/footer.vue";
 import allowGa, { gtag } from "@/allowGa";
 import sponsors from "./components/sponsors.vue";
 import webview from "./components/webview.vue";
-import news from './components/news.vue'
-import Vue from 'vue'
-import {ICollection, ILog, IResource, IResp} from "@/types";
+import news from "./components/news.vue";
+import Vue from "vue";
+import { ICollection, ILog, IReq, IResource, IResp } from "@/types";
 
 export default Vue.extend({
   methods: {
     share(item: ILog) {
       let p = new URLSearchParams();
-      const type = item.isBe ? "be" : "je"
+      const type = item.isBe ? "be" : "je";
       p.set("type", type);
       p.set("ver", "1");
       p.set("input", JSON.stringify(this.input[type]));
@@ -493,34 +521,28 @@ export default Vue.extend({
     },
     sendHelpTrack(label: string) {
       allowGa() &&
-      gtag?.("event", "help", {
-        eventCategory: label,
-      });
+        gtag?.("event", "help", {
+          eventCategory: label,
+        });
     },
-    trackShare(item: {
-      filename: string
-      isBe: boolean
-    }) {
+    trackShare(item: { filename: string; isBe: boolean }) {
       allowGa() &&
-      gtag?.("event", "share", {
-        eventLabel: item.filename,
-        eventType: item.isBe ? "be" : "je",
-      });
+        gtag?.("event", "share", {
+          eventLabel: item.filename,
+          eventType: item.isBe ? "be" : "je",
+        });
     },
-    trackBuild(item: {
-      filename: string
-      isBe: boolean
-    }) {
+    trackBuild(item: { filename: string; isBe: boolean }) {
       allowGa() &&
-      gtag?.("event", "download", {
-        eventLabel: item.filename,
-        eventType: item.isBe ? "be" : "je",
-      });
+        gtag?.("event", "download", {
+          eventLabel: item.filename,
+          eventType: item.isBe ? "be" : "je",
+        });
     },
     collectionDesc(item: ICollection) {
       return `(${this.$t("form.collections.description_prefix")}${
         item["contains"].length
-      }${this.$t("form.collections.resource_suffix")})`
+      }${this.$t("form.collections.resource_suffix")})`;
     },
     open(name: string) {
       window.open(name);
@@ -539,11 +561,11 @@ export default Vue.extend({
       this.consts = {
         ...this.consts,
         // @ts-ignore
-        modList: [{header: this.$t("form.mod.header").toString()}]
-        // @ts-ignore
+        modList: [{ header: this.$t("form.mod.header").toString() }]
+          // @ts-ignore
           .concat(backend.mods)
-          .concat({header: this.$t("form.mod.enHeader").toString()})
-        // @ts-ignore
+          .concat({ header: this.$t("form.mod.enHeader").toString() })
+          // @ts-ignore
           .concat(backend.enmods),
         je_modules: backend.je_modules,
         be_modules: backend.be_modules,
@@ -573,17 +595,24 @@ export default Vue.extend({
         this.inputBasic = _inputBasic;
       }
 
-      this.consts.be_modified = backend.be_modified
-      this.consts.je_modified = backend.je_modified
+      this.consts.be_modified = backend.be_modified;
+      this.consts.je_modified = backend.je_modified;
     },
     async submit() {
       this.loading = true;
 
       const inputBase = this.whetherUseBE ? this.input.be : this.input.je;
-      let data = Object.assign(
-        {},
-        this.inputBasic,
+
+      let packType: "normal" | "legacy" | "compat" = "normal";
+      if (this.inputBasic.format === 3) {
+        packType = "legacy";
+      } else if (this.input.je.compatible) {
+        packType = "compat";
+      }
+
+      let data: IReq = Object.assign(
         {
+          format: this.inputBasic.format,
           _be: this.whetherUseBE,
           modules: {
             language: inputBase.language,
@@ -597,7 +626,7 @@ export default Vue.extend({
               ? this.input.je.mod
               : [],
           hash: true,
-          type: this.inputBasic.format === 3 ? "legacy" : "normal",
+          type: packType,
         },
         this.whetherUseBE && {
           type: this.input.be.extType,
@@ -605,48 +634,45 @@ export default Vue.extend({
         }
       );
       console.log(data);
-      allowGa() && gtag?.("event", "build", {
-        eventType: this.whetherUseBE ? "be" : "je",
-      });
-      const that = this
-      axios({url: "/ajax", baseURL: this.$api, method: "POST", data})
-        .then(
-          res => {
-            console.log(res.data);
-            that.logs.unshift({
-              title: that.$t("log.buildSucceeded") as string,
-              ts: new Date().valueOf(),
-              content: res.data.logs,
-              filename: res.data.filename,
-              github: that.links.github,
-              isBe: that.whetherUseBE,
-            });
-            that.logsPanel = that.logsPanel.map((v) => v + 1);
-            that.logsPanel.unshift(0);
-            that.$nextTick(() => {
-              (that.$refs.logs as Element).scrollIntoView()
-            });
-            
-            that.snackbarBuildSucceeded = true;
-            that.loading = false;
-          }
-        )
-        .catch(
-          err => {
-            that.logs.unshift({
-              title: that.$t("log.buildFailed") as string,
-              ts: new Date().valueOf(),
-              content: err.toString(),
-            });
-            that.logsPanel = that.logsPanel.map((v) => v + 1);
-            that.logsPanel.unshift(0);
-            that.$nextTick(() => {
-              (that.$refs.logs as Element).scrollIntoView()
-            });
-            that.snackbarBuildFailed = true;
-            that.loading = false;
-          }
-        );
+      allowGa() &&
+        gtag?.("event", "build", {
+          eventType: this.whetherUseBE ? "be" : "je",
+        });
+      const that = this;
+      axios({ url: "/ajax", baseURL: this.$api, method: "POST", data })
+        .then((res) => {
+          console.log(res.data);
+          that.logs.unshift({
+            title: that.$t("log.buildSucceeded") as string,
+            ts: new Date().valueOf(),
+            content: res.data.logs,
+            filename: res.data.filename,
+            github: that.links.github,
+            isBe: that.whetherUseBE,
+          });
+          that.logsPanel = that.logsPanel.map((v) => v + 1);
+          that.logsPanel.unshift(0);
+          that.$nextTick(() => {
+            (that.$refs.logs as Element).scrollIntoView();
+          });
+
+          that.snackbarBuildSucceeded = true;
+          that.loading = false;
+        })
+        .catch((err) => {
+          that.logs.unshift({
+            title: that.$t("log.buildFailed") as string,
+            ts: new Date().valueOf(),
+            content: err.toString(),
+          });
+          that.logsPanel = that.logsPanel.map((v) => v + 1);
+          that.logsPanel.unshift(0);
+          that.$nextTick(() => {
+            (that.$refs.logs as Element).scrollIntoView();
+          });
+          that.snackbarBuildFailed = true;
+          that.loading = false;
+        });
     },
   },
   components: {
@@ -656,7 +682,7 @@ export default Vue.extend({
     langMenu,
     "teahouse-footer": footer,
     webview,
-    news
+    news,
   },
   data: () => ({
     you: false,
@@ -703,6 +729,7 @@ export default Vue.extend({
       },
       je: {
         modOption: "all",
+        compatible: false,
         mod: [] as string[],
         resource: [] as string[],
         language: [] as string[],
@@ -715,8 +742,8 @@ export default Vue.extend({
       je_modified: 0,
       be_modified: 0,
       modOption: [
-        {text: "所有", value: "all"},
-        {value: "none", text: "无"},
+        { text: "所有", value: "all" },
+        { value: "none", text: "无" },
         {
           value: "custom",
           text: "自定义",
@@ -724,12 +751,12 @@ export default Vue.extend({
       ],
       beExtType: ["mcpack", "zip"],
       modList: [] as {
-  text: string | number | object,
-  value: string | number | object,
-  disabled: boolean,
-  divider: boolean,
-  header: string
-}[],
+        text: string | number | object;
+        value: string | number | object;
+        disabled: boolean;
+        divider: boolean;
+        header: string;
+      }[],
       je_modules: {
         resource: [] as IResource[],
         collection: [] as ICollection[],
@@ -739,11 +766,11 @@ export default Vue.extend({
         collection: [] as ICollection[],
       },
       versions: [
-        {text: "1.17+", value: 7},
-        {text: "1.16.2 - 1.16.5", value: 6},
-        {text: "1.15 - 1.16.1", value: 5},
-        {text: "1.13 - 1.14.4", value: 4},
-        {text: "1.11 - 1.12.2", value: 3},
+        { text: "1.17+", value: 7 },
+        { text: "1.16.2 - 1.16.5", value: 6 },
+        { text: "1.15 - 1.16.1", value: 5 },
+        { text: "1.13 - 1.14.4", value: 4 },
+        { text: "1.11 - 1.12.2", value: 3 },
       ],
     },
   }),
@@ -767,7 +794,7 @@ export default Vue.extend({
     },
     fixedItems(): {
       resource: string[];
-      language: string[]
+      language: string[];
     } {
       // @ts-ignore
       const base = this.whetherUseBE
@@ -816,25 +843,35 @@ export default Vue.extend({
     you(val) {
       localStorage.setItem("memeYou", val);
     },
+    "inputBasic.format"(val) {
+      if (val === 3) {
+        this.input.je.compatible = true
+      }
+    }
   },
   created() {
-
     if (
       localStorage.getItem("memeYou") !== "true" &&
       localStorage.getItem("memeYou") !== "false"
     ) {
-      localStorage.setItem("memeYou", (Math.round(Math.random()) ? true : false).toString()); // A/B testing
+      localStorage.setItem(
+        "memeYou",
+        (Math.round(Math.random()) ? true : false).toString()
+      ); // A/B testing
     }
     if (localStorage.getItem("memeInitialized") !== "true") {
       localStorage.setItem(
         "memeDarkMode",
         window.matchMedia &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches
+          window.matchMedia("(prefers-color-scheme: dark)").matches
           ? "true"
           : "false"
       );
       localStorage.setItem("memeNewsIgnored", "0");
-      localStorage.setItem("memeYou", (Math.round(Math.random()) ? true : false).toString());
+      localStorage.setItem(
+        "memeYou",
+        (Math.round(Math.random()) ? true : false).toString()
+      );
     }
     this.$vuetify.theme.dark = localStorage.getItem("memeDarkMode") === "true";
     let memeLang = localStorage.getItem("memeLang");

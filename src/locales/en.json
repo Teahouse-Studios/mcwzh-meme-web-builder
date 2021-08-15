@@ -43,7 +43,8 @@
     },
     "compatible": {
       "hint": "Make the pack compatible with langauge files in other packs. This option will overwrite Memified Chinese onto Simplified Chinese, thus you only need to select \"Simplified Chinese\" in the language menu. Learn more at README.md.",
-      "label": "Compatible option"
+      "label": "Compatible option",
+      "disabled": "You are playing game version older than 1.13, thus this is forced to set to on."
     },
     "submit": "Submit build options",
     "selectAll": "Select all",
