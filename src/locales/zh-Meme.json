@@ -59,7 +59,12 @@
     },
     "incompatible_prefix": "（与",
     "incompatible_suffix": "不兼容）",
-    "modified": "最后更新时间: "
+    "modified": "最后更新时间: ",
+    "modOption": {
+      "all": "所有",
+      "none": "无",
+      "custom": "自定义"
+    }
   },
   "hints": [
     "若您不知道如何构建，点击下方按钮来直接生草。",
