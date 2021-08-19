@@ -38,7 +38,7 @@
       "enHeader": "Mod文件（懒得汉化）"
     },
     "beExtType": {
-      "hint": "选择您需要的附加包后缀。",
+      "hint": "选择您需要的附加包后缀。（其实可以自己改的。）",
       "label": "后缀"
     },
     "compatible": {
