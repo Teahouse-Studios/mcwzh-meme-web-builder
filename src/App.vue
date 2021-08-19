@@ -163,7 +163,7 @@
                 <v-select
                   v-model="input.je.modOption"
                   :hint="$t('form.mod.option.hint')"
-                  :items="consts.modOption"
+                  :items="modOption"
                   :label="$t('form.mod.option.label')"
                   :outlined="you"
                   persistent-hint
@@ -741,14 +741,6 @@ export default Vue.extend({
     consts: {
       je_modified: 0,
       be_modified: 0,
-      modOption: [
-        { text: "所有", value: "all" },
-        { value: "none", text: "无" },
-        {
-          value: "custom",
-          text: "自定义",
-        },
-      ],
       beExtType: ["mcpack", "zip"],
       modList: [] as {
         text: string | number | object;
@@ -789,6 +781,16 @@ export default Vue.extend({
       .then((response) => (this.alerts = response.data));
   },
   computed: {
+    modOption(): Record<string, string>[] {
+      return [
+        { text: this.$t("form.modOption.all").toString(), value: "all" },
+        { value: "none", text: "无" },
+        {
+          value: "custom",
+          text: "自定义",
+        },
+      ]
+    },
     whetherUseBE(): boolean {
       return this.tab === 1;
     },

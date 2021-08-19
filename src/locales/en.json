@@ -59,7 +59,12 @@
     },
     "incompatible_prefix": "(incompatible with ",
     "incompatible_suffix": ")",
-    "modified": "Last Modified at"
+    "modified": "Last Modified at",
+    "modOption": {
+      "all": "All",
+      "none": "None",
+      "custom": "Custom"
+    }
   },
   "hints": [
     "Don't know how to choose those options? Just click the button below.",
