@@ -25,5 +25,15 @@ module.exports = {
       localeDir: 'locales',
       enableInSFC: false
     }
+  },
+  pages: {
+    index: {
+      entry: 'src/main.ts',
+      template: 'public/index.html',
+      filename: 'index.html',
+      title: '梗体中文 · 在线构建',
+      chunks: ['chunk-vendors', 'chunk-common', 'index']
+    },
+    interactive: 'src/interactive/main.ts'
   }
 }
