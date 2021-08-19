@@ -42,7 +42,7 @@
       "label": "File format"
     },
     "compatible": {
-      "hint": "Make the pack compatible with langauge files in other packs. This option will overwrite Memified Chinese onto Simplified Chinese, thus you only need to select \"Simplified Chinese\" in the language menu. Learn more at README.md.",
+      "hint": "Make the pack compatible with language files in other packs. This option will overwrite Memified Chinese onto Simplified Chinese, thus you only need to select \"Simplified Chinese\" in the language menu. Learn more at README.md.",
       "label": "Compatible option",
       "disabled": "You are playing game version older than 1.13, thus this is forced to set to on."
     },
@@ -85,7 +85,7 @@
       "headline": "Brought to you by SPGoding",
       "subtitle": "SPGoding is a Mojira mod and MCBBS artist, known for his VSCode extension SpyGlass. They kindly gave us 7 days of MCBBS ad.",
       "mcbbs": "MCBBS profile",
-      "dhp": "Introdution of SpyGlass"
+      "dhp": "Introduction of SpyGlass"
     },
     "qiuxi": {
       "headline": "Brought to you by 是秋夕呀mua",
@@ -122,7 +122,7 @@
       "headline": "Error",
       "text": "An error occurred while requesting module list to the server.",
       "retry": "Retry",
-      "feedback": "Sumit feedback",
+      "feedback": "Submit feedback",
       "ignore": "Ignore"
     },
     "help": {
@@ -138,10 +138,10 @@
       "needToKnow": "You are acknowledged that:",
       "needToKnowList": {
         "1": "According to the license, the developers don't have to address every single issue.",
-        "2": "Please make sure that your issued haven't been submitted by someone else",
+        "2": "Please make sure that your issues haven't been submitted by someone else.",
         "3": "Please use Mandarin Chinese or English.",
         "4": "Too many spam issues may cause you to be banned.",
-        "5": "Submit issues in the accordingly project. Especially, do not submite in-game content or problem to \"Web Builder\", it is only for failed builds or problems with the web interface."
+        "5": "Submit issues in the accordingly project. Especially, do not submit in-game content or problem to \"Web Builder\", it is only for failed builds or problems with the web interface."
       },
       "ready": "All right! Ready for submitting?",
       "webBuilder": "Web Builder",
