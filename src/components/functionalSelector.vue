@@ -20,6 +20,9 @@
       (+ {{ combinedItems.length - 1 }} {{ $t("form.item") }})
     </span>
     </template>
+    <template v-slot:prepend>
+      <slot name="prepend"></slot>
+    </template>
     <template v-slot:prepend-item>
       <v-list-item ripple @click="toggleResource">
         <v-list-item-action>
