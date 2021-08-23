@@ -64,6 +64,19 @@
       "all": "All",
       "none": "None",
       "custom": "Custom"
+    },
+    "child": {
+      "label": "Child Mode",
+      "ticks": [
+        "12+",
+        "16+",
+        "18+"
+      ],
+      "hints": [
+        "For children with immature mentality. Extra protected and censored. Recommended for streaming and recording.",
+        "For teenagers. Only political and especially suggestive contents are censored. Suitable for streaming and recording.",
+        "For fully grown adult minds. NO censoring at all. We DO NOT recommended this for streaming and recording."
+      ]
     }
   },
   "hints": [

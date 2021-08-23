@@ -123,7 +123,11 @@
                   :label="$t('form.version.label')"
                   :outlined="you"
                   persistent-hint
-                />
+                >
+                  <template #prepend>
+                    <v-icon>{{ svgPath.mdiClock }}</v-icon>
+                  </template>
+                </v-select>
               </v-col>
               <v-col cols="12" sm="4">
                 <functional-selector
@@ -141,7 +145,11 @@
                   :outlined="you"
                   help="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack/wiki/%E6%A2%97%E4%BD%93%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9%E5%88%97%E8%A1%A8"
                   @help="sendHelpTrack('je_resource')"
-                />
+                >
+                  <template #prepend>
+                    <v-icon>{{ svgPath.mdiArchive }}</v-icon>
+                  </template>
+                </functional-selector>
               </v-col>
               <v-col cols="12" sm="4">
                 <functional-selector
@@ -157,7 +165,11 @@
                   :label="$t('form.language.label')"
                   :loading="loading_backend"
                   :outlined="you"
-                ></functional-selector>
+                >
+                  <template #prepend>
+                    <v-icon>{{ svgPath.mdiCog }}</v-icon>
+                  </template>
+                </functional-selector>
               </v-col>
               <v-col cols="6" sm="6">
                 <v-select
@@ -167,7 +179,11 @@
                   :label="$t('form.mod.option.label')"
                   :outlined="you"
                   persistent-hint
-                />
+                >
+                  <template #prepend>
+                    <v-icon>{{ svgPath.mdiViewModule }}</v-icon>
+                  </template>
+                </v-select>
               </v-col>
               <v-col cols="6" sm="6">
                 <v-select
@@ -179,7 +195,11 @@
                   :outlined="you"
                   multiple
                   persistent-hint
-                ></v-select>
+                >
+                  <template #prepend>
+                    <v-icon>{{ svgPath.mdiSelectGroup }}</v-icon>
+                  </template>
+                </v-select>
               </v-col>
               <v-col cols="12">
                 <functional-selector
@@ -192,17 +212,41 @@
                   <template v-slot:before-author="data">
                     {{ collectionDesc(data.item) }}
                   </template>
+                  <template #prepend>
+                    <v-icon>{{ svgPath.mdiGroup }}</v-icon>
+                  </template>
                 </functional-selector>
               </v-col>
               <v-col cols="12">
                 <v-checkbox
                   v-model="input.je.compatible"
                   :disabled="inputBasic.format === 3"
-                  :hint="inputBasic.format === 3 ? $t('form.compatible.disabled') : $t('form.compatible.hint')"
+                  :hint="
+                    inputBasic.format === 3
+                      ? $t('form.compatible.disabled')
+                      : $t('form.compatible.hint')
+                  "
                   :label="$t('form.compatible.label')"
-                  class="mt-n2 mb-3"
+                  class="mt-n2"
                   persistent-hint
                 />
+              </v-col>
+              <v-col cols="12">
+                <v-slider
+                  v-model="input.je.child"
+                  :tick-labels="$t('form.child.ticks')"
+                  :max="2"
+                  :label="$t('form.child.label')"
+                  step="1"
+                  ticks="always"
+                  tick-size="3"
+                  :hint="$t('form.child.hints')[input.je.child]"
+                  persistent-hint
+                >
+                  <template #prepend>
+                    <v-icon>{{ svgPath.mdiAccountChildCircle }}</v-icon>
+                  </template>
+                </v-slider>
               </v-col>
             </v-row>
           </v-tab-item>
@@ -216,7 +260,11 @@
                   :label="$t('form.beExtType.label')"
                   :outlined="you"
                   persistent-hint
-                />
+                >
+                  <template #prepend>
+                    <v-icon>{{ svgPath.mdiFolderInformation }}</v-icon>
+                  </template>
+                </v-select>
               </v-col>
               <v-col cols="6" sm="6">
                 <functional-selector
@@ -230,7 +278,11 @@
                   :outlined="you"
                   help="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock/wiki/%E6%A2%97%E4%BD%93%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9%E5%88%97%E8%A1%A8"
                   @help="sendHelpTrack('be_resource')"
-                />
+                >
+                  <template #prepend>
+                    <v-icon>{{ svgPath.mdiArchive }}</v-icon>
+                  </template>
+                </functional-selector>
               </v-col>
               <v-col cols="12">
                 <functional-selector
@@ -243,16 +295,38 @@
                   <template v-slot:before-author="data">
                     {{ collectionDesc(data.item) }}
                   </template>
+                  <template #prepend>
+                    <v-icon>{{ svgPath.mdiGroup }}</v-icon>
+                  </template>
                 </functional-selector>
               </v-col>
+              <v-col cols="12">
+                <v-checkbox
+                  v-model="input.be.compatible"
+                  :hint="$t('form.compatible.hint')"
+                  :label="$t('form.compatible.label')"
+                  persistent-hint
+                />
+              </v-col>
+              <v-col cols="12">
+                <v-slider
+                  v-model="input.be.child"
+                  :tick-labels="$t('form.child.ticks')"
+                  :max="2"
+                  :label="$t('form.child.label')"
+                  step="1"
+                  ticks="always"
+                  tick-size="3"
+                  :hint="$t('form.child.hints')[input.be.child]"
+                  persistent-hint
+                  class="mb-3"
+                >
+                  <template #prepend>
+                    <v-icon>{{ svgPath.mdiAccountChildCircle }}</v-icon>
+                  </template>
+                </v-slider>
+              </v-col>
             </v-row>
-            <v-checkbox
-              v-model="input.be.compatible"
-              :hint="$t('form.compatible.hint')"
-              :label="$t('form.compatible.label')"
-              class="mb-3"
-              persistent-hint
-            />
             <p class="text-body-2">
               <i18n
                 for="bedrock_hint.readme"
@@ -470,6 +544,7 @@ import help from "./components/help.vue";
 import langMenu from "./components/langMenu.vue";
 import {
   mdiAbTesting,
+  mdiClock,
   mdiArrowRight,
   mdiBrightness4,
   mdiBrightness7,
@@ -486,6 +561,13 @@ import {
   mdiPlus,
   mdiPost,
   mdiShareVariant,
+  mdiArchive,
+  mdiCog,
+  mdiViewModule,
+  mdiSelectGroup,
+  mdiGroup,
+  mdiFolderInformation,
+  mdiAccountChildCircle,
 } from "@mdi/js";
 import footer from "./components/footer.vue";
 import allowGa, { gtag } from "@/allowGa";
@@ -711,6 +793,14 @@ export default Vue.extend({
       mdiDotsHorizontal,
       mdiEarth,
       mdiPlus,
+      mdiClock,
+      mdiArchive,
+      mdiCog,
+      mdiViewModule,
+      mdiSelectGroup,
+      mdiGroup,
+      mdiFolderInformation,
+      mdiAccountChildCircle,
     },
     tab: 0 as 0 | 1,
     logsPanel: [] as number[],
@@ -726,6 +816,7 @@ export default Vue.extend({
         resource: [] as string[],
         language: [] as string[],
         collection: [] as string[],
+        child: 0,
       },
       je: {
         modOption: "all",
@@ -734,6 +825,7 @@ export default Vue.extend({
         resource: [] as string[],
         language: [] as string[],
         collection: [] as string[],
+        child: 1,
       },
     },
     hint: 0,
@@ -789,7 +881,7 @@ export default Vue.extend({
           value: "custom",
           text: "自定义",
         },
-      ]
+      ];
     },
     whetherUseBE(): boolean {
       return this.tab === 1;
@@ -802,6 +894,18 @@ export default Vue.extend({
       const base = this.whetherUseBE
         ? this.consts.be_modules
         : this.consts.je_modules;
+      const childBase = this.whetherUseBE
+        ? this.input.be.child
+        : this.input.je.child;
+      let child: string[] = [];
+      switch (childBase) {
+        case 0: // 13+
+          child = ["lang_sfc", "lang_sfw"];
+          break;
+        case 1: // 16+
+          child = ["lang_sfw"];
+          break;
+      }
       let items = base.collection.filter((v) =>
         // @ts-ignore
         this.input[this.whetherUseBE ? "be" : "je"].collection.includes(v.name)
@@ -812,9 +916,11 @@ export default Vue.extend({
           (v) =>
             !base.resource.find((r) => r.name === v)!.name.startsWith("lang_")
         ),
-        language: data.filter((v) =>
-          base.resource.find((r) => r.name === v)!.name.startsWith("lang_")
-        ),
+        language: data
+          .filter((v) =>
+            base.resource.find((r) => r.name === v)!.name.startsWith("lang_")
+          )
+          .concat(child),
       };
     },
     links(): {
@@ -847,9 +953,89 @@ export default Vue.extend({
     },
     "inputBasic.format"(val) {
       if (val === 3) {
-        this.input.je.compatible = true
+        this.input.je.compatible = true;
       }
-    }
+    },
+    "input.je.child"(val) {
+      const allModules = Array.prototype.concat(
+        this.fixedItems.resource,
+        this.fixedItems.language,
+        this.input.je.resource,
+        this.input.je.language
+      );
+      switch (val) {
+        case 0: // 13+
+          if (!allModules.includes("lang_sfw")) {
+            this.input.je.language.push("lang_sfw");
+          }
+          if (!allModules.includes("lang_sfc")) {
+            this.input.je.language.push("lang_sfc");
+          }
+          break;
+        case 1: // 16+
+          if (!allModules.includes("lang_sfw")) {
+            this.input.je.language.push("lang_sfw");
+          }
+          if (allModules.includes("lang_sfc")) {
+            this.input.je.language = this.input.je.language.filter(
+              (item) => item !== "lang_sfc"
+            );
+          }
+          break;
+        case 2: // 18+
+          if (allModules.includes("lang_sfw")) {
+            this.input.je.language = this.input.je.language.filter(
+              (item) => item !== "lang_sfw"
+            );
+          }
+          if (allModules.includes("lang_sfc")) {
+            this.input.je.language = this.input.je.language.filter(
+              (item) => item !== "lang_sfc"
+            );
+          }
+          break;
+      }
+    },
+    "input.be.child"(val) {
+      const allModules = Array.prototype.concat(
+        this.fixedItems.resource,
+        this.fixedItems.language,
+        this.input.be.resource,
+        this.input.be.language
+      );
+      switch (val) {
+        case 0: // 13+
+          if (!allModules.includes("lang_sfw")) {
+            this.input.be.language.push("lang_sfw");
+          }
+          if (!allModules.includes("lang_sfc")) {
+            this.input.be.language.push("lang_sfc");
+          }
+          break;
+        case 1: // 16+
+          if (!allModules.includes("lang_sfw")) {
+            this.input.be.language.push("lang_sfw");
+          }
+          if (allModules.includes("lang_sfc")) {
+            this.input.be.language = this.input.be.language.filter(
+              (item) => item !== "lang_sfc"
+            );
+          }
+          break;
+        case 2: // 18+
+          if (allModules.includes("lang_sfw")) {
+            this.input.be.language = this.input.be.language.filter(
+              (item) => item !== "lang_sfw"
+            );
+          }
+          if (allModules.includes("lang_sfc")) {
+            this.input.be.language = this.input.be.language.filter(
+              (item) => item !== "lang_sfc"
+            );
+          }
+          break;
+      }
+    },
   },
   created() {
     if (
