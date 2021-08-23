@@ -912,10 +912,12 @@ export default Vue.extend({
       );
       const data = items.map((v) => v["contains"]).flat();
       return {
-        resource: data.filter(
-          (v) =>
-            !base.resource.find((r) => r.name === v)!.name.startsWith("lang_")
-        ),
+        resource: data
+          .filter(
+            (v) =>
+              !base.resource.find((r) => r.name === v)!.name.startsWith("lang_")
+          )
+          .concat(child),
         language: data
           .filter((v) =>
             base.resource.find((r) => r.name === v)!.name.startsWith("lang_")
@@ -1001,35 +1003,35 @@ export default Vue.extend({
         this.fixedItems.resource,
         this.fixedItems.language,
         this.input.be.resource,
-        this.input.be.language
+        this.input.be.resource
       );
       switch (val) {
         case 0: // 13+
           if (!allModules.includes("lang_sfw")) {
-            this.input.be.language.push("lang_sfw");
+            this.input.be.resource.push("lang_sfw");
           }
           if (!allModules.includes("lang_sfc")) {
-            this.input.be.language.push("lang_sfc");
+            this.input.be.resource.push("lang_sfc");
           }
           break;
         case 1: // 16+
           if (!allModules.includes("lang_sfw")) {
-            this.input.be.language.push("lang_sfw");
+            this.input.be.resource.push("lang_sfw");
           }
           if (allModules.includes("lang_sfc")) {
-            this.input.be.language = this.input.be.language.filter(
+            this.input.be.resource = this.input.be.resource.filter(
               (item) => item !== "lang_sfc"
             );
           }
           break;
         case 2: // 18+
           if (allModules.includes("lang_sfw")) {
-            this.input.be.language = this.input.be.language.filter(
+            this.input.be.resource = this.input.be.resource.filter(
               (item) => item !== "lang_sfw"
             );
           }
           if (allModules.includes("lang_sfc")) {
-            this.input.be.language = this.input.be.language.filter(
+            this.input.be.resource = this.input.be.resource.filter(
               (item) => item !== "lang_sfc"
             );
           }
