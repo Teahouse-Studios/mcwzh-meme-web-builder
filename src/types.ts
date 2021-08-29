@@ -39,7 +39,6 @@ export interface IReq {
   _be: boolean;
   format?: number;
   modules: {
-    language: string[];
     resource: string[];
     collection: string[];
   };

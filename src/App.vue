@@ -692,13 +692,47 @@ export default Vue.extend({
         packType = "compat";
       }
 
+      let resource: string[] = inputBase.resource.concat(inputBase.language)
+
+      switch (inputBase.child) {
+        case 0: // 13+
+          if (!resource.includes("lang_sfw")) {
+            resource.push("lang_sfw");
+          }
+          if (!resource.includes("lang_sfc")) {
+            resource.push("lang_sfc");
+          }
+          break;
+        case 1: // 16+
+          if (!resource.includes("lang_sfw")) {
+            resource.push("lang_sfw");
+          }
+          if (resource.includes("lang_sfc")) {
+            resource = resource.filter(
+              (item) => item !== "lang_sfc"
+            );
+          }
+          break;
+        case 2: // 18+
+          if (resource.includes("lang_sfw")) {
+            resource = resource.filter(
+              (item) => item !== "lang_sfw"
+            );
+          }
+          if (resource.includes("lang_sfc")) {
+            resource = resource.filter(
+              (item) => item !== "lang_sfc"
+            );
+          }
+          break;
+      }
+
       let data: IReq = Object.assign(
         {
           format: this.inputBasic.format,
           _be: this.whetherUseBE,
           modules: {
-            language: inputBase.language,
-            resource: inputBase.resource,
+            resource: resource,
             collection: inputBase.collection,
           },
           mod:
@@ -956,86 +990,6 @@ export default Vue.extend({
     "inputBasic.format"(val) {
       if (val === 3) {
         this.input.je.compatible = true;
-      }
-    },
-    "input.je.child"(val) {
-      const allModules = Array.prototype.concat(
-        this.fixedItems.resource,
-        this.fixedItems.language,
-        this.input.je.resource,
-        this.input.je.language
-      );
-      switch (val) {
-        case 0: // 13+
-          if (!allModules.includes("lang_sfw")) {
-            this.input.je.language.push("lang_sfw");
-          }
-          if (!allModules.includes("lang_sfc")) {
-            this.input.je.language.push("lang_sfc");
-          }
-          break;
-        case 1: // 16+
-          if (!allModules.includes("lang_sfw")) {
-            this.input.je.language.push("lang_sfw");
-          }
-          if (allModules.includes("lang_sfc")) {
-            this.input.je.language = this.input.je.language.filter(
-              (item) => item !== "lang_sfc"
-            );
-          }
-          break;
-        case 2: // 18+
-          if (allModules.includes("lang_sfw")) {
-            this.input.je.language = this.input.je.language.filter(
-              (item) => item !== "lang_sfw"
-            );
-          }
-          if (allModules.includes("lang_sfc")) {
-            this.input.je.language = this.input.je.language.filter(
-              (item) => item !== "lang_sfc"
-            );
-          }
-          break;
-      }
-    },
-    "input.be.child"(val) {
-      const allModules = Array.prototype.concat(
-        this.fixedItems.resource,
-        this.fixedItems.language,
-        this.input.be.resource,
-        this.input.be.resource
-      );
-      switch (val) {
-        case 0: // 13+
-          if (!allModules.includes("lang_sfw")) {
-            this.input.be.resource.push("lang_sfw");
-          }
-          if (!allModules.includes("lang_sfc")) {
-            this.input.be.resource.push("lang_sfc");
-          }
-          break;
-        case 1: // 16+
-          if (!allModules.includes("lang_sfw")) {
-            this.input.be.resource.push("lang_sfw");
-          }
-          if (allModules.includes("lang_sfc")) {
-            this.input.be.resource = this.input.be.resource.filter(
-              (item) => item !== "lang_sfc"
-            );
-          }
-          break;
-        case 2: // 18+
-          if (allModules.includes("lang_sfw")) {
-            this.input.be.resource = this.input.be.resource.filter(
-              (item) => item !== "lang_sfw"
-            );
-          }
-          if (allModules.includes("lang_sfc")) {
-            this.input.be.resource = this.input.be.resource.filter(
-              (item) => item !== "lang_sfc"
-            );
-          }
-          break;
       }
     },
   },
