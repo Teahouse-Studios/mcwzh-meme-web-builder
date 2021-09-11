@@ -30,7 +30,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 Vue.config.productionTip = false
-Vue.prototype.$api = process.env.NODE_ENV === 'production' ? 'https://meme-ts.wd-api.com/' : 'http://127.0.0.1:8000/'
 if (process.env.NODE_ENV === 'development') {
   Vue.config.devtools = true
 }

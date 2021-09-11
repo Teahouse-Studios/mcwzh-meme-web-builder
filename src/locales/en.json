@@ -10,7 +10,8 @@
     "github": "GitHub",
     "discPack": "Disc Pack",
     "nightModeSwitch": "Day/Night Mode",
-    "superSecretSetting": "Super Secret Settings"
+    "superSecretSetting": "Super Secret Settings",
+    "endpointSetting": "Switch server"
   },
   "form": {
     "version": {
@@ -82,7 +83,8 @@
   "hints": [
     "Don't know how to choose those options? Just click the button below.",
     "If you need the links to MCBBS/GitHub/Disc pack for Bedrock, you can click the Bedrock tab before clicking the buttons.",
-    "We are switching to a new build server. You can report issues to us by clicking the ¿ on the right corner.",
+    "You can report issues to us by clicking the ¿ on the right corner.",
+    "We are switching to a new build server. If you find a problem, you can switch the server in the appbar and create an issue.",
     "Memified Chinese is an active project. Please check back often."
   ],
   "bedrock_hint": {

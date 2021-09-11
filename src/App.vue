@@ -76,6 +76,18 @@
         </v-tooltip>
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
+            <v-btn v-bind="attrs" v-on="on" icon @click="toggleApi">
+              <v-icon>{{
+                $api === "https://meme.wd-api.com"
+                  ? svgPath.mdiLanguageTypescript
+                  : svgPath.mdiLanguagePython
+              }}</v-icon>
+            </v-btn>
+          </template>
+          <span>{{ $t("appbar.endpointSetting") }}</span>
+        </v-tooltip>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
             <v-btn
               v-bind="attrs"
               v-on="on"
@@ -568,6 +580,8 @@ import {
   mdiGroup,
   mdiFolderInformation,
   mdiAccountChildCircle,
+  mdiLanguageTypescript,
+  mdiLanguagePython,
 } from "@mdi/js";
 import footer from "./components/footer.vue";
 import allowGa, { gtag } from "@/allowGa";
@@ -579,6 +593,14 @@ import { ICollection, ILog, IReq, IResource, IResp } from "@/types";
 
 export default Vue.extend({
   methods: {
+    toggleApi() {
+      const newApi =
+        this.$api === "https://meme.wd-api.com"
+          ? "https://meme-ts.wd-api.com"
+          : "https://meme.wd-api.com";
+      this.$api = newApi;
+      localStorage.setItem("api", newApi);
+    },
     share(item: ILog) {
       let p = new URLSearchParams();
       const type = item.isBe ? "be" : "je";
@@ -692,7 +714,7 @@ export default Vue.extend({
         packType = "compat";
       }
 
-      let resource: string[] = inputBase.resource.concat(inputBase.language)
+      let resource: string[] = inputBase.resource.concat(inputBase.language);
 
       switch (inputBase.child) {
         case 0: // 13+
@@ -708,21 +730,15 @@ export default Vue.extend({
             resource.push("lang_sfw");
           }
           if (resource.includes("lang_sfc")) {
-            resource = resource.filter(
-              (item) => item !== "lang_sfc"
-            );
+            resource = resource.filter((item) => item !== "lang_sfc");
           }
           break;
         case 2: // 18+
           if (resource.includes("lang_sfw")) {
-            resource = resource.filter(
-              (item) => item !== "lang_sfw"
-            );
+            resource = resource.filter((item) => item !== "lang_sfw");
           }
           if (resource.includes("lang_sfc")) {
-            resource = resource.filter(
-              (item) => item !== "lang_sfc"
-            );
+            resource = resource.filter((item) => item !== "lang_sfc");
           }
           break;
       }
@@ -801,6 +817,7 @@ export default Vue.extend({
     news,
   },
   data: () => ({
+    $api: "",
     you: false,
     alerts: [],
     snackbarBuildSucceeded: false,
@@ -810,6 +827,8 @@ export default Vue.extend({
     shareLinkParsed: false,
     shareCopyedToClipboard: false,
     svgPath: {
+      mdiLanguagePython,
+      mdiLanguageTypescript,
       mdiArrowRight,
       mdiAbTesting,
       mdiPost,
@@ -892,6 +911,21 @@ export default Vue.extend({
       ],
     },
   }),
+  beforeMount() {
+    if (process.env.NODE_ENV === "production") {
+      const endpoint = {
+        py: "https://meme.wd-api.com",
+        ts: "https://meme-ts.wd-api.com",
+      };
+      let local = localStorage.getItem("api")?.toString() || "";
+      let using = Object.values(endpoint).includes(local)
+        ? local
+        : endpoint["ts"];
+      this.$api = using;
+    } else {
+      this.$api = "http://localhost:8000";
+    }
+  },
   async mounted() {
     let that = this;
     setInterval(() => {

@@ -10,7 +10,8 @@
     "github": "GayHub",
     "discPack": "劲歌金曲",
     "nightModeSwitch": "开关灯",
-    "superSecretSetting": "吊炸天设置"
+    "superSecretSetting": "吊炸天设置",
+    "endpointSetting": "换个土豆"
   },
   "form": {
     "version": {
@@ -82,7 +83,8 @@
   "hints": [
     "若您不知道如何构建，点击下方按钮来直接生草。",
     "若需要床石版的MCSSB/GayHub/劲 歌 金 曲，您可以点击床石版选项卡后，再点击相应跳转按钮。",
-    "阿拉正在切换至新的构建系统, 您可以点击右下角的 ¿ 把 bug 丢给我们。",
+    "您可以点击右下角的 ¿ 把 bug 丢给我们。",
+    "阿拉正在切换至新的构建系统, 如果出锅了, 您可在右上角换个土豆试试。",
     "梗体中文是一个持续更新的项目，欢迎 常 回 家 看 看。"
   ],
   "bedrock_hint": {
