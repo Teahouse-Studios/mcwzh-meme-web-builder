@@ -398,7 +398,7 @@
                   outlined
                   @click="
                     () => {
-                      open($api + 'builds/' + item.filename);
+                      open(item.root + item.filename);
                       trackBuild(item);
                     }
                   "
@@ -741,7 +741,6 @@ export default Vue.extend({
               : this.input.je.modOption === "custom"
               ? this.input.je.mod
               : [],
-          hash: true,
           type: packType,
         },
         this.whetherUseBE && {
@@ -763,6 +762,7 @@ export default Vue.extend({
             ts: new Date().valueOf(),
             content: res.data.logs,
             filename: res.data.filename,
+            root: res.data.root,
             github: that.links.github,
             isBe: that.whetherUseBE,
           });
@@ -779,7 +779,7 @@ export default Vue.extend({
           that.logs.unshift({
             title: that.$t("log.buildFailed") as string,
             ts: new Date().valueOf(),
-            content: err.toString(),
+            content: err.response.data.logs || err.toString(),
           });
           that.logsPanel = that.logsPanel.map((v) => v + 1);
           that.logsPanel.unshift(0);

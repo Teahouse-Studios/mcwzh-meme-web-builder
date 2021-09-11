@@ -33,6 +33,7 @@ export interface ILog {
   filename?: string;
   github?: string;
   isBe?: boolean;
+  root?: string;
 }
 
 export interface IReq {
@@ -43,7 +44,6 @@ export interface IReq {
     collection: string[];
   };
   mod?: ["all"] | string[];
-  hash: boolean;
   type: 'normal' | 'legacy' | 'compat' | 'zip' | 'mcpack';
   compatible?: boolean;
 }
