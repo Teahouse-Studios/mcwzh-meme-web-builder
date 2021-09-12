@@ -79,8 +79,8 @@
             <v-btn v-bind="attrs" v-on="on" icon @click="toggleApi">
               <v-icon>{{
                 $api === "https://meme.wd-api.com"
-                  ? svgPath.mdiLanguageTypescript
-                  : svgPath.mdiLanguagePython
+                  ? svgPath.mdiLanguagePython
+                  : svgPath.mdiLanguageTypescript
               }}</v-icon>
             </v-btn>
           </template>
