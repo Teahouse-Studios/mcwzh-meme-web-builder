@@ -436,7 +436,7 @@
                   v-else
                   :color="$vuetify.theme.dark ? 'dark' : ''"
                   dark
-                  @click="open(item.github + '/issues/new/choose')"
+                  @click="$bus.$emit('help')"
                 >
                   <v-icon left>{{ svgPath.mdiBug }}</v-icon>
                   {{ $t("log.feedback") }}
@@ -795,8 +795,7 @@ export default Vue.extend({
           that.logs.unshift({
             title: that.$t("log.buildFailed") as string,
             ts: new Date().valueOf(),
-            content: err.response.data.logs || err.toString(),
-            github: that.links.github,
+            content: err.response?.data?.logs || err.toString()
           });
           that.logsPanel = that.logsPanel.map((v) => v + 1);
           that.logsPanel.unshift(0);

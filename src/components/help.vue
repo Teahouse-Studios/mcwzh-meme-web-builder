@@ -133,6 +133,11 @@ export default {
       mdiGithub, mdiGoogleAnalytics, mdiVuetify, mdiVuejs, mdiVectorSquare, mdiClose, mdiHelp
     }
   }),
+  mounted(){
+    this.$bus.$on('help', () => {
+      this.dialog = !this.dialog
+    })
+  },
   methods: {
     send() {
       allowGa() && window.gtag?.('event', 'help',{

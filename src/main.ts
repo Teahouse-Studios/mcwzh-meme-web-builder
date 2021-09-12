@@ -30,6 +30,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 Vue.config.productionTip = false
+Vue.prototype.$bus = new Vue()
 if (process.env.NODE_ENV === 'development') {
   Vue.config.devtools = true
 }
