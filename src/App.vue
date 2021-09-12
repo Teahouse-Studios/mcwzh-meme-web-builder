@@ -796,6 +796,7 @@ export default Vue.extend({
             title: that.$t("log.buildFailed") as string,
             ts: new Date().valueOf(),
             content: err.response.data.logs || err.toString(),
+            github: that.links.github,
           });
           that.logsPanel = that.logsPanel.map((v) => v + 1);
           that.logsPanel.unshift(0);
