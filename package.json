@@ -11,13 +11,13 @@
     "release": "node release.js"
   },
   "dependencies": {
-    "@mdi/js": "^5.9.55",
+    "@mdi/js": "^6.1.95",
     "axios": "^0.21.1",
     "core-js": "^3.17.3",
     "vue": "^2.6.14",
     "vue-cli-plugin-i18n": "^2.1.0",
-    "vue-i18n": "^8.24.5",
-    "vuetify": "^2.5.5",
+    "vue-i18n": "^8.26.1",
+    "vuetify": "^2.5.8",
     "web-vitals": "^1.1.2"
   },
   "devDependencies": {
