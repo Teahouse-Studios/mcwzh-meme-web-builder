@@ -903,7 +903,8 @@ export default Vue.extend({
         collection: [] as ICollection[],
       },
       versions: [
-        { text: "1.17+", value: 7 },
+        { text: "1.18+", value: 8 },
+        { text: "1.17 - 1.17.1", value: 7 },
         { text: "1.16.2 - 1.16.5", value: 6 },
         { text: "1.15 - 1.16.1", value: 5 },
         { text: "1.13 - 1.14.4", value: 4 },
