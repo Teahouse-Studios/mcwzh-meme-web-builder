@@ -76,7 +76,7 @@
         </v-tooltip>
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn v-bind="attrs" v-on="on" icon @click="toggleApi">
+            <v-btn v-bind="attrs" v-on="on" icon @click="toggleApi" disabled>
               <v-icon>{{
                 $api === "https://meme.wd-api.com"
                   ? svgPath.mdiLanguagePython
@@ -594,12 +594,13 @@ import { ICollection, ILog, IReq, IResource, IResp } from "@/types";
 export default Vue.extend({
   methods: {
     toggleApi() {
-      const newApi =
+      this.$api = "https://meme.wd-api.com"
+      /* const newApi =
         this.$api === "https://meme.wd-api.com"
           ? "https://meme-ts.wd-api.com"
           : "https://meme.wd-api.com";
       this.$api = newApi;
-      localStorage.setItem("api", newApi);
+      localStorage.setItem("api", newApi); */
     },
     share(item: ILog) {
       let p = new URLSearchParams();
@@ -817,7 +818,7 @@ export default Vue.extend({
     news,
   },
   data: () => ({
-    $api: "",
+    $api: "https://meme.wd-api.com",
     you: false,
     alerts: [],
     snackbarBuildSucceeded: false,
@@ -914,15 +915,15 @@ export default Vue.extend({
   }),
   beforeMount() {
     if (process.env.NODE_ENV === "production") {
-      const endpoint = {
+      /* const endpoint = {
         py: "https://meme.wd-api.com",
         ts: "https://meme-ts.wd-api.com",
       };
       let local = localStorage.getItem("api")?.toString() || "";
       let using = Object.values(endpoint).includes(local)
         ? local
-        : endpoint["py"];
-      this.$api = using;
+        : endpoint["py"]; */
+      this.$api = "https://meme.wd-api.com" // using;
     } else {
       this.$api = "http://localhost:8000";
     }
