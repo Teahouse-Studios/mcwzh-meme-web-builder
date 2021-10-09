@@ -921,7 +921,7 @@ export default Vue.extend({
       let local = localStorage.getItem("api")?.toString() || "";
       let using = Object.values(endpoint).includes(local)
         ? local
-        : endpoint["ts"];
+        : endpoint["py"];
       this.$api = using;
     } else {
       this.$api = "http://localhost:8000";
