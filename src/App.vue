@@ -76,7 +76,7 @@
         </v-tooltip>
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn v-bind="attrs" v-on="on" icon @click="toggleApi" disabled>
+            <v-btn v-bind="attrs" v-on="on" icon @click="toggleApi">
               <v-icon>{{
                 $api === "https://meme.wd-api.com"
                   ? svgPath.mdiLanguagePython
@@ -594,13 +594,12 @@ import { ICollection, ILog, IReq, IResource, IResp } from "@/types";
 export default Vue.extend({
   methods: {
     toggleApi() {
-      this.$api = "https://meme.wd-api.com"
-      /* const newApi =
+      const newApi =
         this.$api === "https://meme.wd-api.com"
           ? "https://meme-ts.wd-api.com"
           : "https://meme.wd-api.com";
       this.$api = newApi;
-      localStorage.setItem("api", newApi); */
+      localStorage.setItem("api", newApi);
     },
     share(item: ILog) {
       let p = new URLSearchParams();
@@ -818,7 +817,7 @@ export default Vue.extend({
     news,
   },
   data: () => ({
-    $api: "https://meme.wd-api.com",
+    $api: "",
     you: false,
     alerts: [],
     snackbarBuildSucceeded: false,
@@ -981,18 +980,11 @@ export default Vue.extend({
         this.input[this.whetherUseBE ? "be" : "je"].collection.includes(v.name)
       );
       const data = items.map((v) => v["contains"]).flat();
+      console.log(data)
+      console.log(base.resource)
       return {
-        resource: data
-          .filter(
-            (v) =>
-              !base.resource.find((r) => r.name === v)!.name.startsWith("lang_")
-          )
-          .concat(child),
-        language: data
-          .filter((v) =>
-            base.resource.find((r) => r.name === v)!.name.startsWith("lang_")
-          )
-          .concat(child),
+        resource: data.concat(child),
+        language: data.concat(child),
       };
     },
     links(): {
