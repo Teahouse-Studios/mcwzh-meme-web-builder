@@ -2,6 +2,8 @@ import Vue from 'vue'
 import i18n from './i18n';
 import App from './App.vue'
 import vuetify from './plugins/vuetify';
+import * as Sentry from '@sentry/vue'
+import { Integrations } from '@sentry/tracing';
 
 import {getCLS, getFID, getLCP} from 'web-vitals';
 import allowGa, { gtag } from "./allowGa";
@@ -11,6 +13,20 @@ declare module 'vue/types/vue' {
     $api: string
   }
 }
+
+Sentry.init({
+  Vue,
+  dsn: "https://8f1c358ea4e04819bc8f53a3c8763150@o417398.ingest.sentry.io/5837515",
+  integrations: [
+    new Integrations.BrowserTracing({
+      tracingOrigins: ["localhost", "meme.wd-ljt.com", /^\//],
+    }),
+  ],
+  // Set tracesSampleRate to 1.0 to capture 100%
+  // of transactions for performance monitoring.
+  // We recommend adjusting this value in production
+  tracesSampleRate: 0.2,
+});
 
 function sendToGoogleAnalytics({name, delta, value, id}: any) {
   if (allowGa() && gtag) {
