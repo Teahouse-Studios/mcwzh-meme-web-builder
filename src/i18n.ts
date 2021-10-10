@@ -9,6 +9,6 @@ export default new VueI18n({
   messages: {
     zhHans: require('./locales/zh-Hans.json'),
     zhMeme: require('./locales/zh-Meme.json'),
-    en: require('./locales/en.json')
-  }
+    en: require('./locales/en.json'),
+  },
 })
