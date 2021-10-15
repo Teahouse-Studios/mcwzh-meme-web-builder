@@ -911,10 +911,18 @@ export default Vue.extend({
     },
   }),
   beforeMount() {
-    if (process.env.NODE_ENV === 'production') {
-      this.$api = 'https://meme.wd-api.com'
+    if (process.env.NODE_ENV === "production") {
+      const endpoint = {
+        py: "https://meme.wd-api.com",
+        ts: "https://meme-ts.wd-api.com",
+      };
+      let local = localStorage.getItem("api")?.toString() || "";
+      let using = Object.values(endpoint).includes(local)
+        ? local
+        : endpoint["py"];
+      this.$api = using;
     } else {
-      this.$api = 'http://localhost:8000'
+      this.$api = "http://localhost:8000";
     }
   },
   async mounted() {
