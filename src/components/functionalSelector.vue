@@ -1,6 +1,6 @@
 <template>
   <v-select v-model="combinedItems" :disabled="disabled || false" :hint="hint"
-            :items="list" :label="label" :loading="loading" :outlined="outlined" multiple persistent-hint>
+            :items="list" :label="label" :loading="loading" :outlined="true" multiple persistent-hint>
     <template v-slot:message="{message}">
       {{ message }}
       <v-btn v-if="help" :href="help" icon small target="_blank" @click="$emit('help')">

@@ -1,10 +1,10 @@
 <template>
-  <v-app :class="{ you: you }">
+  <v-app>
     <v-main>
       <v-app-bar :color="$vuetify.theme.dark ? 'dark' : 'white'" flat>
         <v-toolbar-title>{{ $t("appbar.title") }}</v-toolbar-title>
         <v-spacer></v-spacer>
-        <div v-if="$vuetify.breakpoint.name !== 'xs'">
+        <div v-if="$vuetify.breakpoint.mdAndUp">
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
               <div v-bind="attrs" v-on="on">
@@ -68,14 +68,6 @@
         </div>
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn v-bind="attrs" v-on="on" icon @click="you = !you">
-              <v-icon>{{ svgPath.mdiAbTesting }}</v-icon>
-            </v-btn>
-          </template>
-          <span>{{ $t("appbar.superSecretSetting") }}</span>
-        </v-tooltip>
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on, attrs }">
             <v-btn v-bind="attrs" v-on="on" icon @click="toggleApi">
               <v-icon>{{
                 $api === "https://meme.wd-api.com"
@@ -133,7 +125,7 @@
                   :hint="$t('form.version.hint')"
                   :items="consts.versions"
                   :label="$t('form.version.label')"
-                  :outlined="you"
+                  :outlined="true"
                   persistent-hint
                 >
                   <template #prepend>
@@ -154,7 +146,7 @@
                   "
                   :label="$t('form.resource.label')"
                   :loading="loading_backend"
-                  :outlined="you"
+                  
                   help="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack/wiki/%E6%A2%97%E4%BD%93%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9%E5%88%97%E8%A1%A8"
                   @help="sendHelpTrack('je_resource')"
                 >
@@ -176,7 +168,7 @@
                   "
                   :label="$t('form.language.label')"
                   :loading="loading_backend"
-                  :outlined="you"
+                  
                 >
                   <template #prepend>
                     <v-icon>{{ svgPath.mdiCog }}</v-icon>
@@ -189,7 +181,7 @@
                   :hint="$t('form.mod.option.hint')"
                   :items="modOption"
                   :label="$t('form.mod.option.label')"
-                  :outlined="you"
+                  :outlined="true"
                   persistent-hint
                 >
                   <template #prepend>
@@ -204,7 +196,7 @@
                   :hint="$t('form.mod.list.hint')"
                   :items="consts.modList"
                   :label="$t('form.mod.list.label')"
-                  :outlined="you"
+                  :outlined="true"
                   multiple
                   persistent-hint
                 >
@@ -219,7 +211,7 @@
                   :hint="$t('form.collections.hint')"
                   :items="consts.je_modules.collection"
                   :label="$t(`form.collections.label`)"
-                  :outlined="you"
+                  
                 >
                   <template v-slot:before-author="data">
                     {{ collectionDesc(data.item) }}
@@ -270,7 +262,7 @@
                   :hint="$t('form.beExtType.hint')"
                   :items="consts.beExtType"
                   :label="$t('form.beExtType.label')"
-                  :outlined="you"
+                  :outlined="true"
                   persistent-hint
                 >
                   <template #prepend>
@@ -287,7 +279,7 @@
                   :items="consts.be_modules.resource"
                   :label="$t('form.resource.label')"
                   :loading="loading_backend"
-                  :outlined="you"
+                  
                   help="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock/wiki/%E6%A2%97%E4%BD%93%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9%E5%88%97%E8%A1%A8"
                   @help="sendHelpTrack('be_resource')"
                 >
@@ -302,7 +294,7 @@
                   :hint="$t('form.collections.hint')"
                   :items="consts.be_modules.collection"
                   :label="$t(`form.collections.label`)"
-                  :outlined="you"
+                  
                 >
                   <template v-slot:before-author="data">
                     {{ collectionDesc(data.item) }}
@@ -357,7 +349,6 @@
         </v-tabs-items>
         <v-alert
           :icon="svgPath.mdiInformationOutline"
-          :outlined="!you"
           class="mt-3 mb-3 text-body-2"
           dense
           type="info"
@@ -816,7 +807,6 @@ export default Vue.extend({
   },
   data: () => ({
     $api: '',
-    you: false,
     alerts: [],
     snackbarBuildSucceeded: false,
     snackbarBuildFailed: false,
@@ -1008,9 +998,6 @@ export default Vue.extend({
     '$vuetify.theme.dark'(val) {
       localStorage.setItem('memeDarkMode', val)
     },
-    you(val) {
-      localStorage.setItem('memeYou', val)
-    },
     'inputBasic.format'(val) {
       if (val === 3) {
         this.input.je.compatible = true
@@ -1018,15 +1005,6 @@ export default Vue.extend({
     },
   },
   created() {
-    if (
-      localStorage.getItem('memeYou') !== 'true' &&
-      localStorage.getItem('memeYou') !== 'false'
-    ) {
-      localStorage.setItem(
-        'memeYou',
-        (Math.round(Math.random()) ? true : false).toString()
-      )
-    }
     if (localStorage.getItem('memeInitialized') !== 'true') {
       localStorage.setItem(
         'memeDarkMode',
@@ -1036,10 +1014,6 @@ export default Vue.extend({
           : 'false'
       )
       localStorage.setItem('memeNewsIgnored', '0')
-      localStorage.setItem(
-        'memeYou',
-        (Math.round(Math.random()) ? true : false).toString()
-      )
     }
     this.$vuetify.theme.dark = localStorage.getItem('memeDarkMode') === 'true'
     let memeLang = localStorage.getItem('memeLang')
@@ -1048,9 +1022,6 @@ export default Vue.extend({
       memeLang = 'zhHans'
     }
     this.$i18n.locale = memeLang
-    if (localStorage.getItem('memeYou') === 'true') {
-      this.you = true
-    }
     localStorage.setItem('memeInitialized', 'true')
   },
 })

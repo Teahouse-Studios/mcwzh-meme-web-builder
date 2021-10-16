@@ -12,4 +12,16 @@ export default new Vuetify({
     locales: { zhHans },
     current: 'zhHans',
   },
+  theme: {
+    themes: {
+      light: {
+        primary: '#4285f4',
+        info: '#4285f4',
+      },
+      dark: {
+        primary: '#4285f4',
+        info: '#4285f4',
+      },
+    },
+  },
 })
