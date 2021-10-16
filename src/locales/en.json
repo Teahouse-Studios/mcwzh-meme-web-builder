@@ -58,8 +58,7 @@
       "resource_suffix": " resource modules",
       "language_suffix": " language modules"
     },
-    "incompatible_prefix": "(incompatible with ",
-    "incompatible_suffix": ")",
+    "incompatible": "(incompatible with {0})",
     "modified": "Last Modified at",
     "modOption": {
       "all": "All",
