@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import {mdiCompass, mdiDotsVertical} from "@mdi/js";
+import { mdiCompass, mdiDotsVertical } from "@mdi/js";
 
 export default {
   name: "webview",

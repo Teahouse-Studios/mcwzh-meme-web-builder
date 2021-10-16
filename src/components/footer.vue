@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import {mdiScript, mdiLock, mdiCash} from '@mdi/js'
+import { mdiScript, mdiLock, mdiCash } from '@mdi/js'
 
 export default {
   name: "teahouse-footer",

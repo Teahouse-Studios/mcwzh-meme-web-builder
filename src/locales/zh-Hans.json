@@ -1,6 +1,7 @@
 {
   "metadata": {
-    "dateLocale": "zh-CN"
+    "dateLocale": "zh-CN",
+    "ideographicComma": "、"
   },
   "java": "Java版",
   "bedrock": "基岩版",

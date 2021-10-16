@@ -1,6 +1,7 @@
 {
   "metadata": {
-    "dateLocale": "en-US"
+    "dateLocale": "en-US",
+    "ideographicComma": ", "
   },
   "java": "Java Edition",
   "bedrock": "Bedrock Edition",
