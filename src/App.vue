@@ -211,7 +211,7 @@
                   :hint="$t('form.collections.hint')"
                   :items="consts.je_modules.collection"
                   :label="$t(`form.collections.label`)"
-                  
+                  :fixedItems="collectionFixedItems"
                 >
                   <template v-slot:before-author="data">
                     {{ collectionDesc(data.item) }}
@@ -738,7 +738,7 @@ export default Vue.extend({
           _be: this.whetherUseBE,
           modules: {
             resource: resource,
-            collection: inputBase.collection,
+            collection: inputBase.collection.concat(this.collectionFixedItems),
           },
           mod:
             this.input.je.modOption === 'all'
@@ -847,7 +847,7 @@ export default Vue.extend({
     logsPanel: [] as number[],
     loading: false,
     inputBasic: {
-      format: 7,
+      format: 7 as 8 | 7 | 6 | 5 | 4 | 3,
     },
     logs: [] as ILog[],
     input: {
@@ -972,6 +972,21 @@ export default Vue.extend({
         resource: data.concat(child),
         language: data.concat(child),
       }
+    },
+    collectionFixedItems(): string[] {
+      let version: string[] = []
+      if (!this.whetherUseBE) {
+        const versionModules: { [index: number]: string[] } = {
+          8: [],
+          7: ['version_1.17.1'],
+          6: ['version_1.16.5'],
+          5: ['version_1.12.2-1.15.2'],
+          4: ['version_1.12.2-1.15.2'],
+          3: ['version_1.12.2-1.15.2']
+        }
+        version = versionModules[this.inputBasic.format]
+      }
+      return version
     },
     links(): {
       web_builder: string
