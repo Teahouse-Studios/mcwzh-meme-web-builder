@@ -847,7 +847,7 @@ export default Vue.extend({
     logsPanel: [] as number[],
     loading: false,
     inputBasic: {
-      format: 7 as 8 | 7 | 6 | 5 | 4 | 3,
+      format: 8 as 8 | 7 | 6 | 5 | 4 | 3,
     },
     logs: [] as ILog[],
     input: {
