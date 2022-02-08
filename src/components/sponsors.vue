@@ -38,36 +38,7 @@
           </v-card-actions>
         </v-card>
       </v-col>
-      <v-col col="12" md="6">
-        <v-card>
-          <v-list-item three-line>
-            <v-list-item-content>
-              <div class="overline mb-4">{{ $t("sponsor.overline") }}</div>
-              <v-list-item-title class="headline mb-1">{{
-                  $t("sponsor.qiuxi.headline")
-                }}</v-list-item-title>
-              <v-list-item-subtitle>
-                {{ $t("sponsor.qiuxi.subtitle") }}
-              </v-list-item-subtitle>
-            </v-list-item-content>
-
-            <v-list-item-avatar color="grey" size="80" tile>
-              <v-img src="../assets/qiuxi.jpg"></v-img>
-            </v-list-item-avatar>
-          </v-list-item>
-
-          <v-card-actions>
-            <v-btn
-              href="https://space.bilibili.com/678013610"
-              rel="noopener noreferrer"
-              text
-            >
-              {{ $t("sponsor.qiuxi.bilibili") }}
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-      <v-col col="12" md="6">
+            <v-col col="12" md="6">
         <v-card>
           <v-list-item three-line>
             <v-list-item-content>
@@ -103,26 +74,25 @@
             <v-list-item-content>
               <div class="overline mb-4">{{ $t("sponsor.overline") }}</div>
               <v-list-item-title class="headline mb-1">{{
-                  $t("sponsor.liu.headline")
+                  $t("sponsor.qiuxi.headline")
                 }}</v-list-item-title>
               <v-list-item-subtitle>
-                {{ $t("sponsor.liu.subtitle") }}
+                {{ $t("sponsor.qiuxi.subtitle") }}
               </v-list-item-subtitle>
             </v-list-item-content>
 
-            <v-list-item-avatar color="transparent" size="80" tile>
-              <v-img
-                src="https://static.wd-ljt.com/logo/full.png?x-oss-process=image/resize,h_128"
-              ></v-img>
+            <v-list-item-avatar color="grey" size="80" tile>
+              <v-img src="../assets/qiuxi.jpg"></v-img>
             </v-list-item-avatar>
           </v-list-item>
 
           <v-card-actions>
             <v-btn
-              href="https://www.wd-ljt.com/"
+              href="https://space.bilibili.com/678013610"
               rel="noopener noreferrer"
               text
-            >{{ $t("sponsor.liu.website") }}
+            >
+              {{ $t("sponsor.qiuxi.bilibili") }}
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -150,6 +120,36 @@
               text
             >
               {{ $t("sponsor.suda.bilibili") }}
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+      <v-col col="12" md="6">
+        <v-card>
+          <v-list-item three-line>
+            <v-list-item-content>
+              <div class="overline mb-4">{{ $t("sponsor.overline") }}</div>
+              <v-list-item-title class="headline mb-1">{{
+                  $t("sponsor.liu.headline")
+                }}</v-list-item-title>
+              <v-list-item-subtitle>
+                {{ $t("sponsor.liu.subtitle") }}
+              </v-list-item-subtitle>
+            </v-list-item-content>
+
+            <v-list-item-avatar color="transparent" size="80" tile>
+              <v-img
+                src="https://static.wd-ljt.com/logo/full.png?x-oss-process=image/resize,h_128"
+              ></v-img>
+            </v-list-item-avatar>
+          </v-list-item>
+
+          <v-card-actions>
+            <v-btn
+              href="https://www.wd-ljt.com/"
+              rel="noopener noreferrer"
+              text
+            >{{ $t("sponsor.liu.website") }}
             </v-btn>
           </v-card-actions>
         </v-card>
