@@ -246,6 +246,7 @@
                   tick-size="3"
                   :hint="$t('form.child.hints')[input.je.child]"
                   persistent-hint
+                  disabled
                 >
                   <template #prepend>
                     <v-icon>{{ svgPath.mdiAccountChildCircle }}</v-icon>
@@ -323,6 +324,7 @@
                   tick-size="3"
                   :hint="$t('form.child.hints')[input.be.child]"
                   persistent-hint
+                  disabled
                   class="mb-3"
                 >
                   <template #prepend>
@@ -866,7 +868,7 @@ export default Vue.extend({
         resource: [] as string[],
         language: [] as string[],
         collection: [] as string[],
-        child: 1,
+        child: 0,
       },
     },
     hint: 0,
