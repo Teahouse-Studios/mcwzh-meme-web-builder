@@ -441,7 +441,7 @@
       </v-container>
       <teahouse-footer />
     </v-main>
-    <help ref="help" />
+    <memeHelp ref="help" />
     <v-snackbar v-model="snackbarBuildSucceeded">
       {{ $t("snackbar.buildSucceeded") }}
       <template v-slot:action="{ attrs }">
@@ -543,7 +543,7 @@
 import './app.scss'
 import axios, { AxiosResponse } from 'axios'
 import functionalSelector from '@/components/functionalSelector.vue'
-import help from './components/help.vue'
+import memeHelp from './components/help.vue'
 import langMenu from './components/langMenu.vue'
 import {
   mdiAbTesting,
@@ -799,7 +799,7 @@ export default Vue.extend({
   components: {
     Sponsors: sponsors,
     'functional-selector': functionalSelector,
-    help,
+    memeHelp,
     langMenu,
     'teahouse-footer': footer,
     webview,

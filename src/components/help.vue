@@ -126,7 +126,7 @@ import {mdiGithub, mdiGoogleAnalytics, mdiVuetify, mdiVuejs, mdiVectorSquare, md
 import allowGa from "@/allowGa";
 
 export default {
-  name: "help",
+  name: "memeHelp",
   data: () => ({
     dialog: false,
     svgPath: {

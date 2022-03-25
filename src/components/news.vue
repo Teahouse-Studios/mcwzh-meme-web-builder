@@ -40,7 +40,7 @@
 import axios from "axios";
 import {mdiClose,mdiArrowRight } from '@mdi/js'
 export default {
-  name: "news",
+  name: "memeNews",
   methods: {
     newsIgnore() {
       this.dialogNews = false;

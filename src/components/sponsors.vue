@@ -170,7 +170,7 @@
 
 <script>
 export default {
-  name: "sponsors.vue"
+  name: "memeSponsors"
 }
 </script>
 
