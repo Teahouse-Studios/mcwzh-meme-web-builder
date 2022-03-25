@@ -38,7 +38,7 @@
 
 <script>
 import axios from "axios";
-import {mdiClose} from '@mdi/js'
+import {mdiClose,mdiArrowRight } from '@mdi/js'
 export default {
   name: "news",
   methods: {
@@ -51,7 +51,7 @@ export default {
     dialogNews: false,
     news: null,
     svgPath: {
-      mdiClose
+      mdiClose, mdiArrowRight
     }
   }),
   async mounted() {
