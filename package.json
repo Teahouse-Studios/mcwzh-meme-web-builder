@@ -3,12 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --modern",
-    "lint": "vue-cli-service lint",
+    "serve": "vite",
+    "build": "vite build",
+    "lint": "eslint",
     "ana": "cross-env ANALYZER=true vue-cli-service build",
     "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'",
-    "release": "node release.js"
+    "release": "node release.js",
+    "preview": "vite preview",
+    "vite-build": "vite build"
   },
   "dependencies": {
     "@mdi/js": "^6.1.95",
@@ -25,11 +27,7 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
-    "@vue/cli-plugin-babel": "~4.5.13",
-    "@vue/cli-plugin-eslint": "~4.5.13",
-    "@vue/cli-plugin-typescript": "~4.5.0",
-    "@vue/cli-service": "~4.5.13",
-    "@vue/eslint-config-typescript": "^7.0.0",
+    "@vitejs/plugin-legacy": "^1.4.4",
     "aws-sdk": "^2.912.0",
     "babel-eslint": "^10.1.0",
     "cross-env": "^7.0.3",
@@ -40,12 +38,10 @@
     "mime-types": "^2.1.30",
     "prettier": "^2.4.1",
     "sass": "^1.34.0",
-    "sass-loader": "^10.1.1",
     "typescript": "~4.1.5",
-    "vue-cli-plugin-vuetify": "^2.4.0",
-    "vue-template-compiler": "^2.6.14",
-    "vuetify-loader": "^1.7.2",
-    "webpack-bundle-analyzer": "^4.4.1"
+    "vite": "2",
+    "vite-plugin-vue2": "latest",
+    "vue-template-compiler": "^2.6.14"
   },
   "eslintConfig": {
     "root": true,
