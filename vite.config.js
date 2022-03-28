@@ -2,6 +2,7 @@ import legacyPlugin from '@vitejs/plugin-legacy'
 import { defineConfig } from 'vite'
 import * as path from 'path'
 import vuePlugin from '@vitejs/plugin-vue'
+import vuetify from '@vuetify/vite-plugin'
 
 // @see https://cn.vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
@@ -54,6 +55,9 @@ export default defineConfig(({ command, mode }) => {
     plugins: [
       vuePlugin({
         reactivityTransform: true,
+      }),
+      vuetify({
+        autoImport: true,
       }),
       legacyPlugin({
         targets: [

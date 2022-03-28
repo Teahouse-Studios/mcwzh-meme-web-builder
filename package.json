@@ -3,30 +3,36 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vite",
+    "serve": "vite preview",
     "build": "vite build",
     "lint": "eslint",
-    "release": "node release.js",
+    "dev": "vite",
     "preview": "vite preview",
+    "release": "node release.js",
     "vite-build": "vite build"
   },
   "dependencies": {
+    "@mdi/font": "5.9.55",
     "@mdi/js": "^6.1.95",
     "@sentry/tracing": "^6.13.3",
     "@sentry/vue": "^6.13.3",
     "axios": "^0.24.0",
     "core-js": "^3.17.3",
+    "roboto-fontface": "*",
     "vue": "^3.2.31",
     "vue-cli-plugin-i18n": "^2.3.1",
     "vue-i18n": "^9.2.0-beta.33",
     "vuetify": "^3.0.0-beta.0",
-    "web-vitals": "^1.1.2"
+    "web-vitals": "^1.1.2",
+    "webfontloader": "^1.0.0"
   },
   "devDependencies": {
+    "@types/webfontloader": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
     "@vitejs/plugin-legacy": "^1.4.4",
     "@vitejs/plugin-vue": "^2.2.4",
+    "@vuetify/vite-plugin": "^1.0.0-alpha.0",
     "aws-sdk": "^2.912.0",
     "babel-eslint": "^10.1.0",
     "cross-env": "^7.0.3",
@@ -36,9 +42,12 @@
     "glob": "^7.1.7",
     "mime-types": "^2.1.30",
     "prettier": "^2.4.1",
-    "sass": "^1.34.0",
+    "sass": "^1.38.0",
+    "sass-loader": "^10.0.0",
     "typescript": "~4.1.5",
-    "vite": "2"
+    "vite": "2",
+    "vue-cli-plugin-vuetify": "~2.4.8",
+    "vuetify-loader": "^2.0.0-alpha.0"
   },
   "eslintConfig": {
     "root": true,

@@ -123,7 +123,7 @@
 
 <script>
 import {mdiGithub, mdiGoogleAnalytics, mdiVuetify, mdiVuejs, mdiVectorSquare, mdiClose, mdiHelp} from '@mdi/js'
-import allowGa from "@/allowGa";
+import allowGa from "../allowGa";
 
 export default {
   name: "help",
