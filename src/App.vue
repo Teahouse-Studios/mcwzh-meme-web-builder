@@ -5,7 +5,7 @@
         :color="$vuetify.theme.current.value === 'dark' ? 'dark' : 'white'"
         flat
       >
-        <v-toolbar-title>{{ $t('appbar.title') }}</v-toolbar-title>
+        <v-toolbar-title>{{ t('appbar.title') }}</v-toolbar-title>
         <v-spacer></v-spacer>
         <div v-if="$vuetify.display.mdAndUp">
           <v-tooltip bottom>
@@ -13,20 +13,20 @@
               <div v-bind="attrs" v-on="on">
                 <v-btn :href="links.mcbbs" rel="noopener noreferrer" text>
                   <v-icon left>{{ svgPath.mdiPost }}</v-icon>
-                  {{ $t('appbar.mcbbs') }}
+                  {{ t('appbar.mcbbs') }}
                 </v-btn>
                 <v-btn :href="links.github" rel="noopener noreferrer" text>
                   <v-icon left>{{ svgPath.mdiGithub }}</v-icon>
-                  {{ $t('appbar.github') }}
+                  {{ t('appbar.github') }}
                 </v-btn>
                 <v-btn :href="links.disc" rel="noopener noreferrer" text>
                   <v-icon left>{{ svgPath.mdiDisc }}</v-icon>
-                  {{ $t('appbar.discPack') }}
+                  {{ t('appbar.discPack') }}
                 </v-btn>
                 <langMenu />
               </div>
             </template>
-            <span>{{ !tab ? $t('java') : $t('bedrock') }}</span>
+            <span>{{ !tab ? t('java') : t('bedrock') }}</span>
           </v-tooltip>
         </div>
         <div v-else>
@@ -43,7 +43,7 @@
                   <v-icon>{{ svgPath.mdiPost }}</v-icon>
                 </v-list-item-icon>
                 <v-list-item-text>
-                  {{ $t('appbar.mcbbs') }}
+                  {{ t('appbar.mcbbs') }}
                 </v-list-item-text>
               </v-list-item>
               <v-list-item :href="links.github" rel="noopener noreferrer">
@@ -51,7 +51,7 @@
                   <v-icon>{{ svgPath.mdiGithub }}</v-icon>
                 </v-list-item-icon>
                 <v-list-item-text>
-                  {{ $t('appbar.github') }}
+                  {{ t('appbar.github') }}
                 </v-list-item-text>
               </v-list-item>
               <v-list-item :href="links.disc" rel="noopener noreferrer">
@@ -59,12 +59,12 @@
                   <v-icon>{{ svgPath.mdiDisc }}</v-icon>
                 </v-list-item-icon>
                 <v-list-item-text>
-                  {{ $t('appbar.discPack') }}
+                  {{ t('appbar.discPack') }}
                 </v-list-item-text>
               </v-list-item>
               <langMenu />
               <div class="text-center">
-                （{{ !this.tab ? $t('java') : $t('bedrock') }}）
+                （{{ !this.tab ? t('java') : t('bedrock') }}）
               </div>
             </v-list>
           </v-menu>
@@ -79,7 +79,7 @@
               }}</v-icon>
             </v-btn>
           </template>
-          <span>{{ $t('appbar.endpointSetting') }}</span>
+          <span>{{ t('appbar.endpointSetting') }}</span>
         </v-tooltip>
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -97,7 +97,7 @@
               <v-icon v-else>{{ svgPath.mdiBrightness4 }}</v-icon>
             </v-btn>
           </template>
-          <span>{{ $t('appbar.nightModeSwitch') }}</span>
+          <span>{{ t('appbar.nightModeSwitch') }}</span>
         </v-tooltip>
       </v-app-bar>
       <v-alert
@@ -113,10 +113,10 @@
       </v-alert>
       <v-tabs v-model="tab" background-color="transparent" fixed-tabs>
         <v-tab>
-          {{ $t('java') }}
+          {{ t('java') }}
         </v-tab>
         <v-tab>
-          {{ $t('bedrock') }}
+          {{ t('bedrock') }}
         </v-tab>
       </v-tabs>
 
@@ -127,9 +127,9 @@
               <v-col cols="12" sm="4">
                 <v-select
                   v-model="inputBasic.format"
-                  :hint="$t('form.version.hint')"
+                  :hint="t('form.version.hint')"
                   :items="consts.versions"
-                  :label="$t('form.version.label')"
+                  :label="t('form.version.label')"
                   :outlined="true"
                   persistent-hint
                 >
@@ -143,13 +143,13 @@
                   v-model="input.je.resource"
                   :disabled="fetchListIgnored"
                   :fixed-items="fixedItems.resource"
-                  :hint="$t('form.resource.hint')"
+                  :hint="t('form.resource.hint')"
                   :items="
                     consts.je_modules.resource.filter(
                       (v) => !v.name.startsWith('lang_')
                     )
                   "
-                  :label="$t('form.resource.label')"
+                  :label="t('form.resource.label')"
                   :loading="loading_backend"
                   help="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack/wiki/%E6%A2%97%E4%BD%93%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9%E5%88%97%E8%A1%A8"
                   @help="sendHelpTrack('je_resource')"
@@ -164,13 +164,13 @@
                   v-model="input.je.language"
                   :disabled="fetchListIgnored"
                   :fixedItems="fixedItems.language"
-                  :hint="$t('form.language.hint')"
+                  :hint="t('form.language.hint')"
                   :items="
                     consts.je_modules.resource.filter((v) =>
                       v.name.startsWith('lang_')
                     )
                   "
-                  :label="$t('form.language.label')"
+                  :label="t('form.language.label')"
                   :loading="loading_backend"
                 >
                   <template #prepend>
@@ -181,9 +181,9 @@
               <v-col cols="6" sm="6">
                 <v-select
                   v-model="input.je.modOption"
-                  :hint="$t('form.mod.option.hint')"
+                  :hint="t('form.mod.option.hint')"
                   :items="modOption"
-                  :label="$t('form.mod.option.label')"
+                  :label="t('form.mod.option.label')"
                   :outlined="true"
                   persistent-hint
                 >
@@ -196,9 +196,9 @@
                 <v-select
                   v-model="input.je.mod"
                   :disabled="input.je.modOption !== 'custom'"
-                  :hint="$t('form.mod.list.hint')"
+                  :hint="t('form.mod.list.hint')"
                   :items="consts.modList"
-                  :label="$t('form.mod.list.label')"
+                  :label="t('form.mod.list.label')"
                   :outlined="true"
                   multiple
                   persistent-hint
@@ -211,9 +211,9 @@
               <v-col cols="12">
                 <functional-selector
                   v-model="input.je.collection"
-                  :hint="$t('form.collections.hint')"
+                  :hint="t('form.collections.hint')"
                   :items="consts.je_modules.collection"
-                  :label="$t(`form.collections.label`)"
+                  :label="t(`form.collections.label`)"
                   :fixedItems="collectionFixedItems"
                 >
                   <template v-slot:before-author="data">
@@ -230,10 +230,10 @@
                   :disabled="inputBasic.format === 3"
                   :hint="
                     inputBasic.format === 3
-                      ? $t('form.compatible.disabled')
-                      : $t('form.compatible.hint')
+                      ? t('form.compatible.disabled')
+                      : t('form.compatible.hint')
                   "
-                  :label="$t('form.compatible.label')"
+                  :label="t('form.compatible.label')"
                   class="mt-n2"
                   persistent-hint
                 />
@@ -241,13 +241,13 @@
               <v-col cols="12">
                 <v-slider
                   v-model="input.je.child"
-                  :tick-labels="$t('form.child.ticks')"
+                  :tick-labels="t('form.child.ticks')"
                   :max="2"
-                  :label="$t('form.child.label')"
+                  :label="t('form.child.label')"
                   step="1"
                   ticks="always"
                   tick-size="3"
-                  :hint="$t('form.child.hints')[input.je.child]"
+                  :hint="t('form.child.hints')[input.je.child]"
                   persistent-hint
                 >
                   <template #prepend>
@@ -262,9 +262,9 @@
               <v-col cols="6" sm="6">
                 <v-select
                   v-model="input.be.extType"
-                  :hint="$t('form.beExtType.hint')"
+                  :hint="t('form.beExtType.hint')"
                   :items="consts.beExtType"
-                  :label="$t('form.beExtType.label')"
+                  :label="t('form.beExtType.label')"
                   :outlined="true"
                   persistent-hint
                 >
@@ -278,9 +278,9 @@
                   v-model="input.be.resource"
                   :disabled="fetchListIgnored"
                   :fixed-items="fixedItems.resource"
-                  :hint="$t('form.resource.hint')"
+                  :hint="t('form.resource.hint')"
                   :items="consts.be_modules.resource"
-                  :label="$t('form.resource.label')"
+                  :label="t('form.resource.label')"
                   :loading="loading_backend"
                   help="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock/wiki/%E6%A2%97%E4%BD%93%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9%E5%88%97%E8%A1%A8"
                   @help="sendHelpTrack('be_resource')"
@@ -293,9 +293,9 @@
               <v-col cols="12">
                 <functional-selector
                   v-model="input.be.collection"
-                  :hint="$t('form.collections.hint')"
+                  :hint="t('form.collections.hint')"
                   :items="consts.be_modules.collection"
-                  :label="$t(`form.collections.label`)"
+                  :label="t(`form.collections.label`)"
                 >
                   <template v-slot:before-author="data">
                     {{ collectionDesc(data.item) }}
@@ -308,21 +308,21 @@
               <v-col cols="12">
                 <v-checkbox
                   v-model="input.be.compatible"
-                  :hint="$t('form.compatible.hint')"
-                  :label="$t('form.compatible.label')"
+                  :hint="t('form.compatible.hint')"
+                  :label="t('form.compatible.label')"
                   persistent-hint
                 />
               </v-col>
               <v-col cols="12">
                 <v-slider
                   v-model="input.be.child"
-                  :tick-labels="$t('form.child.ticks')"
+                  :tick-labels="t('form.child.ticks')"
                   :max="2"
-                  :label="$t('form.child.label')"
+                  :label="t('form.child.label')"
                   step="1"
                   ticks="always"
                   tick-size="3"
-                  :hint="$t('form.child.hints')[input.be.child]"
+                  :hint="t('form.child.hints')[input.be.child]"
                   persistent-hint
                   class="mb-3"
                 >
@@ -342,7 +342,7 @@
                   href="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock"
                   rel="nofollow noopener"
                   target="_blank"
-                  >{{ $t('bedrock_hint.readme') }}</a
+                  >{{ t('bedrock_hint.readme') }}</a
                 >
               </i18n>
             </p>
@@ -353,7 +353,7 @@
           class="mt-3 mb-3 text-body-2"
           dense
           type="info"
-          >{{ $t('hints')[hint] }}
+          >{{ t('hints')[hint] }}
         </v-alert>
         <div>
           <v-btn
@@ -363,30 +363,30 @@
             @click="submit"
           >
             <v-icon left>{{ svgPath.mdiCloudDownload }}</v-icon>
-            {{ $t('form.submit') }}
+            {{ t('form.submit') }}
           </v-btn>
           <p
             v-if="consts.be_modified && consts.je_modified"
             class="ml-2 caption"
             style="display: inline-block; vertical-align: middle; margin: auto"
           >
-            {{ $t('form.modified') }}
+            {{ t('form.modified') }}
             {{
               new Date(
                 tab === 0 ? consts.je_modified : consts.be_modified
-              ).toLocaleString($t('metadata.dateLocale'.toString()))
+              ).toLocaleString(t('metadata.dateLocale'.toString()))
             }}
           </p>
         </div>
         <div v-if="logs.length >= 1">
           <v-divider style="margin: 15px 0"></v-divider>
-          <p ref="logs" class="headline">{{ $t('log.headline') }}</p>
+          <p ref="logs" class="headline">{{ t('log.headline') }}</p>
           <v-expansion-panels v-model="logsPanel" multiple>
             <v-expansion-panel v-for="(item, i) in logs" :key="i">
               <v-expansion-panel-header>
                 {{
                   new Date(Number(item.ts)).toLocaleString(
-                    $t('metadata.dateLocale'.toString())
+                    t('metadata.dateLocale'.toString())
                   )
                 }}
                 {{ item.title }}
@@ -413,7 +413,7 @@
                   "
                 >
                   <v-icon left>{{ svgPath.mdiCloudDownload }}</v-icon>
-                  {{ $t('log.download') }}
+                  {{ t('log.download') }}
                 </v-btn>
                 <v-btn
                   v-if="item.filename"
@@ -436,7 +436,7 @@
                   @click="$bus.$emit('help')"
                 >
                   <v-icon left>{{ svgPath.mdiBug }}</v-icon>
-                  {{ $t('log.feedback') }}
+                  {{ t('log.feedback') }}
                 </v-btn>
               </v-expansion-panel-content>
             </v-expansion-panel>
@@ -449,7 +449,7 @@
     </v-main>
     <help ref="help" />
     <v-snackbar v-model="snackbarBuildSucceeded">
-      {{ $t('snackbar.buildSucceeded') }}
+      {{ t('snackbar.buildSucceeded') }}
       <template v-slot:action="{ attrs }">
         <v-btn
           v-bind="attrs"
@@ -457,12 +457,12 @@
           text
           @click="snackbarBuildSucceeded = false"
         >
-          {{ $t('snackbar.close') }}
+          {{ t('snackbar.close') }}
         </v-btn>
       </template>
     </v-snackbar>
     <v-snackbar v-model="shareLinkParsed">
-      {{ $t('snackbar.shareLinkParsed') }}
+      {{ t('snackbar.shareLinkParsed') }}
       <template v-slot:action="{ attrs }">
         <v-btn
           v-bind="attrs"
@@ -470,12 +470,12 @@
           text
           @click="shareLinkParsed = false"
         >
-          {{ $t('snackbar.close') }}
+          {{ t('snackbar.close') }}
         </v-btn>
       </template>
     </v-snackbar>
     <v-snackbar v-model="shareCopyedToClipboard">
-      {{ $t('snackbar.shareCopyedToClipboard') }}
+      {{ t('snackbar.shareCopyedToClipboard') }}
       <template v-slot:action="{ attrs }">
         <v-btn
           v-bind="attrs"
@@ -483,12 +483,12 @@
           text
           @click="shareCopyedToClipboard = false"
         >
-          {{ $t('snackbar.close') }}
+          {{ t('snackbar.close') }}
         </v-btn>
       </template>
     </v-snackbar>
     <v-snackbar v-model="snackbarBuildFailed">
-      {{ $t('snackbar.buildFailed') }}
+      {{ t('snackbar.buildFailed') }}
       <template v-slot:action="{ attrs }">
         <v-btn
           v-bind="attrs"
@@ -496,7 +496,7 @@
           text
           @click="open(links.web_builder + '/issues/new/choose')"
         >
-          {{ $t('snackbar.feedback') }}
+          {{ t('snackbar.feedback') }}
         </v-btn>
         <v-btn
           v-bind="attrs"
@@ -504,22 +504,22 @@
           text
           @click="snackbarBuildSucceeded = false"
         >
-          {{ $t('snackbar.close') }}
+          {{ t('snackbar.close') }}
         </v-btn>
       </template>
     </v-snackbar>
     <v-dialog v-model="dialogFetchListFailed" persistent width="500">
       <v-card>
         <v-card-title class="headline"
-          >{{ $t('dialog.fetchListFailed.headline') }}
+          >{{ t('dialog.fetchListFailed.headline') }}
         </v-card-title>
         <v-card-text>
-          {{ $t('dialog.fetchListFailed.text') }}
+          {{ t('dialog.fetchListFailed.text') }}
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="primary" text @click="fetchList()">
-            {{ $t('dialog.fetchListFailed.retry') }}
+            {{ t('dialog.fetchListFailed.retry') }}
           </v-btn>
           <v-btn
             text
@@ -527,7 +527,7 @@
               ;(dialogFetchListFailed = false), ($refs.help.dialog = true)
             "
           >
-            {{ $t('dialog.fetchListFailed.feedback') }}
+            {{ t('dialog.fetchListFailed.feedback') }}
           </v-btn>
           <v-btn
             color="error"
@@ -538,7 +538,7 @@
                 (loading_backend = false)
             "
           >
-            {{ $t('dialog.fetchListFailed.ignore') }}
+            {{ t('dialog.fetchListFailed.ignore') }}
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -589,20 +589,25 @@ import webview from './components/webview.vue'
 import news from './components/news.vue'
 import { ICollection, ILog, IReq, IResource, IResp } from './types'
 import { useI18n } from 'vue-i18n'
-import { computed, onBeforeMount, onMounted, watch } from 'vue'
-import { useTheme } from 'vuetify'
+import {
+  computed,
+  onBeforeMount,
+  onMounted,
+  watch,
+  getCurrentInstance,
+} from 'vue'
 
 let vuetifyTheme = $ref('light')
 const isDarkTheme = computed(() => vuetifyTheme === 'dark')
 
-const $t = useI18n()
+let { t, locale } = useI18n({ useScope: 'global' })
 
 function toggleApi() {
   const newApi =
-    this.$api === 'https://meme.wd-api.com'
+    $api === 'https://meme.wd-api.com'
       ? 'https://meme-ts.wd-api.com'
       : 'https://meme.wd-api.com'
-  this.$api = newApi
+  $api = newApi
   localStorage.setItem('api', newApi)
 }
 function share(item: ILog) {
@@ -648,9 +653,9 @@ function trackBuild(item: { filename: string; isBe: boolean }) {
     })
 }
 function collectionDesc(item: ICollection) {
-  return `(${this.$t('form.collections.description_prefix')} ${
+  return `(${this.t('form.collections.description_prefix')} ${
     item['contains'].length
-  } ${this.$t('form.collections.resource_suffix')})`
+  } ${this.t('form.collections.resource_suffix')})`
 }
 function open(name: string) {
   window.open(name)
@@ -659,7 +664,7 @@ async function fetchList() {
   this.loading_backend = true
   let req: AxiosResponse<IResp>
   try {
-    req = await axios.get(this.$api)
+    req = await axios.get($api)
   } catch (e) {
     this.dialogFetchListFailed = true
     console.log(e)
@@ -669,9 +674,9 @@ async function fetchList() {
   this.consts = {
     ...this.consts,
     modList: [
-      { header: this.$t('form.mod.header').toString() },
+      { header: this.t('form.mod.header').toString() },
       ...backend.mods,
-      { header: this.$t('form.mod.enHeader').toString() },
+      { header: this.t('form.mod.enHeader').toString() },
       ...backend.enmods,
     ],
     je_modules: backend.je_modules,
@@ -772,11 +777,11 @@ async function submit() {
       eventType: this.whetherUseBE ? 'be' : 'je',
     })
   const that = this
-  axios({ url: '/ajax', baseURL: this.$api, method: 'POST', data })
+  axios({ url: '/ajax', baseURL: $api, method: 'POST', data })
     .then((res) => {
       console.log(res.data)
       that.logs.unshift({
-        title: that.$t('log.buildSucceeded') as string,
+        title: that.t('log.buildSucceeded') as string,
         ts: new Date().valueOf(),
         content: res.data.logs,
         filename: res.data.filename,
@@ -795,7 +800,7 @@ async function submit() {
     })
     .catch((err) => {
       that.logs.unshift({
-        title: that.$t('log.buildFailed') as string,
+        title: that.t('log.buildFailed') as string,
         ts: new Date().valueOf(),
         content: err.response?.data?.logs || err.toString(),
       })
@@ -913,9 +918,9 @@ onBeforeMount(() => {
     }
     let local = localStorage.getItem('api')?.toString() || ''
     let using = Object.values(endpoint).includes(local) ? local : endpoint['py']
-    this.$api = using
+    $api = using
   } else {
-    this.$api = 'http://localhost:8000'
+    $api = 'http://localhost:8000'
   }
 })
 onMounted(async () => {
@@ -935,7 +940,7 @@ onMounted(async () => {
 
 const modOption = computed<Record<string, string>[]>(() => {
   return [
-    { text: this.$t('form.modOption.all').toString(), value: 'all' },
+    { text: this.t('form.modOption.all').toString(), value: 'all' },
     { value: 'none', text: '无' },
     {
       value: 'custom',
@@ -1039,6 +1044,6 @@ if (memeLang !== 'zhHans' && memeLang !== 'zhMeme' && memeLang !== 'en') {
   localStorage.removeItem('memeLang')
   memeLang = 'zhHans'
 }
-this.$i18n.locale = memeLang
+locale = memeLang
 localStorage.setItem('memeInitialized', 'true')
 </script>

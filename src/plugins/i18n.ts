@@ -5,6 +5,7 @@ import localeEn from '../locales/en.json'
 
 export default createI18n({
   legacy: false,
+  globalInjection: true,
   locale: 'zhHans',
   fallbackLocale: 'zhMeme',
   messages: {
