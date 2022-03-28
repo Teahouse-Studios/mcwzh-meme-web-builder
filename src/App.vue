@@ -540,50 +540,8 @@
   </v-app>
 </template>
 <script lang="ts">
-import './app.scss'
-import axios, { AxiosResponse } from 'axios'
-import functionalSelector from '@/components/functionalSelector.vue'
-import help from './components/help.vue'
-import langMenu from './components/langMenu.vue'
-import {
-  mdiAbTesting,
-  mdiClock,
-  mdiArrowRight,
-  mdiBrightness4,
-  mdiBrightness7,
-  mdiBug,
-  mdiClose,
-  mdiCloudDownload,
-  mdiCompass,
-  mdiDisc,
-  mdiDotsHorizontal,
-  mdiDotsVertical,
-  mdiEarth,
-  mdiGithub,
-  mdiInformationOutline,
-  mdiPlus,
-  mdiPost,
-  mdiShareVariant,
-  mdiArchive,
-  mdiCog,
-  mdiViewModule,
-  mdiSelectGroup,
-  mdiGroup,
-  mdiFolderInformation,
-  mdiAccountChildCircle,
-  mdiLanguageTypescript,
-  mdiLanguagePython,
-} from '@mdi/js'
-import footer from './components/footer.vue'
-import allowGa, { gtag } from '@/allowGa'
-import sponsors from './components/sponsors.vue'
-import webview from './components/webview.vue'
-import news from './components/news.vue'
-import Vue from 'vue'
-import { ICollection, ILog, IReq, IResource, IResp } from '@/types'
-
 export default {
-  methods: {
+methods: {
     toggleApi() {
       const newApi =
         this.$api === 'https://meme.wd-api.com'
@@ -796,16 +754,7 @@ export default {
         })
     },
   },
-  components: {
-    Sponsors: sponsors,
-    'functional-selector': functionalSelector,
-    help,
-    langMenu,
-    'teahouse-footer': footer,
-    webview,
-    news,
-  },
-  data: () => ({
+data: () => ({
     $api: '',
     alerts: [],
     snackbarBuildSucceeded: false,
@@ -900,7 +849,7 @@ export default {
       ],
     },
   }),
-  beforeMount() {
+beforeMount() {
     if (process.env.NODE_ENV === "production") {
       const endpoint = {
         py: "https://meme.wd-api.com",
@@ -915,7 +864,7 @@ export default {
       this.$api = "http://localhost:8000";
     }
   },
-  async mounted() {
+async mounted() {
     let that = this
     setInterval(() => {
       that.hint = that.hint === 3 ? 0 : ++that.hint
@@ -929,7 +878,7 @@ export default {
       )
       .then(response => (this.alerts = response.data))
   },
-  computed: {
+computed: {
     modOption(): Record<string, string>[] {
       return [
         { text: this.$t('form.modOption.all').toString(), value: 'all' },
@@ -1009,7 +958,7 @@ export default {
       }
     },
   },
-  watch: {
+watch: {
     '$vuetify.theme.dark'(val) {
       localStorage.setItem('memeDarkMode', val)
     },
@@ -1019,7 +968,7 @@ export default {
       }
     },
   },
-  created() {
+created() {
     if (localStorage.getItem('memeInitialized') !== 'true') {
       localStorage.setItem(
         'memeDarkMode',
@@ -1039,5 +988,48 @@ export default {
     this.$i18n.locale = memeLang
     localStorage.setItem('memeInitialized', 'true')
   },
-}
+};
+</script>
+
+<script lang="ts" setup>
+import './app.scss'
+import axios, { AxiosResponse } from 'axios'
+import functionalSelector from './components/functionalSelector.vue'
+import help from './components/help.vue'
+import langMenu from './components/langMenu.vue'
+import {
+  mdiAbTesting,
+  mdiClock,
+  mdiArrowRight,
+  mdiBrightness4,
+  mdiBrightness7,
+  mdiBug,
+  mdiClose,
+  mdiCloudDownload,
+  mdiCompass,
+  mdiDisc,
+  mdiDotsHorizontal,
+  mdiDotsVertical,
+  mdiEarth,
+  mdiGithub,
+  mdiInformationOutline,
+  mdiPlus,
+  mdiPost,
+  mdiShareVariant,
+  mdiArchive,
+  mdiCog,
+  mdiViewModule,
+  mdiSelectGroup,
+  mdiGroup,
+  mdiFolderInformation,
+  mdiAccountChildCircle,
+  mdiLanguageTypescript,
+  mdiLanguagePython,
+} from '@mdi/js'
+import footer from './components/footer.vue'
+import allowGa, { gtag } from './allowGa'
+import sponsors from './components/sponsors.vue'
+import webview from './components/webview.vue'
+import news from './components/news.vue'
+import { ICollection, ILog, IReq, IResource, IResp } from './types'
 </script>

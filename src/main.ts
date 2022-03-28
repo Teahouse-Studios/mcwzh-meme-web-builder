@@ -8,7 +8,6 @@ import localeEn from './locales/en.json'
 
 import 'vuetify/styles'
 import { createVuetify, ThemeDefinition } from 'vuetify'
-import { zhHans } from 'vuetify/locale'
 import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
 
 import * as Sentry from '@sentry/vue'
@@ -18,6 +17,21 @@ import { getCLS, getFID, getLCP } from 'web-vitals'
 import allowGa, { gtag } from './allowGa'
 
 const app = createApp(App)
+
+const customLightTheme: ThemeDefinition = {
+  dark: false,
+  colors: {
+    primary: '#4285f4',
+    info: '#4285f4',
+  }
+}
+const customDarkTheme: ThemeDefinition = {
+  dark: true,
+  colors: {
+    primary: '#4285f4',
+    info: '#4285f4',
+  }
+}
 const vuetify = createVuetify({
   icons: {
     defaultSet: 'mdi',
@@ -26,20 +40,13 @@ const vuetify = createVuetify({
       mdi
     }
   },
-  lang: {
-    locales: { zhHans },
-    current: 'zhHans',
+  locale: {
+    defaultLocale: 'zh-Hans',
   },
   theme: {
     themes: {
-      light: {
-        primary: '#4285f4',
-        info: '#4285f4',
-      },
-      dark: {
-        primary: '#4285f4',
-        info: '#4285f4',
-      },
+      customLightTheme,
+      customDarkTheme
     },
   },
 })
@@ -82,7 +89,7 @@ function sendToGoogleAnalytics({ name, delta, value, id }: any) {
   }
 }
 
-if (process.env.NODE_ENV === 'production') {
+if (import.meta.env.PROD) {
   getCLS(sendToGoogleAnalytics)
   getFID(sendToGoogleAnalytics)
   getLCP(sendToGoogleAnalytics)
