@@ -1,7 +1,7 @@
 import legacyPlugin from '@vitejs/plugin-legacy'
 import { defineConfig } from 'vite'
 import * as path from 'path'
-import { createVuePlugin } from 'vite-plugin-vue2'
+import vuePlugin from '@vitejs/plugin-vue'
 
 // @see https://cn.vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
@@ -23,7 +23,6 @@ export default defineConfig(({ command, mode }) => {
 
   let proxy = {}
 
-  // todo 替换为原有变量
   let define = {
     'process.env.NODE_ENV':
       command === 'serve' ? '"development"' : '"production"',
@@ -53,7 +52,9 @@ export default defineConfig(({ command, mode }) => {
     esbuild,
     optimizeDeps,
     plugins: [
-      createVuePlugin(),
+      vuePlugin({
+        reactivityTransform: true,
+      }),
       legacyPlugin({
         targets: [
           'Android > 39',

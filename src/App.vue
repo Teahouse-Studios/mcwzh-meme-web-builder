@@ -146,7 +146,7 @@
                   "
                   :label="$t('form.resource.label')"
                   :loading="loading_backend"
-                  
+
                   help="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack/wiki/%E6%A2%97%E4%BD%93%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9%E5%88%97%E8%A1%A8"
                   @help="sendHelpTrack('je_resource')"
                 >
@@ -168,7 +168,7 @@
                   "
                   :label="$t('form.language.label')"
                   :loading="loading_backend"
-                  
+
                 >
                   <template #prepend>
                     <v-icon>{{ svgPath.mdiCog }}</v-icon>
@@ -279,7 +279,7 @@
                   :items="consts.be_modules.resource"
                   :label="$t('form.resource.label')"
                   :loading="loading_backend"
-                  
+
                   help="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock/wiki/%E6%A2%97%E4%BD%93%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9%E5%88%97%E8%A1%A8"
                   @help="sendHelpTrack('be_resource')"
                 >
@@ -294,7 +294,7 @@
                   :hint="$t('form.collections.hint')"
                   :items="consts.be_modules.collection"
                   :label="$t(`form.collections.label`)"
-                  
+
                 >
                   <template v-slot:before-author="data">
                     {{ collectionDesc(data.item) }}
@@ -582,7 +582,7 @@ import news from './components/news.vue'
 import Vue from 'vue'
 import { ICollection, ILog, IReq, IResource, IResp } from '@/types'
 
-export default Vue.extend({
+export default {
   methods: {
     toggleApi() {
       const newApi =
@@ -1039,5 +1039,5 @@ export default Vue.extend({
     this.$i18n.locale = memeLang
     localStorage.setItem('memeInitialized', 'true')
   },
-})
+}
 </script>

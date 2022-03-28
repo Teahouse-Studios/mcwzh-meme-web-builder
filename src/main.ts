@@ -1,21 +1,66 @@
-import Vue from 'vue'
-import i18n from './i18n'
 import App from './App.vue'
-import vuetify from './plugins/vuetify'
+import { createApp } from 'vue'
+
+import { createI18n } from 'vue-i18n'
+import localeZhHans from './locales/zh-Hans.json'
+import localeZhMeme from './locales/zh-Meme.json'
+import localeEn from './locales/en.json'
+
+import 'vuetify/styles'
+import { createVuetify, ThemeDefinition } from 'vuetify'
+import { zhHans } from 'vuetify/locale'
+import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
+
 import * as Sentry from '@sentry/vue'
 import { Integrations } from '@sentry/tracing'
 
 import { getCLS, getFID, getLCP } from 'web-vitals'
 import allowGa, { gtag } from './allowGa'
 
-declare module 'vue/types/vue' {
-  interface Vue {
-    $api: string
-  }
-}
+const app = createApp(App)
+const vuetify = createVuetify({
+  icons: {
+    defaultSet: 'mdi',
+    aliases,
+    sets: {
+      mdi
+    }
+  },
+  lang: {
+    locales: { zhHans },
+    current: 'zhHans',
+  },
+  theme: {
+    themes: {
+      light: {
+        primary: '#4285f4',
+        info: '#4285f4',
+      },
+      dark: {
+        primary: '#4285f4',
+        info: '#4285f4',
+      },
+    },
+  },
+})
+
+const i18n = createI18n({
+  locale: 'zhHans',
+  fallbackLocale: 'zhMeme',
+  messages: {
+    zhHans: localeZhHans,
+    zhMeme: localeZhMeme,
+    en: localeEn,
+  },
+})
+
+app.use(i18n)
+app.use(vuetify)
+
+app.mount('#app')
 
 Sentry.init({
-  Vue,
+  app,
   dsn:
     'https://8f1c358ea4e04819bc8f53a3c8763150@o417398.ingest.sentry.io/5837515',
   integrations: [
@@ -42,14 +87,3 @@ if (process.env.NODE_ENV === 'production') {
   getFID(sendToGoogleAnalytics)
   getLCP(sendToGoogleAnalytics)
 }
-
-Vue.config.productionTip = false
-Vue.prototype.$bus = new Vue()
-if (process.env.NODE_ENV === 'development') {
-  Vue.config.devtools = true
-}
-new Vue({
-  vuetify,
-  i18n,
-  render: h => h(App),
-}).$mount('#app')

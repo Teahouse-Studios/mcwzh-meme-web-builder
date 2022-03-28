@@ -16,3 +16,8 @@ declare module '*.vue' {
   import Vue from 'vue'
   export default Vue
 }
+
+declare module 'locale/*.json' {
+  const value: any
+  export default value
+}
