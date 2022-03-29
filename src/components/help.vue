@@ -1,10 +1,9 @@
 <template>
   <v-dialog v-model="dialog" max-width="700px" scrollable>
-    <template v-slot:activator="{ on, attrs }">
+    <template #activator="{ props }">
       <v-btn
-        v-bind="attrs"
-        v-on="on"
-        :aria-label="$t('dialog.help.title')" :color="$vuetify.theme.dark ? 'dark' : 'primary'" bottom fab fixed
+        v-bind="props"
+        :aria-label="t('dialog.help.title')" :color="$vuetify.theme.dark ? 'dark' : 'primary'" bottom fab fixed
         large
         right
         @click="send"
@@ -14,91 +13,91 @@
     </template>
     <v-card>
       <v-card-title>
-        {{ $t("dialog.help.title") }}
+        {{ t("dialog.help.title") }}
         <v-btn class="ml-auto" icon @click="dialog = false">
           <v-icon>{{ svgPath.mdiClose }}</v-icon>
         </v-btn>
       </v-card-title>
       <v-divider class="mb-3"></v-divider>
       <v-card-text style="height: 500px;">
-        <h2 class="text-h5 mb-1">{{ $t("dialog.help.?") }}</h2>
+        <h2 class="text-h5 mb-1">{{ t("dialog.help.?") }}</h2>
         <p class="text-body-1">
-          {{ $t("dialog.help.thinkTwice") }}
+          {{ t("dialog.help.thinkTwice") }}
         <ul>
-          <li>{{ $t("dialog.help.thinkList.1") }}</li>
-          <li>{{ $t("dialog.help.thinkList.2") }}</li>
-          <li>{{ $t("dialog.help.thinkList.3") }}</li>
+          <li>{{ t("dialog.help.thinkList.1") }}</li>
+          <li>{{ t("dialog.help.thinkList.2") }}</li>
+          <li>{{ t("dialog.help.thinkList.3") }}</li>
         </ul>
         </p>
         <p class="text-body-1">
-          {{ $t("dialog.help.sure") }}
+          {{ t("dialog.help.sure") }}
         </p>
         <p class="text-body-1">
-          {{ $t("dialog.help.needToKnow") }}
+          {{ t("dialog.help.needToKnow") }}
         <ul>
-          <li>{{ $t("dialog.help.needToKnowList.1") }}</li>
-          <li>{{ $t("dialog.help.needToKnowList.2") }}</li>
-          <li>{{ $t("dialog.help.needToKnowList.3") }}</li>
-          <li>{{ $t("dialog.help.needToKnowList.4") }}</li>
-          <li class="text-body-1 red--text text--lighten-1">{{ $t("dialog.help.needToKnowList.5") }}</li>
+          <li>{{ t("dialog.help.needToKnowList.1") }}</li>
+          <li>{{ t("dialog.help.needToKnowList.2") }}</li>
+          <li>{{ t("dialog.help.needToKnowList.3") }}</li>
+          <li>{{ t("dialog.help.needToKnowList.4") }}</li>
+          <li class="text-body-1 red--text text--lighten-1">{{ t("dialog.help.needToKnowList.5") }}</li>
         </ul>
         </p>
         <p class="text-body-1">
-          {{ $t("dialog.help.ready") }}
+          {{ t("dialog.help.ready") }}
         </p>
         <p class="text-body-1">
           <v-btn class="mr-1 mb-1"
                  href="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack/issues/new/choose"
                  target="_blank">
-            {{ $t("java") }}
+            {{ t("java") }}
           </v-btn>
           <v-btn class="mr-1 mb-1"
                  href="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock/issues/new/choose"
                  target="_blank">
-            {{ $t("bedrock") }}
+            {{ t("bedrock") }}
           </v-btn>
           <v-btn class="mr-1 mb-1"
                  href="https://github.com/Teahouse-Studios/mcwzh-meme-web-builder/issues/new/choose"
                  target="_blank">
-            {{ $t("dialog.help.webBuilder") }}
+            {{ t("dialog.help.webBuilder") }}
           </v-btn>
         </p>
-        <h2 class="text-h5 mb-1">{{ $t("dialog.help.dev.title") }}</h2>
+        <h2 class="text-h5 mb-1">{{ t("dialog.help.dev.title") }}</h2>
         <v-list>
           <v-list-item three-line>
-            <v-list-item-content>
-              <v-list-item-title class="headline mb-1">{{ $t("dialog.help.dev.lcnb.name") }}</v-list-item-title>
+            <v-list-item-header>
+              <v-list-item-title class="headline mb-1">{{ t("dialog.help.dev.lcnb.name") }}</v-list-item-title>
               <v-list-item-subtitle>
-                {{ $t("dialog.help.dev.lcnb.des") }}
+                {{ t("dialog.help.dev.lcnb.des") }}
               </v-list-item-subtitle>
-            </v-list-item-content>
+            </v-list-item-header>
           </v-list-item>
           <v-list-item three-line>
-            <v-list-item-content>
-              <v-list-item-title class="headline mb-1">{{ $t("dialog.help.dev.cat.name") }}</v-list-item-title>
+            <v-list-item-header>
+              <v-list-item-title class="headline mb-1">{{ t("dialog.help.dev.cat.name") }}</v-list-item-title>
               <v-list-item-subtitle>
-                {{ $t("dialog.help.dev.cat.des") }}
+                {{ t("dialog.help.dev.cat.des") }}
               </v-list-item-subtitle>
-            </v-list-item-content>
+            </v-list-item-header>
           </v-list-item>
           <v-list-item three-line>
-            <v-list-item-content>
-              <v-list-item-title class="headline mb-1">{{ $t("dialog.help.dev.lake.name") }}</v-list-item-title>
+            <v-list-item-header>
+              <v-list-item-title class="headline mb-1">{{ t("dialog.help.dev.lake.name") }}</v-list-item-title>
               <v-list-item-subtitle>
-                {{ $t("dialog.help.dev.lake.des") }}
+                {{ t("dialog.help.dev.lake.des") }}
               </v-list-item-subtitle>
-            </v-list-item-content>
+            </v-list-item-header>
           </v-list-item>
           <v-list-item three-line>
-            <v-list-item-content>
-              <v-list-item-title class="headline mb-1">{{ $t("dialog.help.dev.dll.name") }}</v-list-item-title>
+            <v-list-item-header>
+              <v-list-item-title class="headline mb-1">{{ t("dialog.help.dev.dll.name") }}</v-list-item-title>
               <v-list-item-subtitle>
-                {{ $t("dialog.help.dev.dll.des") }}
+                {{ t("dialog.help.dev.dll.des") }}
               </v-list-item-subtitle>
-            </v-list-item-content>
+            </v-list-item-header>
           </v-list-item>
         </v-list>
-        <h2 class="text-h5 mb-1">{{ $t("dialog.help.poweredBy") }}</h2>
+        <h2 class="text-h5 mb-1">{{ t("dialog.help.poweredBy") }}</h2>
         <p class="text-body-1">
           <v-btn class="mr-1" href="https://github.com/Teahouse-Studios/mcwzh-meme-web-builder" icon target="_blank">
             <v-icon>{{ svgPath.mdiGithub }}</v-icon>
@@ -121,30 +120,27 @@
   </v-dialog>
 </template>
 
-<script>
+<script setup lang="ts">
 import {mdiGithub, mdiGoogleAnalytics, mdiVuetify, mdiVuejs, mdiVectorSquare, mdiClose, mdiHelp} from '@mdi/js'
+import { onMounted } from 'vue';
+import { useI18n } from 'vue-i18n';
 import allowGa from "../allowGa";
 
-export default {
-  name: "help",
-  data: () => ({
-    dialog: false,
-    svgPath: {
-      mdiGithub, mdiGoogleAnalytics, mdiVuetify, mdiVuejs, mdiVectorSquare, mdiClose, mdiHelp
-    }
-  }),
-  mounted(){
-    this.$bus.$on('help', () => {
-      this.dialog = !this.dialog
-    })
-  },
-  methods: {
-    send() {
-      allowGa() && window.gtag?.('event', 'help',{
-        eventCategory: 'openDialog'
-      });
-    }
-  }
+const { t } = useI18n({ useScope: 'global' })
+
+let dialog = $ref(false)
+const svgPath = {
+  mdiGithub, mdiGoogleAnalytics, mdiVuetify, mdiVuejs, mdiVectorSquare, mdiClose, mdiHelp
+}
+onMounted(() => {
+$on('help', () => {
+  dialog = !dialog
+})
+})
+function send() {
+  allowGa() && window.gtag('event', 'help',{
+    eventCategory: 'openDialog'
+  })
 }
 </script>
 

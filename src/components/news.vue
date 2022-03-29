@@ -23,47 +23,38 @@
       </v-sheet>
       <v-img v-else-if="news.image" :src="news.image" class="mb-4"></v-img>
       <v-divider v-else class="mb-4"></v-divider>
-      <v-card-text style="height: 500px;">
+      <v-card-text style="height: 500px">
         <div v-html="news.content"></div>
-        <v-btn v-if="news.detail" :href="news.detail" plain
-        >
+        <v-btn v-if="news.detail" :href="news.detail" plain>
           <v-icon left>{{ svgPath.mdiArrowRight }}</v-icon>
           阅读更多
-        </v-btn
-        >
+        </v-btn>
       </v-card-text>
     </v-card>
   </v-dialog>
 </template>
 
-<script>
-import axios from "axios";
-import {mdiClose} from '@mdi/js'
-export default {
-  name: "news",
-  methods: {
-    newsIgnore() {
-      this.dialogNews = false;
-      localStorage.memeNewsIgnored = this.news.id;
-    },
-  },
-  data: () => ({
-    dialogNews: false,
-    news: null,
-    svgPath: {
-      mdiClose
-    }
-  }),
-  async mounted() {
-    await axios
-      .get(
-        "https://cdn.jsdelivr.net/gh/Teahouse-Studios/mcwzh-meme-resourcepack@master/news.json"
-      )
-      .then((response) => (this.news = response.data))
-      .then(() => {
-        this.dialogNews =
-          this.news.id > localStorage.getItem("memeNewsIgnored");
-      });
-  }
+<script setup lang="ts">
+import axios from 'axios'
+import { mdiClose, mdiArrowRight } from '@mdi/js'
+import { INews } from '@/types'
+
+function newsIgnore() {
+  dialogNews = false
+  localStorage.memeNewsIgnored = news!.id
 }
+let dialogNews = $ref(false)
+let news = $ref<INews | null>(null)
+const svgPath = {
+  mdiClose,
+  mdiArrowRight,
+}
+await axios
+  .get(
+    'https://cdn.jsdelivr.net/gh/Teahouse-Studios/mcwzh-meme-resourcepack@master/news.json'
+  )
+  .then((response) => (news = response.data))
+  .then(() => {
+    dialogNews = news!.id > new Number(localStorage.getItem('memeNewsIgnored'))
+  })
 </script>

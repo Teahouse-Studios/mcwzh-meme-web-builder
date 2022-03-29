@@ -39,30 +39,31 @@
 </template>
 
 <script>
-import { mdiCompass, mdiDotsVertical } from "@mdi/js";
+import { mdiCompass, mdiDotsVertical } from '@mdi/js'
 
 export default {
-  name: "webview",
+  name: 'webview',
   data: () => ({
     dialog: false,
     provider: null,
     svgPath: {
-      mdiCompass, mdiDotsVertical
-    }
+      mdiCompass,
+      mdiDotsVertical,
+    },
   }),
   beforeMount() {
-    const UA = navigator.userAgent;
+    const UA = navigator.userAgent
 
-    if (UA.includes("MicroMessenger/")) {
-      this.dialog = true;
-      this.provider = "wechat";
-    } else if (UA.includes("QQ/")) {
-      this.dialog = true;
-      this.provider = "qq";
-    } else if (UA.includes("BiliApp/")) {
-      this.dialog = true;
-      this.provider = "bilibili";
+    if (UA.includes('MicroMessenger/')) {
+      dialog = true
+      provider = 'wechat'
+    } else if (UA.includes('QQ/')) {
+      dialog = true
+      provider = 'qq'
+    } else if (UA.includes('BiliApp/')) {
+      dialog = true
+      provider = 'bilibili'
     }
-  }
+  },
 }
 </script>

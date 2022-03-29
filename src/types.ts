@@ -47,3 +47,17 @@ export interface IReq {
   type: 'normal' | 'legacy' | 'compat' | 'zip' | 'mcpack'
   compatible?: boolean
 }
+
+export interface IAlert {
+  name: string
+  message: string
+}
+
+export interface INews {
+  id: number
+  title: string
+  image?: string
+  video?: string
+  content: string
+  detail?: string
+}

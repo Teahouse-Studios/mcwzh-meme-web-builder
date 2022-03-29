@@ -19,6 +19,7 @@
     "axios": "^0.24.0",
     "core-js": "^3.17.3",
     "roboto-fontface": "*",
+    "tiny-emitter": "^2.1.0",
     "vue": "^3.2.31",
     "vue-cli-plugin-i18n": "^2.3.1",
     "vue-i18n": "^9.2.0-beta.33",

@@ -10,6 +10,7 @@ import allowGa, { gtag } from './allowGa'
 import vuetify from './plugins/vuetify'
 import i18n from './plugins/i18n'
 import { loadFonts } from './plugins/webfontloader'
+import emitter from 'tiny-emitter'
 
 const app = createApp(App)
 

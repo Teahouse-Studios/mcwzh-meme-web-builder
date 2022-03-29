@@ -4,15 +4,15 @@
       <v-col col="12" md="6">
         <v-card>
           <v-list-item three-line>
-            <v-list-item-content>
-              <div class="overline mb-4">{{ $t("sponsor.overline") }}</div>
+            <v-list-item-header>
+              <div class="overline mb-4">{{ $t('sponsor.overline') }}</div>
               <v-list-item-title class="headline mb-1">{{
-                  $t("sponsor.spg.headline")
-                }}</v-list-item-title>
+                $t('sponsor.spg.headline')
+              }}</v-list-item-title>
               <v-list-item-subtitle>
-                {{ $t("sponsor.spg.subtitle") }}
+                {{ $t('sponsor.spg.subtitle') }}
               </v-list-item-subtitle>
-            </v-list-item-content>
+            </v-list-item-header>
 
             <v-list-item-avatar color="grey" size="80" tile>
               <v-img
@@ -26,30 +26,30 @@
               href="https://www.mcbbs.net/?2444378"
               rel="noopener noreferrer"
               text
-            >{{ $t("sponsor.spg.mcbbs") }}
+              >{{ $t('sponsor.spg.mcbbs') }}
             </v-btn>
             <v-btn
               href="https://www.mcbbs.net/thread-926724-1-1.html"
               rel="noopener noreferrer"
               text
             >
-              {{ $t("sponsor.spg.dhp") }}
+              {{ $t('sponsor.spg.dhp') }}
             </v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
-            <v-col col="12" md="6">
+      <v-col col="12" md="6">
         <v-card>
           <v-list-item three-line>
-            <v-list-item-content>
-              <div class="overline mb-4">{{ $t("sponsor.overline") }}</div>
+            <v-list-item-header>
+              <div class="overline mb-4">{{ $t('sponsor.overline') }}</div>
               <v-list-item-title class="headline mb-1">{{
-                  $t("sponsor.kkg.headline")
-                }}</v-list-item-title>
+                $t('sponsor.kkg.headline')
+              }}</v-list-item-title>
               <v-list-item-subtitle>
-                {{ $t("sponsor.kkg.subtitle") }}
+                {{ $t('sponsor.kkg.subtitle') }}
               </v-list-item-subtitle>
-            </v-list-item-content>
+            </v-list-item-header>
 
             <v-list-item-avatar color="grey" size="80" tile>
               <v-img
@@ -63,7 +63,7 @@
               href="https://www.mcbbs.net/?10240"
               rel="noopener noreferrer"
               text
-            >{{ $t("sponsor.kkg.mcbbs") }}
+              >{{ $t('sponsor.kkg.mcbbs') }}
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -71,15 +71,15 @@
       <v-col col="12" md="6">
         <v-card>
           <v-list-item three-line>
-            <v-list-item-content>
-              <div class="overline mb-4">{{ $t("sponsor.overline") }}</div>
+            <v-list-item-header>
+              <div class="overline mb-4">{{ $t('sponsor.overline') }}</div>
               <v-list-item-title class="headline mb-1">{{
-                  $t("sponsor.qiuxi.headline")
-                }}</v-list-item-title>
+                $t('sponsor.qiuxi.headline')
+              }}</v-list-item-title>
               <v-list-item-subtitle>
-                {{ $t("sponsor.qiuxi.subtitle") }}
+                {{ $t('sponsor.qiuxi.subtitle') }}
               </v-list-item-subtitle>
-            </v-list-item-content>
+            </v-list-item-header>
 
             <v-list-item-avatar color="grey" size="80" tile>
               <v-img src="../assets/qiuxi.jpg"></v-img>
@@ -92,7 +92,7 @@
               rel="noopener noreferrer"
               text
             >
-              {{ $t("sponsor.qiuxi.bilibili") }}
+              {{ $t('sponsor.qiuxi.bilibili') }}
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -100,13 +100,15 @@
       <v-col col="12" md="6">
         <v-card>
           <v-list-item three-line>
-            <v-list-item-content>
-              <div class="overline mb-4">{{ $t("sponsor.overline") }}</div>
-              <v-list-item-title class="headline mb-1">{{ $t("sponsor.suda.headline") }}</v-list-item-title>
+            <v-list-item-header>
+              <div class="overline mb-4">{{ $t('sponsor.overline') }}</div>
+              <v-list-item-title class="headline mb-1">{{
+                $t('sponsor.suda.headline')
+              }}</v-list-item-title>
               <v-list-item-subtitle>
-                {{ $t("sponsor.suda.subtitle") }}
+                {{ $t('sponsor.suda.subtitle') }}
               </v-list-item-subtitle>
-            </v-list-item-content>
+            </v-list-item-header>
 
             <v-list-item-avatar color="grey" size="80" tile>
               <v-img src="../assets/suda.jpg"></v-img>
@@ -119,7 +121,7 @@
               rel="noopener noreferrer"
               text
             >
-              {{ $t("sponsor.suda.bilibili") }}
+              {{ $t('sponsor.suda.bilibili') }}
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -127,15 +129,15 @@
       <v-col col="12" md="6">
         <v-card>
           <v-list-item three-line>
-            <v-list-item-content>
-              <div class="overline mb-4">{{ $t("sponsor.overline") }}</div>
+            <v-list-item-header>
+              <div class="overline mb-4">{{ $t('sponsor.overline') }}</div>
               <v-list-item-title class="headline mb-1">{{
-                  $t("sponsor.liu.headline")
-                }}</v-list-item-title>
+                $t('sponsor.liu.headline')
+              }}</v-list-item-title>
               <v-list-item-subtitle>
-                {{ $t("sponsor.liu.subtitle") }}
+                {{ $t('sponsor.liu.subtitle') }}
               </v-list-item-subtitle>
-            </v-list-item-content>
+            </v-list-item-header>
 
             <v-list-item-avatar color="transparent" size="80" tile>
               <v-img
@@ -145,11 +147,8 @@
           </v-list-item>
 
           <v-card-actions>
-            <v-btn
-              href="https://www.wd-ljt.com/"
-              rel="noopener noreferrer"
-              text
-            >{{ $t("sponsor.liu.website") }}
+            <v-btn href="https://www.wd-ljt.com/" rel="noopener noreferrer" text
+              >{{ $t('sponsor.liu.website') }}
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -157,23 +156,19 @@
     </v-row>
     <div
       :style="
-            $vuetify.theme.dark !== true
-              ? 'color: rgba(0,0,0,.6)'
-              : 'color: rgba(256,256,256,.7)'
-          "
+        $vuetify.theme.dark !== true
+          ? 'color: rgba(0,0,0,.6)'
+          : 'color: rgba(256,256,256,.7)'
+      "
       class="text-body-2 mb-3 pa-1"
     >
-      {{ $t("sponsor.disclaimer") }}
+      {{ $t('sponsor.disclaimer') }}
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: "sponsors.vue"
-}
+<script setup>
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n({ useScope: 'global' })
 </script>
-
-<style scoped>
-
-</style>

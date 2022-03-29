@@ -2,108 +2,109 @@
   <v-app :theme="vuetifyTheme">
     <v-main>
       <v-app-bar
-        :color="$vuetify.theme.current.value === 'dark' ? 'dark' : 'white'"
+        :color="isDarkTheme ? 'dark' : 'white'"
         flat
+        style="width: 100%"
       >
-        <v-toolbar-title>{{ t('appbar.title') }}</v-toolbar-title>
-        <v-spacer></v-spacer>
-        <div v-if="$vuetify.display.mdAndUp">
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <div v-bind="attrs" v-on="on">
-                <v-btn :href="links.mcbbs" rel="noopener noreferrer" text>
-                  <v-icon left>{{ svgPath.mdiPost }}</v-icon>
-                  {{ t('appbar.mcbbs') }}
+        <v-app-bar-title>{{ t('appbar.title') }}</v-app-bar-title>
+        <template #append>
+          <div v-if="$vuetify.display.mdAndUp">
+            <v-tooltip bottom>
+              <template #activator="{ props }">
+                <div v-bind="props">
+                  <v-btn :href="links.mcbbs" rel="noopener noreferrer" text>
+                    <v-icon left>{{ svgPath.mdiPost }}</v-icon>
+                    {{ t('appbar.mcbbs') }}
+                  </v-btn>
+                  <v-btn :href="links.github" rel="noopener noreferrer" text>
+                    <v-icon left>{{ svgPath.mdiGithub }}</v-icon>
+                    {{ t('appbar.github') }}
+                  </v-btn>
+                  <v-btn :href="links.disc" rel="noopener noreferrer" text>
+                    <v-icon left>{{ svgPath.mdiDisc }}</v-icon>
+                    {{ t('appbar.discPack') }}
+                  </v-btn>
+                  <langMenu />
+                </div>
+              </template>
+              <span>{{ !tab ? t('java') : t('bedrock') }}</span>
+            </v-tooltip>
+          </div>
+          <div v-else>
+            <v-menu bottom left>
+              <template #activator="{ props }">
+                <v-btn icon v-bind="props">
+                  <v-icon>{{ svgPath.mdiDotsVertical }}</v-icon>
                 </v-btn>
-                <v-btn :href="links.github" rel="noopener noreferrer" text>
-                  <v-icon left>{{ svgPath.mdiGithub }}</v-icon>
-                  {{ t('appbar.github') }}
-                </v-btn>
-                <v-btn :href="links.disc" rel="noopener noreferrer" text>
-                  <v-icon left>{{ svgPath.mdiDisc }}</v-icon>
-                  {{ t('appbar.discPack') }}
-                </v-btn>
+              </template>
+
+              <v-list dense>
+                <v-list-item :href="links.mcbbs" rel="noopener noreferrer">
+                  <v-list-item-avatar class="ml-0">
+                    <v-icon>{{ svgPath.mdiPost }}</v-icon>
+                  </v-list-item-avatar>
+                  <v-list-item-subtitle>
+                    {{ t('appbar.mcbbs') }}
+                  </v-list-item-subtitle>
+                </v-list-item>
+                <v-list-item :href="links.github" rel="noopener noreferrer">
+                  <v-list-item-avatar class="ml-0">
+                    <v-icon>{{ svgPath.mdiGithub }}</v-icon>
+                  </v-list-item-avatar>
+                  <v-list-item-subtitle>
+                    {{ t('appbar.github') }}
+                  </v-list-item-subtitle>
+                </v-list-item>
+                <v-list-item :href="links.disc" rel="noopener noreferrer">
+                  <v-list-item-avatar class="ml-0">
+                    <v-icon>{{ svgPath.mdiDisc }}</v-icon>
+                  </v-list-item-avatar>
+                  <v-list-item-subtitle>
+                    {{ t('appbar.discPack') }}
+                  </v-list-item-subtitle>
+                </v-list-item>
                 <langMenu />
-              </div>
-            </template>
-            <span>{{ !tab ? t('java') : t('bedrock') }}</span>
-          </v-tooltip>
-        </div>
-        <div v-else>
-          <v-menu bottom left>
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn v-bind="attrs" v-on="on" icon>
-                <v-icon>{{ svgPath.mdiDotsVertical }}</v-icon>
+                <div class="text-center">
+                  （{{ !tab ? t('java') : t('bedrock') }}）
+                </div>
+              </v-list>
+            </v-menu>
+          </div>
+          <v-tooltip bottom>
+            <template #activator="{ props }">
+              <v-btn icon @click="toggleApi" v-bind="props">
+                <v-icon>{{
+                  api === 'https://meme.wd-api.com'
+                    ? svgPath.mdiLanguagePython
+                    : svgPath.mdiLanguageTypescript
+                }}</v-icon>
               </v-btn>
             </template>
-
-            <v-list dense>
-              <v-list-item :href="links.mcbbs" rel="noopener noreferrer">
-                <v-list-item-icon class="ml-0">
-                  <v-icon>{{ svgPath.mdiPost }}</v-icon>
-                </v-list-item-icon>
-                <v-list-item-text>
-                  {{ t('appbar.mcbbs') }}
-                </v-list-item-text>
-              </v-list-item>
-              <v-list-item :href="links.github" rel="noopener noreferrer">
-                <v-list-item-icon class="ml-0">
-                  <v-icon>{{ svgPath.mdiGithub }}</v-icon>
-                </v-list-item-icon>
-                <v-list-item-text>
-                  {{ t('appbar.github') }}
-                </v-list-item-text>
-              </v-list-item>
-              <v-list-item :href="links.disc" rel="noopener noreferrer">
-                <v-list-item-icon class="ml-0">
-                  <v-icon>{{ svgPath.mdiDisc }}</v-icon>
-                </v-list-item-icon>
-                <v-list-item-text>
-                  {{ t('appbar.discPack') }}
-                </v-list-item-text>
-              </v-list-item>
-              <langMenu />
-              <div class="text-center">
-                （{{ !this.tab ? t('java') : t('bedrock') }}）
-              </div>
-            </v-list>
-          </v-menu>
-        </div>
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn v-bind="attrs" v-on="on" icon @click="toggleApi">
-              <v-icon>{{
-                $api === 'https://meme.wd-api.com'
-                  ? svgPath.mdiLanguagePython
-                  : svgPath.mdiLanguageTypescript
-              }}</v-icon>
-            </v-btn>
-          </template>
-          <span>{{ t('appbar.endpointSetting') }}</span>
-        </v-tooltip>
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              v-bind="attrs"
-              v-on="on"
-              icon
-              @click="
-                vuetifyTheme = vuetifyTheme === 'light' ? 'dark' : 'light'
-              "
-            >
-              <v-icon v-if="isDarkTheme()"
-                >{{ svgPath.mdiBrightness7 }}
-              </v-icon>
-              <v-icon v-else>{{ svgPath.mdiBrightness4 }}</v-icon>
-            </v-btn>
-          </template>
-          <span>{{ t('appbar.nightModeSwitch') }}</span>
-        </v-tooltip>
+            <span>{{ t('appbar.endpointSetting') }}</span>
+          </v-tooltip>
+          <v-tooltip bottom>
+            <template #activator="{ props }">
+              <v-btn
+                v-bind="props"
+                icon
+                @click="
+                  vuetifyTheme = vuetifyTheme === 'light' ? 'dark' : 'light'
+                "
+              >
+                <v-icon v-if="isDarkTheme"
+                  >{{ svgPath.mdiBrightness7 }}
+                </v-icon>
+                <v-icon v-else>{{ svgPath.mdiBrightness4 }}</v-icon>
+              </v-btn>
+            </template>
+            <span>{{ t('appbar.nightModeSwitch') }}</span>
+          </v-tooltip>
+        </template>
       </v-app-bar>
       <v-alert
         v-for="a in alerts"
         :key="a.name"
-        :color="isDarkTheme() ? 'dark' : 'white'"
+        :color="isDarkTheme ? 'dark' : 'white'"
         :icon="svgPath.mdiInformationOutline"
         class="mb-0"
         dense
@@ -112,17 +113,17 @@
         <span v-html="a.message"></span>
       </v-alert>
       <v-tabs v-model="tab" background-color="transparent" fixed-tabs>
-        <v-tab>
+        <v-tab :value="0">
           {{ t('java') }}
         </v-tab>
-        <v-tab>
+        <v-tab :value="1">
           {{ t('bedrock') }}
         </v-tab>
       </v-tabs>
 
       <v-container>
-        <v-tabs-items v-model="tab" class="pt-2">
-          <v-tab-item>
+        <v-window v-model="tab" class="pt-2">
+          <v-window-item :value="0">
             <v-row>
               <v-col cols="12" sm="4">
                 <v-select
@@ -228,7 +229,7 @@
                 <v-checkbox
                   v-model="input.je.compatible"
                   :disabled="inputBasic.format === 3"
-                  :hint="
+                  :messages="
                     inputBasic.format === 3
                       ? t('form.compatible.disabled')
                       : t('form.compatible.hint')
@@ -247,7 +248,7 @@
                   step="1"
                   ticks="always"
                   tick-size="3"
-                  :hint="t('form.child.hints')[input.je.child]"
+                  :message="t('form.child.hints')[input.je.child]"
                   persistent-hint
                 >
                   <template #prepend>
@@ -256,8 +257,8 @@
                 </v-slider>
               </v-col>
             </v-row>
-          </v-tab-item>
-          <v-tab-item>
+          </v-window-item>
+          <v-window-item :value="1">
             <v-row>
               <v-col cols="6" sm="6">
                 <v-select
@@ -322,7 +323,7 @@
                   step="1"
                   ticks="always"
                   tick-size="3"
-                  :hint="t('form.child.hints')[input.be.child]"
+                  :message="t('form.child.hints')[input.be.child]"
                   persistent-hint
                   class="mb-3"
                 >
@@ -333,7 +334,7 @@
               </v-col>
             </v-row>
             <p class="text-body-2">
-              <i18n
+              <i18n-t
                 for="bedrock_hint.readme"
                 path="bedrock_hint.text"
                 tag="label"
@@ -344,10 +345,10 @@
                   target="_blank"
                   >{{ t('bedrock_hint.readme') }}</a
                 >
-              </i18n>
+              </i18n-t>
             </p>
-          </v-tab-item>
-        </v-tabs-items>
+          </v-window-item>
+        </v-window>
         <v-alert
           :icon="svgPath.mdiInformationOutline"
           class="mt-3 mb-3 text-body-2"
@@ -380,18 +381,18 @@
         </div>
         <div v-if="logs.length >= 1">
           <v-divider style="margin: 15px 0"></v-divider>
-          <p ref="logs" class="headline">{{ t('log.headline') }}</p>
+          <p ref="refs.logs" class="headline">{{ t('log.headline') }}</p>
           <v-expansion-panels v-model="logsPanel" multiple>
             <v-expansion-panel v-for="(item, i) in logs" :key="i">
-              <v-expansion-panel-header>
+              <v-expansion-panel-title>
                 {{
                   new Date(Number(item.ts)).toLocaleString(
                     t('metadata.dateLocale'.toString())
                   )
                 }}
                 {{ item.title }}
-              </v-expansion-panel-header>
-              <v-expansion-panel-content>
+              </v-expansion-panel-title>
+              <v-expansion-panel-text>
                 <pre
                   style="
                     padding-bottom: 15px;
@@ -403,7 +404,7 @@
                 >
                 <v-btn
                   v-if="item.filename"
-                  :color="isDarkTheme() ? 'white' : 'primary'"
+                  :color="isDarkTheme ? 'white' : 'primary'"
                   outlined
                   @click="
                     () => {
@@ -417,7 +418,7 @@
                 </v-btn>
                 <v-btn
                   v-if="item.filename"
-                  :color="isDarkTheme() ? 'white' : 'primary'"
+                  :color="isDarkTheme ? 'white' : 'primary'"
                   class="ml-2"
                   icon
                   @click="
@@ -431,14 +432,14 @@
                 </v-btn>
                 <v-btn
                   v-else
-                  :color="isDarkTheme() ? 'dark' : ''"
+                  :color="isDarkTheme ? 'dark' : ''"
                   dark
-                  @click="$bus.$emit('help')"
+                  @click="$emit('help')"
                 >
                   <v-icon left>{{ svgPath.mdiBug }}</v-icon>
                   {{ t('log.feedback') }}
                 </v-btn>
-              </v-expansion-panel-content>
+              </v-expansion-panel-text>
             </v-expansion-panel>
           </v-expansion-panels>
         </div>
@@ -447,7 +448,7 @@
       </v-container>
       <teahouse-footer />
     </v-main>
-    <help ref="help" />
+    <help ref="refs.help" />
     <v-snackbar v-model="snackbarBuildSucceeded">
       {{ t('snackbar.buildSucceeded') }}
       <template v-slot:action="{ attrs }">
@@ -523,9 +524,7 @@
           </v-btn>
           <v-btn
             text
-            @click="
-              ;(dialogFetchListFailed = false), ($refs.help.dialog = true)
-            "
+            @click=";(dialogFetchListFailed = false), (refs.help.dialog = true)"
           >
             {{ t('dialog.fetchListFailed.feedback') }}
           </v-btn>
@@ -543,16 +542,16 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <news />
-    <webview />
+    <News />
+    <Webview />
   </v-app>
 </template>
 <script setup lang="ts">
 import './app.scss'
 import axios, { AxiosResponse } from 'axios'
-import functionalSelector from './components/functionalSelector.vue'
-import help from './components/help.vue'
-import langMenu from './components/langMenu.vue'
+import FunctionalSelector from './components/functionalSelector.vue'
+import Help from './components/help.vue'
+import LangMenu from './components/langMenu.vue'
 import {
   mdiAbTesting,
   mdiClock,
@@ -582,32 +581,31 @@ import {
   mdiLanguageTypescript,
   mdiLanguagePython,
 } from '@mdi/js'
-import footer from './components/footer.vue'
+import TeahouseFooter from './components/TeahouseFooter.vue'
 import allowGa, { gtag } from './allowGa'
-import sponsors from './components/sponsors.vue'
-import webview from './components/webview.vue'
-import news from './components/news.vue'
-import { ICollection, ILog, IReq, IResource, IResp } from './types'
+import Sponsors from './components/sponsors.vue'
+import Webview from './components/webview.vue'
+import News from './components/news.vue'
+import { IAlert, ICollection, ILog, IReq, IResource, IResp } from './types'
 import { useI18n } from 'vue-i18n'
-import {
-  computed,
-  onBeforeMount,
-  onMounted,
-  watch,
-  getCurrentInstance,
-} from 'vue'
+import { computed, onBeforeMount, onMounted, watch, nextTick } from 'vue'
 
 let vuetifyTheme = $ref('light')
 const isDarkTheme = computed(() => vuetifyTheme === 'dark')
 
 let { t, locale } = useI18n({ useScope: 'global' })
 
+let refs = $ref({
+  help: null,
+  logs: null,
+})
+
 function toggleApi() {
   const newApi =
-    $api === 'https://meme.wd-api.com'
+    api === 'https://meme.wd-api.com'
       ? 'https://meme-ts.wd-api.com'
       : 'https://meme.wd-api.com'
-  $api = newApi
+  api = newApi
   localStorage.setItem('api', newApi)
 }
 function share(item: ILog) {
@@ -615,8 +613,8 @@ function share(item: ILog) {
   const type = item.isBe ? 'be' : 'je'
   p.set('type', type)
   p.set('ver', '1')
-  p.set('input', JSON.stringify(this.input[type]))
-  p.set('inputBasic', JSON.stringify(this.inputBasic))
+  p.set('input', JSON.stringify(input[type]))
+  p.set('inputBasic', JSON.stringify(inputBasic))
   let path = `${
     window.location.href.split('#')[0].split('?')[0]
   }?${p.toString()}`
@@ -629,7 +627,7 @@ function share(item: ILog) {
     navigator.share(shareContent)
   } else {
     navigator.clipboard.writeText(path)
-    this.shareCopyedToClipboard = true
+    shareCopyedToClipboard = true
   }
 }
 function sendHelpTrack(label: string) {
@@ -653,39 +651,39 @@ function trackBuild(item: { filename: string; isBe: boolean }) {
     })
 }
 function collectionDesc(item: ICollection) {
-  return `(${this.t('form.collections.description_prefix')} ${
+  return `(${t('form.collections.description_prefix')} ${
     item['contains'].length
-  } ${this.t('form.collections.resource_suffix')})`
+  } ${t('form.collections.resource_suffix')})`
 }
 function open(name: string) {
   window.open(name)
 }
 async function fetchList() {
-  this.loading_backend = true
+  loading_backend = true
   let req: AxiosResponse<IResp>
   try {
-    req = await axios.get($api)
+    req = await axios.get(api)
   } catch (e) {
-    this.dialogFetchListFailed = true
+    dialogFetchListFailed = true
     console.log(e)
     return
   }
   const backend = req.data
-  this.consts = {
-    ...this.consts,
+  consts = {
+    ...consts,
     modList: [
-      { header: this.t('form.mod.header').toString() },
+      { header: t('form.mod.header').toString() },
       ...backend.mods,
-      { header: this.t('form.mod.enHeader').toString() },
+      { header: t('form.mod.enHeader').toString() },
       ...backend.enmods,
     ],
     je_modules: backend.je_modules,
     be_modules: backend.be_modules,
   }
-  this.loading_backend = false
-  this.dialogFetchListFailed = false
-  this.input.be.collection = ['choice_modules_1']
-  this.input.je.collection = ['choice_modules_1']
+  loading_backend = false
+  dialogFetchListFailed = false
+  input.be.collection = ['choice_modules_1']
+  input.je.collection = ['choice_modules_1']
 
   let p = new URLSearchParams(window.location.search)
   let type = p.get('type') as 'be' | 'je'
@@ -700,24 +698,24 @@ async function fetchList() {
     } catch (e) {
       return
     }
-    this.shareLinkParsed = true
-    this.tab = type === 'je' ? 0 : 1
-    this.input[type] = _input
-    this.inputBasic = _inputBasic
+    shareLinkParsed = true
+    tab = type === 'je' ? 0 : 1
+    input[type] = _input
+    inputBasic = _inputBasic
   }
 
-  this.consts.be_modified = backend.be_modified
-  this.consts.je_modified = backend.je_modified
+  consts.be_modified = backend.be_modified
+  consts.je_modified = backend.je_modified
 }
 async function submit() {
-  this.loading = true
+  loading = true
 
-  const inputBase = this.whetherUseBE ? this.input.be : this.input.je
+  const inputBase = whetherUseBE ? input.be : input.je
 
   let packType: 'normal' | 'legacy' | 'compat' = 'normal'
-  if (this.inputBasic.format === 3) {
+  if (inputBasic.format === 3) {
     packType = 'legacy'
-  } else if (this.input.je.compatible) {
+  } else if (input.je.compatible) {
     packType = 'compat'
   }
 
@@ -752,69 +750,68 @@ async function submit() {
 
   let data: IReq = Object.assign(
     {
-      format: this.inputBasic.format,
-      _be: this.whetherUseBE,
+      format: inputBasic.format,
+      _be: whetherUseBE,
       modules: {
         resource: resource,
-        collection: inputBase.collection.concat(this.collectionFixedItems),
+        collection: inputBase.collection.concat(collectionFixedItems),
       },
       mod:
-        this.input.je.modOption === 'all'
+        input.je.modOption === 'all'
           ? ['all']
-          : this.input.je.modOption === 'custom'
-          ? this.input.je.mod
+          : input.je.modOption === 'custom'
+          ? input.je.mod
           : [],
       type: packType,
     },
-    this.whetherUseBE && {
-      type: this.input.be.extType,
-      compatible: this.input.be.compatible,
+    whetherUseBE && {
+      type: input.be.extType,
+      compatible: input.be.compatible,
     }
   )
   console.log(data)
   allowGa() &&
     gtag?.('event', 'build', {
-      eventType: this.whetherUseBE ? 'be' : 'je',
+      eventType: whetherUseBE ? 'be' : 'je',
     })
-  const that = this
-  axios({ url: '/ajax', baseURL: $api, method: 'POST', data })
+  axios({ url: '/ajax', baseURL: api, method: 'POST', data })
     .then((res) => {
       console.log(res.data)
-      that.logs.unshift({
-        title: that.t('log.buildSucceeded') as string,
+      logs.unshift({
+        title: t('log.buildSucceeded') as string,
         ts: new Date().valueOf(),
         content: res.data.logs,
         filename: res.data.filename,
         root: res.data.root,
-        github: that.links.github,
-        isBe: that.whetherUseBE,
+        github: links.github,
+        isBe: whetherUseBE,
       })
-      that.logsPanel = that.logsPanel.map((v) => v + 1)
-      that.logsPanel.unshift(0)
-      that.$nextTick(() => {
-        ;(that.$refs.logs as Element).scrollIntoView()
+      logsPanel = logsPanel.map((v) => v + 1)
+      logsPanel.unshift(0)
+      nextTick(() => {
+        ;(refs.logs as unknown as Element).scrollIntoView()
       })
 
-      that.snackbarBuildSucceeded = true
-      that.loading = false
+      snackbarBuildSucceeded = true
+      loading = false
     })
     .catch((err) => {
-      that.logs.unshift({
-        title: that.t('log.buildFailed') as string,
+      logs.unshift({
+        title: t('log.buildFailed') as string,
         ts: new Date().valueOf(),
         content: err.response?.data?.logs || err.toString(),
       })
-      that.logsPanel = that.logsPanel.map((v) => v + 1)
-      that.logsPanel.unshift(0)
-      that.$nextTick(() => {
-        ;(that.$refs.logs as Element).scrollIntoView()
+      logsPanel = logsPanel.map((v) => v + 1)
+      logsPanel.unshift(0)
+      nextTick(() => {
+        ;(refs.logs as unknown as Element).scrollIntoView()
       })
-      that.snackbarBuildFailed = true
-      that.loading = false
+      snackbarBuildFailed = true
+      loading = false
     })
 }
-let $api = $ref('')
-let alerts = $ref([])
+let api = $ref('')
+let alerts = $ref<IAlert[]>([])
 let snackbarBuildSucceeded = $ref(false)
 let snackbarBuildFailed = $ref(false)
 let dialogFetchListFailed = $ref(false)
@@ -911,36 +908,36 @@ let consts = $ref({
 })
 
 onBeforeMount(() => {
-  if (process.env.NODE_ENV === 'production') {
+  if (import.meta.env.PROD) {
     const endpoint = {
       py: 'https://meme.wd-api.com',
       ts: 'https://meme-ts.wd-api.com',
     }
     let local = localStorage.getItem('api')?.toString() || ''
     let using = Object.values(endpoint).includes(local) ? local : endpoint['py']
-    $api = using
+    api = using
   } else {
-    $api = 'http://localhost:8000'
+    api = 'http://localhost:8000'
   }
 })
 onMounted(async () => {
   let that = this
   setInterval(() => {
-    that.hint = that.hint === 3 ? 0 : ++that.hint
+    hint = hint === 3 ? 0 : ++hint
   }, 4000)
 
-  this.fetchList()
+  fetchList()
 
   await axios
     .get(
       'https://cdn.jsdelivr.net/gh/Teahouse-Studios/mcwzh-meme-resourcepack@master/alerts.json'
     )
-    .then((response) => (this.alerts = response.data))
+    .then((response) => (alerts = response.data))
 })
 
-const modOption = computed<Record<string, string>[]>(() => {
+const modOption = $computed<Record<string, string>[]>(() => {
   return [
-    { text: this.t('form.modOption.all').toString(), value: 'all' },
+    { text: t('form.modOption.all').toString(), value: 'all' },
     { value: 'none', text: '无' },
     {
       value: 'custom',
@@ -948,19 +945,15 @@ const modOption = computed<Record<string, string>[]>(() => {
     },
   ]
 })
-const whetherUseBE = computed<boolean>(() => {
-  return this.tab === 1
+const whetherUseBE = $computed<boolean>(() => {
+  return tab === 1
 })
-const fixedItems = computed<{
+const fixedItems = $computed<{
   resource: string[]
   language: string[]
 }>(() => {
-  const base = this.whetherUseBE
-    ? this.consts.be_modules
-    : this.consts.je_modules
-  const childBase = this.whetherUseBE
-    ? this.input.be.child
-    : this.input.je.child
+  const base = whetherUseBE ? consts.be_modules : consts.je_modules
+  const childBase = whetherUseBE ? input.be.child : input.je.child
   let child: string[] = []
   switch (childBase) {
     case 0:
@@ -971,7 +964,7 @@ const fixedItems = computed<{
       break
   }
   let items = base.collection.filter((v) =>
-    this.input[this.whetherUseBE ? 'be' : 'je'].collection.includes(v.name)
+    input[whetherUseBE ? 'be' : 'je'].collection.includes(v.name)
   )
   const data = items.map((v) => v['contains']).flat()
   console.log(data)
@@ -981,9 +974,9 @@ const fixedItems = computed<{
     language: data.concat(child),
   }
 })
-const collectionFixedItems = computed<string[]>(() => {
+const collectionFixedItems = $computed<string[]>(() => {
   let version: string[] = []
-  if (!this.whetherUseBE) {
+  if (!whetherUseBE) {
     const versionModules: { [index: number]: string[] } = {
       8: [],
       7: ['version_1.17.1'],
@@ -992,11 +985,11 @@ const collectionFixedItems = computed<string[]>(() => {
       4: ['version_1.12.2-1.15.2'],
       3: ['version_1.12.2-1.15.2'],
     }
-    version = versionModules[this.inputBasic.format]
+    version = versionModules[inputBasic.format]
   }
   return version
 })
-const links = computed<{
+const links = $computed<{
   web_builder: string
   github: string
   mcbbs: string
@@ -1006,24 +999,24 @@ const links = computed<{
     web_builder: 'https://github.com/Teahouse-Studios/mcwzh-meme-web-builder',
     github:
       'https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack' +
-      (this.tab ? '-bedrock' : ''),
+      (tab ? '-bedrock' : ''),
     mcbbs: `https://www.mcbbs.net/thread-${
-      this.tab ? '1005191' : '1004643'
+      tab ? '1005191' : '1004643'
     }-1-1.html`,
-    disc: this.tab
+    disc: tab
       ? 'https://wdf.ink/record-bedrock'
       : 'https://wdf.ink/record-java',
   }
 })
-watch(vuetifyTheme, (val) => {
+watch($$(vuetifyTheme), (val) => {
   localStorage.setItem(
     'memeDarkMode',
     vuetifyTheme === 'dark' ? 'true' : 'false'
   )
 })
-watch(inputBasic.format, (val) => {
+watch($$(inputBasic.format), (val) => {
   if (val === 3) {
-    this.input.je.compatible = true
+    input.je.compatible = true
   }
 })
 
@@ -1044,6 +1037,6 @@ if (memeLang !== 'zhHans' && memeLang !== 'zhMeme' && memeLang !== 'en') {
   localStorage.removeItem('memeLang')
   memeLang = 'zhHans'
 }
-locale = memeLang
+locale.value = memeLang
 localStorage.setItem('memeInitialized', 'true')
 </script>
