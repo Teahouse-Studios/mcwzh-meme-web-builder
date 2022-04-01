@@ -66,7 +66,7 @@
             </v-list>
           </v-menu>
         </div>
-        <v-tooltip bottom>
+        <!-- <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
             <v-btn v-bind="attrs" v-on="on" icon @click="toggleApi">
               <v-icon>{{
@@ -77,7 +77,7 @@
             </v-btn>
           </template>
           <span>{{ $t("appbar.endpointSetting") }}</span>
-        </v-tooltip>
+        </v-tooltip> -->
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
             <v-btn
@@ -584,14 +584,14 @@ import { ICollection, ILog, IReq, IResource, IResp } from '@/types'
 
 export default Vue.extend({
   methods: {
-    toggleApi() {
-      const newApi =
-        this.$api === 'https://meme.wd-api.com'
-          ? 'https://meme-ts.wd-api.com'
-          : 'https://meme.wd-api.com'
-      this.$api = newApi
-      localStorage.setItem('api', newApi)
-    },
+    // toggleApi() {
+    //   const newApi =
+    //     this.$api === 'https://meme.wd-api.com'
+    //       ? 'https://meme-ts.wd-api.com'
+    //       : 'https://meme.wd-api.com'
+    //   this.$api = newApi
+    //   localStorage.setItem('api', newApi)
+    // },
     share(item: ILog) {
       let p = new URLSearchParams()
       const type = item.isBe ? 'be' : 'je'
@@ -903,15 +903,7 @@ export default Vue.extend({
   }),
   beforeMount() {
     if (process.env.NODE_ENV === "production") {
-      const endpoint = {
-        py: "https://meme.wd-api.com",
-        ts: "https://meme-ts.wd-api.com",
-      };
-      let local = localStorage.getItem("api")?.toString() || "";
-      let using = Object.values(endpoint).includes(local)
-        ? local
-        : endpoint["py"];
-      this.$api = using;
+      this.$api = "https://meme.wd-api.com";
     } else {
       this.$api = "http://localhost:8000";
     }
