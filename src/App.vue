@@ -776,9 +776,7 @@ export default Vue.extend({
           })
           that.logsPanel = that.logsPanel.map((v) => v + 1)
           that.logsPanel.unshift(0)
-          that.$nextTick(() => {
-            ;(that.$refs.logs as Element).scrollIntoView()
-          })
+          that.$nextTick(() => (that.$refs.logs as Element).scrollIntoView())
 
           that.snackbarBuildSucceeded = true
           that.loading = false
@@ -791,9 +789,7 @@ export default Vue.extend({
           })
           that.logsPanel = that.logsPanel.map((v) => v + 1)
           that.logsPanel.unshift(0)
-          that.$nextTick(() => {
-            ;(that.$refs.logs as Element).scrollIntoView()
-          })
+          that.$nextTick(() => (that.$refs.logs as Element).scrollIntoView())
           that.snackbarBuildFailed = true
           that.loading = false
         })
