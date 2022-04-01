@@ -3,19 +3,19 @@
     <template #activator="{ props }">
       <v-btn
         v-bind="props"
-        :aria-label="t('dialog.help.title')" :color="$vuetify.theme.dark ? 'dark' : 'primary'" bottom fab fixed
+        :aria-label="t('dialog.help.title')" :color="isDarkTheme ? 'dark' : 'primary'" bottom fab fixed
         large
         right
         @click="send"
       >
-        <v-icon class="rotate-question">{{ svgPath.mdiHelp }}</v-icon>
+        <v-icon class="rotate-question">{{ mdiHelp }}</v-icon>
       </v-btn>
     </template>
     <v-card>
       <v-card-title>
         {{ t("dialog.help.title") }}
         <v-btn class="ml-auto" icon @click="dialog = false">
-          <v-icon>{{ svgPath.mdiClose }}</v-icon>
+          <v-icon>{{ mdiClose }}</v-icon>
         </v-btn>
       </v-card-title>
       <v-divider class="mb-3"></v-divider>
@@ -100,19 +100,19 @@
         <h2 class="text-h5 mb-1">{{ t("dialog.help.poweredBy") }}</h2>
         <p class="text-body-1">
           <v-btn class="mr-1" href="https://github.com/Teahouse-Studios/mcwzh-meme-web-builder" icon target="_blank">
-            <v-icon>{{ svgPath.mdiGithub }}</v-icon>
+            <v-icon>{{ mdiGithub }}</v-icon>
           </v-btn>
           <v-btn class="mr-1" href="https://analytics.google.com/analytics/web/" icon target="_blank">
-            <v-icon>{{ svgPath.mdiGoogleAnalytics }}</v-icon>
+            <v-icon>{{ mdiGoogleAnalytics }}</v-icon>
           </v-btn>
           <v-btn class="mr-1" href="https://vuetifyjs.com/" icon target="_blank">
-            <v-icon>{{ svgPath.mdiVuetify }}</v-icon>
+            <v-icon>{{ mdiVuetify }}</v-icon>
           </v-btn>
           <v-btn class="mr-1" href="https://cn.vuejs.org/" icon target="_blank">
-            <v-icon>{{ svgPath.mdiVuejs }}</v-icon>
+            <v-icon>{{ mdiVuejs }}</v-icon>
           </v-btn>
           <v-btn class="mr-1" href="https://materialdesignicons.com/" icon target="_blank">
-            <v-icon>{{ svgPath.mdiVectorSquare }}</v-icon>
+            <v-icon>{{ mdiVectorSquare }}</v-icon>
           </v-btn>
         </p>
       </v-card-text>
@@ -122,20 +122,18 @@
 
 <script setup lang="ts">
 import {mdiGithub, mdiGoogleAnalytics, mdiVuetify, mdiVuejs, mdiVectorSquare, mdiClose, mdiHelp} from '@mdi/js'
-import { onMounted } from 'vue';
-import { useI18n } from 'vue-i18n';
-import allowGa from "../allowGa";
+import { onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
+import allowGa from "../allowGa"
+import { isDarkTheme } from '../utils/theme'
 
 const { t } = useI18n({ useScope: 'global' })
 
 let dialog = $ref(false)
-const svgPath = {
-  mdiGithub, mdiGoogleAnalytics, mdiVuetify, mdiVuejs, mdiVectorSquare, mdiClose, mdiHelp
-}
 onMounted(() => {
-$on('help', () => {
-  dialog = !dialog
-})
+  $on('help', () => {
+    dialog = !dialog
+  })
 })
 function send() {
   allowGa() && window.gtag('event', 'help',{

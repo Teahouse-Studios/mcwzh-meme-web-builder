@@ -19,51 +19,41 @@
         <h3 class="text-h5 mb-4">让我出去！</h3>
         <p class="text-body-1" v-if="provider === 'wechat'">
           （微信）请点击右上角的
-          <v-icon>{{ svgPath.mdiDotsHorizontal }}</v-icon> “更多” →
-          <v-icon color="blue darken-3">{{ svgPath.mdiEarth }}</v-icon>
+          <v-icon>{{ mdiDotsHorizontal }}</v-icon> “更多” →
+          <v-icon color="blue darken-3">{{ mdiEarth }}</v-icon>
           “<b>在浏览器中打开</b>”。
         </p>
         <p class="text-body-1" v-if="provider === 'qq'">
-          （QQ）请点击右上角的 <v-icon>{{ svgPath.mdiPlus }}</v-icon> “更多” →
-          <v-icon color="blue darken-3">{{ svgPath.mdiEarth }}</v-icon>
+          （QQ）请点击右上角的 <v-icon>{{ mdiPlus }}</v-icon> “更多” →
+          <v-icon color="blue darken-3">{{ mdiEarth }}</v-icon>
           “<b>浏览器</b>”。
         </p>
         <p class="text-body-1" v-if="provider === 'bilibili'">
           （哔哩哔哩）请点击右上角的
-          <v-icon>{{ svgPath.mdiDotsVertical }}</v-icon> “更多” →
-          <v-icon>{{ svgPath.mdiCompass }}</v-icon> <b>“浏览器</b>”。
+          <v-icon>{{ mdiDotsVertical }}</v-icon> “更多” →
+          <v-icon>{{ mdiCompass }}</v-icon> <b>“浏览器</b>”。
         </p>
       </v-container>
     </v-card>
   </v-dialog>
 </template>
 
-<script>
+<script setup lang="ts">
 import { mdiCompass, mdiDotsVertical } from '@mdi/js'
 
-export default {
-  name: 'webview',
-  data: () => ({
-    dialog: false,
-    provider: null,
-    svgPath: {
-      mdiCompass,
-      mdiDotsVertical,
-    },
-  }),
-  beforeMount() {
-    const UA = navigator.userAgent
+let dialog = $ref(false)
+let provider = $ref<string | null>(null)
 
-    if (UA.includes('MicroMessenger/')) {
-      dialog = true
-      provider = 'wechat'
-    } else if (UA.includes('QQ/')) {
-      dialog = true
-      provider = 'qq'
-    } else if (UA.includes('BiliApp/')) {
-      dialog = true
-      provider = 'bilibili'
-    }
-  },
+const UA = navigator.userAgent
+
+if (UA.includes('MicroMessenger/')) {
+  dialog = true
+  provider = 'wechat'
+} else if (UA.includes('QQ/')) {
+  dialog = true
+  provider = 'qq'
+} else if (UA.includes('BiliApp/')) {
+  dialog = true
+  provider = 'bilibili'
 }
 </script>

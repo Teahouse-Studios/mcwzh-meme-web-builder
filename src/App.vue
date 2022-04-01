@@ -13,15 +13,15 @@
               <template #activator="{ props }">
                 <div v-bind="props">
                   <v-btn :href="links.mcbbs" rel="noopener noreferrer" text>
-                    <v-icon left>{{ svgPath.mdiPost }}</v-icon>
+                    <v-icon left>{{ mdiPost }}</v-icon>
                     {{ t('appbar.mcbbs') }}
                   </v-btn>
                   <v-btn :href="links.github" rel="noopener noreferrer" text>
-                    <v-icon left>{{ svgPath.mdiGithub }}</v-icon>
+                    <v-icon left>{{ mdiGithub }}</v-icon>
                     {{ t('appbar.github') }}
                   </v-btn>
                   <v-btn :href="links.disc" rel="noopener noreferrer" text>
-                    <v-icon left>{{ svgPath.mdiDisc }}</v-icon>
+                    <v-icon left>{{ mdiDisc }}</v-icon>
                     {{ t('appbar.discPack') }}
                   </v-btn>
                   <langMenu />
@@ -34,14 +34,14 @@
             <v-menu bottom left>
               <template #activator="{ props }">
                 <v-btn icon v-bind="props">
-                  <v-icon>{{ svgPath.mdiDotsVertical }}</v-icon>
+                  <v-icon>{{ mdiDotsVertical }}</v-icon>
                 </v-btn>
               </template>
 
               <v-list dense>
                 <v-list-item :href="links.mcbbs" rel="noopener noreferrer">
                   <v-list-item-avatar class="ml-0">
-                    <v-icon>{{ svgPath.mdiPost }}</v-icon>
+                    <v-icon>{{ mdiPost }}</v-icon>
                   </v-list-item-avatar>
                   <v-list-item-subtitle>
                     {{ t('appbar.mcbbs') }}
@@ -49,7 +49,7 @@
                 </v-list-item>
                 <v-list-item :href="links.github" rel="noopener noreferrer">
                   <v-list-item-avatar class="ml-0">
-                    <v-icon>{{ svgPath.mdiGithub }}</v-icon>
+                    <v-icon>{{ mdiGithub }}</v-icon>
                   </v-list-item-avatar>
                   <v-list-item-subtitle>
                     {{ t('appbar.github') }}
@@ -57,7 +57,7 @@
                 </v-list-item>
                 <v-list-item :href="links.disc" rel="noopener noreferrer">
                   <v-list-item-avatar class="ml-0">
-                    <v-icon>{{ svgPath.mdiDisc }}</v-icon>
+                    <v-icon>{{ mdiDisc }}</v-icon>
                   </v-list-item-avatar>
                   <v-list-item-subtitle>
                     {{ t('appbar.discPack') }}
@@ -75,8 +75,8 @@
               <v-btn icon @click="toggleApi" v-bind="props">
                 <v-icon>{{
                   api === 'https://meme.wd-api.com'
-                    ? svgPath.mdiLanguagePython
-                    : svgPath.mdiLanguageTypescript
+                    ? mdiLanguagePython
+                    : mdiLanguageTypescript
                 }}</v-icon>
               </v-btn>
             </template>
@@ -91,10 +91,8 @@
                   vuetifyTheme = vuetifyTheme === 'light' ? 'dark' : 'light'
                 "
               >
-                <v-icon v-if="isDarkTheme"
-                  >{{ svgPath.mdiBrightness7 }}
-                </v-icon>
-                <v-icon v-else>{{ svgPath.mdiBrightness4 }}</v-icon>
+                <v-icon v-if="isDarkTheme">{{ mdiBrightness7 }} </v-icon>
+                <v-icon v-else>{{ mdiBrightness4 }}</v-icon>
               </v-btn>
             </template>
             <span>{{ t('appbar.nightModeSwitch') }}</span>
@@ -105,7 +103,7 @@
         v-for="a in alerts"
         :key="a.name"
         :color="isDarkTheme ? 'dark' : 'white'"
-        :icon="svgPath.mdiInformationOutline"
+        :icon="mdiInformationOutline"
         class="mb-0"
         dense
         tile
@@ -113,17 +111,17 @@
         <span v-html="a.message"></span>
       </v-alert>
       <v-tabs v-model="tab" background-color="transparent" fixed-tabs>
-        <v-tab :value="0">
+        <v-tab value="je">
           {{ t('java') }}
         </v-tab>
-        <v-tab :value="1">
+        <v-tab value="be">
           {{ t('bedrock') }}
         </v-tab>
       </v-tabs>
 
       <v-container>
         <v-window v-model="tab" class="pt-2">
-          <v-window-item :value="0">
+          <v-window-item value="je">
             <v-row>
               <v-col cols="12" sm="4">
                 <v-select
@@ -135,7 +133,7 @@
                   persistent-hint
                 >
                   <template #prepend>
-                    <v-icon>{{ svgPath.mdiClock }}</v-icon>
+                    <v-icon>{{ mdiClock }}</v-icon>
                   </template>
                 </v-select>
               </v-col>
@@ -156,7 +154,7 @@
                   @help="sendHelpTrack('je_resource')"
                 >
                   <template #prepend>
-                    <v-icon>{{ svgPath.mdiArchive }}</v-icon>
+                    <v-icon>{{ mdiArchive }}</v-icon>
                   </template>
                 </functional-selector>
               </v-col>
@@ -175,7 +173,7 @@
                   :loading="loading_backend"
                 >
                   <template #prepend>
-                    <v-icon>{{ svgPath.mdiCog }}</v-icon>
+                    <v-icon>{{ mdiCog }}</v-icon>
                   </template>
                 </functional-selector>
               </v-col>
@@ -189,7 +187,7 @@
                   persistent-hint
                 >
                   <template #prepend>
-                    <v-icon>{{ svgPath.mdiViewModule }}</v-icon>
+                    <v-icon>{{ mdiViewModule }}</v-icon>
                   </template>
                 </v-select>
               </v-col>
@@ -205,7 +203,7 @@
                   persistent-hint
                 >
                   <template #prepend>
-                    <v-icon>{{ svgPath.mdiSelectGroup }}</v-icon>
+                    <v-icon>{{ mdiSelectGroup }}</v-icon>
                   </template>
                 </v-select>
               </v-col>
@@ -221,7 +219,7 @@
                     {{ collectionDesc(data.item) }}
                   </template>
                   <template #prepend>
-                    <v-icon>{{ svgPath.mdiGroup }}</v-icon>
+                    <v-icon>{{ mdiGroup }}</v-icon>
                   </template>
                 </functional-selector>
               </v-col>
@@ -242,7 +240,7 @@
               <v-col cols="12">
                 <v-slider
                   v-model="input.je.child"
-                  :tick-labels="t('form.child.ticks')"
+                  :ticks="t('form.child.ticks')"
                   :max="2"
                   :label="t('form.child.label')"
                   step="1"
@@ -252,13 +250,13 @@
                   persistent-hint
                 >
                   <template #prepend>
-                    <v-icon>{{ svgPath.mdiAccountChildCircle }}</v-icon>
+                    <v-icon>{{ mdiAccountChildCircle }}</v-icon>
                   </template>
                 </v-slider>
               </v-col>
             </v-row>
           </v-window-item>
-          <v-window-item :value="1">
+          <v-window-item value="be">
             <v-row>
               <v-col cols="6" sm="6">
                 <v-select
@@ -270,7 +268,7 @@
                   persistent-hint
                 >
                   <template #prepend>
-                    <v-icon>{{ svgPath.mdiFolderInformation }}</v-icon>
+                    <v-icon>{{ mdiFolderInformation }}</v-icon>
                   </template>
                 </v-select>
               </v-col>
@@ -287,7 +285,7 @@
                   @help="sendHelpTrack('be_resource')"
                 >
                   <template #prepend>
-                    <v-icon>{{ svgPath.mdiArchive }}</v-icon>
+                    <v-icon>{{ mdiArchive }}</v-icon>
                   </template>
                 </functional-selector>
               </v-col>
@@ -302,7 +300,7 @@
                     {{ collectionDesc(data.item) }}
                   </template>
                   <template #prepend>
-                    <v-icon>{{ svgPath.mdiGroup }}</v-icon>
+                    <v-icon>{{ mdiGroup }}</v-icon>
                   </template>
                 </functional-selector>
               </v-col>
@@ -328,7 +326,7 @@
                   class="mb-3"
                 >
                   <template #prepend>
-                    <v-icon>{{ svgPath.mdiAccountChildCircle }}</v-icon>
+                    <v-icon>{{ mdiAccountChildCircle }}</v-icon>
                   </template>
                 </v-slider>
               </v-col>
@@ -350,7 +348,7 @@
           </v-window-item>
         </v-window>
         <v-alert
-          :icon="svgPath.mdiInformationOutline"
+          :icon="mdiInformationOutline"
           class="mt-3 mb-3 text-body-2"
           dense
           type="info"
@@ -363,7 +361,7 @@
             color="primary"
             @click="submit"
           >
-            <v-icon left>{{ svgPath.mdiCloudDownload }}</v-icon>
+            <v-icon left>{{ mdiCloudDownload }}</v-icon>
             {{ t('form.submit') }}
           </v-btn>
           <p
@@ -374,7 +372,7 @@
             {{ t('form.modified') }}
             {{
               new Date(
-                tab === 0 ? consts.je_modified : consts.be_modified
+                tab === 'je' ? consts.je_modified : consts.be_modified
               ).toLocaleString(t('metadata.dateLocale'.toString()))
             }}
           </p>
@@ -413,7 +411,7 @@
                     }
                   "
                 >
-                  <v-icon left>{{ svgPath.mdiCloudDownload }}</v-icon>
+                  <v-icon left>{{ mdiCloudDownload }}</v-icon>
                   {{ t('log.download') }}
                 </v-btn>
                 <v-btn
@@ -428,7 +426,7 @@
                     }
                   "
                 >
-                  <v-icon>{{ svgPath.mdiShareVariant }}</v-icon>
+                  <v-icon>{{ mdiShareVariant }}</v-icon>
                 </v-btn>
                 <v-btn
                   v-else
@@ -436,7 +434,7 @@
                   dark
                   @click="$emit('help')"
                 >
-                  <v-icon left>{{ svgPath.mdiBug }}</v-icon>
+                  <v-icon left>{{ mdiBug }}</v-icon>
                   {{ t('log.feedback') }}
                 </v-btn>
               </v-expansion-panel-text>
@@ -589,9 +587,7 @@ import News from './components/news.vue'
 import { IAlert, ICollection, ILog, IReq, IResource, IResp } from './types'
 import { useI18n } from 'vue-i18n'
 import { computed, onBeforeMount, onMounted, watch, nextTick } from 'vue'
-
-let vuetifyTheme = $ref('light')
-const isDarkTheme = computed(() => vuetifyTheme === 'dark')
+import { vuetifyTheme, isDarkTheme, setTheme } from './utils/theme'
 
 let { t, locale } = useI18n({ useScope: 'global' })
 
@@ -699,7 +695,7 @@ async function fetchList() {
       return
     }
     shareLinkParsed = true
-    tab = type === 'je' ? 0 : 1
+    tab = type
     input[type] = _input
     inputBasic = _inputBasic
   }
@@ -818,36 +814,7 @@ let dialogFetchListFailed = $ref(false)
 let fetchListIgnored = $ref(false)
 let shareLinkParsed = $ref(false)
 let shareCopyedToClipboard = $ref(false)
-const svgPath = {
-  mdiLanguagePython,
-  mdiLanguageTypescript,
-  mdiArrowRight,
-  mdiAbTesting,
-  mdiPost,
-  mdiGithub,
-  mdiDisc,
-  mdiCloudDownload,
-  mdiBug,
-  mdiDotsVertical,
-  mdiInformationOutline,
-  mdiBrightness4,
-  mdiBrightness7,
-  mdiShareVariant,
-  mdiClose,
-  mdiCompass,
-  mdiDotsHorizontal,
-  mdiEarth,
-  mdiPlus,
-  mdiClock,
-  mdiArchive,
-  mdiCog,
-  mdiViewModule,
-  mdiSelectGroup,
-  mdiGroup,
-  mdiFolderInformation,
-  mdiAccountChildCircle,
-}
-let tab = $ref<0 | 1>(0)
+let tab = $ref<'je' | 'be'>('je')
 let logsPanel = $ref<number[]>()
 let loading = $ref(false)
 let inputBasic = $ref({
@@ -946,7 +913,7 @@ const modOption = $computed<Record<string, string>[]>(() => {
   ]
 })
 const whetherUseBE = $computed<boolean>(() => {
-  return tab === 1
+  return tab === 'be'
 })
 const fixedItems = $computed<{
   resource: string[]
@@ -999,13 +966,14 @@ const links = $computed<{
     web_builder: 'https://github.com/Teahouse-Studios/mcwzh-meme-web-builder',
     github:
       'https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack' +
-      (tab ? '-bedrock' : ''),
+      (tab === 'be' ? '-bedrock' : ''),
     mcbbs: `https://www.mcbbs.net/thread-${
-      tab ? '1005191' : '1004643'
+      tab === 'be' ? '1005191' : '1004643'
     }-1-1.html`,
-    disc: tab
-      ? 'https://wdf.ink/record-bedrock'
-      : 'https://wdf.ink/record-java',
+    disc:
+      tab === 'be'
+        ? 'https://wdf.ink/record-bedrock'
+        : 'https://wdf.ink/record-java',
   }
 })
 watch($$(vuetifyTheme), (val) => {
@@ -1030,8 +998,8 @@ if (localStorage.getItem('memeInitialized') !== 'true') {
   )
   localStorage.setItem('memeNewsIgnored', '0')
 }
-vuetifyTheme =
-  localStorage.getItem('memeDarkMode') === 'true' ? 'dark' : 'light'
+
+setTheme(localStorage.getItem('memeDarkMode') === 'true' ? 'dark' : 'light')
 let memeLang = localStorage.getItem('memeLang')
 if (memeLang !== 'zhHans' && memeLang !== 'zhMeme' && memeLang !== 'en') {
   localStorage.removeItem('memeLang')

@@ -18,7 +18,7 @@ export default defineConfig(({ command, mode }) => {
     node_modules: path.resolve(__dirname, './node_modules'),
     public: path.resolve(__dirname, './public'),
     src: path.resolve(__dirname, './src'),
-    '@': path.resolve(__dirname, '.src'),
+    '@': path.resolve(__dirname, './src'),
     vue$: 'vue/dist/vue.runtime.esm.js',
   }
 

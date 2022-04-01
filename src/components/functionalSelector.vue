@@ -24,7 +24,7 @@
         @click="$emit('help')"
       >
         <v-icon>
-          {{ svgPath.mdiHelpCircleOutline }}
+          {{ mdiHelpCircleOutline }}
         </v-icon>
       </v-btn>
     </template>
@@ -111,15 +111,18 @@ let props = withDefaults(
     hint: String
     items: IResource[]
     resource_parent?: IResource[]
-    loading: Boolean
-    disabled: Boolean
-    fixedItems: IResource[]
-    help: string
+    loading?: Boolean
+    disabled?: Boolean
+    fixedItems?: IResource[]
+    help?: string
     outlined?: Boolean
     modelValue: IResource[]
   }>(),
   {
     resource_parent: [],
+    loading: false,
+    disabled: false,
+    fixedItems: [],
   }
 )
 
@@ -134,11 +137,11 @@ const list = $computed(() => {
 })
 const resourceIcon = $computed(() => {
   if (resource.length === 0) {
-    return svgPath.mdiCheckboxBlankOutline
+    return mdiCheckboxBlankOutline
   } else if (resource.length === props.items?.length) {
-    return svgPath.mdiCloseBox
+    return mdiCloseBox
   } else {
-    return svgPath.mdiMinusBox
+    return mdiMinusBox
   }
 })
 let combinedItems = $computed({
@@ -155,7 +158,7 @@ const incompatibleMap = $computed(() => {
   return props.items
     .filter((v) => v.incompatible_with?.length)
     .reduce((v, obj) => {
-      obj.incompatible_with.map((item) => {
+      obj.incompatible_with!.map((item) => {
         v[item] ||= []
         v[item].push(obj.name)
       })
@@ -192,12 +195,5 @@ function toggleResource() {
       .filter((v) => !props.fixedItems.includes(v))
       .filter((v) => !Object.keys(incompatibleMap).includes(v))
   }
-}
-
-const svgPath = {
-  mdiCheckboxBlankOutline,
-  mdiCloseBox,
-  mdiMinusBox,
-  mdiHelpCircleOutline,
 }
 </script>

@@ -4,7 +4,7 @@
       <v-card-title>
         梗中新闻 #{{ news.id }} - {{ news.title }}
         <v-btn class="ml-auto" icon @click="newsIgnore()">
-          <v-icon>{{ svgPath.mdiClose }}</v-icon>
+          <v-icon>{{ mdiClose }}</v-icon>
         </v-btn>
       </v-card-title>
       <v-sheet v-if="news.video" class="v-card--hero mb-4">
@@ -26,7 +26,7 @@
       <v-card-text style="height: 500px">
         <div v-html="news.content"></div>
         <v-btn v-if="news.detail" :href="news.detail" plain>
-          <v-icon left>{{ svgPath.mdiArrowRight }}</v-icon>
+          <v-icon left>{{ mdiArrowRight }}</v-icon>
           阅读更多
         </v-btn>
       </v-card-text>
@@ -45,10 +45,7 @@ function newsIgnore() {
 }
 let dialogNews = $ref(false)
 let news = $ref<INews | null>(null)
-const svgPath = {
-  mdiClose,
-  mdiArrowRight,
-}
+
 await axios
   .get(
     'https://cdn.jsdelivr.net/gh/Teahouse-Studios/mcwzh-meme-resourcepack@master/news.json'
