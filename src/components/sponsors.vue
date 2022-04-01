@@ -23,13 +23,7 @@
 
           <v-card-actions>
             <v-btn
-              href="https://www.mcbbs.net/?2444378"
-              rel="noopener noreferrer"
-              text
-            >{{ $t("sponsor.spg.mcbbs") }}
-            </v-btn>
-            <v-btn
-              href="https://www.mcbbs.net/thread-926724-1-1.html"
+              href="https://marketplace.visualstudio.com/items?itemName=SPGoding.datapack-language-server"
               rel="noopener noreferrer"
               text
             >
