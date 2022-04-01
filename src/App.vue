@@ -2,7 +2,7 @@
   <v-app>
     <v-main>
       <v-app-bar :color="$vuetify.theme.dark ? 'dark' : 'white'" flat>
-        <v-toolbar-title>{{ $t("appbar.title") }}</v-toolbar-title>
+        <v-toolbar-title>{{ $t('appbar.title') }}</v-toolbar-title>
         <v-spacer></v-spacer>
         <div v-if="$vuetify.breakpoint.mdAndUp">
           <v-tooltip bottom>
@@ -10,20 +10,20 @@
               <div v-bind="attrs" v-on="on">
                 <v-btn :href="links.mcbbs" rel="noopener noreferrer" text>
                   <v-icon left>{{ svgPath.mdiPost }}</v-icon>
-                  {{ $t("appbar.mcbbs") }}
+                  {{ $t('appbar.mcbbs') }}
                 </v-btn>
                 <v-btn :href="links.github" rel="noopener noreferrer" text>
                   <v-icon left>{{ svgPath.mdiGithub }}</v-icon>
-                  {{ $t("appbar.github") }}
+                  {{ $t('appbar.github') }}
                 </v-btn>
                 <v-btn :href="links.disc" rel="noopener noreferrer" text>
                   <v-icon left>{{ svgPath.mdiDisc }}</v-icon>
-                  {{ $t("appbar.discPack") }}
+                  {{ $t('appbar.discPack') }}
                 </v-btn>
                 <langMenu />
               </div>
             </template>
-            <span>{{ !this.tab ? $t("java") : $t("bedrock") }}</span>
+            <span>{{ !this.tab ? $t('java') : $t('bedrock') }}</span>
           </v-tooltip>
         </div>
         <div v-else>
@@ -40,7 +40,7 @@
                   <v-icon>{{ svgPath.mdiPost }}</v-icon>
                 </v-list-item-icon>
                 <v-list-item-text>
-                  {{ $t("appbar.mcbbs") }}
+                  {{ $t('appbar.mcbbs') }}
                 </v-list-item-text>
               </v-list-item>
               <v-list-item :href="links.github" rel="noopener noreferrer">
@@ -48,7 +48,7 @@
                   <v-icon>{{ svgPath.mdiGithub }}</v-icon>
                 </v-list-item-icon>
                 <v-list-item-text>
-                  {{ $t("appbar.github") }}
+                  {{ $t('appbar.github') }}
                 </v-list-item-text>
               </v-list-item>
               <v-list-item :href="links.disc" rel="noopener noreferrer">
@@ -56,12 +56,12 @@
                   <v-icon>{{ svgPath.mdiDisc }}</v-icon>
                 </v-list-item-icon>
                 <v-list-item-text>
-                  {{ $t("appbar.discPack") }}
+                  {{ $t('appbar.discPack') }}
                 </v-list-item-text>
               </v-list-item>
               <langMenu />
               <div class="text-center">
-                （{{ !this.tab ? $t("java") : $t("bedrock") }}）
+                （{{ !this.tab ? $t('java') : $t('bedrock') }}）
               </div>
             </v-list>
           </v-menu>
@@ -92,7 +92,7 @@
               <v-icon v-else>{{ svgPath.mdiBrightness4 }}</v-icon>
             </v-btn>
           </template>
-          <span>{{ $t("appbar.nightModeSwitch") }}</span>
+          <span>{{ $t('appbar.nightModeSwitch') }}</span>
         </v-tooltip>
       </v-app-bar>
       <v-alert
@@ -108,10 +108,10 @@
       </v-alert>
       <v-tabs v-model="tab" background-color="transparent" fixed-tabs>
         <v-tab>
-          {{ $t("java") }}
+          {{ $t('java') }}
         </v-tab>
         <v-tab>
-          {{ $t("bedrock") }}
+          {{ $t('bedrock') }}
         </v-tab>
       </v-tabs>
 
@@ -146,7 +146,6 @@
                   "
                   :label="$t('form.resource.label')"
                   :loading="loading_backend"
-                  
                   help="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack/wiki/%E6%A2%97%E4%BD%93%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9%E5%88%97%E8%A1%A8"
                   @help="sendHelpTrack('je_resource')"
                 >
@@ -168,7 +167,6 @@
                   "
                   :label="$t('form.language.label')"
                   :loading="loading_backend"
-                  
                 >
                   <template #prepend>
                     <v-icon>{{ svgPath.mdiCog }}</v-icon>
@@ -279,7 +277,6 @@
                   :items="consts.be_modules.resource"
                   :label="$t('form.resource.label')"
                   :loading="loading_backend"
-                  
                   help="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock/wiki/%E6%A2%97%E4%BD%93%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9%E5%88%97%E8%A1%A8"
                   @help="sendHelpTrack('be_resource')"
                 >
@@ -294,7 +291,6 @@
                   :hint="$t('form.collections.hint')"
                   :items="consts.be_modules.collection"
                   :label="$t(`form.collections.label`)"
-                  
                 >
                   <template v-slot:before-author="data">
                     {{ collectionDesc(data.item) }}
@@ -341,7 +337,7 @@
                   href="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock"
                   rel="nofollow noopener"
                   target="_blank"
-                  >{{ $t("bedrock_hint.readme") }}</a
+                  >{{ $t('bedrock_hint.readme') }}</a
                 >
               </i18n>
             </p>
@@ -352,7 +348,7 @@
           class="mt-3 mb-3 text-body-2"
           dense
           type="info"
-          >{{ $t("hints")[hint] }}
+          >{{ $t('hints')[hint] }}
         </v-alert>
         <div>
           <v-btn
@@ -362,37 +358,42 @@
             @click="submit"
           >
             <v-icon left>{{ svgPath.mdiCloudDownload }}</v-icon>
-            {{ $t("form.submit") }}
+            {{ $t('form.submit') }}
           </v-btn>
           <p
             v-if="consts.be_modified && consts.je_modified"
             class="ml-2 caption"
-            style="display:inline-block;vertical-align: middle; margin: auto"
+            style="display: inline-block; vertical-align: middle; margin: auto"
           >
-            {{ $t("form.modified") }}
+            {{ $t('form.modified') }}
             {{
               new Date(
                 tab === 0 ? consts.je_modified : consts.be_modified
-              ).toLocaleString($t("metadata.dateLocale".toString()))
+              ).toLocaleString($t('metadata.dateLocale'.toString()))
             }}
           </p>
         </div>
         <div v-if="logs.length >= 1">
-          <v-divider style="margin:15px 0"></v-divider>
-          <p ref="logs" class="headline">{{ $t("log.headline") }}</p>
+          <v-divider style="margin: 15px 0"></v-divider>
+          <p ref="logs" class="headline">{{ $t('log.headline') }}</p>
           <v-expansion-panels v-model="logsPanel" multiple>
             <v-expansion-panel v-for="(item, i) in logs" :key="i">
               <v-expansion-panel-header>
                 {{
                   new Date(Number(item.ts)).toLocaleString(
-                    $t("metadata.dateLocale".toString())
+                    $t('metadata.dateLocale'.toString())
                   )
                 }}
                 {{ item.title }}
               </v-expansion-panel-header>
               <v-expansion-panel-content>
                 <pre
-                  style="padding-bottom:15px;white-space: pre-wrap;font-family: 'Cascadia Code', 'Fira Code','Consolas', monospace;"
+                  style="
+                    padding-bottom: 15px;
+                    white-space: pre-wrap;
+                    font-family: 'Cascadia Code', 'Fira Code', 'Consolas',
+                      monospace;
+                  "
                   >{{ item.content }}</pre
                 >
                 <v-btn
@@ -401,13 +402,13 @@
                   outlined
                   @click="
                     () => {
-                      open(item.root + item.filename);
-                      trackBuild(item);
+                      open(item.root + item.filename)
+                      trackBuild(item)
                     }
                   "
                 >
                   <v-icon left>{{ svgPath.mdiCloudDownload }}</v-icon>
-                  {{ $t("log.download") }}
+                  {{ $t('log.download') }}
                 </v-btn>
                 <v-btn
                   v-if="item.filename"
@@ -416,8 +417,8 @@
                   icon
                   @click="
                     () => {
-                      share(item);
-                      trackShare(item);
+                      share(item)
+                      trackShare(item)
                     }
                   "
                 >
@@ -430,20 +431,20 @@
                   @click="$bus.$emit('help')"
                 >
                   <v-icon left>{{ svgPath.mdiBug }}</v-icon>
-                  {{ $t("log.feedback") }}
+                  {{ $t('log.feedback') }}
                 </v-btn>
               </v-expansion-panel-content>
             </v-expansion-panel>
           </v-expansion-panels>
         </div>
-        <v-divider style="margin:15px 0"></v-divider>
+        <v-divider style="margin: 15px 0"></v-divider>
         <Sponsors />
       </v-container>
       <teahouse-footer />
     </v-main>
     <memeHelp ref="help" />
     <v-snackbar v-model="snackbarBuildSucceeded">
-      {{ $t("snackbar.buildSucceeded") }}
+      {{ $t('snackbar.buildSucceeded') }}
       <template v-slot:action="{ attrs }">
         <v-btn
           v-bind="attrs"
@@ -451,12 +452,12 @@
           text
           @click="snackbarBuildSucceeded = false"
         >
-          {{ $t("snackbar.close") }}
+          {{ $t('snackbar.close') }}
         </v-btn>
       </template>
     </v-snackbar>
     <v-snackbar v-model="shareLinkParsed">
-      {{ $t("snackbar.shareLinkParsed") }}
+      {{ $t('snackbar.shareLinkParsed') }}
       <template v-slot:action="{ attrs }">
         <v-btn
           v-bind="attrs"
@@ -464,12 +465,12 @@
           text
           @click="shareLinkParsed = false"
         >
-          {{ $t("snackbar.close") }}
+          {{ $t('snackbar.close') }}
         </v-btn>
       </template>
     </v-snackbar>
     <v-snackbar v-model="shareCopyedToClipboard">
-      {{ $t("snackbar.shareCopyedToClipboard") }}
+      {{ $t('snackbar.shareCopyedToClipboard') }}
       <template v-slot:action="{ attrs }">
         <v-btn
           v-bind="attrs"
@@ -477,12 +478,12 @@
           text
           @click="shareCopyedToClipboard = false"
         >
-          {{ $t("snackbar.close") }}
+          {{ $t('snackbar.close') }}
         </v-btn>
       </template>
     </v-snackbar>
     <v-snackbar v-model="snackbarBuildFailed">
-      {{ $t("snackbar.buildFailed") }}
+      {{ $t('snackbar.buildFailed') }}
       <template v-slot:action="{ attrs }">
         <v-btn
           v-bind="attrs"
@@ -490,7 +491,7 @@
           text
           @click="open(links.web_builder + '/issues/new/choose')"
         >
-          {{ $t("snackbar.feedback") }}
+          {{ $t('snackbar.feedback') }}
         </v-btn>
         <v-btn
           v-bind="attrs"
@@ -498,39 +499,41 @@
           text
           @click="snackbarBuildSucceeded = false"
         >
-          {{ $t("snackbar.close") }}
+          {{ $t('snackbar.close') }}
         </v-btn>
       </template>
     </v-snackbar>
     <v-dialog v-model="dialogFetchListFailed" persistent width="500">
       <v-card>
         <v-card-title class="headline"
-          >{{ $t("dialog.fetchListFailed.headline") }}
+          >{{ $t('dialog.fetchListFailed.headline') }}
         </v-card-title>
         <v-card-text>
-          {{ $t("dialog.fetchListFailed.text") }}
+          {{ $t('dialog.fetchListFailed.text') }}
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="primary" text @click="fetchList()">
-            {{ $t("dialog.fetchListFailed.retry") }}
+            {{ $t('dialog.fetchListFailed.retry') }}
           </v-btn>
           <v-btn
             text
-            @click="(dialogFetchListFailed = false), ($refs.help.dialog = true)"
+            @click="
+              ;(dialogFetchListFailed = false), ($refs.help.dialog = true)
+            "
           >
-            {{ $t("dialog.fetchListFailed.feedback") }}
+            {{ $t('dialog.fetchListFailed.feedback') }}
           </v-btn>
           <v-btn
             color="error"
             text
             @click="
-              (dialogFetchListFailed = false),
+              ;(dialogFetchListFailed = false),
                 (fetchListIgnored = true),
                 (loading_backend = false)
             "
           >
-            {{ $t("dialog.fetchListFailed.ignore") }}
+            {{ $t('dialog.fetchListFailed.ignore') }}
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -656,11 +659,11 @@ export default Vue.extend({
       this.consts = {
         ...this.consts,
         modList: [
-            { header: this.$t('form.mod.header').toString() },
-            ...backend.mods,
-            { header: this.$t('form.mod.enHeader').toString() },
-            ...backend.enmods
-          ],
+          { header: this.$t('form.mod.header').toString() },
+          ...backend.mods,
+          { header: this.$t('form.mod.enHeader').toString() },
+          ...backend.enmods,
+        ],
         je_modules: backend.je_modules,
         be_modules: backend.be_modules,
       }
@@ -719,15 +722,15 @@ export default Vue.extend({
             resource.push('lang_sfw')
           }
           if (resource.includes('lang_sfc')) {
-            resource = resource.filter(item => item !== 'lang_sfc')
+            resource = resource.filter((item) => item !== 'lang_sfc')
           }
           break
         case 2:
           if (resource.includes('lang_sfw')) {
-            resource = resource.filter(item => item !== 'lang_sfw')
+            resource = resource.filter((item) => item !== 'lang_sfw')
           }
           if (resource.includes('lang_sfc')) {
-            resource = resource.filter(item => item !== 'lang_sfc')
+            resource = resource.filter((item) => item !== 'lang_sfc')
           }
           break
       }
@@ -760,7 +763,7 @@ export default Vue.extend({
         })
       const that = this
       axios({ url: '/ajax', baseURL: this.$api, method: 'POST', data })
-        .then(res => {
+        .then((res) => {
           console.log(res.data)
           that.logs.unshift({
             title: that.$t('log.buildSucceeded') as string,
@@ -771,25 +774,25 @@ export default Vue.extend({
             github: that.links.github,
             isBe: that.whetherUseBE,
           })
-          that.logsPanel = that.logsPanel.map(v => v + 1)
+          that.logsPanel = that.logsPanel.map((v) => v + 1)
           that.logsPanel.unshift(0)
           that.$nextTick(() => {
-            (that.$refs.logs as Element).scrollIntoView()
+            ;(that.$refs.logs as Element).scrollIntoView()
           })
 
           that.snackbarBuildSucceeded = true
           that.loading = false
         })
-        .catch(err => {
+        .catch((err) => {
           that.logs.unshift({
             title: that.$t('log.buildFailed') as string,
             ts: new Date().valueOf(),
             content: err.response?.data?.logs || err.toString(),
           })
-          that.logsPanel = that.logsPanel.map(v => v + 1)
+          that.logsPanel = that.logsPanel.map((v) => v + 1)
           that.logsPanel.unshift(0)
           that.$nextTick(() => {
-            (that.$refs.logs as Element).scrollIntoView()
+            ;(that.$refs.logs as Element).scrollIntoView()
           })
           that.snackbarBuildFailed = true
           that.loading = false
@@ -875,13 +878,16 @@ export default Vue.extend({
       je_modified: 0,
       be_modified: 0,
       beExtType: ['mcpack', 'zip'],
-      modList: [] as Array<{
-        text?: string | number | object
-        value?: string | number | object
-        disabled?: boolean
-        divider?: boolean
-        header?: string
-      }| string>,
+      modList: [] as Array<
+        | {
+            text?: string | number | object
+            value?: string | number | object
+            disabled?: boolean
+            divider?: boolean
+            header?: string
+          }
+        | string
+      >,
       je_modules: {
         resource: [] as IResource[],
         collection: [] as ICollection[],
@@ -902,10 +908,10 @@ export default Vue.extend({
     },
   }),
   beforeMount() {
-    if (process.env.NODE_ENV === "production") {
-      this.$api = "https://meme.wd-api.com";
+    if (process.env.NODE_ENV === 'production') {
+      this.$api = 'https://meme.wd-api.com'
     } else {
-      this.$api = "http://localhost:8000";
+      this.$api = 'http://localhost:8000'
     }
   },
   async mounted() {
@@ -920,7 +926,7 @@ export default Vue.extend({
       .get(
         'https://cdn.jsdelivr.net/gh/Teahouse-Studios/mcwzh-meme-resourcepack@master/alerts.json'
       )
-      .then(response => (this.alerts = response.data))
+      .then((response) => (this.alerts = response.data))
   },
   computed: {
     modOption(): Record<string, string>[] {
@@ -955,10 +961,10 @@ export default Vue.extend({
           child = ['lang_sfw']
           break
       }
-      let items = base.collection.filter(v =>
+      let items = base.collection.filter((v) =>
         this.input[this.whetherUseBE ? 'be' : 'je'].collection.includes(v.name)
       )
-      const data = items.map(v => v['contains']).flat()
+      const data = items.map((v) => v['contains']).flat()
       console.log(data)
       console.log(base.resource)
       return {
@@ -970,12 +976,13 @@ export default Vue.extend({
       let version: string[] = []
       if (!this.whetherUseBE) {
         const versionModules: { [index: number]: string[] } = {
+          9: [],
           8: [],
           7: ['version_1.17.1'],
           6: ['version_1.16.5'],
           5: ['version_1.12.2-1.15.2'],
           4: ['version_1.12.2-1.15.2'],
-          3: ['version_1.12.2-1.15.2']
+          3: ['version_1.12.2-1.15.2'],
         }
         version = versionModules[this.inputBasic.format]
       }
