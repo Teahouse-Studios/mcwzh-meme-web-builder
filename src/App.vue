@@ -973,7 +973,7 @@ export default Vue.extend({
       if (!this.whetherUseBE) {
         const versionModules: { [index: number]: string[] } = {
           9: [],
-          8: [],
+          8: ['version_1.18.2'],
           7: ['version_1.17.1'],
           6: ['version_1.16.5'],
           5: ['version_1.12.2-1.15.2'],
