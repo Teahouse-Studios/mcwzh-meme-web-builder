@@ -13,7 +13,7 @@
   "dependencies": {
     "@mdi/js": "^6.6.95",
     "@sentry/tracing": "^6.19.2",
-    "@sentry/vue": "^6.19.2",
+    "@sentry/vue": "^6.19.6",
     "axios": "^0.26.1",
     "core-js": "^3.21.1",
     "vue": "^2.6.14",
