@@ -6,7 +6,7 @@
           <v-list-item three-line>
             <v-list-item-header>
               <div class="text-overline mb-4">{{ $t('sponsor.overline') }}</div>
-              <v-list-item-title class="headline mb-1">{{
+              <v-list-item-title class="text-headline mb-1">{{
                 $t('sponsor.spg.headline')
               }}</v-list-item-title>
               <v-list-item-subtitle>
@@ -46,7 +46,7 @@
           >
             <v-list-item-header>
               <div class="text-overline mb-4">{{ $t('sponsor.overline') }}</div>
-              <v-list-item-title class="headline mb-1">{{
+              <v-list-item-title class="text-headline mb-1">{{
                 $t('sponsor.kkg.headline')
               }}</v-list-item-title>
               <v-list-item-subtitle>
@@ -70,7 +70,7 @@
           <v-list-item three-line>
             <v-list-item-header>
               <div class="text-overline mb-4">{{ $t('sponsor.overline') }}</div>
-              <v-list-item-title class="headline mb-1">{{
+              <v-list-item-title class="text-headline mb-1">{{
                 $t('sponsor.qiuxi.headline')
               }}</v-list-item-title>
               <v-list-item-subtitle>
@@ -99,7 +99,7 @@
           <v-list-item three-line>
             <v-list-item-header>
               <div class="text-overline mb-4">{{ $t('sponsor.overline') }}</div>
-              <v-list-item-title class="headline mb-1">{{
+              <v-list-item-title class="text-headline mb-1">{{
                 $t('sponsor.suda.headline')
               }}</v-list-item-title>
               <v-list-item-subtitle>
@@ -128,7 +128,7 @@
           <v-list-item three-line>
             <v-list-item-header>
               <div class="text-overline mb-4">{{ $t('sponsor.overline') }}</div>
-              <v-list-item-title class="headline mb-1">{{
+              <v-list-item-title class="text-headline mb-1">{{
                 $t('sponsor.liu.headline')
               }}</v-list-item-title>
               <v-list-item-subtitle>

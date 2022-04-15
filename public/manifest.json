@@ -1,0 +1,22 @@
+{
+  "short_name": "梗体中文",
+  "name": "梗体中文 · 在线构建",
+  "icons": [
+    {
+      "src": "/apple-touch-icon.png",
+      "type": "image/png",
+      "sizes": "180x180"
+    },
+    {
+      "src": "/favicon-32x32.png",
+      "type": "image/png",
+      "sizes": "32x32"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#ffffff",
+  "description": "自定义你的梗体中文！我们将我的世界中的字符串替换成了一些知名/不知名的梗。"
+}

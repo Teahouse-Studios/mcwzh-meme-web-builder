@@ -66,7 +66,7 @@
         <v-list>
           <v-list-item three-line>
             <v-list-item-header>
-              <v-list-item-title class="headline mb-1">{{ t("dialog.help.dev.lcnb.name") }}</v-list-item-title>
+              <v-list-item-title class="text-headline mb-1">{{ t("dialog.help.dev.lcnb.name") }}</v-list-item-title>
               <v-list-item-subtitle>
                 {{ t("dialog.help.dev.lcnb.des") }}
               </v-list-item-subtitle>
@@ -74,7 +74,7 @@
           </v-list-item>
           <v-list-item three-line>
             <v-list-item-header>
-              <v-list-item-title class="headline mb-1">{{ t("dialog.help.dev.cat.name") }}</v-list-item-title>
+              <v-list-item-title class="text-headline mb-1">{{ t("dialog.help.dev.cat.name") }}</v-list-item-title>
               <v-list-item-subtitle>
                 {{ t("dialog.help.dev.cat.des") }}
               </v-list-item-subtitle>
@@ -82,7 +82,7 @@
           </v-list-item>
           <v-list-item three-line>
             <v-list-item-header>
-              <v-list-item-title class="headline mb-1">{{ t("dialog.help.dev.lake.name") }}</v-list-item-title>
+              <v-list-item-title class="text-headline mb-1">{{ t("dialog.help.dev.lake.name") }}</v-list-item-title>
               <v-list-item-subtitle>
                 {{ t("dialog.help.dev.lake.des") }}
               </v-list-item-subtitle>
@@ -90,7 +90,7 @@
           </v-list-item>
           <v-list-item three-line>
             <v-list-item-header>
-              <v-list-item-title class="headline mb-1">{{ t("dialog.help.dev.dll.name") }}</v-list-item-title>
+              <v-list-item-title class="text-headline mb-1">{{ t("dialog.help.dev.dll.name") }}</v-list-item-title>
               <v-list-item-subtitle>
                 {{ t("dialog.help.dev.dll.des") }}
               </v-list-item-subtitle>
@@ -124,7 +124,7 @@
 import {mdiGithub, mdiGoogleAnalytics, mdiVuetify, mdiVuejs, mdiVectorSquare, mdiClose, mdiHelp} from '@mdi/js'
 import { onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
-import allowGa from "../allowGa"
+import allowGa from '../allowGa'
 import { isDarkTheme } from '../utils/theme'
 
 const { t } = useI18n({ useScope: 'global' })
