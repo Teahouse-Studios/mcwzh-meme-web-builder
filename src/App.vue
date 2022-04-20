@@ -745,7 +745,7 @@ export default Vue.extend({
           },
           mod:
             this.input.je.modOption === 'all'
-              ? ['all']
+              ? this.consts.modList.filter(v => typeof v === "string") as string[]
               : this.input.je.modOption === 'custom'
               ? this.input.je.mod
               : [],
