@@ -29,7 +29,7 @@
           <v-icon> {{ resourceIcon }}</v-icon>
         </v-list-item-action>
         <v-list-item-content>
-          <v-list-item-title>{{ $t("form.selectAll") }}</v-list-item-title>
+          <v-list-item-title>{{ $t("form.selectNone") }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
       <v-divider class="mt-2"></v-divider>
@@ -142,11 +142,7 @@ export default {
       return (this.incompatibleMap[name] || []).filter(v => this.resource.includes(v)).length >= 1
     },
     toggleResource() {
-      if (this.resource.length === this.items.length - this.fixedItems.length - Object.keys(this.incompatibleMap).length) {
-        this.resource = []
-      } else {
-        this.resource = this.items.map(v => v.name).filter(v => !this.fixedItems.includes(v)).filter(v => !Object.keys(this.incompatibleMap).includes(v))
-      }
+      this.resource = []
     },
   },
   data() {

@@ -48,7 +48,7 @@
       "disabled": "由于您游玩的版本小于 1.13，此选项已强制勾选。"
     },
     "submit": "提交构建选项",
-    "selectAll": "全选",
+    "selectNone": "清空",
     "author": "作者：",
     "item": "项",
     "collections": {

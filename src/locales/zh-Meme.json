@@ -48,7 +48,7 @@
       "disabled": "由于你的游戏版本小于 1.13，太逊了，所以我们钦定此项为开。"
     },
     "submit": "搞快点",
-    "selectAll": "我全都要",
+    "selectNone": "我全都不要",
     "author": "作者：",
     "item": "个玩意",
     "collections": {
