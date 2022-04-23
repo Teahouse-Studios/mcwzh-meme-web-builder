@@ -146,6 +146,8 @@
                   "
                   :label="$t('form.resource.label')"
                   :loading="loading_backend"
+                  @forceClear="forceClear"
+                  :forceClear="true"
                   help="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack/wiki/%E6%A2%97%E4%BD%93%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9%E5%88%97%E8%A1%A8"
                   @help="sendHelpTrack('je_resource')"
                 >
@@ -277,6 +279,8 @@
                   :items="consts.be_modules.resource"
                   :label="$t('form.resource.label')"
                   :loading="loading_backend"
+                  @forceClear="forceClear"
+                  :forceClear="true"
                   help="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock/wiki/%E6%A2%97%E4%BD%93%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9%E5%88%97%E8%A1%A8"
                   @help="sendHelpTrack('be_resource')"
                 >
@@ -587,14 +591,11 @@ import { ICollection, ILog, IReq, IResource, IResp } from '@/types'
 
 export default Vue.extend({
   methods: {
-    // toggleApi() {
-    //   const newApi =
-    //     this.$api === 'https://meme.wd-api.com'
-    //       ? 'https://meme-ts.wd-api.com'
-    //       : 'https://meme.wd-api.com'
-    //   this.$api = newApi
-    //   localStorage.setItem('api', newApi)
-    // },
+    forceClear(){
+      this.whetherUseBE ? this.input.be.collection = [] : this.input.je.collection = []
+      console.log('force', this.whetherUseBE, this.input.be.collection)
+      
+    },
     share(item: ILog) {
       let p = new URLSearchParams()
       const type = item.isBe ? 'be' : 'je'
@@ -961,8 +962,6 @@ export default Vue.extend({
         this.input[this.whetherUseBE ? 'be' : 'je'].collection.includes(v.name)
       )
       const data = items.map((v) => v['contains']).flat()
-      console.log(data)
-      console.log(base.resource)
       return {
         resource: data.concat(child),
         language: data.concat(child),
