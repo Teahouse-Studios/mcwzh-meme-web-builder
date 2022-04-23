@@ -26,10 +26,18 @@
     <template v-slot:prepend-item>
       <v-list-item ripple @click="toggleResource">
         <v-list-item-action>
-          <v-icon> {{ resourceIcon }}</v-icon>
+          <v-icon></v-icon>
         </v-list-item-action>
         <v-list-item-content>
-          <v-list-item-title>{{ $t("form.selectNone") }}</v-list-item-title>
+          <v-list-item-title>{{ $t("form.clearSelected") }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+      <v-list-item ripple @click="toggleAllResource" v-if="forceClear">
+        <v-list-item-action>
+          <v-icon></v-icon>
+        </v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title>{{ $t("form.clearAll") }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
       <v-divider class="mt-2"></v-divider>
@@ -62,9 +70,10 @@
 
 <script>
 import {mdiCheckboxBlankOutline, mdiCloseBox, mdiMinusBox, mdiHelpCircleOutline} from '@mdi/js'
+import Vue from 'vue'
 
-export default {
-  name: "functioanlSelector",
+export default Vue.extend({
+  name: "functionalSelector",
   props: {
     label: String,
     hint: String,
@@ -83,7 +92,8 @@ export default {
       type: String,
       default: ''
     },
-    outlined: Boolean
+    outlined: Boolean,
+    forceClear: Boolean
   },
   model: {
     prop: 'resource_parent',
@@ -126,12 +136,14 @@ export default {
       }, {})
     }
   },
-  beforeMount() {
-    this.resource = this.resource_parent || []
-  },
   watch: {
+    resource_parent(val) {
+      this.resource = val
+    },
     resource(newVal) {
-      this.$emit('change', newVal.filter(v => v !== undefined))
+      if(newVal.length !== this.resource_parent.length) {
+        this.$emit('change', newVal.filter(v => v !== undefined))
+      }
     },
     fixedItems() {
       this.combinedItems = this.combinedItems.concat([])
@@ -144,6 +156,10 @@ export default {
     toggleResource() {
       this.resource = []
     },
+    toggleAllResource(){
+      this.toggleResource()
+      this.$emit('forceClear')
+    }
   },
   data() {
     return {
@@ -151,5 +167,5 @@ export default {
       mdiHelpCircleOutline
     }
   }
-}
+})
 </script>

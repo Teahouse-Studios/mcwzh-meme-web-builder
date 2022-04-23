@@ -48,7 +48,8 @@
       "disabled": "You are playing game version older than 1.13, thus this is forced to set to on."
     },
     "submit": "Submit build options",
-    "selectNone": "Select none",
+    "clearSelected": "Clear selected",
+    "clearAll": "Clear all",
     "author": "Author: ",
     "item": "item(s)",
     "collections": {
