@@ -3,9 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vite preview",
     "build": "vite build",
-    "lint": "eslint",
+    "lint": "eslint --ext .js,.ts,.vue src",
     "dev": "vite",
     "preview": "vite preview",
     "release": "node release.js",
@@ -21,7 +20,6 @@
     "roboto-fontface": "*",
     "tiny-emitter": "^2.1.0",
     "vue": "^3.2.33",
-    "vue-cli-plugin-i18n": "^2.3.1",
     "vue-i18n": "^9.1.9",
     "vuetify": "^3.0.0-beta.1",
     "web-vitals": "^1.1.2",
@@ -33,14 +31,13 @@
     "@typescript-eslint/parser": "^5.20.0",
     "@vitejs/plugin-legacy": "^1.8.1",
     "@vitejs/plugin-vue": "^2.3.1",
+    "@vue/eslint-plugin": "^4.2.0",
     "@vuetify/vite-plugin": "^1.0.0-alpha.0",
     "aws-sdk": "^2.912.0",
     "cross-env": "^7.0.3",
     "dotenv": "^9.0.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^8.7.1",
-    "glob": "^7.1.7",
-    "mime-types": "^2.1.30",
     "prettier": "^2.6.2",
     "typescript": "~4.6.3",
     "vite": "2.9.5"
@@ -52,11 +49,16 @@
     },
     "extends": [
       "eslint:recommended",
-      "plugin:vue/vue3-recommended"
+      "plugin:@typescript-eslint/recommended",
+      "plugin:@vue/vue3-recommended"
     ],
     "parserOptions": {
       "parser": "@typescript-eslint/parser"
     },
+    "plugins": [
+      "@typescript-eslint",
+      "@vue"
+    ],
     "rules": {
       "vue/script-setup-uses-vars": "off"
     }
