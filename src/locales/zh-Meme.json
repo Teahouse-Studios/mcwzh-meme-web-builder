@@ -38,7 +38,7 @@
       "header": "Mod文件",
       "enHeader": "Mod文件（懒得汉化）"
     },
-    "beExtType": {
+    "bedrockExtType": {
       "hint": "选择您需要的附加包后缀。",
       "label": "后缀"
     },

@@ -66,7 +66,9 @@
 <script setup lang="ts">
 import { mdiScript, mdiLock, mdiCash } from '@mdi/js'
 import { useI18n } from 'vue-i18n'
-import { isDarkTheme } from '../utils/theme'
+import { useThemeStore } from '@/stores/ui'
+
+const { isDarkTheme } = useThemeStore()
 
 const { t } = useI18n({ useScope: 'global' })
 const beian = window.location.host === 'meme.wd-ljt.com' && import.meta.env.PROD

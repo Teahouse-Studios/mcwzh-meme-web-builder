@@ -1,3 +1,4 @@
+import './app.scss'
 import App from './App.vue'
 import { createApp } from 'vue'
 
@@ -6,6 +7,8 @@ import { Integrations } from '@sentry/tracing'
 
 import { getCLS, getFID, getLCP } from 'web-vitals'
 import allowGa, { gtag } from './allowGa'
+
+import { createPinia } from 'pinia'
 
 import vuetify from './plugins/vuetify'
 import i18n from './plugins/i18n'
@@ -16,6 +19,7 @@ const app = createApp(App)
 
 app.use(i18n)
 app.use(vuetify)
+app.use(createPinia())
 
 app.mount('#app')
 

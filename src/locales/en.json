@@ -38,7 +38,7 @@
       "header": "Mod files",
       "enHeader": "Mod files (not translated to Chinese)"
     },
-    "beExtType": {
+    "bedrockExtType": {
       "hint": "Please select the file format you prefer for the pack.",
       "label": "File format"
     },
@@ -67,11 +67,7 @@
     },
     "child": {
       "label": "Child Mode",
-      "ticks": [
-        "12+",
-        "16+",
-        "18+"
-      ],
+      "ticks": ["12+", "16+", "18+"],
       "hints": [
         "For children with immature mentality. Extra protected and censored. Recommended for streaming and recording.",
         "For teenagers. Only political and especially suggestive contents are censored. Suitable for streaming and recording.",

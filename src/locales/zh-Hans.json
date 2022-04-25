@@ -38,7 +38,7 @@
       "header": "Mod文件",
       "enHeader": "Mod文件（未汉化）"
     },
-    "beExtType": {
+    "bedrockExtType": {
       "hint": "请选择您需要下载的附加包文件格式。",
       "label": "文件格式"
     },

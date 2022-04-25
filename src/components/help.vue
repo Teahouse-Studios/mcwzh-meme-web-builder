@@ -125,7 +125,9 @@ import {mdiGithub, mdiGoogleAnalytics, mdiVuetify, mdiVuejs, mdiVectorSquare, md
 import { onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import allowGa from '../allowGa'
-import { isDarkTheme } from '../utils/theme'
+import { useThemeStore } from '@/stores/ui'
+
+const { isDarkTheme } = useThemeStore()
 
 const { t } = useI18n({ useScope: 'global' })
 

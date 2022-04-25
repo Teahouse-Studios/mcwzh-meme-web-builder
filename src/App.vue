@@ -1,104 +1,7 @@
 <template>
-  <v-app :theme="vuetifyTheme">
+  <v-app :theme="theme">
     <v-main>
-      <v-app-bar
-        :color="isDarkTheme ? 'dark' : 'white'"
-        flat
-        style="width: 100%"
-      >
-        <v-app-bar-title>{{ t('appbar.title') }}</v-app-bar-title>
-        <template #append>
-          <div v-if="$vuetify.display.mdAndUp">
-            <v-tooltip bottom>
-              <template #activator="{ props }">
-                <div v-bind="props">
-                  <v-btn :href="links.mcbbs" rel="noopener noreferrer" text>
-                    <v-icon left>{{ mdiPost }}</v-icon>
-                    {{ t('appbar.mcbbs') }}
-                  </v-btn>
-                  <v-btn :href="links.github" rel="noopener noreferrer" text>
-                    <v-icon left>{{ mdiGithub }}</v-icon>
-                    {{ t('appbar.github') }}
-                  </v-btn>
-                  <v-btn :href="links.disc" rel="noopener noreferrer" text>
-                    <v-icon left>{{ mdiDisc }}</v-icon>
-                    {{ t('appbar.discPack') }}
-                  </v-btn>
-                  <langMenu />
-                </div>
-              </template>
-              <span>{{ !tab ? t('java') : t('bedrock') }}</span>
-            </v-tooltip>
-          </div>
-          <div v-else>
-            <v-menu bottom left>
-              <template #activator="{ props }">
-                <v-btn icon v-bind="props">
-                  <v-icon>{{ mdiDotsVertical }}</v-icon>
-                </v-btn>
-              </template>
-
-              <v-list dense>
-                <v-list-item :href="links.mcbbs" rel="noopener noreferrer">
-                  <v-list-item-avatar class="ml-0">
-                    <v-icon>{{ mdiPost }}</v-icon>
-                  </v-list-item-avatar>
-                  <v-list-item-subtitle>
-                    {{ t('appbar.mcbbs') }}
-                  </v-list-item-subtitle>
-                </v-list-item>
-                <v-list-item :href="links.github" rel="noopener noreferrer">
-                  <v-list-item-avatar class="ml-0">
-                    <v-icon>{{ mdiGithub }}</v-icon>
-                  </v-list-item-avatar>
-                  <v-list-item-subtitle>
-                    {{ t('appbar.github') }}
-                  </v-list-item-subtitle>
-                </v-list-item>
-                <v-list-item :href="links.disc" rel="noopener noreferrer">
-                  <v-list-item-avatar class="ml-0">
-                    <v-icon>{{ mdiDisc }}</v-icon>
-                  </v-list-item-avatar>
-                  <v-list-item-subtitle>
-                    {{ t('appbar.discPack') }}
-                  </v-list-item-subtitle>
-                </v-list-item>
-                <langMenu />
-                <div class="text-center">
-                  （{{ !tab ? t('java') : t('bedrock') }}）
-                </div>
-              </v-list>
-            </v-menu>
-          </div>
-          <v-tooltip bottom>
-            <template #activator="{ props }">
-              <v-btn icon @click="toggleApi" v-bind="props">
-                <v-icon>{{
-                  api === 'https://meme.wd-api.com'
-                    ? mdiLanguagePython
-                    : mdiLanguageTypescript
-                }}</v-icon>
-              </v-btn>
-            </template>
-            <span>{{ t('appbar.endpointSetting') }}</span>
-          </v-tooltip>
-          <v-tooltip bottom>
-            <template #activator="{ props }">
-              <v-btn
-                v-bind="props"
-                icon
-                @click="
-                  vuetifyTheme = vuetifyTheme === 'light' ? 'dark' : 'light'
-                "
-              >
-                <v-icon v-if="isDarkTheme">{{ mdiBrightness7 }} </v-icon>
-                <v-icon v-else>{{ mdiBrightness4 }}</v-icon>
-              </v-btn>
-            </template>
-            <span>{{ t('appbar.nightModeSwitch') }}</span>
-          </v-tooltip>
-        </template>
-      </v-app-bar>
+      <AppHeader></AppHeader>
       <v-alert
         v-for="a in alerts"
         :key="a.name"
@@ -110,18 +13,18 @@
       >
         <span v-html="a.message"></span>
       </v-alert>
-      <v-tabs v-model="tab" background-color="transparent" fixed-tabs>
-        <v-tab value="je">
+      <v-tabs v-model="edition" background-color="transparent" fixed-editions>
+        <v-tab value="java">
           {{ t('java') }}
         </v-tab>
-        <v-tab value="be">
+        <v-tab value="bedrock">
           {{ t('bedrock') }}
         </v-tab>
       </v-tabs>
 
       <v-container>
-        <v-window v-model="tab" class="pt-2">
-          <v-window-item value="je">
+        <v-window v-model="edition" class="pt-2">
+          <v-window-item value="java">
             <v-row>
               <v-col cols="12" sm="4">
                 <v-select
@@ -139,19 +42,19 @@
               </v-col>
               <v-col cols="12" sm="4">
                 <functional-selector
-                  v-model="input.je.resource"
+                  v-model="input.java.resource"
                   :disabled="fetchListIgnored"
                   :fixed-items="fixedItems.resource"
                   :hint="t('form.resource.hint')"
                   :items="
-                    consts.je_modules.resource.filter(
+                    consts.java_modules.resource.filter(
                       (v) => !v.name.startsWith('lang_')
                     )
                   "
                   :label="t('form.resource.label')"
                   :loading="loading_backend"
                   help="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack/wiki/%E6%A2%97%E4%BD%93%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9%E5%88%97%E8%A1%A8"
-                  @help="sendHelpTrack('je_resource')"
+                  @help="sendHelpTrack('java_resource')"
                 >
                   <template #prepend>
                     <v-icon>{{ mdiArchive }}</v-icon>
@@ -160,12 +63,12 @@
               </v-col>
               <v-col cols="12" sm="4">
                 <functional-selector
-                  v-model="input.je.language"
+                  v-model="input.java.language"
                   :disabled="fetchListIgnored"
                   :fixedItems="fixedItems.language"
                   :hint="t('form.language.hint')"
                   :items="
-                    consts.je_modules.resource.filter((v) =>
+                    consts.java_modules.resource.filter((v) =>
                       v.name.startsWith('lang_')
                     )
                   "
@@ -179,7 +82,7 @@
               </v-col>
               <v-col cols="6" sm="6">
                 <v-select
-                  v-model="input.je.modOption"
+                  v-model="input.java.modOption"
                   :hint="t('form.mod.option.hint')"
                   :items="modOption"
                   :label="t('form.mod.option.label')"
@@ -193,8 +96,8 @@
               </v-col>
               <v-col cols="6" sm="6">
                 <v-select
-                  v-model="input.je.mod"
-                  :disabled="input.je.modOption !== 'custom'"
+                  v-model="input.java.mod"
+                  :disabled="input.java.modOption !== 'custom'"
                   :hint="t('form.mod.list.hint')"
                   :items="consts.modList"
                   :label="t('form.mod.list.label')"
@@ -209,9 +112,9 @@
               </v-col>
               <v-col cols="12">
                 <functional-selector
-                  v-model="input.je.collection"
+                  v-model="input.java.collection"
                   :hint="t('form.collections.hint')"
-                  :items="consts.je_modules.collection"
+                  :items="consts.java_modules.collection"
                   :label="t(`form.collections.label`)"
                   :fixedItems="collectionFixedItems"
                 >
@@ -225,7 +128,7 @@
               </v-col>
               <v-col cols="12">
                 <v-checkbox
-                  v-model="input.je.compatible"
+                  v-model="input.java.compatible"
                   :disabled="inputBasic.format === 3"
                   :messages="
                     inputBasic.format === 3
@@ -239,14 +142,14 @@
               </v-col>
               <v-col cols="12">
                 <v-slider
-                  v-model="input.je.child"
+                  v-model="input.java.child"
                   :ticks="t('form.child.ticks')"
                   :max="2"
                   :label="t('form.child.label')"
                   step="1"
                   ticks="always"
                   tick-size="3"
-                  :message="t('form.child.hints')[input.je.child]"
+                  :message="t('form.child.hints')[input.java.child]"
                   persistent-hint
                 >
                   <template #prepend>
@@ -256,14 +159,14 @@
               </v-col>
             </v-row>
           </v-window-item>
-          <v-window-item value="be">
+          <v-window-item value="bedrock">
             <v-row>
               <v-col cols="6" sm="6">
                 <v-select
-                  v-model="input.be.extType"
-                  :hint="t('form.beExtType.hint')"
-                  :items="consts.beExtType"
-                  :label="t('form.beExtType.label')"
+                  v-model="input.bedrock.extType"
+                  :hint="t('form.bedrockExtType.hint')"
+                  :items="consts.bedrockExtType"
+                  :label="t('form.bedrockExtType.label')"
                   :outlined="true"
                   persistent-hint
                 >
@@ -274,15 +177,15 @@
               </v-col>
               <v-col cols="6" sm="6">
                 <functional-selector
-                  v-model="input.be.resource"
+                  v-model="input.bedrock.resource"
                   :disabled="fetchListIgnored"
                   :fixed-items="fixedItems.resource"
                   :hint="t('form.resource.hint')"
-                  :items="consts.be_modules.resource"
+                  :items="consts.bedrock_modules.resource"
                   :label="t('form.resource.label')"
                   :loading="loading_backend"
                   help="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock/wiki/%E6%A2%97%E4%BD%93%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9%E5%88%97%E8%A1%A8"
-                  @help="sendHelpTrack('be_resource')"
+                  @help="sendHelpTrack('bedrock_resource')"
                 >
                   <template #prepend>
                     <v-icon>{{ mdiArchive }}</v-icon>
@@ -291,9 +194,9 @@
               </v-col>
               <v-col cols="12">
                 <functional-selector
-                  v-model="input.be.collection"
+                  v-model="input.bedrock.collection"
                   :hint="t('form.collections.hint')"
-                  :items="consts.be_modules.collection"
+                  :items="consts.bedrock_modules.collection"
                   :label="t(`form.collections.label`)"
                 >
                   <template v-slot:before-author="data">
@@ -306,7 +209,7 @@
               </v-col>
               <v-col cols="12">
                 <v-checkbox
-                  v-model="input.be.compatible"
+                  v-model="input.bedrock.compatible"
                   :hint="t('form.compatible.hint')"
                   :label="t('form.compatible.label')"
                   persistent-hint
@@ -314,14 +217,14 @@
               </v-col>
               <v-col cols="12">
                 <v-slider
-                  v-model="input.be.child"
+                  v-model="input.bedrock.child"
                   :tick-labels="t('form.child.ticks')"
                   :max="2"
                   :label="t('form.child.label')"
                   step="1"
                   ticks="always"
                   tick-size="3"
-                  :message="t('form.child.hints')[input.be.child]"
+                  :message="t('form.child.hints')[input.bedrock.child]"
                   persistent-hint
                   class="mb-3"
                 >
@@ -365,14 +268,16 @@
             {{ t('form.submit') }}
           </v-btn>
           <p
-            v-if="consts.be_modified && consts.je_modified"
+            v-if="consts.bedrock_modified && consts.java_modified"
             class="ml-2 caption"
             style="display: inline-block; vertical-align: middle; margin: auto"
           >
             {{ t('form.modified') }}
             {{
               new Date(
-                tab === 'je' ? consts.je_modified : consts.be_modified
+                edition === 'java'
+                  ? consts.java_modified
+                  : consts.bedrock_modified
               ).toLocaleString(t('metadata.dateLocale'.toString()))
             }}
           </p>
@@ -406,7 +311,7 @@
                   outlined
                   @click="
                     () => {
-                      open(item.root + item.filename)
+                      open(item.root + item.filename!)
                       trackBuild(item)
                     }
                   "
@@ -545,29 +450,16 @@
   </v-app>
 </template>
 <script setup lang="ts">
-import './app.scss'
 import axios, { AxiosResponse } from 'axios'
+import { useLocalStorage } from '@vueuse/core'
 import FunctionalSelector from './components/functionalSelector.vue'
 import Help from './components/help.vue'
-import LangMenu from './components/langMenu.vue'
+import AppHeader from './components/AppHeader.vue'
 import {
-  mdiAbTesting,
   mdiClock,
-  mdiArrowRight,
-  mdiBrightness4,
-  mdiBrightness7,
   mdiBug,
-  mdiClose,
   mdiCloudDownload,
-  mdiCompass,
-  mdiDisc,
-  mdiDotsHorizontal,
-  mdiDotsVertical,
-  mdiEarth,
-  mdiGithub,
   mdiInformationOutline,
-  mdiPlus,
-  mdiPost,
   mdiShareVariant,
   mdiArchive,
   mdiCog,
@@ -576,18 +468,27 @@ import {
   mdiGroup,
   mdiFolderInformation,
   mdiAccountChildCircle,
-  mdiLanguageTypescript,
-  mdiLanguagePython,
 } from '@mdi/js'
 import TeahouseFooter from './components/TeahouseFooter.vue'
 import allowGa, { gtag } from './allowGa'
 import Sponsors from './components/sponsors.vue'
 import Webview from './components/webview.vue'
 import News from './components/news.vue'
-import { IAlert, ICollection, ILog, IReq, IResource, IResp } from './types'
+import type {
+  IAlert,
+  ICollection,
+  ILog,
+  IReq,
+  IResource,
+  IResp,
+  Edition,
+} from './types'
 import { useI18n } from 'vue-i18n'
 import { computed, onBeforeMount, onMounted, watch, nextTick } from 'vue'
-import { vuetifyTheme, isDarkTheme, setTheme } from './utils/theme'
+import { useThemeStore } from '@/stores/ui'
+import { useEditionStore } from '@/stores/edition'
+
+let { edition, links } = useEditionStore()
 
 let { t, locale } = useI18n({ useScope: 'global' })
 
@@ -606,7 +507,7 @@ function toggleApi() {
 }
 function share(item: ILog) {
   let p = new URLSearchParams()
-  const type = item.isBe ? 'be' : 'je'
+  const type = item.isBedrock ? 'bedrock' : 'java'
   p.set('type', type)
   p.set('ver', '1')
   p.set('input', JSON.stringify(input[type]))
@@ -632,18 +533,18 @@ function sendHelpTrack(label: string) {
       eventCategory: label,
     })
 }
-function trackShare(item: { filename: string; isBe: boolean }) {
+function trackShare(item: ILog) {
   allowGa() &&
     gtag?.('event', 'share', {
       eventLabel: item.filename,
-      eventType: item.isBe ? 'be' : 'je',
+      eventType: item.isBedrock ? 'bedrock' : 'java',
     })
 }
-function trackBuild(item: { filename: string; isBe: boolean }) {
+function trackBuild(item: ILog) {
   allowGa() &&
     gtag?.('event', 'download', {
       eventLabel: item.filename,
-      eventType: item.isBe ? 'be' : 'je',
+      eventType: item.isBedrock ? 'bedrock' : 'java',
     })
 }
 function collectionDesc(item: ICollection) {
@@ -673,45 +574,48 @@ async function fetchList() {
       { header: t('form.mod.enHeader').toString() },
       ...backend.enmods,
     ],
-    je_modules: backend.je_modules,
-    be_modules: backend.be_modules,
+    java_modules: backend.java_modules,
+    bedrock_modules: backend.bedrock_modules,
   }
   loading_backend = false
   dialogFetchListFailed = false
-  input.be.collection = ['choice_modules_1']
-  input.je.collection = ['choice_modules_1']
+  input.bedrock.collection = ['choice_modules_1']
+  input.java.collection = ['choice_modules_1']
 
-  let p = new URLSearchParams(window.location.search)
-  let type = p.get('type') as 'be' | 'je'
-  let ver = p.get('ver')
-  let inputBasic = p.get('inputBasic')
-  let input = p.get('input') as 'be' | 'je'
-  if (['je', 'be'].includes(type) && inputBasic && ver === '1') {
-    let _inputBasic, _input
-    try {
-      _inputBasic = JSON.parse(inputBasic)
-      _input = JSON.parse(input)
-    } catch (e) {
-      return
+  function loadParams() {
+    let p = new URLSearchParams(window.location.search)
+    let type = p.get('type') as Edition
+    let ver = p.get('ver')
+    let inputBasic = p.get('inputBasic')
+    let input = p.get('input') as Edition
+    if (['java', 'bedrock'].includes(type) && inputBasic && ver === '1') {
+      let _inputBasic, _input
+      try {
+        _inputBasic = JSON.parse(inputBasic)
+        _input = JSON.parse(input)
+      } catch (e) {
+        return
+      }
+      shareLinkParsed = true
+      edition = type
+      input[type] = _input
+      inputBasic = _inputBasic
     }
-    shareLinkParsed = true
-    tab = type
-    input[type] = _input
-    inputBasic = _inputBasic
   }
+  loadParams()
 
-  consts.be_modified = backend.be_modified
-  consts.je_modified = backend.je_modified
+  consts.bedrock_modified = backend.bedrock_modified
+  consts.java_modified = backend.java_modified
 }
 async function submit() {
   loading = true
 
-  const inputBase = whetherUseBE ? input.be : input.je
+  const inputBase = whetherUsebedrock ? input.bedrock : input.java
 
   let packType: 'normal' | 'legacy' | 'compat' = 'normal'
   if (inputBasic.format === 3) {
     packType = 'legacy'
-  } else if (input.je.compatible) {
+  } else if (input.java.compatible) {
     packType = 'compat'
   }
 
@@ -747,28 +651,28 @@ async function submit() {
   let data: IReq = Object.assign(
     {
       format: inputBasic.format,
-      _be: whetherUseBE,
+      _bedrock: whetherUsebedrock,
       modules: {
         resource: resource,
         collection: inputBase.collection.concat(collectionFixedItems),
       },
       mod:
-        input.je.modOption === 'all'
+        input.java.modOption === 'all'
           ? ['all']
-          : input.je.modOption === 'custom'
-          ? input.je.mod
+          : input.java.modOption === 'custom'
+          ? input.java.mod
           : [],
       type: packType,
     },
-    whetherUseBE && {
-      type: input.be.extType,
-      compatible: input.be.compatible,
+    whetherUsebedrock && {
+      type: input.bedrock.extType,
+      compatible: input.bedrock.compatible,
     }
   )
   console.log(data)
   allowGa() &&
     gtag?.('event', 'build', {
-      eventType: whetherUseBE ? 'be' : 'je',
+      eventType: whetherUsebedrock ? 'bedrock' : 'java',
     })
   axios({ url: '/ajax', baseURL: api, method: 'POST', data })
     .then((res) => {
@@ -780,7 +684,7 @@ async function submit() {
         filename: res.data.filename,
         root: res.data.root,
         github: links.github,
-        isBe: whetherUseBE,
+        isBedrock: whetherUsebedrock,
       })
       logsPanel = logsPanel.map((v) => v + 1)
       logsPanel.unshift(0)
@@ -814,7 +718,6 @@ let dialogFetchListFailed = $ref(false)
 let fetchListIgnored = $ref(false)
 let shareLinkParsed = $ref(false)
 let shareCopyedToClipboard = $ref(false)
-let tab = $ref<'je' | 'be'>('je')
 let logsPanel = $ref<number[]>()
 let loading = $ref(false)
 let inputBasic = $ref({
@@ -822,7 +725,7 @@ let inputBasic = $ref({
 })
 let logs = $ref<ILog[]>([])
 let input = $ref({
-  be: {
+  bedrock: {
     extType: 'mcpack',
     compatible: false,
     resource: [] as string[],
@@ -830,7 +733,7 @@ let input = $ref({
     collection: [] as string[],
     child: 0,
   },
-  je: {
+  java: {
     modOption: 'all',
     compatible: false,
     mod: [] as string[],
@@ -843,9 +746,9 @@ let input = $ref({
 let hint = $ref(0)
 let loading_backend = $ref(true)
 let consts = $ref({
-  je_modified: 0,
-  be_modified: 0,
-  beExtType: ['mcpack', 'zip'],
+  java_modified: 0,
+  bedrock_modified: 0,
+  bedrockExtType: ['mcpack', 'zip'],
   modList: [] as Array<
     | {
         text?: string | number | object
@@ -856,11 +759,11 @@ let consts = $ref({
       }
     | string
   >,
-  je_modules: {
+  java_modules: {
     resource: [] as IResource[],
     collection: [] as ICollection[],
   },
-  be_modules: {
+  bedrock_modules: {
     resource: [] as IResource[],
     collection: [] as ICollection[],
   },
@@ -888,7 +791,6 @@ onBeforeMount(() => {
   }
 })
 onMounted(async () => {
-  let that = this
   setInterval(() => {
     hint = hint === 3 ? 0 : ++hint
   }, 4000)
@@ -912,15 +814,15 @@ const modOption = $computed<Record<string, string>[]>(() => {
     },
   ]
 })
-const whetherUseBE = $computed<boolean>(() => {
-  return tab === 'be'
+const whetherUsebedrock = $computed<boolean>(() => {
+  return edition === 'bedrock'
 })
 const fixedItems = $computed<{
   resource: string[]
   language: string[]
 }>(() => {
-  // const base = whetherUseBE ? consts.be_modules : consts.je_modules
-  // const childBase = whetherUseBE ? input.be.child : input.je.child
+  // const base = whetherUsebedrock ? consts.bedrock_modules : consts.java_modules
+  // const childBase = whetherUsebedrock ? input.bedrock.child : input.java.child
   // let child: string[] = []
   // switch (childBase) {
   //   case 0:
@@ -931,7 +833,7 @@ const fixedItems = $computed<{
   //     break
   // }
   // let items = base.collection.filter((v) =>
-  //   input[whetherUseBE ? 'be' : 'je'].collection.includes(v.name)
+  //   input[whetherUsebedrock ? 'bedrock' : 'java'].collection.includes(v.name)
   // )
   // const data = items.map((v) => v['contains']).flat()
   // console.log(data)
@@ -939,12 +841,13 @@ const fixedItems = $computed<{
   return {
     // resource: data.concat(child),
     // language: data.concat(child),
-    resource: [], language: []
+    resource: [],
+    language: [],
   }
 })
 const collectionFixedItems = $computed<string[]>(() => {
   let version: string[] = []
-  if (!whetherUseBE) {
+  if (!whetherUsebedrock) {
     const versionModules: { [index: number]: string[] } = {
       8: [],
       7: ['version_1.17.1'],
@@ -957,55 +860,22 @@ const collectionFixedItems = $computed<string[]>(() => {
   }
   return version
 })
-const links = $computed<{
-  web_builder: string
-  github: string
-  mcbbs: string
-  disc: string
-}>(() => {
-  return {
-    web_builder: 'https://github.com/Teahouse-Studios/mcwzh-meme-web-builder',
-    github:
-      'https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack' +
-      (tab === 'be' ? '-bedrock' : ''),
-    mcbbs: `https://www.mcbbs.net/thread-${
-      tab === 'be' ? '1005191' : '1004643'
-    }-1-1.html`,
-    disc:
-      tab === 'be'
-        ? 'https://wdf.ink/record-bedrock'
-        : 'https://wdf.ink/record-java',
-  }
-})
-watch($$(vuetifyTheme), (val) => {
-  localStorage.setItem(
-    'memeDarkMode',
-    vuetifyTheme === 'dark' ? 'true' : 'false'
-  )
-})
+
 watch($$(inputBasic.format), (val) => {
   if (val === 3) {
-    input.je.compatible = true
+    input.java.compatible = true
   }
 })
 
-if (localStorage.getItem('memeInitialized') !== 'true') {
-  localStorage.setItem(
-    'memeDarkMode',
-    window.matchMedia &&
-      window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'true'
-      : 'false'
-  )
-  localStorage.setItem('memeNewsIgnored', '0')
-}
+let newsIgnoredLS = useLocalStorage('memeNewsIgnored', 0)
 
-setTheme(localStorage.getItem('memeDarkMode') === 'true' ? 'dark' : 'light')
-let memeLang = localStorage.getItem('memeLang')
-if (memeLang !== 'zhHans' && memeLang !== 'zhMeme' && memeLang !== 'en') {
-  localStorage.removeItem('memeLang')
-  memeLang = 'zhHans'
-}
-locale.value = memeLang
-localStorage.setItem('memeInitialized', 'true')
+let { theme, isDarkTheme } = useThemeStore()
+let themeLS = $(useLocalStorage('memeTheme', theme))
+
+useThemeStore().$subscribe((mutation, state) => {
+  themeLS = state.theme
+})
+
+let localeLS = useLocalStorage('memeLang', 'zhHans')
+locale.value = localeLS.value
 </script>

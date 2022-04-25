@@ -1,13 +1,13 @@
 export interface IResp {
   mods: string[]
   enmods: string[]
-  je_modified: number
-  be_modified: number
-  je_modules: {
+  java_modified: number
+  bedrock_modified: number
+  java_modules: {
     resource: IResource[]
     collection: ICollection[]
   }
-  be_modules: {
+  bedrock_modules: {
     resource: IResource[]
     collection: ICollection[]
   }
@@ -32,12 +32,12 @@ export interface ILog {
   content: string
   filename?: string
   github?: string
-  isBe?: boolean
+  isBedrock?: boolean
   root?: string
 }
 
 export interface IReq {
-  _be: boolean
+  _bedrock: boolean
   format?: number
   modules: {
     resource: string[]
@@ -61,3 +61,7 @@ export interface INews {
   content: string
   detail?: string
 }
+
+export type Theme = 'light' | 'dark'
+
+export type Edition = 'java' | 'bedrock'
