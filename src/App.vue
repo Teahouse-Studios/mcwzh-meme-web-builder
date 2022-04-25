@@ -919,26 +919,27 @@ const fixedItems = $computed<{
   resource: string[]
   language: string[]
 }>(() => {
-  const base = whetherUseBE ? consts.be_modules : consts.je_modules
-  const childBase = whetherUseBE ? input.be.child : input.je.child
-  let child: string[] = []
-  switch (childBase) {
-    case 0:
-      child = ['lang_sfc', 'lang_sfw']
-      break
-    case 1:
-      child = ['lang_sfw']
-      break
-  }
-  let items = base.collection.filter((v) =>
-    input[whetherUseBE ? 'be' : 'je'].collection.includes(v.name)
-  )
-  const data = items.map((v) => v['contains']).flat()
-  console.log(data)
-  console.log(base.resource)
+  // const base = whetherUseBE ? consts.be_modules : consts.je_modules
+  // const childBase = whetherUseBE ? input.be.child : input.je.child
+  // let child: string[] = []
+  // switch (childBase) {
+  //   case 0:
+  //     child = ['lang_sfc', 'lang_sfw']
+  //     break
+  //   case 1:
+  //     child = ['lang_sfw']
+  //     break
+  // }
+  // let items = base.collection.filter((v) =>
+  //   input[whetherUseBE ? 'be' : 'je'].collection.includes(v.name)
+  // )
+  // const data = items.map((v) => v['contains']).flat()
+  // console.log(data)
+  // console.log(base.resource)
   return {
-    resource: data.concat(child),
-    language: data.concat(child),
+    // resource: data.concat(child),
+    // language: data.concat(child),
+    resource: [], language: []
   }
 })
 const collectionFixedItems = $computed<string[]>(() => {
