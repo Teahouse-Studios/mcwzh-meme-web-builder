@@ -2,17 +2,8 @@
   <v-app :theme="theme">
     <v-main>
       <AppHeader></AppHeader>
-      <v-alert
-        v-for="a in alerts"
-        :key="a.name"
-        :color="isDarkTheme ? 'dark' : 'white'"
-        :icon="mdiInformationOutline"
-        class="mb-0"
-        dense
-        tile
-      >
-        <span v-html="a.message"></span>
-      </v-alert>
+      <DymanicAlerts></DymanicAlerts>
+
       <v-tabs v-model="edition" background-color="transparent" fixed-editions>
         <v-tab value="java">
           {{ t('java') }}
@@ -47,7 +38,7 @@
                   :fixed-items="fixedItems.resource"
                   :hint="t('form.resource.hint')"
                   :items="
-                    consts.java_modules.resource.filter(
+                    consts.javaModules.resource.filter(
                       (v) => !v.name.startsWith('lang_')
                     )
                   "
@@ -68,7 +59,7 @@
                   :fixedItems="fixedItems.language"
                   :hint="t('form.language.hint')"
                   :items="
-                    consts.java_modules.resource.filter((v) =>
+                    consts.javaModules.resource.filter((v) =>
                       v.name.startsWith('lang_')
                     )
                   "
@@ -114,7 +105,7 @@
                 <functional-selector
                   v-model="input.java.collection"
                   :hint="t('form.collections.hint')"
-                  :items="consts.java_modules.collection"
+                  :items="consts.javaModules.collection"
                   :label="t(`form.collections.label`)"
                   :fixedItems="collectionFixedItems"
                 >
@@ -181,7 +172,7 @@
                   :disabled="fetchListIgnored"
                   :fixed-items="fixedItems.resource"
                   :hint="t('form.resource.hint')"
-                  :items="consts.bedrock_modules.resource"
+                  :items="consts.bedrockModules.resource"
                   :label="t('form.resource.label')"
                   :loading="loading_backend"
                   help="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack-bedrock/wiki/%E6%A2%97%E4%BD%93%E4%B8%AD%E6%96%87%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9%E5%88%97%E8%A1%A8"
@@ -196,7 +187,7 @@
                 <functional-selector
                   v-model="input.bedrock.collection"
                   :hint="t('form.collections.hint')"
-                  :items="consts.bedrock_modules.collection"
+                  :items="consts.bedrockModules.collection"
                   :label="t(`form.collections.label`)"
                 >
                   <template v-slot:before-author="data">
@@ -455,6 +446,7 @@ import { useLocalStorage } from '@vueuse/core'
 import FunctionalSelector from './components/functionalSelector.vue'
 import Help from './components/help.vue'
 import AppHeader from './components/AppHeader.vue'
+import DymanicAlerts from './components/DymanicAlerts.vue'
 import {
   mdiClock,
   mdiBug,
@@ -574,8 +566,8 @@ async function fetchList() {
       { header: t('form.mod.enHeader').toString() },
       ...backend.enmods,
     ],
-    java_modules: backend.java_modules,
-    bedrock_modules: backend.bedrock_modules,
+    javaModules: backend.javaModules,
+    bedrockModules: backend.bedrockModules,
   }
   loading_backend = false
   dialogFetchListFailed = false
@@ -711,7 +703,6 @@ async function submit() {
     })
 }
 let api = $ref('')
-let alerts = $ref<IAlert[]>([])
 let snackbarBuildSucceeded = $ref(false)
 let snackbarBuildFailed = $ref(false)
 let dialogFetchListFailed = $ref(false)
@@ -759,11 +750,11 @@ let consts = $ref({
       }
     | string
   >,
-  java_modules: {
+  javaModules: {
     resource: [] as IResource[],
     collection: [] as ICollection[],
   },
-  bedrock_modules: {
+  bedrockModules: {
     resource: [] as IResource[],
     collection: [] as ICollection[],
   },
@@ -796,12 +787,6 @@ onMounted(async () => {
   }, 4000)
 
   fetchList()
-
-  await axios
-    .get(
-      'https://cdn.jsdelivr.net/gh/Teahouse-Studios/mcwzh-meme-resourcepack@master/alerts.json'
-    )
-    .then((response) => (alerts = response.data))
 })
 
 const modOption = $computed<Record<string, string>[]>(() => {
@@ -821,7 +806,7 @@ const fixedItems = $computed<{
   resource: string[]
   language: string[]
 }>(() => {
-  // const base = whetherUsebedrock ? consts.bedrock_modules : consts.java_modules
+  // const base = whetherUsebedrock ? consts.bedrockModules : consts.javaModules
   // const childBase = whetherUsebedrock ? input.bedrock.child : input.java.child
   // let child: string[] = []
   // switch (childBase) {

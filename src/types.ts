@@ -3,11 +3,11 @@ export interface IResp {
   enmods: string[]
   java_modified: number
   bedrock_modified: number
-  java_modules: {
+  javaModules: {
     resource: IResource[]
     collection: ICollection[]
   }
-  bedrock_modules: {
+  bedrockModules: {
     resource: IResource[]
     collection: ICollection[]
   }

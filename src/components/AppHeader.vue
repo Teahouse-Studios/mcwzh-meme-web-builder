@@ -1,21 +1,34 @@
 <template>
   <v-app-bar :color="isDarkTheme ? 'dark' : 'white'" flat style="width: 100%">
     <v-app-bar-title>{{ t('appbar.title') }}</v-app-bar-title>
+
     <template #append>
       <div v-if="$vuetify.display.mdAndUp">
         <v-tooltip bottom>
           <template #activator="{ props }">
-            <div v-bind="props">
-              <v-btn :href="links.mcbbs" rel="noopener noreferrer" text>
-                <v-icon left>{{ mdiPost }}</v-icon>
+            <div v-bind="props" class="appbar-btns d-flex align-center">
+              <v-btn
+                :href="links.mcbbs"
+                rel="noopener noreferrer"
+                :prepend-icon="mdiPost"
+                variant="text"
+              >
                 {{ t('appbar.mcbbs') }}
               </v-btn>
-              <v-btn :href="links.github" rel="noopener noreferrer" text>
-                <v-icon left>{{ mdiGithub }}</v-icon>
+              <v-btn
+                :href="links.github"
+                rel="noopener noreferrer"
+                :prepend-icon="mdiGithub"
+                variant="text"
+              >
                 {{ t('appbar.github') }}
               </v-btn>
-              <v-btn :href="links.disc" rel="noopener noreferrer" text>
-                <v-icon left>{{ mdiDisc }}</v-icon>
+              <v-btn
+                :href="links.disc"
+                rel="noopener noreferrer"
+                :prepend-icon="mdiDisc"
+                variant="text"
+              >
                 {{ t('appbar.discPack') }}
               </v-btn>
               <LangMenu />
@@ -92,3 +105,8 @@ let { edition, links } = useEditionStore()
 let { theme, isDarkTheme, switchTheme } = useThemeStore()
 let { t, locale } = useI18n({ useScope: 'global' })
 </script>
+<style>
+.appbar-btns {
+  height: 100%;
+}
+</style>
