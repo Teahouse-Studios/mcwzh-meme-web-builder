@@ -958,8 +958,8 @@ export default Vue.extend({
           child = ['lang_sfw']
           break
       }
-      let items = base.collection.filter((v) =>
-        this.input[this.whetherUseBE ? 'be' : 'je'].collection.includes(v.name)
+      let items = (base.collection).filter((v) =>
+        this.input[this.whetherUseBE ? 'be' : 'je'].collection.includes(v.name) || this.collectionFixedItems.includes(v.name)
       )
       const data = items.map((v) => v['contains']).flat()
       return {
