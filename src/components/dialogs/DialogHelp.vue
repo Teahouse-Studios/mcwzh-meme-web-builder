@@ -127,6 +127,17 @@ import { useI18n } from 'vue-i18n'
 import allowGa from '@/allowGa'
 import { useThemeStore } from '@/stores/ui'
 
+defineProps({
+  modelValue: {
+    type: Boolean,
+    default: false
+  },
+})
+
+defineEmits({
+  update: ['modelValue'],
+})
+
 const { isDarkTheme } = useThemeStore()
 
 const { t } = useI18n({ useScope: 'global' })

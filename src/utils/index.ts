@@ -1,6 +1,6 @@
 import { useI18n, UseI18nOptions } from 'vue-i18n'
 
-export default function useLocalizedArray(
+export function useLocalizedArray(
   key: string,
   length: number,
   vueI18nOptions: UseI18nOptions = { useScope: 'global' }
@@ -10,4 +10,8 @@ export default function useLocalizedArray(
     localizedArray.push(useI18n(vueI18nOptions).t(`${key}.${i + 1}`))
   }
   return localizedArray
+}
+
+export function open(name: string) {
+  window.open(name)
 }

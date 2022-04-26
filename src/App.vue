@@ -336,66 +336,6 @@
       </v-container>
       <AppFooter />
     </v-main>
-    <v-snackbar v-model="snackbarBuildSucceeded">
-      {{ t('snackbar.buildSucceeded') }}
-      <template v-slot:action="{ attrs }">
-        <v-btn
-          v-bind="attrs"
-          color="blue"
-          text
-          @click="snackbarBuildSucceeded = false"
-        >
-          {{ t('snackbar.close') }}
-        </v-btn>
-      </template>
-    </v-snackbar>
-    <v-snackbar v-model="shareLinkParsed">
-      {{ t('snackbar.shareLinkParsed') }}
-      <template v-slot:action="{ attrs }">
-        <v-btn
-          v-bind="attrs"
-          color="primary"
-          text
-          @click="shareLinkParsed = false"
-        >
-          {{ t('snackbar.close') }}
-        </v-btn>
-      </template>
-    </v-snackbar>
-    <v-snackbar v-model="shareCopyedToClipboard">
-      {{ t('snackbar.shareCopyedToClipboard') }}
-      <template v-slot:action="{ attrs }">
-        <v-btn
-          v-bind="attrs"
-          color="primary"
-          text
-          @click="shareCopyedToClipboard = false"
-        >
-          {{ t('snackbar.close') }}
-        </v-btn>
-      </template>
-    </v-snackbar>
-    <v-snackbar v-model="snackbarBuildFailed">
-      {{ t('snackbar.buildFailed') }}
-      <template v-slot:action="{ attrs }">
-        <v-btn
-          v-bind="attrs"
-          color="red"
-          text
-          @click="open(links.web_builder + '/issues/new/choose')"
-        >
-          {{ t('snackbar.feedback') }}
-        </v-btn>
-        <v-btn
-          v-bind="attrs"
-          color="blue"
-          text
-          @click="snackbarBuildSucceeded = false"
-        >
-          {{ t('snackbar.close') }}
-        </v-btn>
-      </template>
-    </v-snackbar>
     <v-dialog v-model="dialogFetchListFailed" persistent width="500">
       <v-card>
         <v-card-title class="headline"
@@ -436,12 +376,7 @@
   </v-app>
 </template>
 <script setup lang="ts">
-import axios, { AxiosResponse } from 'axios'
-import { useLocalStorage } from '@vueuse/core'
-import FunctionalSelector from '@/components/FunctionalSelector.vue'
-import DialogHelp from '@/components/dialogs/DialogHelp.vue'
-import AppHeader from '@/components/AppHeader.vue'
-import DymanicAlerts from '@/components/DymanicAlerts.vue'
+import { computed, onBeforeMount, onMounted, watch, nextTick } from 'vue'
 import {
   mdiClock,
   mdiBug,
@@ -455,14 +390,25 @@ import {
   mdiFolderInformation,
   mdiAccountChildCircle,
 } from '@mdi/js'
-import AppFooter from '@/components/AppFooter.vue'
+import axios, { AxiosResponse } from 'axios'
+import { useLocalStorage } from '@vueuse/core'
+import { useI18n } from 'vue-i18n'
+
+import FunctionalSelector from '@/components/FunctionalSelector.vue'
+import DialogHelp from '@/components/dialogs/DialogHelp.vue'
+import AppHeader from '@/components/app/AppHeader.vue'
+import DymanicAlerts from '@/components/DymanicAlerts.vue'
+import AppFooter from '@/components/app/AppFooter.vue'
 import IntervalHints from '@/components/IntervalHints.vue'
 import allowGa, { gtag } from '@/allowGa'
-import AppSponsors from '@/components/AppSponsors.vue'
+import AppSponsors from '@/components/app/AppSponsors.vue'
 import DialogWebview from '@/components/dialogs/DialogWebview.vue'
 import DialogNews from '@/components/dialogs/DialogNews.vue'
+
+import { useThemeStore } from '@/stores/ui'
+import { useEditionStore } from '@/stores/edition'
+
 import type {
-  IAlert,
   ICollection,
   ILog,
   IReq,
@@ -470,10 +416,6 @@ import type {
   IResp,
   Edition,
 } from '@/types'
-import { useI18n } from 'vue-i18n'
-import { computed, onBeforeMount, onMounted, watch, nextTick } from 'vue'
-import { useThemeStore } from '@/stores/ui'
-import { useEditionStore } from '@/stores/edition'
 
 let { edition, links } = useEditionStore()
 
@@ -538,9 +480,6 @@ function collectionDesc(item: ICollection) {
   return `(${t('form.collections.description_prefix')} ${
     item['contains'].length
   } ${t('form.collections.resource_suffix')})`
-}
-function open(name: string) {
-  window.open(name)
 }
 async function fetchList() {
   loading_backend = true

@@ -9,11 +9,8 @@
 </template>
 <script setup lang="ts">
 import { mdiInformationOutline } from '@mdi/js'
-import { useI18n } from 'vue-i18n'
-import useLocalizedArray from '@/utils/localizedArray'
+import { useLocalizedArray } from '@/utils'
 import { onMounted } from 'vue'
-
-let { t } = useI18n({ useScope: 'global' })
 
 const hints = useLocalizedArray('hints', 5)
 let hint = $ref(0)
