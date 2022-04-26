@@ -4,7 +4,7 @@
       <AppHeader></AppHeader>
       <DymanicAlerts></DymanicAlerts>
 
-      <v-tabs v-model="edition" background-color="transparent" fixed-editions>
+      <v-tabs v-model="edition" background-color="transparent" fixed-tabs>
         <v-tab value="java">
           {{ t('java') }}
         </v-tab>
@@ -321,7 +321,7 @@
                 <v-btn
                   v-else
                   :color="isDarkTheme ? 'dark' : ''"
-                  dark
+                  theme="dark"
                   @click="$emit('help')"
                 >
                   <v-icon left>{{ mdiBug }}</v-icon>
@@ -847,6 +847,7 @@ let { theme, isDarkTheme } = useThemeStore()
 let themeLS = $(useLocalStorage('memeTheme', theme))
 
 useThemeStore().$subscribe((mutation, state) => {
+  theme = state.theme
   themeLS = state.theme
 })
 

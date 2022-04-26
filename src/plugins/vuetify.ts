@@ -11,8 +11,8 @@ export default createVuetify({
     defaultSet: 'mdi',
     aliases,
     sets: {
-      mdi
-    }
+      mdi,
+    },
   },
   locale: {
     defaultLocale: 'zh-Hans',
@@ -21,16 +21,27 @@ export default createVuetify({
     themes: {
       light: {
         colors: {
-          primary: '#4285f4',
-          info: '#4285f4',
-        }
+          primary: '#4285F4',
+          secondary: '#424242',
+          accent: '#82B1FF',
+          error: '#FF5252',
+          info: '#4285F4',
+          success: '#4CAF50',
+          warning: '#FB8C00',
+        },
       },
       dark: {
+        dark: true,
         colors: {
-          primary: '#4285f4',
-          info: '#4285f4',
-        }
-      }
+          primary: '#4285F4',
+          secondary: '#424242',
+          accent: '#FF4081',
+          error: '#FF5252',
+          info: '#4285F4',
+          success: '#4CAF50',
+          warning: '#FB8C00',
+        },
+      },
     },
   },
 })

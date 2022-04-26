@@ -74,7 +74,7 @@
             </a>
             <a
               v-if="(data.item.text.incompatible_with || []).length >= 1"
-              class="red--text"
+              class="text-red"
             >
               {{
                 t('form.incompatible', [
