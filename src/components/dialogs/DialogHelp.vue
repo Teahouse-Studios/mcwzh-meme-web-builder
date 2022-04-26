@@ -124,7 +124,7 @@
 import {mdiGithub, mdiGoogleAnalytics, mdiVuetify, mdiVuejs, mdiVectorSquare, mdiClose, mdiHelp} from '@mdi/js'
 import { onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
-import allowGa from '../allowGa'
+import allowGa from '@/allowGa'
 import { useThemeStore } from '@/stores/ui'
 
 const { isDarkTheme } = useThemeStore()

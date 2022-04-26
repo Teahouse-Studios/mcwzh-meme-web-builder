@@ -332,11 +332,10 @@
           </v-expansion-panels>
         </div>
         <v-divider style="margin: 15px 0"></v-divider>
-        <Sponsors />
+        <AppSponsors />
       </v-container>
-      <teahouse-footer />
+      <AppFooter />
     </v-main>
-    <help ref="refs.help" />
     <v-snackbar v-model="snackbarBuildSucceeded">
       {{ t('snackbar.buildSucceeded') }}
       <template v-slot:action="{ attrs }">
@@ -430,17 +429,19 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <News />
-    <Webview />
+
+    <DialogHelp ref="refs.help" />
+    <DialogNews />
+    <DialogWebview />
   </v-app>
 </template>
 <script setup lang="ts">
 import axios, { AxiosResponse } from 'axios'
 import { useLocalStorage } from '@vueuse/core'
-import FunctionalSelector from './components/functionalSelector.vue'
-import Help from './components/help.vue'
-import AppHeader from './components/AppHeader.vue'
-import DymanicAlerts from './components/DymanicAlerts.vue'
+import FunctionalSelector from '@/components/FunctionalSelector.vue'
+import DialogHelp from '@/components/dialogs/DialogHelp.vue'
+import AppHeader from '@/components/AppHeader.vue'
+import DymanicAlerts from '@/components/DymanicAlerts.vue'
 import {
   mdiClock,
   mdiBug,
@@ -454,12 +455,12 @@ import {
   mdiFolderInformation,
   mdiAccountChildCircle,
 } from '@mdi/js'
-import TeahouseFooter from './components/TeahouseFooter.vue'
-import IntervalHints from './components/IntervalHints.vue'
-import allowGa, { gtag } from './allowGa'
-import Sponsors from './components/sponsors.vue'
-import Webview from './components/webview.vue'
-import News from './components/news.vue'
+import AppFooter from '@/components/AppFooter.vue'
+import IntervalHints from '@/components/IntervalHints.vue'
+import allowGa, { gtag } from '@/allowGa'
+import AppSponsors from '@/components/AppSponsors.vue'
+import DialogWebview from '@/components/dialogs/DialogWebview.vue'
+import DialogNews from '@/components/dialogs/DialogNews.vue'
 import type {
   IAlert,
   ICollection,
@@ -468,7 +469,7 @@ import type {
   IResource,
   IResp,
   Edition,
-} from './types'
+} from '@/types'
 import { useI18n } from 'vue-i18n'
 import { computed, onBeforeMount, onMounted, watch, nextTick } from 'vue'
 import { useThemeStore } from '@/stores/ui'
