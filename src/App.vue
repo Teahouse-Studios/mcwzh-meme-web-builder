@@ -241,13 +241,7 @@
             </p>
           </v-window-item>
         </v-window>
-        <v-alert
-          :icon="mdiInformationOutline"
-          class="mt-3 mb-3 text-body-2"
-          dense
-          type="info"
-          >{{ t('hints')[hint] }}
-        </v-alert>
+        <IntervalHints />
         <div>
           <v-btn
             :disabled="loading"
@@ -451,7 +445,6 @@ import {
   mdiClock,
   mdiBug,
   mdiCloudDownload,
-  mdiInformationOutline,
   mdiShareVariant,
   mdiArchive,
   mdiCog,
@@ -462,6 +455,7 @@ import {
   mdiAccountChildCircle,
 } from '@mdi/js'
 import TeahouseFooter from './components/TeahouseFooter.vue'
+import IntervalHints from './components/IntervalHints.vue'
 import allowGa, { gtag } from './allowGa'
 import Sponsors from './components/sponsors.vue'
 import Webview from './components/webview.vue'
@@ -734,7 +728,6 @@ let input = $ref({
     child: 1,
   },
 })
-let hint = $ref(0)
 let loading_backend = $ref(true)
 let consts = $ref({
   java_modified: 0,
@@ -782,10 +775,6 @@ onBeforeMount(() => {
   }
 })
 onMounted(async () => {
-  setInterval(() => {
-    hint = hint === 3 ? 0 : ++hint
-  }, 4000)
-
   fetchList()
 })
 
