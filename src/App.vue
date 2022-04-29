@@ -373,6 +373,8 @@
     <DialogHelp ref="refs.help" />
     <DialogNews />
     <DialogWebview />
+
+    <AppSnackbars />
   </v-app>
 </template>
 <script setup lang="ts">
@@ -399,6 +401,7 @@ import DialogHelp from '@/components/dialogs/DialogHelp.vue'
 import AppHeader from '@/components/app/AppHeader.vue'
 import DymanicAlerts from '@/components/DymanicAlerts.vue'
 import AppFooter from '@/components/app/AppFooter.vue'
+import AppSnackbars from '@/components/app/AppSnackbars.vue'
 import IntervalHints from '@/components/IntervalHints.vue'
 import allowGa, { gtag } from '@/allowGa'
 import AppSponsors from '@/components/app/AppSponsors.vue'
@@ -407,6 +410,7 @@ import DialogNews from '@/components/dialogs/DialogNews.vue'
 
 import { useThemeStore } from '@/stores/ui'
 import { useEditionStore } from '@/stores/edition'
+import { useSnackbarsStore } from './stores/snackbars'
 
 import type {
   ICollection,
@@ -421,19 +425,13 @@ let { edition, links } = useEditionStore()
 
 let { t, locale } = useI18n({ useScope: 'global' })
 
+let snackbars = useSnackbarsStore()
+
 let refs = $ref({
   help: null,
   logs: null,
 })
 
-function toggleApi() {
-  const newApi =
-    api === 'https://meme.wd-api.com'
-      ? 'https://meme-ts.wd-api.com'
-      : 'https://meme.wd-api.com'
-  api = newApi
-  localStorage.setItem('api', newApi)
-}
 function share(item: ILog) {
   let p = new URLSearchParams()
   const type = item.isBedrock ? 'bedrock' : 'java'
@@ -453,7 +451,7 @@ function share(item: ILog) {
     navigator.share(shareContent)
   } else {
     navigator.clipboard.writeText(path)
-    shareCopyedToClipboard = true
+    snackbars.shareCopyedToClipboard = true
   }
 }
 function sendHelpTrack(label: string) {
@@ -522,7 +520,7 @@ async function fetchList() {
       } catch (e) {
         return
       }
-      shareLinkParsed = true
+      snackbars.shareLinkParsed = true
       edition = type
       input[type] = _input
       inputBasic = _inputBasic
@@ -618,7 +616,7 @@ async function submit() {
         ;(refs.logs as unknown as Element).scrollIntoView()
       })
 
-      snackbarBuildSucceeded = true
+      snackbars.buildSucceeded = true
       loading = false
     })
     .catch((err) => {
@@ -632,17 +630,13 @@ async function submit() {
       nextTick(() => {
         ;(refs.logs as unknown as Element).scrollIntoView()
       })
-      snackbarBuildFailed = true
+      snackbars.buildFailed = true
       loading = false
     })
 }
 let api = $ref('')
-let snackbarBuildSucceeded = $ref(false)
-let snackbarBuildFailed = $ref(false)
 let dialogFetchListFailed = $ref(false)
 let fetchListIgnored = $ref(false)
-let shareLinkParsed = $ref(false)
-let shareCopyedToClipboard = $ref(false)
 let logsPanel = $ref<number[]>()
 let loading = $ref(false)
 let inputBasic = $ref({
