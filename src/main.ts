@@ -16,11 +16,15 @@ declare module 'vue/types/vue' {
 
 Sentry.init({
   Vue,
-  dsn:
-    'https://8f1c358ea4e04819bc8f53a3c8763150@o417398.ingest.sentry.io/5837515',
+  dsn: 'https://8f1c358ea4e04819bc8f53a3c8763150@o417398.ingest.sentry.io/5837515',
   integrations: [
     new Integrations.BrowserTracing({
-      tracingOrigins: ['localhost', 'meme.wd-ljt.com', /^\//],
+      tracingOrigins: [
+        'localhost',
+        'meme.wd-ljt.com',
+        'meme.teahouse.team',
+        /^\//,
+      ],
     }),
   ],
   tracesSampleRate: 0.2,
@@ -51,5 +55,5 @@ if (process.env.NODE_ENV === 'development') {
 new Vue({
   vuetify,
   i18n,
-  render: h => h(App),
+  render: (h) => h(App),
 }).$mount('#app')
