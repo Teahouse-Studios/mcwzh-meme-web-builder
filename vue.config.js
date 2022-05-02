@@ -2,7 +2,7 @@ const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPl
 require('dotenv').config()
 module.exports = {
   productionSourceMap: false,
-  publicPath: process.env.NODE_ENV === 'production' ? `${process.env.FE_DOMAIN}${process.env.PROJ_NAME}` : './',
+  publicPath: process.env.NODE_ENV === 'production' ? `https://fe.wd-ljt.com/meme/` : './',
   "transpileDependencies": [
     "vuetify"
   ],
