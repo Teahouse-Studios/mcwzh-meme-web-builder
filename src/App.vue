@@ -751,10 +751,10 @@ export default Vue.extend({
               ? this.input.je.mod
               : [],
           type: packType,
+          compatible: inputBase.compatible
         },
         this.whetherUseBE && {
-          type: this.input.be.extType,
-          compatible: this.input.be.compatible,
+          type: this.input.be.extType
         }
       )
       console.log(data)
