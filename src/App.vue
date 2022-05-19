@@ -700,12 +700,10 @@ export default Vue.extend({
 
       const inputBase = this.whetherUseBE ? this.input.be : this.input.je
 
-      let packType: 'normal' | 'legacy' | 'compat' = 'normal'
+      let packType: 'normal' | 'legacy'
       if (this.inputBasic.format === 3) {
         packType = 'legacy'
-      } else if (this.input.je.compatible) {
-        packType = 'compat'
-      }
+      } 
 
       let resource: string[] = inputBase.resource.concat(inputBase.language)
 
