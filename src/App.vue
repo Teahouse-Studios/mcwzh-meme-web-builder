@@ -700,7 +700,7 @@ export default Vue.extend({
 
       const inputBase = this.whetherUseBE ? this.input.be : this.input.je
 
-      let packType: 'normal' | 'legacy'
+      let packType: 'normal' | 'legacy' = 'normal'
       if (this.inputBasic.format === 3) {
         packType = 'legacy'
       } 
