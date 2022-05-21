@@ -55,9 +55,7 @@ export default {
   }),
   async mounted() {
     await axios
-      .get(
-        'https://fastly.jsdelivr.net/gh/Teahouse-Studios/mcwzh-meme-resourcepack@master/news.json'
-      )
+      .get('https://fe.wd-ljt.com/meme/dymanic/news.json')
       .then((response) => (this.news = response.data))
       .then(() => {
         this.dialogNews = this.news.id > localStorage.getItem('memeNewsIgnored')

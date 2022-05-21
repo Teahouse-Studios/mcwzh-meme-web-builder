@@ -922,7 +922,7 @@ export default Vue.extend({
 
     await axios
       .get(
-        'https://fastly.jsdelivr.net/gh/Teahouse-Studios/mcwzh-meme-resourcepack@master/alerts.json'
+        'https://fe.wd-ljt.com/meme/dymanic/alerts.json'
       )
       .then((response) => (this.alerts = response.data))
   },
