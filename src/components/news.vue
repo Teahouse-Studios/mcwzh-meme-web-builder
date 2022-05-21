@@ -23,47 +23,45 @@
       </v-sheet>
       <v-img v-else-if="news.image" :src="news.image" class="mb-4"></v-img>
       <v-divider v-else class="mb-4"></v-divider>
-      <v-card-text style="height: 500px;">
+      <v-card-text style="height: 500px">
         <div v-html="news.content"></div>
-        <v-btn v-if="news.detail" :href="news.detail" plain
-        >
+        <v-btn v-if="news.detail" :href="news.detail" plain>
           <v-icon left>{{ svgPath.mdiArrowRight }}</v-icon>
           阅读更多
-        </v-btn
-        >
+        </v-btn>
       </v-card-text>
     </v-card>
   </v-dialog>
 </template>
 
 <script>
-import axios from "axios";
-import {mdiClose,mdiArrowRight } from '@mdi/js'
+import axios from 'axios'
+import { mdiClose, mdiArrowRight } from '@mdi/js'
 export default {
-  name: "memeNews",
+  name: 'memeNews',
   methods: {
     newsIgnore() {
-      this.dialogNews = false;
-      localStorage.memeNewsIgnored = this.news.id;
+      this.dialogNews = false
+      localStorage.memeNewsIgnored = this.news.id
     },
   },
   data: () => ({
     dialogNews: false,
     news: null,
     svgPath: {
-      mdiClose, mdiArrowRight
-    }
+      mdiClose,
+      mdiArrowRight,
+    },
   }),
   async mounted() {
     await axios
       .get(
-        "https://cdn.jsdelivr.net/gh/Teahouse-Studios/mcwzh-meme-resourcepack@master/news.json"
+        'https://fastly.jsdelivr.net/gh/Teahouse-Studios/mcwzh-meme-resourcepack@master/news.json'
       )
       .then((response) => (this.news = response.data))
       .then(() => {
-        this.dialogNews =
-          this.news.id > localStorage.getItem("memeNewsIgnored");
-      });
-  }
+        this.dialogNews = this.news.id > localStorage.getItem('memeNewsIgnored')
+      })
+  },
 }
 </script>

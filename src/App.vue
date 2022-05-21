@@ -594,7 +594,7 @@ export default Vue.extend({
     forceClear(){
       this.whetherUseBE ? this.input.be.collection = [] : this.input.je.collection = []
       console.log('force', this.whetherUseBE, this.input.be.collection)
-      
+
     },
     share(item: ILog) {
       let p = new URLSearchParams()
@@ -921,7 +921,7 @@ export default Vue.extend({
 
     await axios
       .get(
-        'https://cdn.jsdelivr.net/gh/Teahouse-Studios/mcwzh-meme-resourcepack@master/alerts.json'
+        'https://fastly.jsdelivr.net/gh/Teahouse-Studios/mcwzh-meme-resourcepack@master/alerts.json'
       )
       .then((response) => (this.alerts = response.data))
   },
