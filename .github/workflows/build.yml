@@ -42,16 +42,12 @@ jobs:
 
       - name: Build
         run: yarn build
-        env:
-          PROJ_NAME: ${{ secrets.PROJ_NAME }}
-          FE_DOMAIN: ${{ secrets.FE_DOMAIN }}
-
-      - name: Release
-        run: yarn release
-        env:
-          AL_FE_REGION: ${{ secrets.AL_FE_REGION }}
-          AL_FE_KEYID: ${{ secrets.AL_FE_KEYID }}
-          AL_FE_SECRET: ${{ secrets.AL_FE_SECRET }}
-          AL_FE_BUCKET: ${{ secrets.AL_FE_BUCKET }}
-          PROJ_NAME: ${{ secrets.PROJ_NAME }}
-          FE_DOMAIN: ${{ secrets.FE_DOMAIN }}
+        
+      - name: Upload
+        uses: Teahouse-Studios/aliyun-oss-action@0.7
+        with:
+          KEY_ID: ${{ secrets.KEY_ID }}
+          KEY_SECRET: ${{ secrets.KEY_SECRET }}
+          BUCKET: frontend-wdljt
+          LOCAL_PATH: ./dist/
+          REMOTE_PREFIX: meme/

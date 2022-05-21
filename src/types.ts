@@ -44,6 +44,6 @@ export interface IReq {
     collection: string[]
   }
   mod?: ['all'] | string[]
-  type: 'normal' | 'legacy' | 'compat' | 'zip' | 'mcpack'
+  type: 'normal' | 'legacy' | 'zip' | 'mcpack'
   compatible?: boolean
 }

@@ -591,10 +591,11 @@ import { ICollection, ILog, IReq, IResource, IResp } from '@/types'
 
 export default Vue.extend({
   methods: {
-    forceClear(){
-      this.whetherUseBE ? this.input.be.collection = [] : this.input.je.collection = []
+    forceClear() {
+      this.whetherUseBE
+        ? (this.input.be.collection = [])
+        : (this.input.je.collection = [])
       console.log('force', this.whetherUseBE, this.input.be.collection)
-
     },
     share(item: ILog) {
       let p = new URLSearchParams()
@@ -700,11 +701,9 @@ export default Vue.extend({
 
       const inputBase = this.whetherUseBE ? this.input.be : this.input.je
 
-      let packType: 'normal' | 'legacy' | 'compat' = 'normal'
+      let packType: 'normal' | 'legacy' = 'normal'
       if (this.inputBasic.format === 3) {
         packType = 'legacy'
-      } else if (this.input.je.compatible) {
-        packType = 'compat'
       }
 
       let resource: string[] = inputBase.resource.concat(inputBase.language)
@@ -746,15 +745,17 @@ export default Vue.extend({
           },
           mod:
             this.input.je.modOption === 'all'
-              ? this.consts.modList.filter(v => typeof v === "string") as string[]
+              ? (this.consts.modList.filter(
+                  (v) => typeof v === 'string'
+                ) as string[])
               : this.input.je.modOption === 'custom'
               ? this.input.je.mod
               : [],
           type: packType,
+          compatible: inputBase.compatible,
         },
         this.whetherUseBE && {
           type: this.input.be.extType,
-          compatible: this.input.be.compatible,
         }
       )
       console.log(data)
@@ -847,7 +848,7 @@ export default Vue.extend({
     logsPanel: [] as number[],
     loading: false,
     inputBasic: {
-      format: 8 as 8 | 7 | 6 | 5 | 4 | 3,
+      format: 9 as 9 | 8 | 7 | 6 | 5 | 4 | 3,
     },
     logs: [] as ILog[],
     input: {
@@ -958,8 +959,11 @@ export default Vue.extend({
           child = ['lang_sfw']
           break
       }
-      let items = (base.collection).filter((v) =>
-        this.input[this.whetherUseBE ? 'be' : 'je'].collection.includes(v.name) || this.collectionFixedItems.includes(v.name)
+      let items = base.collection.filter(
+        (v) =>
+          this.input[this.whetherUseBE ? 'be' : 'je'].collection.includes(
+            v.name
+          ) || this.collectionFixedItems.includes(v.name)
       )
       const data = items.map((v) => v['contains']).flat()
       return {

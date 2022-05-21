@@ -151,7 +151,7 @@ export default Vue.extend({
   },
   methods: {
     checkIncompatible(name) {
-      return (this.incompatibleMap[name] || []).filter(v => this.resource.includes(v)).length >= 1
+      return (this.incompatibleMap[name] || []).filter(v => this.combinedItems.includes(v)).length >= 1
     },
     toggleResource() {
       this.resource = []
