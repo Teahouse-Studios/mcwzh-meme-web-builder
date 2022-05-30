@@ -921,9 +921,7 @@ export default Vue.extend({
     this.fetchList()
 
     await axios
-      .get(
-        'https://fe.wd-ljt.com/meme/dymanic/alerts.json'
-      )
+      .get('https://fe.wd-ljt.com/meme/dynamic/alerts.json')
       .then((response) => (this.alerts = response.data))
   },
   computed: {

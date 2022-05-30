@@ -55,7 +55,7 @@ export default {
   }),
   async mounted() {
     await axios
-      .get('https://fe.wd-ljt.com/meme/dymanic/news.json')
+      .get('https://fe.wd-ljt.com/meme/dynamic/news.json')
       .then((response) => (this.news = response.data))
       .then(() => {
         this.dialogNews = this.news.id > localStorage.getItem('memeNewsIgnored')
