@@ -860,7 +860,7 @@ export default Vue.extend({
         resource: [] as string[],
         language: [] as string[],
         collection: [] as string[],
-        child: 2,
+        child: 0,
       },
       je: {
         modOption: 'all',
@@ -869,7 +869,7 @@ export default Vue.extend({
         resource: [] as string[],
         language: [] as string[],
         collection: [] as string[],
-        child: 2,
+        child: 0,
       },
     },
     hint: 0,
